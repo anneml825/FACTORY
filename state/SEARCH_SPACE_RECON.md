@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-18T12:23:58.120Z  
+**Run:** 2026-08-18T12:32:24.541Z  
 **Spaces probed:** 10 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,16 +11,16 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 175ms |
-| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17797 | 257ms |
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 65ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19629 | 738ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 328ms |
-| `pypi_packages` | yes | none | **8%** | 1.00 | 0% | 164 | 69ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 379ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 158ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 258ms |
-| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 275ms |
+| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 170ms |
+| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17797 | 240ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 78ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19629 | 731ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 176ms |
+| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 456 | 76ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 237ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 181ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 175ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 316ms |
 
 ## Structure
 
@@ -63,7 +63,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19603, invoice=73, booking calendar=44009, seo=4495, inventory=125, form builder=70884035, analytics dashboard=97356, image optimization=4207185, membership=3189, csv import=23154277, time tracking=19629, pdf export=2707
+- **Values:** backup=19603, invoice=73, booking calendar=44009, seo=4495, inventory=125, form builder=70884249, analytics dashboard=97356, image optimization=4207193, membership=3189, csv import=23154494, time tracking=19629, pdf export=2707
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
@@ -74,9 +74,9 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":1,"404":5,"429":6}
-- **First failure:** HTTP 429
-- **Values:** backup=164, invoice=null, booking calendar=null, seo=null, inventory=null, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
+- **HTTP statuses:** {"200":4,"404":8}
+- **First failure:** HTTP 404
+- **Values:** backup=164, invoice=456, booking calendar=null, seo=31, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
 ### `obsidian_plugins` — Obsidian community plugins
 

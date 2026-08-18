@@ -1,6 +1,6 @@
 # WordPress Opportunity Scan
 
-**Retrieved:** 2026-08-18T12:21:21.731Z  
+**Retrieved:** 2026-08-18T12:29:45.744Z  
 **Queries:** 160 (systematic 20 site types x 8 jobs)  
 **Source:** api.wordpress.org/plugins/info/1.2 · **Cost:** $0.00
 
@@ -14,28 +14,23 @@ An opportunity is a query where **demand is proven but incumbents are weak**:
 **A large, well-maintained, well-rated incumbent scores zero.** A solved problem is
 not an opportunity, however big its install base — that is the misreading this rule exists to prevent.
 
-## Ranked opportunities — 21 of 160 queries scored above zero
+## Ranked opportunities — 16 of 160 queries scored above zero
 
 | # | Query | Top incumbent | Installs | Rating | Stale (mo) | Weaknesses | Score |
 |---|---|---|---|---|---|---|---|
-| 1 | school inventory tracking | Optima Express IDX | 10,000 | 64/100 (45) | 2.3 | incumbent rated 64/100; only 3 plugins compete | **8** |
-| 2 | nonprofit charity intake form | GiveWP &#8211; Donation Plugin and Fundr | 100,000 | 92/100 (705) | 0.2 | only 1 plugins compete | **5** |
-| 3 | photographer intake form | Appointment Booking Plugin – LatePoint | | 100,000 | 98/100 (97) | 0.5 | only 2 plugins compete | **5** |
-| 4 | auto repair shop intake form | Appointment Booking Plugin – LatePoint | | 100,000 | 98/100 (97) | 0.5 | only 3 plugins compete | **5** |
-| 5 | auto repair shop staff scheduling | Appointment Booking Plugin – LatePoint | | 100,000 | 98/100 (97) | 0.5 | only 3 plugins compete | **5** |
-| 6 | nonprofit charity inventory tracking | SureCart &#8211; Ecommerce Made Easy For | 80,000 | 96/100 (277) | 0 | only 1 plugins compete | **4.9** |
-| 7 | event venue booking | Events Manager &#8211; Calendar, Booking | 70,000 | 84/100 (547) | 0.4 | only 33% of support threads resolved | **4.85** |
-| 8 | tutoring membership directory | Happyforms &#8211; Form Builder for Word | 20,000 | 88/100 (433) | 1.2 | only 2 plugins compete | **4.3** |
-| 9 | tutoring invoice quote | Happyforms &#8211; Form Builder for Word | 20,000 | 88/100 (433) | 1.2 | only 2 plugins compete | **4.3** |
-| 10 | event venue intake form | Happyforms &#8211; Form Builder for Word | 20,000 | 88/100 (433) | 1.2 | only 2 plugins compete | **4.3** |
-| 11 | event venue invoice quote | Happyforms &#8211; Form Builder for Word | 20,000 | 88/100 (433) | 1.2 | only 3 plugins compete | **4.3** |
-| 12 | church intake form | Advanced Form Integration — Connect Form | 10,000 | 96/100 (90) | 0.2 | only 1 plugins compete | **4** |
-| 13 | church invoice quote | GeoDirectory &#8211; WP Business Directo | 10,000 | 96/100 (715) | 0.1 | only 2 plugins compete | **4** |
-| 14 | church inventory tracking | Advanced Form Integration — Connect Form | 10,000 | 96/100 (90) | 0.2 | only 1 plugins compete | **4** |
-| 15 | farm booking | Location Weather – WordPress Weather For | 10,000 | 90/100 (103) | 0.9 | only 3 plugins compete | **4** |
-| 16 | farm membership directory | Business Directory Plugin &#8211; Easy L | 10,000 | 92/100 (504) | 0.7 | only 2 plugins compete | **4** |
-| 17 | dental practice booking | MPG – Multiple Page Generator, Bulk Land | 2,000 | 78/100 (27) | 0.2 | incumbent rated 78/100 | **3.3** |
-| 18 | dental practice inventory tracking | Rox Appointment Booking &#8211; Appointm | 1,000 | 0/100 (0) | 0.2 | only 1 plugins compete | **3** |
-| 19 | hair salon inventory tracking | Rox Appointment Booking &#8211; Appointm | 1,000 | 0/100 (0) | 0.2 | only 1 plugins compete | **3** |
-| 20 | photographer waiver signature | Signature Add-On for Gravity Forms | 1,000 | 78/100 (21) | 0.2 | incumbent rated 78/100 | **3** |
-| 21 | library waiver signature | Signature Add-On for Gravity Forms | 1,000 | 78/100 (21) | 0.2 | incumbent rated 78/100 | **3** |
+| 1 | event venue booking | Events Manager &#8211; Calendar, Booking | 70,000 | 84/100 (547) | 0.4 | only 33% of support threads resolved | **4.85** |
+| 2 | church membership directory | Business Directory Plugin &#8211; Easy L | 10,000 | 92/100 (504) | 0.7 | only 2 plugins compete | **4** |
+| 3 | real estate agency appointment reminder | Estatik Real Estate Plugin | 10,000 | 90/100 (186) | 0.4 | only 1 plugins compete | **4** |
+| 4 | hotel booking | MotoPress Hotel Booking | 10,000 | 74/100 (65) | 0.5 | incumbent rated 74/100 | **4** |
+| 5 | event venue appointment reminder | Eventin – Event Calendar, Tickets, Regis | 10,000 | 94/100 (396) | 0.2 | only 3 plugins compete | **4** |
+| 6 | event venue staff scheduling | Sugar Calendar &#8211; Events Calendar,  | 10,000 | 90/100 (24) | 1.1 | only 1 plugins compete | **4** |
+| 7 | hotel invoice quote | VikBooking Hotel Booking Engine &amp; PM | 8,000 | 96/100 (60) | 0.1 | only 1 plugins compete | **3.9** |
+| 8 | real estate agency membership directory | Essential Real Estate | 7,000 | 86/100 (52) | 2.6 | only 3 plugins compete | **3.85** |
+| 9 | restaurant appointment reminder | WPCafe &#8211; Restaurant Menu, Online F | 5,000 | 92/100 (108) | 0.1 | only 2 plugins compete | **3.7** |
+| 10 | restaurant inventory tracking | Food Menu &#8211; Restaurant Menu &amp;  | 3,000 | 100/100 (23) | 0 | only 1 plugins compete | **3.48** |
+| 11 | hair salon booking | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0 | only 1 plugins compete | **3.3** |
+| 12 | hair salon appointment reminder | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0 | only 1 plugins compete | **3.3** |
+| 13 | hair salon staff scheduling | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0 | only 1 plugins compete | **3.3** |
+| 14 | real estate agency booking | Autocomplete Location Field for Contact  | 1,000 | 100/100 (13) | 1 | only 1 plugins compete | **3** |
+| 15 | law firm intake form | Clio Grow Form | 1,000 | 46/100 (3) | 4.1 | only 2 plugins compete | **3** |
+| 16 | library inventory tracking | Media Library Tools &#8211; AI-Powered R | 1,000 | 94/100 (13) | 0.3 | only 1 plugins compete | **3** |

@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T12:23:58.120Z",
+  "runAt": "2026-08-18T12:32:24.540Z",
   "probeTerms": [
     "backup",
     "invoice",
@@ -29,7 +29,7 @@
       "distinctValueRatio": 0.08333333333333333,
       "zeroShare": 0,
       "medianValue": 24,
-      "medianLatencyMs": 175,
+      "medianLatencyMs": 170,
       "httpStatuses": {
         "200": 12
       },
@@ -100,7 +100,7 @@
       "distinctValueRatio": 0.9166666666666666,
       "zeroShare": 0,
       "medianValue": 17797,
-      "medianLatencyMs": 257,
+      "medianLatencyMs": 240,
       "httpStatuses": {
         "200": 12
       },
@@ -171,7 +171,7 @@
       "distinctValueRatio": 0.5833333333333334,
       "zeroShare": 0,
       "medianValue": 5000000,
-      "medianLatencyMs": 65,
+      "medianLatencyMs": 78,
       "httpStatuses": {
         "200": 12
       },
@@ -242,7 +242,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 19629,
-      "medianLatencyMs": 738,
+      "medianLatencyMs": 731,
       "httpStatuses": {
         "200": 12
       },
@@ -269,7 +269,7 @@
         },
         {
           "term": "form builder",
-          "value": 70884035
+          "value": 70884249
         },
         {
           "term": "analytics dashboard",
@@ -277,7 +277,7 @@
         },
         {
           "term": "image optimization",
-          "value": 4207185
+          "value": 4207193
         },
         {
           "term": "membership",
@@ -285,7 +285,7 @@
         },
         {
           "term": "csv import",
-          "value": 23154277
+          "value": 23154494
         },
         {
           "term": "time tracking",
@@ -313,7 +313,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1072,
-      "medianLatencyMs": 328,
+      "medianLatencyMs": 176,
       "httpStatuses": {
         "200": 12
       },
@@ -379,16 +379,15 @@
       "reachable": true,
       "requiresAuth": false,
       "termsAttempted": 12,
-      "termsWithValue": 1,
-      "coverage": 0.08333333333333333,
+      "termsWithValue": 4,
+      "coverage": 0.3333333333333333,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 164,
-      "medianLatencyMs": 69,
+      "medianValue": 456,
+      "medianLatencyMs": 76,
       "httpStatuses": {
-        "200": 1,
-        "404": 5,
-        "429": 6
+        "200": 4,
+        "404": 8
       },
       "values": [
         {
@@ -397,7 +396,7 @@
         },
         {
           "term": "invoice",
-          "value": null
+          "value": 456
         },
         {
           "term": "booking calendar",
@@ -405,11 +404,11 @@
         },
         {
           "term": "seo",
-          "value": null
+          "value": 31
         },
         {
           "term": "inventory",
-          "value": null
+          "value": 458
         },
         {
           "term": "form builder",
@@ -440,7 +439,7 @@
           "value": null
         }
       ],
-      "failureDetail": "HTTP 429",
+      "failureDetail": "HTTP 404",
       "notes": "Free API. Same monetization weakness as npm — paying for a Python library is unusual."
     },
     {
@@ -457,7 +456,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 7294943,
-      "medianLatencyMs": 379,
+      "medianLatencyMs": 237,
       "httpStatuses": {
         "200": 1
       },
@@ -484,7 +483,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1411650,
-      "medianLatencyMs": 158,
+      "medianLatencyMs": 181,
       "httpStatuses": {
         "200": 12
       },
@@ -555,7 +554,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 43999,
-      "medianLatencyMs": 258,
+      "medianLatencyMs": 175,
       "httpStatuses": {
         "200": 12
       },
@@ -626,7 +625,7 @@
       "distinctValueRatio": 0.8888888888888888,
       "zeroShare": 0.1111111111111111,
       "medianValue": 10,
-      "medianLatencyMs": 275,
+      "medianLatencyMs": 316,
       "httpStatuses": {
         "200": 10,
         "403": 2
