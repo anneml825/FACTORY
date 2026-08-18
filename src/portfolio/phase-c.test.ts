@@ -78,7 +78,9 @@ class RecordingDevToTransport implements DevToTransport {
   async request<T>(request: DevToRequest): Promise<T> {
     this.requests.push(structuredClone(request));
     let response: unknown;
-    if (request.path === '/api/users/me') response = { id: 7, username: 'factory-fixture' };
+    if (request.path === '/api/users/me' || request.path === '/api/users/by_username?url=factory-fixture') {
+      response = { id: 7, name: 'Factory Fixture', username: 'factory-fixture', github_username: null };
+    }
     else if (request.path.startsWith('/api/articles?tag=')) {
       response = [{
         id: 9,
@@ -98,6 +100,7 @@ class RecordingDevToTransport implements DevToTransport {
         description,
         url: 'https://dev.to/factory/fixture-42',
         published: true,
+        user: { id: 7, name: 'Factory Fixture', username: 'factory-fixture', github_username: null },
       };
       response = this.article;
     } else if (request.path === '/api/analytics/totals' || request.path === '/api/analytics/totals?article_id=42') {
@@ -175,6 +178,8 @@ test('DEV pilot evaluates a measured gate, publishes once, measures, and deactiv
     transport,
     store: new JsonDevToArrivalStore(join(directory, 'devto.json')),
     tag: 'webdev',
+    expectedPublicName: 'Factory Fixture',
+    expectedPublicUsername: 'factory-fixture',
   });
   const manifest = shortDocumentFixture();
   const gate = await adapter.evaluateGate(manifest, 'gate-key');
@@ -194,6 +199,48 @@ test('DEV pilot evaluates a measured gate, publishes once, measures, and deactiv
   assert.equal((await adapter.measure(first)).qualifiedExposures, 1);
   assert.equal((await adapter.deactivate(first, 'deactivate-key')).status, 'INACTIVE');
   assert.equal(transport.requests.filter((request) => request.method === 'PUT').length, 1);
+});
+
+test('DEV analytics preflight accepts a new account with no aggregate rows', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'factory-devto-empty-analytics-'));
+  const transport = new RecordingDevToTransport();
+  transport.totals = [] as unknown as typeof transport.totals;
+  const adapter = new DevToArriveAdapter({
+    transport,
+    store: new JsonDevToArrivalStore(join(directory, 'devto.json')),
+    expectedPublicName: 'Factory Fixture',
+    expectedPublicUsername: 'factory-fixture',
+  });
+  assert.equal((await adapter.evaluateGate(shortDocumentFixture(), 'empty-gate')).status, 'PASSED');
+  const publication = await adapter.activate(shortDocumentFixture(), providerPublication(), 'empty-arrival');
+  assert.equal(publication.baseline.qualifiedExposures, 0);
+});
+
+test('DEV publication fails closed when public identity leaks a personal GitHub handle', async () => {
+  class LeakingIdentityTransport extends RecordingDevToTransport {
+    override async request<T>(request: DevToRequest): Promise<T> {
+      if (request.path === '/api/users/me') {
+        return {
+          id: 7,
+          name: 'Factory Fixture',
+          username: 'factory-fixture',
+          github_username: 'anneml825',
+        } as T;
+      }
+      return super.request<T>(request);
+    }
+  }
+  const transport = new LeakingIdentityTransport();
+  const adapter = new DevToArriveAdapter({
+    transport,
+    expectedPublicName: 'Factory Fixture',
+    expectedPublicUsername: 'factory-fixture',
+  });
+  await assert.rejects(
+    adapter.evaluateGate(shortDocumentFixture(), 'identity-gate'),
+    /exposes a GitHub username/,
+  );
+  assert.equal(transport.requests.some((request) => request.method === 'POST'), false);
 });
 
 test('Stripe async-payment failure is signed, attributed, visible, and idempotent', async () => {

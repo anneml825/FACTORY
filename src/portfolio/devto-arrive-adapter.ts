@@ -54,6 +54,15 @@ interface DevToArticleSummary {
   published?: boolean;
   positive_reactions_count?: number;
   comments_count?: number;
+  user?: DevToPublicIdentity;
+}
+
+interface DevToPublicIdentity {
+  id?: number;
+  name?: string;
+  username?: string;
+  github_username?: string | null;
+  twitter_username?: string | null;
 }
 
 interface DevToAnalyticsTotals {
@@ -139,10 +148,26 @@ function integer(value: unknown): number | null {
   return Number.isInteger(value) && (value as number) >= 0 ? value as number : null;
 }
 
-function parseTotals(value: DevToAnalyticsTotals): { views: number; reactions: number; comments: number } {
-  const views = integer(value.page_views) ?? integer(value.views) ?? integer(value.total_views);
-  const reactions = integer(value.reactions_count) ?? integer(value.reactions) ?? integer(value.total_reactions) ?? 0;
-  const comments = integer(value.comments_count) ?? integer(value.comments) ?? integer(value.total_comments) ?? 0;
+function metricObject(value: unknown): DevToAnalyticsTotals | null {
+  if (Array.isArray(value)) {
+    if (value.length === 0) return null;
+    if (value.length !== 1) throw new Error('DEV analytics totals returned multiple aggregate records.');
+    return metricObject(value[0]);
+  }
+  if (!value || typeof value !== 'object') return null;
+  const record = value as Record<string, unknown>;
+  if (record.totals !== undefined) return metricObject(record.totals);
+  if (record.data !== undefined) return metricObject(record.data);
+  return record as DevToAnalyticsTotals;
+}
+
+function parseTotals(value: unknown, emptyMeansZero = false): { views: number; reactions: number; comments: number } {
+  const metrics = metricObject(value);
+  if (!metrics && emptyMeansZero) return { views: 0, reactions: 0, comments: 0 };
+  if (!metrics) throw new Error('DEV analytics response contained no aggregate metrics.');
+  const views = integer(metrics.page_views) ?? integer(metrics.views) ?? integer(metrics.total_views);
+  const reactions = integer(metrics.reactions_count) ?? integer(metrics.reactions) ?? integer(metrics.total_reactions) ?? 0;
+  const comments = integer(metrics.comments_count) ?? integer(metrics.comments) ?? integer(metrics.total_comments) ?? 0;
   if (views === null) {
     throw new Error('DEV analytics response did not expose a recognized non-negative view total.');
   }
@@ -214,26 +239,47 @@ export class DevToArriveAdapter implements ArriveAdapter {
   private readonly transport: DevToTransport;
   private readonly store: DevToArrivalStore;
   private readonly tag: string;
+  private readonly expectedPublicName: string;
+  private readonly expectedPublicUsername: string;
 
   constructor(options: {
     transport: DevToTransport;
     store?: DevToArrivalStore;
     tag?: string;
+    expectedPublicName: string;
+    expectedPublicUsername: string;
   }) {
     this.transport = options.transport;
     this.store = options.store ?? new InMemoryDevToArrivalStore();
     this.tag = options.tag ?? 'webdev';
+    this.expectedPublicName = options.expectedPublicName.trim();
+    this.expectedPublicUsername = options.expectedPublicUsername.trim().toLowerCase();
+    if (!this.expectedPublicName || !this.expectedPublicUsername) {
+      throw new Error('DEV publication requires an explicit expected Factory public identity.');
+    }
   }
 
   async evaluateGate(manifest: AssetManifest, _idempotencyKey: string): Promise<ArrivalGateRecord> {
     if (!manifest.noncommercialFixture) {
       throw new Error('Phase C DEV adapter accepts noncommercial fixtures only.');
     }
-    await this.transport.request<Record<string, unknown>>({ method: 'GET', path: '/api/users/me' });
-    parseTotals(await this.transport.request<DevToAnalyticsTotals>({
+    const authenticatedIdentity = await this.transport.request<DevToPublicIdentity>({
+      method: 'GET',
+      path: '/api/users/me',
+    });
+    this.assertFactoryIdentity(authenticatedIdentity, 'authenticated account');
+    const publicIdentity = await this.transport.request<DevToPublicIdentity>({
+      method: 'GET',
+      path: `/api/users/by_username?url=${encodeURIComponent(this.expectedPublicUsername)}`,
+    });
+    this.assertFactoryIdentity(publicIdentity, 'public profile');
+    const analyticsPreflight = await this.transport.request<unknown>({
       method: 'GET',
       path: '/api/analytics/totals',
-    }));
+    });
+    if (!analyticsPreflight || typeof analyticsPreflight !== 'object') {
+      throw new Error('DEV analytics preflight returned a non-object response.');
+    }
     const articles = await this.transport.request<DevToArticleSummary[]>({
       method: 'GET',
       path: `/api/articles?tag=${encodeURIComponent(this.tag)}&state=fresh&per_page=10`,
@@ -309,6 +355,7 @@ export class DevToArriveAdapter implements ArriveAdapter {
     if (!Number.isInteger(article.id) || !article.url) {
       throw new Error('DEV article creation returned no stable article ID/URL.');
     }
+    this.assertFactoryIdentity(article.user, 'created article author');
     const baseline = await this.measureArticle(article.id);
     const arrival: ArrivalPublication = {
       arrivalPublicationId: arrivalId,
@@ -369,10 +416,10 @@ export class DevToArriveAdapter implements ArriveAdapter {
   }
 
   private async measureArticle(articleId: number): Promise<ArrivalMetrics> {
-    const totals = parseTotals(await this.transport.request<DevToAnalyticsTotals>({
+    const totals = parseTotals(await this.transport.request<unknown>({
       method: 'GET',
       path: `/api/analytics/totals?article_id=${articleId}`,
-    }));
+    }), true);
     return {
       measuredAt: new Date().toISOString(),
       qualifiedExposures: totals.views,
@@ -387,5 +434,23 @@ export class DevToArriveAdapter implements ArriveAdapter {
         offerInteractions: 'DIRECT: reactions plus comments. DEV does not expose outbound-link clicks through this API.',
       },
     };
+  }
+
+  private assertFactoryIdentity(identity: DevToPublicIdentity | undefined, source: string): void {
+    if (!identity || typeof identity !== 'object') {
+      throw new Error(`DEV ${source} did not expose a verifiable public identity.`);
+    }
+    if (identity.name !== this.expectedPublicName) {
+      throw new Error(`DEV ${source} name does not match the configured Factory identity.`);
+    }
+    if (identity.username?.toLowerCase() !== this.expectedPublicUsername) {
+      throw new Error(`DEV ${source} username does not match the configured Factory identity.`);
+    }
+    if (identity.github_username) {
+      throw new Error(`DEV ${source} exposes a GitHub username; Factory publication is blocked.`);
+    }
+    if (JSON.stringify(identity).toLowerCase().includes('anneml825')) {
+      throw new Error(`DEV ${source} exposes a prohibited personal identifier; Factory publication is blocked.`);
+    }
   }
 }

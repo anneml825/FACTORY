@@ -28,6 +28,13 @@ publication plus authenticated per-article analytics. DEV's terms require substa
 on-topic, good-faith content and prohibit posts designed primarily for promotion or backlinks.
 Factory therefore refuses superficial promotional variants.
 
+Public identity is a fail-closed publication gate. The adapter requires an owner-configured
+Factory display name and username, verifies both the authenticated account and public profile,
+rejects any public GitHub username or the prohibited personal identifier `anneml825`, and checks
+the created article author again before accepting activation. It never derives public identity
+from GitHub, repository ownership, email, credentials, or provider defaults. Email is not part of
+DEV's documented public article/user representation and is never copied into fixture content.
+
 Official references checked 2026-08-18:
 
 - <https://developers.forem.com/api/v1>
@@ -155,8 +162,13 @@ Until that run passes, Phase C is `BUILT`, not `DONE`, and no stranger exposure 
 
 ### First external attempt — provider schema correction
 
-Run `32180403256` authenticated successfully but failed closed before publication. DEV's live
-totals payload uses `page_views`, `reactions_count`, and `comments_count`; the first parser had
-implemented the prose documentation as `views`, `reactions`, and `comments`. The adapter now
-accepts the live provider schema while retaining the documented aliases. No article was created,
-no checkout was opened, and the failure artifact recorded cleanup state.
+Runs `32180403256` and `32180836478` authenticated successfully but failed closed before
+publication. The first parser required a populated totals object during the account-level
+preflight; adding DEV's documented live field aliases did not change the failure. That established
+the actual issue: a new account with no articles can return an empty aggregate result.
+
+The adapter now separates endpoint reachability from scoped measurement. The gate requires an
+authenticated JSON response; the just-created article is then measured separately, with an empty
+scoped result represented explicitly as zero until DEV's analytics pipeline materializes it. It
+still rejects nonempty unrecognized or multi-record aggregate responses. Neither failed run
+created an article or opened a checkout.

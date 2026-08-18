@@ -16,8 +16,13 @@ not yet created its public DEV fixture. No real money.
 
 **Phase D / metered MAKE:** prohibited until Phase C passes and the owner reviews it
 
-**Owner setup:** Stripe is complete. Phase C now needs one scoped `DEVTO_API_KEY` stored directly
-in GitHub Actions. Never request or expose its value in chat or logs.
+**Owner setup:** Stripe is complete. The scoped `DEVTO_API_KEY` is stored directly in GitHub
+Actions. Never request or expose its value in chat or logs.
+
+**Public identity:** the owner configured DEV as `Factory94`. The real probe requires exact
+display name `Factory94` and username `factory94`, verifies authenticated and public DEV identity,
+rejects any exposed GitHub username or `anneml825`, and rechecks the created article author. A
+mismatch fails before publication; do not weaken or infer this identity gate.
 
 Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
 `DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.
@@ -50,10 +55,11 @@ Do not report Phase C `DONE` until the workflow records post-baseline DEV articl
 attributed Stripe sandbox checkout start and fulfilled `OWNER_TEST` transaction, zero eligible
 commercial revenue, and deactivation of both provider surfaces.
 
-External run `32180403256` disproved the initial DEV totals-field assumption before publishing:
-the live payload uses `page_views`, `reactions_count`, and `comments_count`. The parser correction
-is implemented; rerun the same noncommercial probe. No public article was created by the failed
-attempt.
+External runs `32180403256` and `32180836478` failed closed before publishing. They showed that a
+new account's account-level analytics preflight can return an empty aggregate result. The adapter
+now checks endpoint reachability at the gate, then parses the scoped article result after creation;
+an empty scoped result is explicitly zero while any nonempty unknown shape still fails closed.
+No public article was created by either failed attempt.
 
 ## Canonical Phase A base
 

@@ -74,6 +74,8 @@ jobs:
       DATABASE_URL: postgresql://factory:factory_test_only@127.0.0.1:5432/factory_arrive
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
       DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+      DEVTO_EXPECTED_PUBLIC_NAME: Factory94
+      DEVTO_EXPECTED_PUBLIC_USERNAME: factory94
       FACTORY_PAID_ACTIVITY_HALTED: "1"
       PHASE_C_WAIT_SECONDS: "900"
       PHASE_C_PROBE_ID: ${{ github.run_id }}-${{ github.run_attempt }}

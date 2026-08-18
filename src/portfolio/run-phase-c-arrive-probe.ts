@@ -17,6 +17,8 @@ import type { ArrivalPublication, Publication } from './types.ts';
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const devToKey = process.env.DEVTO_API_KEY;
+const devToExpectedPublicName = process.env.DEVTO_EXPECTED_PUBLIC_NAME;
+const devToExpectedPublicUsername = process.env.DEVTO_EXPECTED_PUBLIC_USERNAME;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const internalSecret = process.env.FACTORY_INTERNAL_EVENT_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
@@ -27,7 +29,10 @@ const waitSeconds = Number(process.env.PHASE_C_WAIT_SECONDS ?? '900');
 const port = Number(process.env.PHASE_C_WEBHOOK_PORT ?? '4242');
 const probeId = process.env.PHASE_C_PROBE_ID?.trim() || `local-${Date.now()}`;
 
-if (!stripeKey || !devToKey || !webhookSecret || !internalSecret || !databaseUrl) {
+if (
+  !stripeKey || !devToKey || !devToExpectedPublicName || !devToExpectedPublicUsername ||
+  !webhookSecret || !internalSecret || !databaseUrl
+) {
   throw new Error('Phase C requires Stripe/DEV test credentials, webhook/internal secrets, and DATABASE_URL.');
 }
 if (process.env.FACTORY_PAID_ACTIVITY_HALTED !== '1') {
@@ -47,6 +52,8 @@ const arrive = new DevToArriveAdapter({
   transport: new DevToHttpTransport(devToKey),
   store: new JsonDevToArrivalStore(resolve(stateDirectory, 'devto-arrival.json')),
   tag: 'webdev',
+  expectedPublicName: devToExpectedPublicName,
+  expectedPublicUsername: devToExpectedPublicUsername,
 });
 const watch = await PostgresWatchStore.create({
   pool,
