@@ -16,8 +16,8 @@ labor**. Neither outranks the other.
 
 ## Status — 2026-08-18
 
-**Phase B Stripe sandbox proof passed. Phase C ARRIVE + durable WATCH is built and awaits its
-one noncommercial provider probe.**
+**Phase B Stripe sandbox proof passed. Phase C ARRIVE + durable WATCH engineering proof is
+complete. Genuine commercial ARRIVE remains UNPROVEN.**
 
 | | |
 |---|---|
@@ -28,9 +28,10 @@ one noncommercial provider probe.**
 | Arm's-length transactions | **0** |
 | Commercial clock | **not started** |
 
-**External evidence is sandbox-only.** Stripe test objects and owner-test transactions proved
-PUT/WATCH plumbing; they produced no commercial revenue or demand evidence. No public ARRIVE
-fixture has yet been published.
+**External evidence is noncommercial engineering evidence only.** A temporary DEV fixture proved
+programmatic publication, analytics retrieval, attribution-link construction, and automatic
+unpublication. Stripe sandbox proved the attributed transaction, fulfillment, exclusion from
+commercial revenue, durable WATCH behavior, and deactivation. It produced no demand evidence.
 
 **→ Start with [`IMPLEMENTATION_BRIEF.md`](IMPLEMENTATION_BRIEF.md).**
 

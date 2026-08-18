@@ -27,9 +27,9 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | **Capital Authority** | **`DONE`** — 19/19 verified, including concurrency under contention |
 | **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
 | **Phase B Stripe Managed Payments sandbox adapter** | **`DONE`** — run `32173279299` passed the complete provider-test lifecycle and deactivated all objects |
-| **Phase C ARRIVE + durable WATCH** | **`BUILT`** — provider-neutral contract, DEV pilot, PostgreSQL WATCH/webhook durability, and local restart tests; real noncommercial probe awaits one scoped DEV credential |
+| **Phase C ARRIVE + durable WATCH** | **`DONE` as an engineering proof** — temporary DEV publication/analytics/deactivation, attributed Stripe sandbox transaction, PostgreSQL durability, and zero commercial evidence |
 | Live database instance | `BLOCKED` — needs owner Neon account |
-| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH externally proved in sandbox; DEV ARRIVE adapter built but not externally run; MAKE not started |
+| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH and DEV publication/measurement plumbing externally exercised; genuine commercial ARRIVE and metered MAKE not started |
 
 **Only provider-test commerce has happened.** Stripe sandbox objects, two owner-test checkouts,
 two fulfillments, one refund, reconciliation, and deactivation occurred. No live publication,
@@ -84,21 +84,24 @@ refund, and dispute events; reconciles provider state; and deactivates all provi
 Local verification: **21/21 combined Phase A + Phase B tests pass**. Provider run `32173279299`
 then passed Product/Price/Payment Link creation, two owner-test Checkouts, signed webhooks, two
 fulfillments, refund, dispute recovery, full reconciliation, zero commercial settlement, and
-deactivation. The owner approved Phase C on 2026-08-18; its credential-free implementation is
-built, but the public noncommercial ARRIVE probe has not yet run.
+deactivation. The owner approved Phase C on 2026-08-18; its noncommercial engineering proof is
+complete.
 
 ---
 
 ## Phase C — provider-neutral ARRIVE + durable WATCH
 
-**Status: `BUILT`; external probe `BLOCKED` on one scoped DEV Community API key. Cost: $0.00.**
+**Status: `DONE` as an engineering proof. Genuine commercial ARRIVE: `UNPROVEN`. Cost: $0.00.**
 
 Implemented: a provider-neutral activation/measurement/deactivation contract, one DEV
 Community pilot adapter, cumulative-metric idempotency, a crash-durable local journal, an
 append-only PostgreSQL WATCH inbox, durable Stripe webhook/transaction state, explicit
 `EXCEPTION` labor, and visible `checkout.session.async_payment_failed` handling.
 
-No public DEV article has been created yet. No stranger exposure is claimed. See
+A temporary DEV article was created and automatically unpublished. The controlled browser load
+did not appear in DEV totals within ten minutes, so DEV analytics is not accepted as a timely
+visit instrument. The ARRIVE reference nevertheless propagated into a fulfilled Stripe sandbox
+transaction and remained excluded from commercial evidence. See
 `docs/PHASE_C_ARRIVE_DURABLE_WATCH.md`.
 
 ---

@@ -2,15 +2,6 @@ name: Phase C ARRIVE and durable WATCH
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - codex/phase-c-arrive-durable-watch
-    paths:
-      - .github/workflows/phase-c-arrive-watch.yml
-      - src/portfolio/**
-      - db/schema.sql
-      - package.json
-      - package-lock.json
 
 permissions:
   contents: read
@@ -149,7 +140,7 @@ jobs:
           sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/stripe-listen.log"
           exit 1
 
-      - name: Start public noncommercial ARRIVE probe
+      - name: Start controlled noncommercial ARRIVE probe
         if: steps.credential.outputs.present == 'true'
         shell: bash
         run: |
@@ -180,7 +171,7 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Wait for exposure and test transaction
+      - name: Wait for provider measurement and test transaction
         if: steps.credential.outputs.present == 'true'
         shell: bash
         run: |

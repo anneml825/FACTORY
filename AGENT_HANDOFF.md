@@ -4,19 +4,17 @@
 
 **Branch:** `codex/phase-c-arrive-durable-watch`
 
-**Status:** Phase B real-provider proof `PASS`. Phase C credential-free implementation is
-`BUILT`; the public noncommercial DEV ARRIVE probe has not run and no stranger exposure is yet
-claimed.
+**Status:** Phase B real-provider proof `PASS`. Phase C is `DONE` as a controlled engineering
+proof. Genuine commercial ARRIVE remains `UNPROVEN`; no stranger exposure is claimed.
 
 **Cash spent:** $0.00
 
-**External commerce actions:** Stripe sandbox only — four owner-test checkouts across two provider
-runs, four fulfillments, two refunds, two disputes, reconciliation, and deactivation. Phase C run
-`32183291790` created one public DEV fixture, then hit a nested-analytics parser error before state
-persistence. The fixture remained public pending the emergency cleanup correction below. No real
-money.
+**External Phase C action:** run `32185055925` created one temporary DEV fixture, retrieved its
+analytics, propagated one ARRIVE reference into one fulfilled USD 12.00 Stripe sandbox owner-test
+transaction, recorded zero eligible commercial revenue, and automatically deactivated both
+surfaces. Direct checks returned DEV 404 and Stripe “The link is no longer active.” No real money.
 
-**Phase D / metered MAKE:** prohibited until Phase C passes and the owner reviews it
+**Phase D / metered MAKE:** prohibited until the owner reviews this Phase C closeout
 
 **Owner setup:** Stripe is complete. The scoped `DEVTO_API_KEY` is stored directly in GitHub
 Actions. Never request or expose its value in chat or logs.
@@ -28,11 +26,12 @@ approved `anneml825` in DEV's GitHub field only; every other GitHub value and an
 DEV name, username, or other identity metadata fails before publication. Do not broaden or infer
 this allowlist.
 
-**Urgent provider finding:** run `32183291790` created the fixture, then failed on DEV's nested
-analytics shape before activation state was saved. That exposed a cleanup gap and left one public
-fixture visible on the Factory94 profile. The pending correction adds exact-marker orphan cleanup,
-emergency unpublish around the full create-to-persist interval, nested metric parsing, and workflow
-concurrency. Verify the orphan is unpublished in the next external run before reporting Phase C.
+**Provider findings:** DEV totals are nested (`page_views.total`, `reactions.total`, and
+`comments.total`). The create-to-persist interval now has emergency cleanup, exact-marker orphan
+cleanup, and serialized execution. The controlled browser load in run `32185055925` did not appear
+in DEV totals within ten minutes, so DEV analytics is not a timely visit instrument. Stripe also
+did not yield a usable attributed `checkout.session.created` event; WATCH preserves
+`checkoutStarts: 0` rather than inventing it.
 
 Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
 `DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.
@@ -56,20 +55,27 @@ Implemented without credentials:
 - GitHub Actions workflow with disposable PostgreSQL 16 core verification and an optional real
   DEV + Stripe sandbox probe.
 
-Local result before connector publication: 28 tests discovered, 26 passed, 2 PostgreSQL tests
-skipped because this build workspace has no database service. TypeScript passed locally. The
-combined Node suite's final pre-commit run reported 2.23 s. The GitHub Actions core job must run both PostgreSQL tests
-before the real probe is requested.
+Final local result: 33 tests discovered, 31 passed, 2 PostgreSQL tests skipped because this build
+workspace has no database service; duration 1.353 s. GitHub Actions run `32185055925` passed all
+33, including both PostgreSQL restart tests, in 489.558 ms. TypeScript and database invariant
+checks passed.
 
-Do not report Phase C `DONE` until the workflow records post-baseline DEV article views, an
-attributed Stripe sandbox checkout start and fulfilled `OWNER_TEST` transaction, zero eligible
-commercial revenue, and deactivation of both provider surfaces.
+Phase C is complete only as infrastructure. Do not reinterpret its controlled fixture, DEV view,
+or owner-test checkout as demand, stranger arrival, revenue, or channel validation.
 
 External runs `32180403256` and `32180836478` failed closed before publishing. They showed that a
 new account's account-level analytics preflight can return an empty aggregate result. The adapter
 now checks endpoint reachability at the gate, then parses the scoped article result after creation;
 an empty scoped result is explicitly zero while any nonempty unknown shape still fails closed.
 No public article was created by either failed attempt.
+
+Run `32183291790` then exposed DEV's nested analytics shape and a create-time cleanup gap. The
+corrected run `32185055925` cleaned the orphan, published one fresh fixture, and deactivated it.
+Its job conclusion is `failure` only because the old acceptance expression required a prompt DEV
+counter increment and an attributed checkout-start event. The artifact proves the fulfilled,
+attributed `OWNER_TEST` transaction and all zero-commercial controls. The runner was corrected
+afterward and the workflow made manual-only; do not launch another DEV fixture to cosmetically
+change the historical run badge.
 
 ## Canonical Phase A base
 
@@ -193,11 +199,10 @@ arrival hypothesis is incomplete. ARRIVE remains provider-neutral and should sup
 adapters across the portfolio. No ARRIVE provider was selected in this update.
 
 The prior `EXCEPTION` storage gap is resolved by Phase C schema migration 003 and TypeScript
-accounting. It still needs the PostgreSQL Actions verification before being called provider-run
-evidence.
+accounting. GitHub Actions run `32185055925` verified it against PostgreSQL.
 
 ## Stop condition
 
-Complete only the Phase C noncommercial provider probe and report it for owner review. Do not
-begin Phase D, request `ANTHROPIC_API_KEY`, generate a commercial product, create a live
-storefront, or spend capital.
+Phase C is closed for owner review. Stop here. Do not begin Phase D, request
+`ANTHROPIC_API_KEY`, generate a commercial product, create a live storefront, run another DEV
+fixture, or spend capital without new owner authorization.

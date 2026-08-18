@@ -126,10 +126,10 @@ Recorded plainly so no later document can imply otherwise:
   reputation, no email list, and no social presence.
 - **Broad, underpowered paid acquisition is not evidence.** A bounded paid mechanism may be
   proposed only when its expected denominator and information value are explicit.
-- **No commercial mechanism has been validated.** Phase C has built a DEV Community adapter for
-  one noncommercial empirical probe; until the external workflow passes, no public exposure is
-  claimed. Even a passing fixture proves instrumentation and permitted automation, not product
-  demand or universal channel fit.
+- **No commercial mechanism has been validated.** Phase C exercised a DEV Community adapter with
+  one temporary noncommercial fixture. Programmatic publication, analytics retrieval, attribution,
+  and deactivation worked, but the controlled browser load did not appear in DEV totals within ten
+  minutes. This is engineering evidence only, not product demand or channel validation.
 - **Automation permissions are adapter-specific.** DEV's documented article API and content
   policy have been checked for the fixture. Pinterest's public-access and batch-approval
   requirements have been checked and deferred. Every later adapter must repeat this work before
