@@ -19,6 +19,7 @@ const stripeKey = process.env.STRIPE_SECRET_KEY;
 const devToKey = process.env.DEVTO_API_KEY;
 const devToExpectedPublicName = process.env.DEVTO_EXPECTED_PUBLIC_NAME;
 const devToExpectedPublicUsername = process.env.DEVTO_EXPECTED_PUBLIC_USERNAME;
+const devToAllowedPublicGithubUsername = process.env.DEVTO_ALLOWED_PUBLIC_GITHUB_USERNAME;
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const internalSecret = process.env.FACTORY_INTERNAL_EVENT_SECRET;
 const databaseUrl = process.env.DATABASE_URL;
@@ -54,6 +55,7 @@ const arrive = new DevToArriveAdapter({
   tag: 'webdev',
   expectedPublicName: devToExpectedPublicName,
   expectedPublicUsername: devToExpectedPublicUsername,
+  allowedPublicGithubUsername: devToAllowedPublicGithubUsername,
 });
 const watch = await PostgresWatchStore.create({
   pool,

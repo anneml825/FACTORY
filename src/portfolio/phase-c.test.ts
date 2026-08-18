@@ -238,9 +238,41 @@ test('DEV publication fails closed when public identity leaks a personal GitHub 
   });
   await assert.rejects(
     adapter.evaluateGate(shortDocumentFixture(), 'identity-gate'),
-    /exposes a GitHub username/,
+    /exposes an unapproved GitHub username/,
   );
   assert.equal(transport.requests.some((request) => request.method === 'POST'), false);
+});
+
+test('DEV publication permits only the exact owner-approved GitHub handle', async () => {
+  class ApprovedIdentityTransport extends RecordingDevToTransport {
+    override async request<T>(request: DevToRequest): Promise<T> {
+      const response = await super.request<T>(request);
+      if (
+        request.path === '/api/users/me' ||
+        request.path === '/api/users/by_username?url=factory-fixture' ||
+        (request.method === 'POST' && request.path === '/api/articles')
+      ) {
+        return {
+          ...(response as Record<string, unknown>),
+          github_username: request.method === 'POST' ? undefined : 'anneml825',
+          user: request.method === 'POST'
+            ? { id: 7, name: 'Factory Fixture', username: 'factory-fixture', github_username: 'anneml825' }
+            : undefined,
+        } as T;
+      }
+      return response;
+    }
+  }
+  const transport = new ApprovedIdentityTransport();
+  const adapter = new DevToArriveAdapter({
+    transport,
+    expectedPublicName: 'Factory Fixture',
+    expectedPublicUsername: 'factory-fixture',
+    allowedPublicGithubUsername: 'anneml825',
+  });
+  assert.equal((await adapter.evaluateGate(shortDocumentFixture(), 'approved-identity-gate')).status, 'PASSED');
+  const publication = await adapter.activate(shortDocumentFixture(), providerPublication(), 'approved-identity-arrival');
+  assert.equal(publication.status, 'ACTIVE');
 });
 
 test('Stripe async-payment failure is signed, attributed, visible, and idempotent', async () => {

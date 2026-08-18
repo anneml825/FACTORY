@@ -76,6 +76,7 @@ jobs:
       DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
       DEVTO_EXPECTED_PUBLIC_NAME: Factory94
       DEVTO_EXPECTED_PUBLIC_USERNAME: factory94
+      DEVTO_ALLOWED_PUBLIC_GITHUB_USERNAME: anneml825
       FACTORY_PAID_ACTIVITY_HALTED: "1"
       PHASE_C_WAIT_SECONDS: "900"
       PHASE_C_PROBE_ID: ${{ github.run_id }}-${{ github.run_attempt }}

@@ -21,8 +21,10 @@ Actions. Never request or expose its value in chat or logs.
 
 **Public identity:** the owner configured DEV as `Factory94`. The real probe requires exact
 display name `Factory94` and username `factory94`, verifies authenticated and public DEV identity,
-rejects any exposed GitHub username or `anneml825`, and rechecks the created article author. A
-mismatch fails before publication; do not weaken or infer this identity gate.
+and rechecks the created article author. After reviewing the exposure, the owner explicitly
+approved `anneml825` in DEV's GitHub field only; every other GitHub value and any occurrence in the
+DEV name, username, or other identity metadata fails before publication. Do not broaden or infer
+this allowlist.
 
 Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
 `DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.

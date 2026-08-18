@@ -30,10 +30,13 @@ Factory therefore refuses superficial promotional variants.
 
 Public identity is a fail-closed publication gate. The adapter requires an owner-configured
 Factory display name and username, verifies both the authenticated account and public profile,
-rejects any public GitHub username or the prohibited personal identifier `anneml825`, and checks
+rejects any unapproved public GitHub username and checks
 the created article author again before accepting activation. It never derives public identity
 from GitHub, repository ownership, email, credentials, or provider defaults. Email is not part of
 DEV's documented public article/user representation and is never copied into fixture content.
+For this Phase C probe, the owner explicitly approved the existing `anneml825` link after reviewing
+who could see it and why; the adapter accepts that exact value only in DEV's GitHub field and still
+rejects it in the public display name, DEV username, or other returned identity metadata.
 
 Official references checked 2026-08-18:
 

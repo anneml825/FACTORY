@@ -239,6 +239,7 @@ export class DevToArriveAdapter implements ArriveAdapter {
   private readonly transport: DevToTransport;
   private readonly store: DevToArrivalStore;
   private readonly tag: string;
+  private readonly allowedPublicGithubUsername: string | null;
   private readonly expectedPublicName: string;
   private readonly expectedPublicUsername: string;
 
@@ -246,12 +247,14 @@ export class DevToArriveAdapter implements ArriveAdapter {
     transport: DevToTransport;
     store?: DevToArrivalStore;
     tag?: string;
+    allowedPublicGithubUsername?: string;
     expectedPublicName: string;
     expectedPublicUsername: string;
   }) {
     this.transport = options.transport;
     this.store = options.store ?? new InMemoryDevToArrivalStore();
     this.tag = options.tag ?? 'webdev';
+    this.allowedPublicGithubUsername = options.allowedPublicGithubUsername?.trim().toLowerCase() || null;
     this.expectedPublicName = options.expectedPublicName.trim();
     this.expectedPublicUsername = options.expectedPublicUsername.trim().toLowerCase();
     if (!this.expectedPublicName || !this.expectedPublicUsername) {
@@ -446,10 +449,12 @@ export class DevToArriveAdapter implements ArriveAdapter {
     if (identity.username?.toLowerCase() !== this.expectedPublicUsername) {
       throw new Error(`DEV ${source} username does not match the configured Factory identity.`);
     }
-    if (identity.github_username) {
-      throw new Error(`DEV ${source} exposes a GitHub username; Factory publication is blocked.`);
+    const githubUsername = identity.github_username?.trim().toLowerCase() || null;
+    if (githubUsername && githubUsername !== this.allowedPublicGithubUsername) {
+      throw new Error(`DEV ${source} exposes an unapproved GitHub username; Factory publication is blocked.`);
     }
-    if (JSON.stringify(identity).toLowerCase().includes('anneml825')) {
+    const identityWithoutApprovedGithub = { ...identity, github_username: undefined };
+    if (JSON.stringify(identityWithoutApprovedGithub).toLowerCase().includes('anneml825')) {
       throw new Error(`DEV ${source} exposes a prohibited personal identifier; Factory publication is blocked.`);
     }
   }
