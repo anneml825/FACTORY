@@ -15,7 +15,7 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 
 ---
 
-## Current state — 2026-08-17
+## Current state — 2026-08-18
 
 | Item | Status |
 |---|---|
@@ -23,14 +23,18 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | Governing documentation (9 files) | `DONE` |
 | Source specs recorded verbatim | `DONE` |
 | Database schema | `DONE` — applies to PostgreSQL 16; invariants verified (`db/tests/EXPECTED.md`) |
-| Capital Authority code | `NOT STARTED` |
+| Owner configuration migration | `DONE` — applied and verified against PostgreSQL 16 |
+| **Capital Authority** | **`DONE`** — 19/19 verified, including concurrency under contention |
+| Live database instance | `BLOCKED` — needs owner Neon account |
 | Everything else | `NOT STARTED` |
 
 **Nothing external has happened.** No account created, no credential issued, no service
 contacted, no deployment, no payment, no publication, no customer interaction.
 
-**Fixed monthly burn: $0.00.** **Owner capital consumed: $0.00.** **Owner capital at risk:
-$0.00** — the ceiling ships at zero and the kill switch ships engaged.
+**Fixed monthly burn: $0.00.** **Owner capital consumed: $0.00.**
+**Owner capital authorized: $50.00** (2026-08-17) — allocated but entirely unspent.
+**Paid activity: HALTED** — the kill switch remains engaged. Authorizing capital is not
+permitting spend, and nothing exists yet that could usefully spend it.
 
 ---
 
@@ -46,14 +50,25 @@ $0.00** — the ceiling ships at zero and the kill switch ships engaged.
 | Bucket overdraw prevention | `DONE` (verified) |
 | Idempotency uniqueness | `DONE` (verified) |
 | Kill switch, ships engaged | `DONE` (verified) |
-| Capital Authority (TypeScript) | `NOT STARTED` |
-| Reserve → execute → settle logic | `NOT STARTED` |
-| Concurrency safety under contention | `NOT STARTED` — designed, unproven |
-| Recurring-cost registry population | `NOT STARTED` |
+| Capital Authority (TypeScript) | `DONE` (verified) |
+| Reserve → execute → settle logic | `DONE` (verified) |
+| Concurrency safety under contention | `DONE` (verified) |
+| Owner capital authorization + buckets | `DONE` — $50 allocated 30/10/10, reserve from earnings |
+| Recurring-cost registry population | `NOT STARTED` — nothing to register at $0 burn |
 | Live database instance | `BLOCKED` — needs owner Neon account |
 
 **Exit criteria:** Capital Authority refuses an unauthorized spend, in code, against a live
-database, under a passing concurrency test.
+database, under a passing concurrency test. **Met, against a local PostgreSQL 16 instance —
+19/19 checks pass** (`src/capital/authority.test.ts`).
+
+The concurrency result is the one that mattered: 40 workers racing to reserve from a bucket
+funding exactly 10 produced **exactly 10 successes, no overdraw, no deadlock**, with every
+rejection a clean `InsufficientBucketFunds`. A naive check-then-write implementation passes
+every sequential test and still overdraws here — which is precisely how owner capital would
+quietly leak.
+
+**Remaining for 0A:** run the same suite against the owner-provisioned Neon instance. Verified
+locally is not verified in production.
 
 ---
 
