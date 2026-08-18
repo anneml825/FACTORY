@@ -1,0 +1,1085 @@
+{
+  "generatedAt": "2026-08-18T13:30:38.761Z",
+  "verdicts": [
+    {
+      "id": "v001",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v001",
+        "family": "media-asset",
+        "sells": "Seamless tileable textures per material type (200 variants)",
+        "buyer": "game devs, 3D artists",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 200,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v002",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v002",
+        "family": "media-asset",
+        "sells": "UI sound sets, one per game genre (40 genres)",
+        "buyer": "indie game devs",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 40,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v003",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v003",
+        "family": "template",
+        "sells": "Résumé templates tuned per industry ATS quirk (60 industries)",
+        "buyer": "job seekers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 60,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v004",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v004",
+        "family": "template",
+        "sells": "Pitch-deck skeletons per funding stage and sector (50)",
+        "buyer": "founders",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 50,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v005",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v005",
+        "family": "printable",
+        "sells": "Graph/grid paper generator, every ruling and size (300)",
+        "buyer": "students, engineers",
+        "moat": "BREADTH",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 300,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v006",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v006",
+        "family": "printable",
+        "sells": "Sewing pattern grading across full size range per garment",
+        "buyer": "home sewers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 80,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v007",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v007",
+        "family": "media-asset",
+        "sells": "Icon sets per professional domain (80 domains)",
+        "buyer": "product designers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 80,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v008",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v008",
+        "family": "template",
+        "sells": "Bill-of-materials templates per maker discipline (40)",
+        "buyer": "makers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 40,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v009",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v009",
+        "family": "educational",
+        "sells": "Flashcard decks per exam section for niche certs (100)",
+        "buyer": "cert candidates",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 100,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v010",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v010",
+        "family": "media-asset",
+        "sells": "Ambient loop packs per environment type (60)",
+        "buyer": "video editors",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 60,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v011",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v011",
+        "family": "template",
+        "sells": "Checklists per equipment maintenance schedule (150 models)",
+        "buyer": "equipment owners",
+        "moat": "BREADTH",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 150,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v012",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v012",
+        "family": "developer-asset",
+        "sells": "Config presets per linter/framework combination (120)",
+        "buyer": "developers",
+        "moat": "BREADTH",
+        "arrival": "REGISTRY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 120,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v013",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v013",
+        "family": "media-asset",
+        "sells": "Pixel-art tilesets per biome and era (70)",
+        "buyer": "indie game devs",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 70,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v014",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v014",
+        "family": "printable",
+        "sells": "Label templates per Avery/equivalent stock code (200)",
+        "buyer": "small businesses",
+        "moat": "BREADTH",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 200,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v015",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v015",
+        "family": "template",
+        "sells": "Lesson-plan skeletons per curriculum standard code (250)",
+        "buyer": "teachers",
+        "moat": "BREADTH",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 250,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v016",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v016",
+        "family": "media-asset",
+        "sells": "Font pairing packs per industry aesthetic (50)",
+        "buyer": "designers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 50,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v017",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v017",
+        "family": "developer-asset",
+        "sells": "Dockerfile/compose templates per stack combination (100)",
+        "buyer": "developers",
+        "moat": "BREADTH",
+        "arrival": "REGISTRY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 100,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v018",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v018",
+        "family": "template",
+        "sells": "Board-game print-and-play components per mechanic (40)",
+        "buyer": "tabletop designers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 40,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v019",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v019",
+        "family": "printable",
+        "sells": "Planner inserts per binder size and layout (180)",
+        "buyer": "planner users",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 180,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v020",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v020",
+        "family": "media-asset",
+        "sells": "Loop-ready background patterns per craft style (120)",
+        "buyer": "crafters, POD sellers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 120,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v021",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v021",
+        "family": "educational",
+        "sells": "Practice problem sets per math topic and grade (200)",
+        "buyer": "tutors, parents",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 200,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v022",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v022",
+        "family": "template",
+        "sells": "Cut lists per common furniture project and timber size (90)",
+        "buyer": "woodworkers",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 90,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v023",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v023",
+        "family": "developer-asset",
+        "sells": "API client stubs per public API (60 APIs)",
+        "buyer": "developers",
+        "moat": "BREADTH",
+        "arrival": "REGISTRY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 60,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v024",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v024",
+        "family": "media-asset",
+        "sells": "Sprite animation sets per character action (100)",
+        "buyer": "game devs",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 100,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v025",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v025",
+        "family": "printable",
+        "sells": "Knitting chart symbols per stitch pattern library (150)",
+        "buyer": "knitters",
+        "moat": "BREADTH",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 30,
+        "variantsNeeded": 150,
+        "legalRisk": "none",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v026",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v026",
+        "family": "data-product",
+        "sells": "Farmers-market schedules normalised nationwide",
+        "buyer": "app devs, brands",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v027",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v027",
+        "family": "data-product",
+        "sells": "Building-permit fee schedules per municipality",
+        "buyer": "estimators",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v028",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v028",
+        "family": "programmatic-site",
+        "sells": "Accessory fitment reference per equipment model",
+        "buyer": "equipment owners",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v029",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v029",
+        "family": "data-product",
+        "sells": "Small-airport fuel prices and services",
+        "buyer": "pilots",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v030",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v030",
+        "family": "programmatic-site",
+        "sells": "Municipal recycling acceptance rules per council",
+        "buyer": "residents",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v031",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v031",
+        "family": "data-product",
+        "sells": "Public holiday + school term dataset per region",
+        "buyer": "scheduling vendors",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 12,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v032",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v032",
+        "family": "programmatic-site",
+        "sells": "Which software supports one narrow feature",
+        "buyer": "buyers",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v033",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v033",
+        "family": "data-product",
+        "sells": "Trail closure and condition feed per park system",
+        "buyer": "outdoor apps",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 12,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v034",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v034",
+        "family": "programmatic-site",
+        "sells": "Replacement part numbers per discontinued model",
+        "buyer": "repairers",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v035",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v035",
+        "family": "data-product",
+        "sells": "Trade association dues and benefits per trade",
+        "buyer": "sole traders",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v036",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v036",
+        "family": "programmatic-site",
+        "sells": "Camp/park amenity comparison per site",
+        "buyer": "campers",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v037",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v037",
+        "family": "data-product",
+        "sells": "Open dataset of species range by region",
+        "buyer": "naturalist apps",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v038",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v038",
+        "family": "programmatic-site",
+        "sells": "Which adapters connect device A to device B",
+        "buyer": "consumers",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v039",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v039",
+        "family": "data-product",
+        "sells": "Standard part dimensions per fastener spec",
+        "buyer": "engineers",
+        "moat": "ASSEMBLY",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v040",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v040",
+        "family": "programmatic-site",
+        "sells": "Venue capacity and layout reference per venue",
+        "buyer": "event planners",
+        "moat": "ASSEMBLY",
+        "arrival": "PROGRAMMATIC",
+        "entryCostUsd": 12,
+        "daysToSignal": 90,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v041",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v041",
+        "family": "data-product",
+        "sells": "Weekly regenerated price index for a hobby resale market",
+        "buyer": "collectors",
+        "moat": "FRESHNESS",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 12,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v042",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v042",
+        "family": "other",
+        "sells": "Change-monitoring digest for a narrow standard",
+        "buyer": "professionals",
+        "moat": "FRESHNESS",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 12,
+        "daysToSignal": 60,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v043",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v043",
+        "family": "data-product",
+        "sells": "Rolling availability feed for scarce inventory type",
+        "buyer": "buyers",
+        "moat": "FRESHNESS",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 12,
+        "daysToSignal": 45,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v044",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v044",
+        "family": "other",
+        "sells": "Weekly digest of new grants per sector",
+        "buyer": "nonprofits",
+        "moat": "FRESHNESS",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 0,
+        "daysToSignal": 60,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v045",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v045",
+        "family": "data-product",
+        "sells": "Seasonal agronomic window feed per crop/region",
+        "buyer": "agtech",
+        "moat": "FRESHNESS",
+        "arrival": "DIRECTORY",
+        "entryCostUsd": 12,
+        "daysToSignal": 60,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": false
+      }
+    },
+    {
+      "id": "v046",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v046",
+        "family": "personalized",
+        "sells": "Sewing pattern graded to submitted body measurements",
+        "buyer": "home sewers",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v047",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v047",
+        "family": "personalized",
+        "sells": "Knit pattern regraded to measured gauge",
+        "buyer": "knitters",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v048",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v048",
+        "family": "personalized",
+        "sells": "Cut list optimised for submitted stock sizes",
+        "buyer": "woodworkers",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v049",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v049",
+        "family": "personalized",
+        "sells": "Garden planting calendar from ZIP and bed layout",
+        "buyer": "gardeners",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v050",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v050",
+        "family": "personalized",
+        "sells": "Aquarium stocking plan from tank volume and species",
+        "buyer": "fishkeepers",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v051",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v051",
+        "family": "personalized",
+        "sells": "Strength programme from submitted lift history",
+        "buyer": "lifters",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v052",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v052",
+        "family": "personalized",
+        "sells": "Van electrical diagram from submitted load list",
+        "buyer": "van builders",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v053",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v053",
+        "family": "personalized",
+        "sells": "Feed ration plan from submitted herd/flock data",
+        "buyer": "smallholders",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v054",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v054",
+        "family": "personalized",
+        "sells": "Quilt layout generated from submitted fabric inventory",
+        "buyer": "quilters",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v055",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v055",
+        "family": "personalized",
+        "sells": "Model railway layout plan from submitted room dimensions",
+        "buyer": "modellers",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v056",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v056",
+        "family": "personalized",
+        "sells": "Terrarium planting plan from vessel dimensions and light",
+        "buyer": "hobbyists",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v057",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v057",
+        "family": "personalized",
+        "sells": "Custom D&D encounter set from party composition",
+        "buyer": "tabletop DMs",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v058",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v058",
+        "family": "personalized",
+        "sells": "Beer recipe scaled to submitted equipment profile",
+        "buyer": "homebrewers",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v059",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v059",
+        "family": "personalized",
+        "sells": "Photo-book layout from submitted image set",
+        "buyer": "hobby photographers",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "low",
+        "factSourceIsCustomer": true
+      }
+    },
+    {
+      "id": "v060",
+      "passed": true,
+      "reasons": [],
+      "h": {
+        "id": "v060",
+        "family": "personalized",
+        "sells": "Seed-starting schedule from frost dates and species list",
+        "buyer": "gardeners",
+        "moat": "PER_INPUT",
+        "arrival": "MARKETPLACE",
+        "entryCostUsd": 0,
+        "daysToSignal": 28,
+        "variantsNeeded": 1,
+        "legalRisk": "none",
+        "factSourceIsCustomer": true
+      }
+    }
+  ]
+}
