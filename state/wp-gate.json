@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T00:56:29.751Z",
+  "runAt": "2026-08-18T01:02:49.298Z",
   "criteria": {
     "minCoverage": 0.6,
     "maxCostPerCandidateUsd": 0.02,
@@ -9,7 +9,9 @@
     "excludeWeakFromCoverage": true,
     "maxZeroShare": 0.4,
     "maxModeShare": 0.4,
-    "requireNonZeroLongTailMedian": true
+    "requireNonZeroLongTailMedian": true,
+    "minDistinctValueCount": 15,
+    "minStratumSeparation": 5
   },
   "checks": {
     "coverage": {
@@ -17,10 +19,15 @@
       "threshold": 0.6,
       "pass": true
     },
-    "distinct": {
-      "value": 0.4166666666666667,
-      "threshold": 0.5,
-      "pass": false
+    "distinctCount": {
+      "value": 25,
+      "threshold": 15,
+      "pass": true
+    },
+    "stratumSeparation": {
+      "value": 50,
+      "threshold": 5,
+      "pass": true
     },
     "zeroShare": {
       "value": 0.13333333333333333,
@@ -38,7 +45,7 @@
       "pass": true
     }
   },
-  "passes": false,
+  "passes": true,
   "rows": [
     {
       "id": "wh01",

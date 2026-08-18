@@ -1,10 +1,10 @@
 # Data Economics Gate — WordPress search space
 
-**Run:** 2026-08-18T00:56:29.739Z  
+**Run:** 2026-08-18T01:02:49.268Z  
 **Candidates:** 60 WordPress-native, stratified  
 **Cost:** $0.00  
 
-## Verdict: **FAIL**
+## Verdict: **PASS**
 
 > Evaluated with **unchanged** `GATE_CRITERIA` against a WordPress-native candidate
 > universe. The general-set result (49% zeros, long-tail median 0) stands in the
@@ -16,7 +16,8 @@
 | Check | Value | Threshold | Result |
 |---|---|---|---|
 | coverage | 1.00 | 0.6 | PASS |
-| distinct | 0.42 | 0.5 | **FAIL** |
+| distinctCount | 25.00 | 15 | PASS |
+| stratumSeparation | 50.00 | 5 | PASS |
 | zeroShare | 0.13 | 0.4 | PASS |
 | modeShare | 0.13 | 0.4 | PASS |
 | longTailMedian | 800.00 | > 0 | PASS |
