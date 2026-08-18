@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-18T21:43:28.575Z  
+**Run:** 2026-08-18T22:44:12.898Z  
 **Spaces probed:** 10 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,16 +11,16 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 157ms |
-| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17829 | 276ms |
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 62ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19633 | 605ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 195ms |
-| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 456 | 59ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 1152ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 3092506 | 156ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 44405 | 220ms |
-| `homeassistant_hacs` | yes | **required** | **50%** | 1.00 | 0% | 45 | 260ms |
+| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 122ms |
+| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17829 | 285ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 27ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19634 | 597ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 122ms |
+| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 456 | 34ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 307ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 3092506 | 110ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 44405 | 121ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 244ms |
 
 ## Structure
 
@@ -63,7 +63,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19604, invoice=73, booking calendar=44018, seo=4495, inventory=126, form builder=70896281, analytics dashboard=97360, image optimization=4207828, membership=3189, csv import=23165323, time tracking=19633, pdf export=2707
+- **Values:** backup=19604, invoice=73, booking calendar=44018, seo=4495, inventory=126, form builder=70897077, analytics dashboard=97361, image optimization=4207884, membership=3189, csv import=23165999, time tracking=19634, pdf export=2708
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
@@ -74,7 +74,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":4,"404":8}
+- **HTTP statuses:** {"200":4,"404":7,"429":1}
 - **First failure:** HTTP 404
 - **Values:** backup=164, invoice=456, booking calendar=null, seo=31, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
@@ -99,6 +99,6 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 ### `homeassistant_hacs` — Home Assistant custom integrations (HACS)
 
 - **Note:** Prosumer audience that already spends money on hardware, which is unusual among the code-adjacent spaces. Stars are a weak usage proxy.
-- **HTTP statuses:** {"200":6,"403":6}
+- **HTTP statuses:** {"200":10,"403":2}
 - **First failure:** HTTP 403 — authentication or policy required
-- **Values:** backup=3559, invoice=853, booking calendar=2, seo=10, inventory=45, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=6
+- **Values:** backup=3559, invoice=853, booking calendar=2, seo=10, inventory=45, form builder=null, analytics dashboard=246, image optimization=0, membership=1, csv import=1, time tracking=null, pdf export=null

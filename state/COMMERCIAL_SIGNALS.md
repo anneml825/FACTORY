@@ -1,6 +1,6 @@
 # Commercial Signal Probe
 
-**Retrieved:** 2026-08-18T21:40:33.044Z · **Terms:** 8 · **Cost:** $0.00
+**Retrieved:** 2026-08-18T22:41:29.985Z · **Terms:** 8 · **Cost:** $0.00
 
 Targets sources where **money changing hands is observable**, unlike the adoption
 metrics (installs, downloads, stars) that dominated earlier reconnaissance.
