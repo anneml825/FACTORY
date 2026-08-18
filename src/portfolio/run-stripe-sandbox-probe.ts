@@ -7,7 +7,10 @@ import { shortDocumentFixture } from './fixtures.ts';
 import { StripeTestHttpTransport } from './stripe-api.ts';
 import { StripeTestPutAdapter } from './stripe-put-adapter.ts';
 import { JsonStripePublicationStore } from './stripe-publication-store.ts';
-import { StripeTestReconciler } from './stripe-reconciliation.ts';
+import {
+  StripeTestReconciler,
+  StripeTestReconciliationRecovery,
+} from './stripe-reconciliation.ts';
 import { StripeTestWebhookProcessor } from './stripe-webhook.ts';
 import { InMemoryWatchStore } from './watch.ts';
 
@@ -18,6 +21,7 @@ const statePath = resolve(process.env.PHASE_B_STATE_PATH ?? 'state/phase-b-strip
 const resultPath = resolve(process.env.PHASE_B_RESULT_PATH ?? 'state/phase-b-stripe-sandbox-result.json');
 const waitSeconds = Number(process.env.PHASE_B_WAIT_SECONDS ?? '900');
 const port = Number(process.env.PHASE_B_WEBHOOK_PORT ?? '4242');
+const probeId = process.env.PHASE_B_PROBE_ID?.trim() || `local-${Date.now()}`;
 
 if (!stripeKey || !webhookSecret || !internalSecret) {
   throw new Error(
@@ -54,6 +58,12 @@ const processor = new StripeTestWebhookProcessor({
     },
   },
 });
+const recovery = new StripeTestReconciliationRecovery({
+  transport,
+  watch,
+  internalEventSecret: internalSecret,
+});
+const recoveredEffects = { refunds: 0, disputes: 0 };
 
 let wake: (() => void) | null = null;
 const activity = () => {
@@ -123,7 +133,10 @@ try {
   engine.valueQa(manifest.experimentId);
   await engine.stage(manifest.experimentId);
   artifactAvailable = true;
-  const publication = await engine.publish(manifest.experimentId, 'phase-b:stripe-sandbox:publication');
+  const publication = await engine.publish(
+    manifest.experimentId,
+    `phase-b:stripe-sandbox:${probeId}:publication`,
+  );
   engine.observe(manifest.experimentId);
 
   const instructions = [
@@ -146,7 +159,16 @@ try {
 
   const deadline = Date.now() + waitSeconds * 1000;
   while (Date.now() < deadline) {
-    const snapshot = watch.snapshot(manifest.experimentId);
+    let snapshot = watch.snapshot(manifest.experimentId);
+    for (const transaction of snapshot.transactions) {
+      const recovered = await recovery.recoverTransaction(
+        snapshot,
+        transaction.transactionId,
+      );
+      recoveredEffects.refunds += recovered.recoveredRefundEffects;
+      recoveredEffects.disputes += recovered.recoveredDisputeEffects;
+      snapshot = watch.snapshot(manifest.experimentId);
+    }
     const fulfilled = snapshot.transactions.filter((transaction) => transaction.fulfilled).length;
     if (fulfilled >= 2 && snapshot.refundsCents >= 300 && snapshot.disputesCents > 0) break;
     await new Promise<void>((resolveWait) => {
@@ -165,7 +187,10 @@ try {
       ),
     );
   }
-  const inactive = await put.deactivate(publication, 'phase-b:stripe-sandbox:deactivate');
+  const inactive = await put.deactivate(
+    publication,
+    `phase-b:stripe-sandbox:${probeId}:deactivate`,
+  );
   const passed =
     snapshot.transactions.length >= 2 &&
     snapshot.transactions.every(
@@ -182,10 +207,12 @@ try {
     passed,
     environment: 'PROVIDER_TEST',
     managedPaymentsRequested: true,
+    probeId,
     experimentId: manifest.experimentId,
     publication,
     deactivated: inactive.status === 'INACTIVE',
     snapshot,
+    recoveredEffects,
     reconciliations,
     settlement: {
       bookedRevenueCents: 0,

@@ -1,8 +1,9 @@
 # Phase B — Stripe Managed Payments sandbox
 
 **Date:** 2026-08-18  
-**Status:** credential-free implementation complete and locally verified; real Stripe sandbox
-execution blocked on one owner-provisioned sandbox key  
+**Status:** real Stripe sandbox execution reached the full provider boundary; the first run
+failed closed on a missing dispute webhook, and an idempotent reconciliation-recovery correction
+is implemented locally pending one rerun
 **Cash spent:** $0.00  
 **Commercial assets:** none; the only manifest is a visibly noncommercial fixture  
 **ARRIVE:** deliberately unsolved and unchanged
@@ -110,9 +111,10 @@ Primary official references:
 - `stripe-webhook.ts`: raw-body Stripe signature verification, timestamp tolerance, duplicate
   event IDs, duplicate provider-effect IDs, explicit provider-test classification, retryable
   out-of-order attribution, and fulfillment success/failure visibility.
-- `stripe-reconciliation.ts`: PaymentIntent and Charge reconciliation. Provider-test settlement
-  is always zero booked commercial revenue, zero available settled cash, zero eligible
-  arm's-length revenue, and zero Factory cost.
+- `stripe-reconciliation.ts`: PaymentIntent and Charge reconciliation plus idempotent recovery of
+  missing refund/dispute effects from authoritative Stripe objects. Provider-test settlement is
+  always zero booked commercial revenue, zero available settled cash, zero eligible arm's-length
+  revenue, and zero Factory cost.
 - `run-stripe-sandbox-probe.ts`: noncommercial end-to-end probe, automatic partial test refund,
   dispute observation, reconciliation, and deactivation.
 
@@ -137,6 +139,10 @@ combined test process. No Stripe request was made; Phase B tests use a recording
 Re-run after the official Stripe planner review: **20 passed, 0 failed; 882.734 ms**. The local
 working tree was clean before this documentation update. No Stripe object was created or
 modified.
+
+After the first provider run exposed the reconciliation gap: **21 passed, 0 failed; 954.632 ms**.
+The added test proves missing refund/dispute webhooks are backfilled from Stripe with stable
+provider effect IDs, and that repeating recovery duplicates neither refunds nor disputes.
 
 The suite covers:
 
@@ -166,17 +172,46 @@ The suite covers:
    environment, and classification remain separate facts.
 5. **A public webhook host is not necessary for the one-time proof.** Stripe CLI forwarding in
    an ephemeral Action is sufficient for Phase B. Production hosting remains a later decision.
+6. **A timely webhook cannot be assumed even when provider state has already changed.** The first
+   real run observed `charge.disputed=true` during reconciliation but no dispute effect in WATCH.
+   Reconciliation must therefore repair missing provider effects idempotently, not merely report
+   a mismatch.
+7. **GitHub does not automatically mask secrets generated inside a workflow.** The first run's
+   ephemeral internal signing secret and Stripe CLI webhook secret appeared in finalized job
+   logs. They expired with the runner and did not expose the repository Stripe key, but the
+   workflow now calls `add-mask` before exporting either generated secret.
+8. **An idempotency namespace cannot be permanent across intentionally separate probes.** A
+   rerun after deactivation would otherwise replay the prior inactive Product/Price/Payment Link.
+   Each GitHub run attempt now has a unique probe namespace; retries within that attempt remain
+   stable and deduplicated.
+9. **Managed Payments can make customer total differ from catalog price.** The $12.00 fixture
+   produced $13.10 Checkout totals in this sandbox. WATCH correctly records customer gross, but
+   live economics must keep catalog subtotal, tax, provider fees, seller proceeds, and settled
+   payout separate.
+
+## First real sandbox result — failed closed, 2026-08-18
+
+GitHub Actions run `32167225370`, attempt 2, made genuine Stripe sandbox requests and proved:
+
+- this sandbox accepted `managed_payments[enabled]=true` for the downloadable-document tax code;
+- API creation of one Product, Price, and hosted Payment Link succeeded;
+- two owner test checkouts produced attributed `OWNER_TEST` transactions;
+- both fixture fulfillments succeeded;
+- one $3.00 test refund reached WATCH;
+- Stripe provider state marked the dispute-card charge disputed;
+- every revenue/cash/cost settlement field remained zero and no commercial clock started;
+- the Payment Link, Price, and Product were deactivated.
+
+The run correctly returned `FAIL`, not success, because WATCH recorded zero dispute cents while
+Stripe reconciliation reported the second charge as disputed. Both transactions remained
+ineligible for arm's-length revenue. No capital was spent and no demand evidence was created.
 
 ## Remaining gate
 
-The provider-independent code is ready. One real sandbox run must still prove:
-
-- this Stripe sandbox accepts `managed_payments[enabled]=true`;
-- the selected digital-document tax code is accepted for the account;
-- Stripe creates the Product, Price, and Payment Link;
-- two hosted test checkouts produce genuine signed webhook events;
-- the refund and dispute fixtures behave under Managed Payments;
-- provider reconciliation and deactivation complete.
+One corrected rerun must prove the missing dispute effect is recovered into WATCH, both
+transactions reconcile, and the final artifact reports `passed: true`. Product eligibility,
+Managed Payments creation, Checkout, fulfillment, refund, owner exclusion, zero settlement, and
+deactivation are already observed provider facts rather than implementation claims.
 
 Until that run passes, Phase B is `BUILT`, not `DONE`. No money spine exists,
 `COMMERCIAL_CLOCK_START` remains unset, and Phase C is prohibited.

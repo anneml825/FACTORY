@@ -164,6 +164,7 @@ export class InMemoryWatchStore implements WatchAdapter {
       this.transactions.set(fields.transactionId, {
         transactionId: fields.transactionId,
         experimentId: event.experimentId,
+        assetId: event.assetId,
         classification: fields.classification,
         grossCents: fields.amountCents,
         currency: event.currency ?? 'UNKNOWN',

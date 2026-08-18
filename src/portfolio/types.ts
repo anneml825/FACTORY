@@ -175,6 +175,7 @@ export interface SignedEventEnvelope {
 export interface TransactionSnapshot {
   transactionId: string;
   experimentId: string;
+  assetId: string;
   classification: TransactionClassification;
   grossCents: number;
   currency: string;

@@ -2,6 +2,9 @@ name: Phase B Stripe sandbox probe
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - codex/phase-b-stripe-test-mode
 
 permissions:
   contents: read

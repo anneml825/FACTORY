@@ -22,7 +22,10 @@ import {
   verifyStripeSignature,
   type ProviderTestFulfillment,
 } from './stripe-webhook.ts';
-import { StripeTestReconciler } from './stripe-reconciliation.ts';
+import {
+  StripeTestReconciler,
+  StripeTestReconciliationRecovery,
+} from './stripe-reconciliation.ts';
 import { InMemoryWatchStore } from './watch.ts';
 
 const INTERNAL_SECRET = 'phase-b-internal-event-secret';
@@ -69,6 +72,30 @@ class RecordingStripeTransport implements StripeTransport {
         disputed: true,
         currency: 'usd',
         payment_intent: 'pi_test_fixture',
+      };
+    } else if (request.path.startsWith('/v1/refunds?payment_intent=pi_test_fixture')) {
+      response = {
+        data: [{
+          id: 're_test_fixture',
+          amount: 300,
+          currency: 'usd',
+          created: NOW,
+          payment_intent: 'pi_test_fixture',
+          charge: 'ch_test_fixture',
+        }],
+        has_more: false,
+      };
+    } else if (request.path.startsWith('/v1/disputes?payment_intent=pi_test_fixture')) {
+      response = {
+        data: [{
+          id: 'dp_test_fixture',
+          amount: 200,
+          currency: 'usd',
+          created: NOW,
+          payment_intent: 'pi_test_fixture',
+          charge: 'ch_test_fixture',
+        }],
+        has_more: false,
       };
     } else if (request.path.startsWith('/v1/payment_links/')) {
       response = { id: 'plink_test_fixture', livemode, active: false };
@@ -299,6 +326,56 @@ test('refund and dispute effects deduplicate, reconcile, and settle to zero comm
   assert.equal(reconciliation.availableSettledCashCents, 0);
   assert.equal(reconciliation.eligibleArmLengthRevenueCents, 0);
   assert.equal(reconciliation.attributableFactoryCostCents, 0);
+});
+
+test('provider reconciliation backfills missing refund and dispute events idempotently', async () => {
+  const watch = new InMemoryWatchStore(INTERNAL_SECRET, ['PROVIDER_TEST']);
+  const transport = new RecordingStripeTransport();
+  const processor = new StripeTestWebhookProcessor({
+    webhookSecret: WEBHOOK_SECRET,
+    internalEventSecret: INTERNAL_SECRET,
+    watch,
+    transport,
+    fulfillment: { async fulfill() { return { succeeded: true }; } },
+    nowSeconds: () => NOW,
+  });
+  const checkout = stripeEvent('evt_checkout_recovery', 'checkout.session.completed', checkoutObject());
+  await processor.process(checkout.payload, checkout.signature);
+
+  const recovery = new StripeTestReconciliationRecovery({
+    transport,
+    watch,
+    internalEventSecret: INTERNAL_SECRET,
+  });
+  const first = await recovery.recoverTransaction(
+    watch.snapshot('phase-a-doc-001'),
+    'pi_test_fixture',
+  );
+  assert.deepEqual(first, {
+    transactionId: 'pi_test_fixture',
+    recoveredRefundEffects: 1,
+    recoveredDisputeEffects: 1,
+  });
+  const recovered = watch.snapshot('phase-a-doc-001');
+  assert.equal(recovered.refundsCents, 300);
+  assert.equal(recovered.disputesCents, 200);
+  assert.equal(recovered.eligibleArmLengthRevenueCents, 0);
+  assert.equal(
+    (await new StripeTestReconciler(transport).reconcileTransaction(
+      recovered,
+      'pi_test_fixture',
+    )).reconciled,
+    true,
+  );
+
+  const retry = await recovery.recoverTransaction(
+    watch.snapshot('phase-a-doc-001'),
+    'pi_test_fixture',
+  );
+  assert.equal(retry.recoveredRefundEffects, 0);
+  assert.equal(retry.recoveredDisputeEffects, 0);
+  assert.equal(watch.snapshot('phase-a-doc-001').refundsCents, 300);
+  assert.equal(watch.snapshot('phase-a-doc-001').disputesCents, 200);
 });
 
 test('out-of-order provider effects remain retryable until checkout attribution exists', async () => {

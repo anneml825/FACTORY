@@ -486,6 +486,7 @@ test('KEEP requires positive contribution after settled Factory cost', () => {
       {
         transactionId: 'cost-sensitive-tx',
         experimentId: manifest.experimentId,
+        assetId: manifest.assetId,
         classification: 'ARM_LENGTH_CUSTOMER',
         grossCents: 1200,
         currency: 'USD',
