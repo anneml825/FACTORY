@@ -62,7 +62,20 @@ jobs:
           git add state/
           if git diff --staged --quiet; then
             echo "No change in probe results."
-          else
-            git commit -m "Data Economics Probe results ($(date -u +%Y-%m-%dT%H:%MZ))"
-            git push
+            exit 0
           fi
+          git commit -m "Data Economics Probe results ($(date -u +%Y-%m-%dT%H:%MZ))"
+          # The branch can move while the probe runs (it takes minutes), so a bare
+          # push races and is rejected as non-fast-forward. Rebase and retry.
+          for attempt in 1 2 3; do
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected; rebasing onto latest and retrying."
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            sleep $((attempt * 5))
+          done
+          # The measurement is already preserved as an artifact, so a push failure
+          # must not destroy the run or imply the probe itself failed.
+          echo "::warning::Could not push results after 3 attempts. Results are in the uploaded artifact."
