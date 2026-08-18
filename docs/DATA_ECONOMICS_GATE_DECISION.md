@@ -102,11 +102,35 @@ Etsy also doubles as a candidate **Stranger Arrival Mechanism** (`DISTRIBUTION.m
 marketplace with native discovery that Factory would not have to buy traffic for. Registering
 it serves Milestone 0B and Milestone 2 at once.
 
-**Unverified and blocking:** whether Etsy's and eBay's developer terms permit this use.
-Their APIs are aimed at building apps for their own sellers and buyers; automated market
-research may fall outside that. **This must be read before a Campaign depends on it** — a
-source Factory is not permitted to operate autonomously fails the mission even if the data is
-good (`EXPERIMENTAL_PROTOCOL.md` §7).
+> ### ⚠️ Terms check, 2026-08-18: option A is probably not available for evidence
+>
+> Checked before asking the owner to spend time registering. Etsy's API terms **prohibit
+> using the API to collect, scan, or otherwise request Etsy content for analytics, machine
+> learning, or licensing unless expressly authorized**, along with screen-scraping and
+> transferring API data to third parties.
+>
+> Retrieving listing counts to screen market opportunities is analytics. **That is the
+> prohibited use, not an edge case.**
+>
+> `EXPERIMENTAL_PROTOCOL.md` §7 is unambiguous here: a source Factory is not permitted to
+> operate autonomously **fails the gate even if the data is good.** So Etsy is most likely
+> disqualified as an *evidence* source, and eBay's Browse API — similarly aimed at building
+> buying experiences rather than market research — deserves the same scrutiny before anyone
+> registers.
+>
+> **Caveat on this finding:** it comes from search summaries, one of which referenced an
+> archived version of the terms. The current terms warrant direct reading before this is
+> treated as final. But the signal is strong enough that **I am not asking the owner to
+> register on this basis**, which is the decision the check was for.
+>
+> **This does not affect Etsy as a distribution surface.** Listing products as a seller is an
+> ordinary, permitted use and is unrelated to the API restriction. Etsy may still be a
+> candidate Stranger Arrival Mechanism (`DISTRIBUTION.md`); it just cannot be the thing that
+> tells Factory *where* to sell.
+>
+> **Consequence: this materially strengthens option C.** The sources that already work — npm,
+> Stack Overflow, Hacker News — are open APIs explicitly built for programmatic use, with no
+> comparable restriction on automated querying.
 
 Also: listing counts measure **supply, not demand**. High counts may indicate a healthy
 market or a saturated one, and the number alone cannot tell them apart. eBay sold comps are
@@ -151,16 +175,26 @@ before free data has been genuinely exhausted.
 
 ---
 
-## Recommendation
+## Recommendation — revised after the terms check
 
-**Pursue A now; hold C for the owner.**
+**C, with the owner's decision required.**
 
-Option A is free, is the cheapest credible path by a wide margin, unlocks the only DIRECT
-commercial signal, and doubles as distribution groundwork. It costs ~30 minutes of owner time
-once.
+Option A was the recommendation until the terms check above. If Etsy's restriction on
+analytics use holds — and it appears to — then A does not merely cost 30 minutes, it produces
+a source Factory is forbidden to operate autonomously, which fails the gate by definition.
 
-Option C is real and arguably stronger on evidence quality — but it changes what Factory is
-looking for, and that is the owner's call.
+That leaves **C: narrow the search space to developer-facing products**, where the evidence
+pipeline is already measured as working (npm: 1.00 distinct values, 0% zeros) on APIs built
+for programmatic use. It costs $0 and requires no owner action.
+
+**This is a material strategic fork and it is the owner's call**, because it changes what
+Factory sells and to whom: developer tools rather than consumer digital products — different
+customers, surfaces, price points, and competition. Narrower market, more sophisticated
+buyers, more free alternatives, but a working evidence pipeline and permissive terms.
+
+The honest summary: **the consumer-niche search space is not reachable with the evidence
+Factory can legally and cheaply obtain.** Either the search space changes, or evidence
+acquisition has to be solved some other way first.
 
 **Until the gate passes, Factory does not proceed to high-volume autonomous screening**
 (`EXPERIMENTAL_PROTOCOL.md` §7). The gate exists to prevent spending validation capital on a
