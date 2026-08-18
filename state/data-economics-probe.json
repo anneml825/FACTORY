@@ -1,0 +1,232 @@
+{
+  "runAt": "2026-08-18T00:24:08.504Z",
+  "criteria": {
+    "minCoverage": 0.6,
+    "maxCostPerCandidateUsd": 0.02,
+    "minCandidatesAt5Usd": 250,
+    "minCandidatesPerDay": 50,
+    "minDistinctValueRatio": 0.5,
+    "excludeWeakFromCoverage": true
+  },
+  "candidateCounts": {
+    "total": 100,
+    "byStratum": {
+      "HEAD": 34,
+      "MID": 33,
+      "LONG_TAIL": 33
+    }
+  },
+  "gatePasses": true,
+  "qualifyingSourceIds": [
+    "stackexchange_questions",
+    "hn_algolia_mentions"
+  ],
+  "measurements": [
+    {
+      "source": "wikipedia_pageviews",
+      "candidatesAttempted": 100,
+      "candidatesWithUsableE1": 57,
+      "coverageByStratum": {
+        "HEAD": {
+          "attempted": 34,
+          "usable": 34
+        },
+        "MID": {
+          "attempted": 33,
+          "usable": 23
+        },
+        "LONG_TAIL": {
+          "attempted": 33,
+          "usable": 0
+        }
+      },
+      "failuresByReason": {
+        "NOT_FOUND": 43
+      },
+      "distinctValueRatio": 0.9824561403508771,
+      "totalRequests": 57,
+      "medianLatencyMs": 27,
+      "observedRateLimitNote": "No 429 at 4/s over 100 requests."
+    },
+    {
+      "source": "wikipedia_search_hits",
+      "candidatesAttempted": 100,
+      "candidatesWithUsableE1": 100,
+      "coverageByStratum": {
+        "HEAD": {
+          "attempted": 34,
+          "usable": 34
+        },
+        "MID": {
+          "attempted": 33,
+          "usable": 33
+        },
+        "LONG_TAIL": {
+          "attempted": 33,
+          "usable": 33
+        }
+      },
+      "failuresByReason": {},
+      "distinctValueRatio": 0.8,
+      "totalRequests": 100,
+      "medianLatencyMs": 235,
+      "observedRateLimitNote": "No 429 at 4/s over 100 requests."
+    },
+    {
+      "source": "stackexchange_questions",
+      "candidatesAttempted": 100,
+      "candidatesWithUsableE1": 100,
+      "coverageByStratum": {
+        "HEAD": {
+          "attempted": 34,
+          "usable": 34
+        },
+        "MID": {
+          "attempted": 33,
+          "usable": 33
+        },
+        "LONG_TAIL": {
+          "attempted": 33,
+          "usable": 33
+        }
+      },
+      "failuresByReason": {},
+      "distinctValueRatio": 0.53,
+      "totalRequests": 100,
+      "medianLatencyMs": 101,
+      "observedRateLimitNote": "No 429 at 4/s over 100 requests."
+    },
+    {
+      "source": "hn_algolia_mentions",
+      "candidatesAttempted": 100,
+      "candidatesWithUsableE1": 100,
+      "coverageByStratum": {
+        "HEAD": {
+          "attempted": 34,
+          "usable": 34
+        },
+        "MID": {
+          "attempted": 33,
+          "usable": 33
+        },
+        "LONG_TAIL": {
+          "attempted": 33,
+          "usable": 33
+        }
+      },
+      "failuresByReason": {},
+      "distinctValueRatio": 0.59,
+      "totalRequests": 100,
+      "medianLatencyMs": 212,
+      "observedRateLimitNote": "No 429 at 4/s over 100 requests."
+    },
+    {
+      "source": "npm_weekly_downloads",
+      "candidatesAttempted": 100,
+      "candidatesWithUsableE1": 19,
+      "coverageByStratum": {
+        "HEAD": {
+          "attempted": 34,
+          "usable": 9
+        },
+        "MID": {
+          "attempted": 33,
+          "usable": 10
+        },
+        "LONG_TAIL": {
+          "attempted": 33,
+          "usable": 0
+        }
+      },
+      "failuresByReason": {
+        "NOT_FOUND": 81
+      },
+      "distinctValueRatio": 1,
+      "totalRequests": 19,
+      "medianLatencyMs": 22,
+      "observedRateLimitNote": "No 429 at 4/s over 100 requests."
+    },
+    {
+      "source": "etsy_active_listings",
+      "candidatesAttempted": 100,
+      "candidatesWithUsableE1": 0,
+      "coverageByStratum": {
+        "HEAD": {
+          "attempted": 34,
+          "usable": 0
+        },
+        "MID": {
+          "attempted": 33,
+          "usable": 0
+        },
+        "LONG_TAIL": {
+          "attempted": 33,
+          "usable": 0
+        }
+      },
+      "failuresByReason": {
+        "NO_CREDENTIAL": 100
+      },
+      "distinctValueRatio": 0,
+      "totalRequests": 0,
+      "medianLatencyMs": 0,
+      "observedRateLimitNote": "No 429 at 4/s over 100 requests."
+    }
+  ],
+  "verdicts": [
+    {
+      "sourceId": "wikipedia_pageviews",
+      "coverage": 0.57,
+      "passesCoverage": false,
+      "passesDiscrimination": true,
+      "countsTowardGate": false,
+      "notes": [
+        "WEAK purchase-intent proximity: may supplement but cannot carry the gate."
+      ]
+    },
+    {
+      "sourceId": "wikipedia_search_hits",
+      "coverage": 1,
+      "passesCoverage": true,
+      "passesDiscrimination": true,
+      "countsTowardGate": false,
+      "notes": [
+        "WEAK purchase-intent proximity: may supplement but cannot carry the gate."
+      ]
+    },
+    {
+      "sourceId": "stackexchange_questions",
+      "coverage": 1,
+      "passesCoverage": true,
+      "passesDiscrimination": true,
+      "countsTowardGate": true,
+      "notes": []
+    },
+    {
+      "sourceId": "hn_algolia_mentions",
+      "coverage": 1,
+      "passesCoverage": true,
+      "passesDiscrimination": true,
+      "countsTowardGate": true,
+      "notes": []
+    },
+    {
+      "sourceId": "npm_weekly_downloads",
+      "coverage": 0.19,
+      "passesCoverage": false,
+      "passesDiscrimination": true,
+      "countsTowardGate": false,
+      "notes": []
+    },
+    {
+      "sourceId": "etsy_active_listings",
+      "coverage": 0,
+      "passesCoverage": false,
+      "passesDiscrimination": false,
+      "countsTowardGate": false,
+      "notes": [
+        "Blocked on a credential requiring owner setup — coverage unmeasured, not zero."
+      ]
+    }
+  ]
+}
