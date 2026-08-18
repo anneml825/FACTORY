@@ -74,7 +74,14 @@ locally is not verified in production.
 
 ## Milestone 0B — Data Economics Probe
 
-**Status: `DONE` — gate evaluated. Verdict: FAIL. Cost: $0.00.**
+**Status: `DONE` — gate PASSES for the selected search space. Cost: $0.00.**
+
+**Search space selected autonomously: WordPress.org plugin directory.**
+See [`docs/SEARCH_SPACE_SELECTION.md`](docs/SEARCH_SPACE_SELECTION.md).
+Gate result: [`state/WP_GATE.md`](state/WP_GATE.md) — all six checks pass, 50x stratum
+separation, long-tail median 800 active installs.
+
+The consumer-niche search space remains **FAIL** and is not reopened.
 
 Decision and next options: [`docs/DATA_ECONOMICS_GATE_DECISION.md`](docs/DATA_ECONOMICS_GATE_DECISION.md).
 Raw measurements: [`state/DATA_ECONOMICS_PROBE.md`](state/DATA_ECONOMICS_PROBE.md).
@@ -135,7 +142,16 @@ attributed profit line, with the transaction flagged `OWNER_TEST`.
 
 ## Milestone 2 — Initial Campaign + Stranger Arrival Mechanism
 
-**Status: `NOT STARTED`.** Requires 0B to have passed.
+**Status: `NOT STARTED`.** 0B has passed; surface is selected.
+
+Locked surface: WordPress.org plugin directory. Stranger Arrival Test passes with one
+recorded gap — the directory exposes no search-impression count, so top-of-funnel
+`QUALIFIED EXPOSURES` is not directly observable and a proxy must be established here.
+
+**Attempt-velocity deviation, recorded deliberately:** ~5-day human review per plugin and
+spam risk on bulk submission mean this surface cannot support 30-50 attempts. Per Master
+Codex §17 the Campaign runs fewer attempts with larger measurable denominators each. This
+is a considered trade, not drift.
 
 Lock one distribution surface, one product family, one checkout/fulfillment architecture, one
 pricing pattern, common analytics. Candidate families and their unresolved objections are in
