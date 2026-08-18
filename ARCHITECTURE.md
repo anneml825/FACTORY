@@ -123,6 +123,7 @@ The goal is that an agent which *decides* to violate a financial rule still fail
   src/evidence/              E1 signal retrieval + persistence, source adapters
   src/experiments/           Campaign, experiment lifecycle, gates
   src/portfolio/             Phase A MAKE / PUT / ARRIVE / WATCH contracts and fixture harness
+  src/campaign/              complete experiment plans, provider-neutral inference, Phase D runner
   src/workers/               scout, analyst, producer, qa, publisher, measurement, …
   src/adapters/              external services behind interfaces
   src/dashboard/             owner check-in renderer
@@ -177,6 +178,17 @@ Narrow modules with structured inputs/outputs, per Master Codex §34: `SCOUT` ·
 
 **No worker holds a payment credential or calls a paid API directly.** Paid capability is
 mediated by the Capital Authority, which is the only component that can authorize spend.
+
+### ADR-4 — Provider-neutral metered inference
+
+Phase D does not select a universal inference provider. Each adapter registers a provider/model
+profile with task capabilities, quality score, micro-dollar token prices, credential availability,
+and fixture-only status. Routing chooses the cheapest available model that satisfies the task and
+quality threshold. Any nonzero quote is mediated by Capital Authority before provider execution.
+
+The financial ledger remains cent-denominated. Exact inference attribution is sub-cent, so a
+metered adapter may not be enabled until a reviewed batching/reconciliation policy preserves exact
+usage without rounding every call up or down. See `docs/PHASE_D_CREDENTIAL_FREE.md`.
 
 **Workers are built when the milestone needs them**, not up front. A swarm of agents with
 nothing verified to do is exactly what the Bootstrap Instructions forbid.

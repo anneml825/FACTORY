@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T19:55:31.044Z",
+  "runAt": "2026-08-18T16:03:17.300Z",
   "probeTerms": [
     "backup",
     "invoice",
@@ -29,7 +29,7 @@
       "distinctValueRatio": 0.08333333333333333,
       "zeroShare": 0,
       "medianValue": 24,
-      "medianLatencyMs": 80,
+      "medianLatencyMs": 126,
       "httpStatuses": {
         "200": 12
       },
@@ -100,7 +100,7 @@
       "distinctValueRatio": 0.9166666666666666,
       "zeroShare": 0,
       "medianValue": 17829,
-      "medianLatencyMs": 303,
+      "medianLatencyMs": 267,
       "httpStatuses": {
         "200": 12
       },
@@ -171,7 +171,7 @@
       "distinctValueRatio": 0.5833333333333334,
       "zeroShare": 0,
       "medianValue": 5000000,
-      "medianLatencyMs": 280,
+      "medianLatencyMs": 27,
       "httpStatuses": {
         "200": 12
       },
@@ -241,15 +241,15 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 19633,
-      "medianLatencyMs": 658,
+      "medianValue": 19632,
+      "medianLatencyMs": 759,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 19604
+          "value": 19603
         },
         {
           "term": "invoice",
@@ -257,7 +257,7 @@
         },
         {
           "term": "booking calendar",
-          "value": 44017
+          "value": 44015
         },
         {
           "term": "seo",
@@ -269,7 +269,7 @@
         },
         {
           "term": "form builder",
-          "value": 70894642
+          "value": 70889886
         },
         {
           "term": "analytics dashboard",
@@ -277,7 +277,7 @@
         },
         {
           "term": "image optimization",
-          "value": 4207721
+          "value": 4207472
         },
         {
           "term": "membership",
@@ -285,11 +285,11 @@
         },
         {
           "term": "csv import",
-          "value": 23163828
+          "value": 23159743
         },
         {
           "term": "time tracking",
-          "value": 19633
+          "value": 19632
         },
         {
           "term": "pdf export",
@@ -313,7 +313,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1072,
-      "medianLatencyMs": 129,
+      "medianLatencyMs": 140,
       "httpStatuses": {
         "200": 12
       },
@@ -356,15 +356,15 @@
         },
         {
           "term": "csv import",
-          "value": 1561
+          "value": 1560
         },
         {
           "term": "time tracking",
-          "value": 3143
+          "value": 3142
         },
         {
           "term": "pdf export",
-          "value": 1452
+          "value": 1451
         }
       ],
       "failureDetail": null,
@@ -379,15 +379,16 @@
       "reachable": true,
       "requiresAuth": false,
       "termsAttempted": 12,
-      "termsWithValue": 4,
-      "coverage": 0.3333333333333333,
+      "termsWithValue": 3,
+      "coverage": 0.25,
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 456,
-      "medianLatencyMs": 23,
+      "medianLatencyMs": 29,
       "httpStatuses": {
-        "200": 4,
-        "404": 8
+        "200": 3,
+        "404": 4,
+        "429": 5
       },
       "values": [
         {
@@ -404,7 +405,7 @@
         },
         {
           "term": "seo",
-          "value": 31
+          "value": null
         },
         {
           "term": "inventory",
@@ -439,7 +440,7 @@
           "value": null
         }
       ],
-      "failureDetail": "HTTP 404",
+      "failureDetail": "HTTP 429",
       "notes": "Free API. Same monetization weakness as npm — paying for a Python library is unusual."
     },
     {
@@ -456,7 +457,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 7294943,
-      "medianLatencyMs": 24,
+      "medianLatencyMs": 380,
       "httpStatuses": {
         "200": 1
       },
@@ -483,7 +484,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 3092506,
-      "medianLatencyMs": 84,
+      "medianLatencyMs": 118,
       "httpStatuses": {
         "200": 12
       },
@@ -522,7 +523,7 @@
         },
         {
           "term": "membership",
-          "value": 118705
+          "value": 118670
         },
         {
           "term": "csv import",
@@ -530,7 +531,7 @@
         },
         {
           "term": "time tracking",
-          "value": 47200148
+          "value": 47195311
         },
         {
           "term": "pdf export",
@@ -553,23 +554,23 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 44405,
-      "medianLatencyMs": 90,
+      "medianValue": 43999,
+      "medianLatencyMs": 113,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 86709
+          "value": 86694
         },
         {
           "term": "invoice",
-          "value": 1324
+          "value": 1316
         },
         {
           "term": "booking calendar",
-          "value": 3252
+          "value": 3183
         },
         {
           "term": "seo",
@@ -577,11 +578,11 @@
         },
         {
           "term": "inventory",
-          "value": 115539646
+          "value": 115407387
         },
         {
           "term": "form builder",
-          "value": 2582305
+          "value": 2579841
         },
         {
           "term": "analytics dashboard",
@@ -589,11 +590,11 @@
         },
         {
           "term": "image optimization",
-          "value": 61725
+          "value": 61720
         },
         {
           "term": "membership",
-          "value": 799850
+          "value": 799649
         },
         {
           "term": "csv import",
@@ -601,7 +602,7 @@
         },
         {
           "term": "time tracking",
-          "value": 44405
+          "value": 43999
         },
         {
           "term": "pdf export",
@@ -625,7 +626,7 @@
       "distinctValueRatio": 0.8888888888888888,
       "zeroShare": 0.1111111111111111,
       "medianValue": 10,
-      "medianLatencyMs": 262,
+      "medianLatencyMs": 246,
       "httpStatuses": {
         "200": 10,
         "403": 2

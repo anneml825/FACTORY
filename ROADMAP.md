@@ -229,7 +229,14 @@ configured.
 
 ## Milestone 3 — Value QA + autonomous attempt loop
 
-**Status: `NOT STARTED`.** The first real test of the thesis.
+**Status: `CREDENTIAL-FREE INFRASTRUCTURE IMPLEMENTED`; commercial loop not started.**
+
+Phase D implements typed complete experiment plans, provider-neutral per-task inference routing,
+Capital Authority mediation, deterministic fixture QA, bounded concurrent preparation, and
+fail-closed launch gates. Four fixtures prove integration only; a 100-plan local simulation proves
+there is no 3–5 asset architecture cap or per-asset owner operating step. No provider credential,
+metered inference, E1 evidence, commercial product, live PUT, or commercial ARRIVE has started.
+See `docs/PHASE_D_CREDENTIAL_FREE.md`.
 
 Factory retrieves E1 signals, selects opportunities within Campaign constraints, builds,
 passes Value QA, launches within policy, measures, kills or iterates — **without owner

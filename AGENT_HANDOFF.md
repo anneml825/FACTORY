@@ -1,11 +1,12 @@
-# Agent handoff — Phase C ARRIVE + durable WATCH checkpoint
+# Agent handoff — Phase D credential-free checkpoint
 
 **Date:** 2026-08-18
 
-**Branch:** `codex/phase-c-arrive-durable-watch`
+**Branch:** `codex/phase-d-credential-free`
 
-**Status:** Phase B real-provider proof `PASS`. Phase C is `DONE` as a controlled engineering
-proof. Genuine commercial ARRIVE remains `UNPROVEN`; no stranger exposure is claimed.
+**Status:** Phase B real-provider proof `PASS`. Phase C controlled engineering proof `DONE`.
+Phase D credential-free campaign/inference infrastructure `DONE`. Genuine commercial ARRIVE and
+metered MAKE remain `UNPROVEN`; no stranger exposure or commercial launch is claimed.
 
 **Cash spent:** $0.00
 
@@ -14,7 +15,41 @@ analytics, propagated one ARRIVE reference into one fulfilled USD 12.00 Stripe s
 transaction, recorded zero eligible commercial revenue, and automatically deactivated both
 surfaces. Direct checks returned DEV 404 and Stripe “The link is no longer active.” No real money.
 
-**Phase D / metered MAKE:** prohibited until the owner reviews this Phase C closeout
+**Metered MAKE / credentials / commercial launch:** prohibited until the owner reviews this Phase D closeout
+
+## Phase D credential-free checkpoint
+
+Read `docs/PHASE_D_CREDENTIAL_FREE.md` first.
+
+Implemented without credentials or spend:
+
+- typed `BUYER + PROBLEM + OFFER + MAKE + PUT + ARRIVE + WATCH` plans;
+- provider/model-neutral inference adapter registry and per-task cost/quality router;
+- explicit credential availability and fixture-only filtering;
+- Capital Authority mediation for every nonzero inference quote and refusal before execution when
+  authority/kill-switch checks fail;
+- deterministic, idempotent fixture inference and Phase A renderer/QA reuse;
+- bounded concurrent campaign preparation with per-experiment attribution and failure isolation;
+- structural zero-per-asset owner operating-labor enforcement;
+- independent launch-gate checks for E1 evidence, semantic verification, ARRIVE measurement,
+  functional QA, Value QA, LIVE PUT, and non-fixture status;
+- four-plan integration batch plus a 100-plan scale simulation.
+
+Measured local simulation: 4/4 prepared in 13.174 ms at peak concurrency 3; 100/100 prepared in
+74.254 ms at peak concurrency 12. Both reported zero launch eligibility, zero settled cost, and
+zero owner operating minutes. These are deterministic local measurements, not provider/model
+benchmarks or commercial evidence.
+
+Complete local verification discovered 43 tests: 41 passed, 2 PostgreSQL integration tests skipped
+because this workspace has no database service, and 0 failed. Node duration was 1.445 seconds and
+shell wall time 1.771 seconds. TypeScript, runner syntax, and whitespace checks passed.
+
+Important finding: routing prices use integer micro-dollars, but Capital Authority settles cents.
+Before any metered adapter is enabled, implement/review exact usage persistence plus batch/provider
+reconciliation so sub-cent calls are neither rounded down nor each charged as a full cent.
+
+No provider-specific credential name is embedded in the new contract. Do not default to Anthropic
+or request any inference credential merely because this layer exists.
 
 **Owner setup:** Stripe is complete. The scoped `DEVTO_API_KEY` is stored directly in GitHub
 Actions. Never request or expose its value in chat or logs.
@@ -203,6 +238,7 @@ accounting. GitHub Actions run `32185055925` verified it against PostgreSQL.
 
 ## Stop condition
 
-Phase C is closed for owner review. Stop here. Do not begin Phase D, request
-`ANTHROPIC_API_KEY`, generate a commercial product, create a live storefront, run another DEV
-fixture, or spend capital without new owner authorization.
+Phase D credential-free implementation is closed for owner review. Stop here. Do not select or
+request an inference-provider credential, enable a metered adapter, generate a commercial product,
+create a live storefront, run another DEV fixture, spend capital, or launch commercially without
+new owner authorization.

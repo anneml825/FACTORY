@@ -130,7 +130,7 @@ request `CONSTITUTION.md` §8 is meant to prevent.
 | Scheduler | **GitHub Actions** | $0 | 2,000 min/mo on Free for private repos. **Scheduled workflows disable after ~60 days of repo inactivity**; `schedule` is best-effort and can lag |
 | Dashboard | **Markdown committed to repo** | $0 | Read on GitHub from any device. No hosting, no ToS question |
 | Web hosting | **None at bootstrap** | $0 | Vercel Hobby is non-commercial-use; Pro is ~$20/mo = 40% of capital monthly. Avoided by using MoR-hosted pages — see `ARCHITECTURE.md` ADR-1 |
-| Model inference | Existing session/API | Tracked | Counted against `DISCOVERY` bucket once metered |
+| Model inference | Provider-neutral adapter registry | $0 in Phase D | Per-task capability/quality/micro-cost routing; no provider or credential selected; nonzero calls require Capital Authority |
 
 **Target fixed monthly burn at bootstrap: $0.00.**
 

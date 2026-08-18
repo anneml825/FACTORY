@@ -17,7 +17,8 @@ labor**. Neither outranks the other.
 ## Status — 2026-08-18
 
 **Phase B Stripe sandbox proof passed. Phase C ARRIVE + durable WATCH engineering proof is
-complete. Genuine commercial ARRIVE remains UNPROVEN.**
+complete. Phase D credential-free campaign and provider-neutral inference infrastructure is
+implemented. Genuine commercial ARRIVE and metered MAKE remain UNPROVEN.**
 
 | | |
 |---|---|
@@ -32,6 +33,9 @@ complete. Genuine commercial ARRIVE remains UNPROVEN.**
 programmatic publication, analytics retrieval, attribution-link construction, and automatic
 unpublication. Stripe sandbox proved the attributed transaction, fulfillment, exclusion from
 commercial revenue, durable WATCH behavior, and deactivation. It produced no demand evidence.
+Phase D locally prepared 4 fixture plans and simulated 100 separately attributed plans with
+bounded concurrency, zero cost, zero owner operating labor, and zero launch eligibility. See
+[`docs/PHASE_D_CREDENTIAL_FREE.md`](docs/PHASE_D_CREDENTIAL_FREE.md).
 
 **→ Start with [`IMPLEMENTATION_BRIEF.md`](IMPLEMENTATION_BRIEF.md).**
 
