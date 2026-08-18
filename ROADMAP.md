@@ -74,7 +74,26 @@ locally is not verified in production.
 
 ## Milestone 0B — Data Economics Probe
 
-**Status: `DESIGNED`.** Runs immediately after 0A. Costs $0 — free sources only.
+**Status: `DONE` — gate evaluated. Verdict: FAIL. Cost: $0.00.**
+
+Decision and next options: [`docs/DATA_ECONOMICS_GATE_DECISION.md`](docs/DATA_ECONOMICS_GATE_DECISION.md).
+Raw measurements: [`state/DATA_ECONOMICS_PROBE.md`](state/DATA_ECONOMICS_PROBE.md).
+
+100 candidates, stratified, 6 sources, 600 requests, run in GitHub Actions (ADR-2a).
+**Every free source returns nothing or zero for long-tail candidates**, and the only
+DIRECT commercial source is blocked on an unregistered free credential.
+
+Run 1 passed spuriously on two sources at 100% coverage whose long-tail median was zero —
+search endpoints always return a count, and coverage measured whether a source *answered*
+rather than whether the answer *distinguished* anything. Three tightening criteria were added
+post-hoc (disclosed), and the gate correctly failed.
+
+**Factory does not proceed to high-volume autonomous screening until this passes**
+(`EXPERIMENTAL_PROTOCOL.md` §7). Cheapest credible path is free Etsy/eBay developer
+registration (~30 min owner time, $0). A genuine strategic fork — narrowing the search space
+to developer tools, where free evidence already works well — awaits an owner decision.
+
+**Original design notes, retained:**
 
 Measures, for each candidate source, all eleven required fields, and above all the measured
 **`pct_candidates_with_retrievable_E1`** across a real candidate set. Computes screening
