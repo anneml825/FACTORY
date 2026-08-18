@@ -296,7 +296,65 @@ export const etsyListings: EvidenceSource = {
   },
 };
 
+/**
+ * WordPress.org plugin directory. Added after search-space reconnaissance
+ * identified it as the only candidate space coupling free evidence, native
+ * discovery, and a normal paid model.
+ *
+ * Signal: how many people actively run a plugin solving this problem. Rated
+ * INDIRECT and not DIRECT — an install is someone adopting a free solution, not
+ * someone paying. The monetization link is the freemium upgrade, which this
+ * number does not measure.
+ *
+ * Known limitation, measured rather than assumed: `active_installs` is BUCKETED
+ * (10, 20, ..., 1000000, 5000000). Discrimination is coarse at the top and finer
+ * at the bottom, which is the opposite of what a saturation check wants but the
+ * right way round for spotting under-served niches.
+ */
+export const wordpressActiveInstalls: EvidenceSource = {
+  id: 'wordpress_active_installs',
+  provider: 'WordPress.org plugins API 1.2',
+  signalType: 'active installs of the leading plugin matching the query',
+  metricName: 'wp_top_plugin_active_installs',
+  unit: 'active installs',
+  purchaseIntent: 'INDIRECT',
+  requiresCredential: false,
+  termsNote:
+    'Open documented API, no key, no registration. Serves the plugin directory itself, so ' +
+    'programmatic querying is its intended use — unlike marketplace APIs restricted to ' +
+    'first-party app building.',
+  reliabilityLimitations:
+    'active_installs is bucketed, so values are coarse at high volume. Measures adoption of ' +
+    'FREE plugins, not willingness to pay; the freemium upgrade is the unmeasured link. A high ' +
+    'number can mean healthy demand or an already-solved problem.',
+  async fetch(candidate, signal): Promise<FetchResult> {
+    const started = Date.now();
+    try {
+      const url =
+        'https://api.wordpress.org/plugins/info/1.2/?action=query_plugins' +
+        `&request[search]=${encodeURIComponent(candidate.term)}&request[per_page]=5`;
+      const { status, body, latencyMs } = await getJson(url, signal);
+      if (status !== 200) {
+        return { ok: false, reason: classify(status), detail: `HTTP ${status}`, requestCount: 1, latencyMs };
+      }
+      const plugins = (body as { plugins?: { active_installs?: number }[] })?.plugins;
+      if (!Array.isArray(plugins)) {
+        return { ok: false, reason: 'UNPARSEABLE', detail: 'no plugins array', requestCount: 1, latencyMs };
+      }
+      if (!plugins.length) {
+        // A real, informative answer: nobody has built for this query.
+        return { ok: true, numericValue: 0, requestCount: 1, latencyMs, raw: { matches: 0 } };
+      }
+      const top = plugins.reduce((max, p) => Math.max(max, p.active_installs ?? 0), 0);
+      return { ok: true, numericValue: top, requestCount: 1, latencyMs, raw: { matches: plugins.length } };
+    } catch (err) {
+      return networkFailure(err, Date.now() - started);
+    }
+  },
+};
+
 export const ALL_SOURCES: EvidenceSource[] = [
+  wordpressActiveInstalls,
   wikipediaPageviews,
   wikipediaSearch,
   stackExchangeQuestions,
