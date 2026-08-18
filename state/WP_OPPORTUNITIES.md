@@ -1,6 +1,6 @@
 # WordPress Opportunity Scan
 
-**Retrieved:** 2026-08-18T13:00:06.338Z  
+**Retrieved:** 2026-08-18T16:00:56.894Z  
 **Queries:** 160 (systematic 20 site types x 8 jobs)  
 **Source:** api.wordpress.org/plugins/info/1.2 · **Cost:** $0.00
 
@@ -18,13 +18,13 @@ not an opportunity, however big its install base — that is the misreading this
 
 | # | Query | Top incumbent | Installs | Rating | Stale (mo) | Weaknesses | Score |
 |---|---|---|---|---|---|---|---|
-| 1 | event venue booking | Events Manager &#8211; Calendar, Booking | 70,000 | 84/100 (547) | 0.4 | only 33% of support threads resolved | **4.85** |
+| 1 | event venue booking | Events Manager &#8211; Calendar, Booking | 70,000 | 84/100 (547) | 0.4 | only 31% of support threads resolved | **4.85** |
 | 2 | church membership directory | Business Directory Plugin &#8211; Easy L | 10,000 | 92/100 (504) | 0.7 | only 2 plugins compete | **4** |
 | 3 | real estate agency appointment reminder | Estatik Real Estate Plugin | 10,000 | 90/100 (186) | 0.4 | only 1 plugins compete | **4** |
 | 4 | hotel booking | MotoPress Hotel Booking | 10,000 | 74/100 (65) | 0.5 | incumbent rated 74/100 | **4** |
 | 5 | event venue appointment reminder | Eventin – Event Calendar, Tickets, Regis | 10,000 | 94/100 (396) | 0.2 | only 3 plugins compete | **4** |
 | 6 | event venue staff scheduling | Sugar Calendar &#8211; Events Calendar,  | 10,000 | 90/100 (24) | 1.1 | only 1 plugins compete | **4** |
-| 7 | hotel invoice quote | VikBooking Hotel Booking Engine &amp; PM | 8,000 | 96/100 (60) | 0.1 | only 1 plugins compete | **3.9** |
+| 7 | hotel invoice quote | VikBooking Hotel Booking Engine &amp; PM | 8,000 | 96/100 (60) | 0.2 | only 1 plugins compete | **3.9** |
 | 8 | real estate agency membership directory | Essential Real Estate | 7,000 | 86/100 (52) | 2.6 | only 3 plugins compete | **3.85** |
 | 9 | restaurant appointment reminder | WPCafe &#8211; Restaurant Menu, Online F | 5,000 | 92/100 (108) | 0.1 | only 2 plugins compete | **3.7** |
 | 10 | restaurant inventory tracking | Food Menu &#8211; Restaurant Menu &amp;  | 3,000 | 100/100 (23) | 0 | only 1 plugins compete | **3.48** |

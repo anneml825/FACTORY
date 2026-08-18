@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-18T13:02:30.949Z  
+**Run:** 2026-08-18T16:03:17.300Z  
 **Spaces probed:** 10 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,16 +11,16 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 171ms |
-| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17797 | 279ms |
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 34ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19630 | 693ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 178ms |
-| `pypi_packages` | yes | none | **17%** | 1.00 | 0% | 458 | 39ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 335ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 139ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 136ms |
-| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 302ms |
+| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 126ms |
+| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17829 | 267ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 27ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19632 | 759ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 140ms |
+| `pypi_packages` | yes | none | **25%** | 1.00 | 0% | 456 | 29ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 380ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 3092506 | 118ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 113ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 246ms |
 
 ## Structure
 
@@ -51,7 +51,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Included as an EVIDENCE CONTROL, not a candidate. AMO publishes true daily-user counts, so it shows what a high-quality catalogue signal looks like. Monetization is near zero, so it cannot be selected — it exists here to calibrate the others.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=6663, invoice=210664, booking calendar=36104, seo=12339, inventory=8809, form builder=17797, analytics dashboard=46, image optimization=64205, membership=6722, csv import=78289, time tracking=17797, pdf export=3986
+- **Values:** backup=6656, invoice=210630, booking calendar=36126, seo=12322, inventory=8810, form builder=17829, analytics dashboard=46, image optimization=64566, membership=6727, csv import=78055, time tracking=17829, pdf export=3992
 
 ### `wordpress_plugins` — WordPress.org plugin directory
 
@@ -63,20 +63,20 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19603, invoice=73, booking calendar=44010, seo=4495, inventory=125, form builder=70885070, analytics dashboard=97356, image optimization=4207233, membership=3189, csv import=23155231, time tracking=19630, pdf export=2707
+- **Values:** backup=19603, invoice=73, booking calendar=44015, seo=4495, inventory=126, form builder=70889886, analytics dashboard=97359, image optimization=4207472, membership=3189, csv import=23159743, time tracking=19632, pdf export=2707
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
 - **Note:** Paid apps are the NORM here, not the exception — the strongest monetization profile of any candidate. Business buyers with budgets. Question is whether Factory can build and publish to it autonomously.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=101, invoice=99, booking calendar=510, seo=365, inventory=54, form builder=1340, analytics dashboard=1394, image optimization=1072, membership=45, csv import=1560, time tracking=3142, pdf export=1451
+- **Values:** backup=101, invoice=99, booking calendar=510, seo=367, inventory=54, form builder=1341, analytics dashboard=1394, image optimization=1072, membership=45, csv import=1560, time tracking=3142, pdf export=1451
 
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":2,"404":5,"429":5}
+- **HTTP statuses:** {"200":3,"404":4,"429":5}
 - **First failure:** HTTP 429
-- **Values:** backup=164, invoice=null, booking calendar=null, seo=null, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
+- **Values:** backup=164, invoice=456, booking calendar=null, seo=null, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
 ### `obsidian_plugins` — Obsidian community plugins
 
@@ -88,7 +88,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Pull counts are real usage but heavily inflated by CI. Monetization is very weak.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1276834, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118633, csv import=1411650, time tracking=883838, pdf export=97904478
+- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1277005, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118670, csv import=1411650, time tracking=47195311, pdf export=97904478
 
 ### `crates_rust` — crates.io / Rust ecosystem
 
@@ -101,4 +101,4 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 - **Note:** Prosumer audience that already spends money on hardware, which is unusual among the code-adjacent spaces. Stars are a weak usage proxy.
 - **HTTP statuses:** {"200":10,"403":2}
 - **First failure:** HTTP 403 — authentication or policy required
-- **Values:** backup=3560, invoice=853, booking calendar=2, seo=10, inventory=45, form builder=null, analytics dashboard=245, image optimization=0, membership=1, csv import=1, time tracking=null, pdf export=null
+- **Values:** backup=3560, invoice=853, booking calendar=2, seo=10, inventory=45, form builder=null, analytics dashboard=246, image optimization=0, membership=1, csv import=1, time tracking=null, pdf export=null

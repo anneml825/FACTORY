@@ -1,5 +1,5 @@
 {
-  "retrievedAt": "2026-08-18T13:00:06.338Z",
+  "retrievedAt": "2026-08-18T16:00:56.894Z",
   "rows": [
     {
       "query": "restaurant booking",
@@ -1366,7 +1366,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-08-14 1:59pm GMT",
-        "monthsSinceUpdate": 0.1,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -1683,7 +1683,7 @@
         "rating": 96,
         "numRatings": 60,
         "lastUpdated": "2026-08-14 8:41am GMT",
-        "monthsSinceUpdate": 0.1,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 0
       },
       "demandProven": true,
@@ -2018,12 +2018,12 @@
         "numRatings": 547,
         "lastUpdated": "2026-08-07 1:23am GMT",
         "monthsSinceUpdate": 0.4,
-        "supportResolutionPct": 32.608695652173914
+        "supportResolutionPct": 31.25
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 33% of support threads resolved"
+        "only 31% of support threads resolved"
       ],
       "score": 4.85
     },
@@ -2075,7 +2075,7 @@
         "numRatings": 165,
         "lastUpdated": "2026-08-18 7:16am GMT",
         "monthsSinceUpdate": 0,
-        "supportResolutionPct": 85.71428571428571
+        "supportResolutionPct": 100
       },
       "demandProven": true,
       "notDominated": true,
@@ -2094,7 +2094,7 @@
         "rating": 98,
         "numRatings": 22,
         "lastUpdated": "2026-08-14 8:02am GMT",
-        "monthsSinceUpdate": 0.1,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -2116,7 +2116,7 @@
         "rating": 98,
         "numRatings": 22,
         "lastUpdated": "2026-08-14 8:02am GMT",
-        "monthsSinceUpdate": 0.1,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -2504,12 +2504,12 @@
         "numRatings": 547,
         "lastUpdated": "2026-08-07 1:23am GMT",
         "monthsSinceUpdate": 0.4,
-        "supportResolutionPct": 32.608695652173914
+        "supportResolutionPct": 31.25
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 33% of support threads resolved"
+        "only 31% of support threads resolved"
       ],
       "score": 4.85
     },
@@ -2635,7 +2635,7 @@
         "rating": 96,
         "numRatings": 60,
         "lastUpdated": "2026-08-14 8:41am GMT",
-        "monthsSinceUpdate": 0.1,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 0
       },
       "demandProven": true,
