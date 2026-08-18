@@ -1,0 +1,404 @@
+{
+  "runAt": "2026-08-18T00:56:29.751Z",
+  "criteria": {
+    "minCoverage": 0.6,
+    "maxCostPerCandidateUsd": 0.02,
+    "minCandidatesAt5Usd": 250,
+    "minCandidatesPerDay": 50,
+    "minDistinctValueRatio": 0.5,
+    "excludeWeakFromCoverage": true,
+    "maxZeroShare": 0.4,
+    "maxModeShare": 0.4,
+    "requireNonZeroLongTailMedian": true
+  },
+  "checks": {
+    "coverage": {
+      "value": 1,
+      "threshold": 0.6,
+      "pass": true
+    },
+    "distinct": {
+      "value": 0.4166666666666667,
+      "threshold": 0.5,
+      "pass": false
+    },
+    "zeroShare": {
+      "value": 0.13333333333333333,
+      "threshold": 0.4,
+      "pass": true
+    },
+    "modeShare": {
+      "value": 0.13333333333333333,
+      "threshold": 0.4,
+      "pass": true
+    },
+    "longTailMedian": {
+      "value": 800,
+      "threshold": "> 0",
+      "pass": true
+    }
+  },
+  "passes": false,
+  "rows": [
+    {
+      "id": "wh01",
+      "term": "contact form",
+      "stratum": "HEAD",
+      "value": 10000000
+    },
+    {
+      "id": "wh02",
+      "term": "backup",
+      "stratum": "HEAD",
+      "value": 3000000
+    },
+    {
+      "id": "wh03",
+      "term": "seo",
+      "stratum": "HEAD",
+      "value": 10000000
+    },
+    {
+      "id": "wh04",
+      "term": "security firewall",
+      "stratum": "HEAD",
+      "value": 5000000
+    },
+    {
+      "id": "wh05",
+      "term": "caching",
+      "stratum": "HEAD",
+      "value": 7000000
+    },
+    {
+      "id": "wh06",
+      "term": "image optimization",
+      "stratum": "HEAD",
+      "value": 7000000
+    },
+    {
+      "id": "wh07",
+      "term": "analytics",
+      "stratum": "HEAD",
+      "value": 5000000
+    },
+    {
+      "id": "wh08",
+      "term": "spam protection",
+      "stratum": "HEAD",
+      "value": 5000000
+    },
+    {
+      "id": "wh09",
+      "term": "page builder",
+      "stratum": "HEAD",
+      "value": 10000000
+    },
+    {
+      "id": "wh10",
+      "term": "newsletter signup",
+      "stratum": "HEAD",
+      "value": 1000000
+    },
+    {
+      "id": "wh11",
+      "term": "social sharing",
+      "stratum": "HEAD",
+      "value": 3000000
+    },
+    {
+      "id": "wh12",
+      "term": "cookie consent",
+      "stratum": "HEAD",
+      "value": 1000000
+    },
+    {
+      "id": "wh13",
+      "term": "redirect manager",
+      "stratum": "HEAD",
+      "value": 3000000
+    },
+    {
+      "id": "wh14",
+      "term": "sitemap",
+      "stratum": "HEAD",
+      "value": 10000000
+    },
+    {
+      "id": "wh15",
+      "term": "user registration",
+      "stratum": "HEAD",
+      "value": 200000
+    },
+    {
+      "id": "wh16",
+      "term": "multilingual translation",
+      "stratum": "HEAD",
+      "value": 900000
+    },
+    {
+      "id": "wh17",
+      "term": "gallery slider",
+      "stratum": "HEAD",
+      "value": 2000000
+    },
+    {
+      "id": "wh18",
+      "term": "custom fields",
+      "stratum": "HEAD",
+      "value": 2000000
+    },
+    {
+      "id": "wh19",
+      "term": "ecommerce store",
+      "stratum": "HEAD",
+      "value": 10000000
+    },
+    {
+      "id": "wh20",
+      "term": "booking appointments",
+      "stratum": "HEAD",
+      "value": 90000
+    },
+    {
+      "id": "wm01",
+      "term": "woocommerce abandoned cart recovery",
+      "stratum": "MID",
+      "value": 300000
+    },
+    {
+      "id": "wm02",
+      "term": "restaurant menu display",
+      "stratum": "MID",
+      "value": 10000
+    },
+    {
+      "id": "wm03",
+      "term": "membership subscription content",
+      "stratum": "MID",
+      "value": 7000000
+    },
+    {
+      "id": "wm04",
+      "term": "event calendar tickets",
+      "stratum": "MID",
+      "value": 600000
+    },
+    {
+      "id": "wm05",
+      "term": "real estate property listings",
+      "stratum": "MID",
+      "value": 10000
+    },
+    {
+      "id": "wm06",
+      "term": "job board listings",
+      "stratum": "MID",
+      "value": 80000
+    },
+    {
+      "id": "wm07",
+      "term": "donation fundraising",
+      "stratum": "MID",
+      "value": 100000
+    },
+    {
+      "id": "wm08",
+      "term": "course learning management",
+      "stratum": "MID",
+      "value": 100000
+    },
+    {
+      "id": "wm09",
+      "term": "directory listings business",
+      "stratum": "MID",
+      "value": 20000
+    },
+    {
+      "id": "wm10",
+      "term": "invoice quotes client",
+      "stratum": "MID",
+      "value": 30000
+    },
+    {
+      "id": "wm11",
+      "term": "live chat support",
+      "stratum": "MID",
+      "value": 900000
+    },
+    {
+      "id": "wm12",
+      "term": "product reviews ratings",
+      "stratum": "MID",
+      "value": 900000
+    },
+    {
+      "id": "wm13",
+      "term": "wholesale pricing customer group",
+      "stratum": "MID",
+      "value": 10000
+    },
+    {
+      "id": "wm14",
+      "term": "inventory stock management",
+      "stratum": "MID",
+      "value": 20000
+    },
+    {
+      "id": "wm15",
+      "term": "gdpr data request",
+      "stratum": "MID",
+      "value": 1000000
+    },
+    {
+      "id": "wm16",
+      "term": "staff directory team",
+      "stratum": "MID",
+      "value": 10000
+    },
+    {
+      "id": "wm17",
+      "term": "pdf invoice packing slip",
+      "stratum": "MID",
+      "value": 300000
+    },
+    {
+      "id": "wm18",
+      "term": "shipping rates calculator",
+      "stratum": "MID",
+      "value": 5000000
+    },
+    {
+      "id": "wm19",
+      "term": "affiliate referral program",
+      "stratum": "MID",
+      "value": 200000
+    },
+    {
+      "id": "wm20",
+      "term": "podcast episode player",
+      "stratum": "MID",
+      "value": 30000
+    },
+    {
+      "id": "wt01",
+      "term": "allergen labels restaurant menu items",
+      "stratum": "LONG_TAIL",
+      "value": 5000
+    },
+    {
+      "id": "wt02",
+      "term": "recurring donation receipt annual statement nonprofit",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt03",
+      "term": "qr code ticket check in door scanning",
+      "stratum": "LONG_TAIL",
+      "value": 4000
+    },
+    {
+      "id": "wt04",
+      "term": "veterinary appointment reminder sms",
+      "stratum": "LONG_TAIL",
+      "value": 20000
+    },
+    {
+      "id": "wt05",
+      "term": "church sermon archive audio series",
+      "stratum": "LONG_TAIL",
+      "value": 1000
+    },
+    {
+      "id": "wt06",
+      "term": "gym class capacity waitlist booking",
+      "stratum": "LONG_TAIL",
+      "value": 300
+    },
+    {
+      "id": "wt07",
+      "term": "school parent permission slip signature",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt08",
+      "term": "winery wine club shipment scheduling",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt09",
+      "term": "salon stylist commission tracking",
+      "stratum": "LONG_TAIL",
+      "value": 2000
+    },
+    {
+      "id": "wt10",
+      "term": "trade show exhibitor floor plan booth",
+      "stratum": "LONG_TAIL",
+      "value": 20000
+    },
+    {
+      "id": "wt11",
+      "term": "boat marina slip reservation",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt12",
+      "term": "farm csa share subscription box weekly",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt13",
+      "term": "dental patient intake form hipaa",
+      "stratum": "LONG_TAIL",
+      "value": 800
+    },
+    {
+      "id": "wt14",
+      "term": "photographer client proofing gallery download",
+      "stratum": "LONG_TAIL",
+      "value": 300000
+    },
+    {
+      "id": "wt15",
+      "term": "auto repair shop service history vehicle",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt16",
+      "term": "library book lending due date",
+      "stratum": "LONG_TAIL",
+      "value": 200
+    },
+    {
+      "id": "wt17",
+      "term": "brewery tap list beer abv update",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    },
+    {
+      "id": "wt18",
+      "term": "tutoring session scheduling recurring student",
+      "stratum": "LONG_TAIL",
+      "value": 2000
+    },
+    {
+      "id": "wt19",
+      "term": "equipment rental availability calendar deposit",
+      "stratum": "LONG_TAIL",
+      "value": 50000
+    },
+    {
+      "id": "wt20",
+      "term": "hoa dues payment tracking resident",
+      "stratum": "LONG_TAIL",
+      "value": 0
+    }
+  ]
+}

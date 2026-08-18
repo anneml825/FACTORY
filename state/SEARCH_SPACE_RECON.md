@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-18T00:50:11.190Z  
+**Run:** 2026-08-18T00:57:19.721Z  
 **Spaces probed:** 8 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,14 +11,14 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 13ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19625 | 676ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 111ms |
-| `pypi_packages` | yes | none | **17%** | 1.00 | 0% | 454 | 19ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 17ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 3092506 | 86ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43733 | 90ms |
-| `homeassistant_hacs` | yes | **required** | **67%** | 1.00 | 13% | 44 | 260ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 12ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19625 | 643ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 108ms |
+| `pypi_packages` | yes | none | **17%** | 1.00 | 0% | 458 | 23ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 27ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 77ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43733 | 74ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 249ms |
 
 ## Structure
 
@@ -47,7 +47,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19601, invoice=72, booking calendar=44002, seo=4494, inventory=125, form builder=70868820, analytics dashboard=97346, image optimization=4206412, membership=3189, csv import=23139533, time tracking=19625, pdf export=2706
+- **Values:** backup=19601, invoice=72, booking calendar=44002, seo=4494, inventory=125, form builder=70868925, analytics dashboard=97346, image optimization=4206417, membership=3189, csv import=23139618, time tracking=19625, pdf export=2706
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
@@ -58,9 +58,9 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":2,"404":3,"429":7}
+- **HTTP statuses:** {"200":2,"404":4,"429":6}
 - **First failure:** HTTP 429
-- **Values:** backup=163, invoice=null, booking calendar=null, seo=null, inventory=454, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
+- **Values:** backup=null, invoice=458, booking calendar=null, seo=null, inventory=454, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
 ### `obsidian_plugins` — Obsidian community plugins
 
@@ -72,7 +72,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Pull counts are real usage but heavily inflated by CI. Monetization is very weak.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1276056, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118425, csv import=1411650, time tracking=47195311, pdf export=97904478
+- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1276056, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118425, csv import=1411650, time tracking=882737, pdf export=97904478
 
 ### `crates_rust` — crates.io / Rust ecosystem
 
@@ -83,6 +83,6 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 ### `homeassistant_hacs` — Home Assistant custom integrations (HACS)
 
 - **Note:** Prosumer audience that already spends money on hardware, which is unusual among the code-adjacent spaces. Stars are a weak usage proxy.
-- **HTTP statuses:** {"200":9,"403":3}
+- **HTTP statuses:** {"200":10,"403":2}
 - **First failure:** HTTP 403 — authentication or policy required
-- **Values:** backup=3560, invoice=853, booking calendar=2, seo=10, inventory=44, form builder=null, analytics dashboard=245, image optimization=0, membership=1, csv import=null, time tracking=null, pdf export=null
+- **Values:** backup=3560, invoice=853, booking calendar=2, seo=10, inventory=44, form builder=null, analytics dashboard=245, image optimization=0, membership=1, csv import=1, time tracking=null, pdf export=null
