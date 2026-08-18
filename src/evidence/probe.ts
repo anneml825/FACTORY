@@ -49,6 +49,7 @@ async function measureSource(source: EvidenceSource): Promise<SourceMeasurement>
   };
   const failuresByReason: Partial<Record<FetchFailureReason, number>> = {};
   const values: number[] = [];
+  const valuesByStratum: Record<CandidateStratum, number[]> = { HEAD: [], MID: [], LONG_TAIL: [] };
   const latencies: number[] = [];
   let totalRequests = 0;
   let usable = 0;
@@ -82,6 +83,7 @@ async function measureSource(source: EvidenceSource): Promise<SourceMeasurement>
       usable++;
       coverageByStratum[candidate.stratum].usable++;
       values.push(result.numericValue);
+      valuesByStratum[candidate.stratum].push(result.numericValue);
       process.stderr.write('.');
     } else {
       failuresByReason[result.reason] = (failuresByReason[result.reason] ?? 0) + 1;
@@ -98,7 +100,20 @@ async function measureSource(source: EvidenceSource): Promise<SourceMeasurement>
   const distinct = new Set(values).size;
   const distinctValueRatio = values.length ? distinct / values.length : 0;
 
+  const zeroShare = values.length ? values.filter((v) => v === 0).length / values.length : 0;
+  const freq = new Map<number, number>();
+  for (const v of values) freq.set(v, (freq.get(v) ?? 0) + 1);
+  const modeShare = values.length ? Math.max(0, ...freq.values()) / values.length : 0;
+  const medianByStratum = {
+    HEAD: valuesByStratum.HEAD.length ? median(valuesByStratum.HEAD) : null,
+    MID: valuesByStratum.MID.length ? median(valuesByStratum.MID) : null,
+    LONG_TAIL: valuesByStratum.LONG_TAIL.length ? median(valuesByStratum.LONG_TAIL) : null,
+  };
+
   return {
+    zeroShare,
+    modeShare,
+    medianByStratum,
     source,
     candidatesAttempted: CANDIDATES.length,
     candidatesWithUsableE1: usable,
@@ -127,9 +142,31 @@ function evaluate(measurements: SourceMeasurement[]) {
   const verdicts: Verdict[] = measurements.map((m) => {
     const coverage = m.candidatesWithUsableE1 / m.candidatesAttempted;
     const passesCoverage = coverage >= GATE_CRITERIA.minCoverage;
-    const passesDiscrimination = m.distinctValueRatio >= GATE_CRITERIA.minDistinctValueRatio;
+    const passesDistinct = m.distinctValueRatio >= GATE_CRITERIA.minDistinctValueRatio;
+    const passesZeroShare = m.zeroShare <= GATE_CRITERIA.maxZeroShare;
+    const passesModeShare = m.modeShare <= GATE_CRITERIA.maxModeShare;
+    const longTailMedian = m.medianByStratum.LONG_TAIL;
+    const passesLongTail =
+      !GATE_CRITERIA.requireNonZeroLongTailMedian || (longTailMedian !== null && longTailMedian > 0);
+    const passesDiscrimination =
+      passesDistinct && passesZeroShare && passesModeShare && passesLongTail;
     const weakExcluded = GATE_CRITERIA.excludeWeakFromCoverage && m.source.purchaseIntent === 'WEAK';
     const notes: string[] = [];
+    if (!passesZeroShare) {
+      notes.push(
+        `${(m.zeroShare * 100).toFixed(0)}% of candidates return exactly zero — mostly-zero is not signal.`,
+      );
+    }
+    if (!passesModeShare) {
+      notes.push(
+        `${(m.modeShare * 100).toFixed(0)}% of candidates share one value — the metric barely separates them.`,
+      );
+    }
+    if (!passesLongTail) {
+      notes.push(
+        'Long-tail median is zero: discriminates only among head terms, where opportunities are not.',
+      );
+    }
     if (weakExcluded) {
       notes.push('WEAK purchase-intent proximity: may supplement but cannot carry the gate.');
     }
@@ -180,11 +217,14 @@ function renderMarkdown(measurements: SourceMeasurement[], evaluation: ReturnTyp
   L.push(`| Candidates at $5 | ≥ ${GATE_CRITERIA.minCandidatesAt5Usd} |`);
   L.push(`| Sustainable rate | ≥ ${GATE_CRITERIA.minCandidatesPerDay}/day |`);
   L.push(`| Distinct-value ratio | ≥ ${GATE_CRITERIA.minDistinctValueRatio} |`);
+  L.push(`| Zero share | ≤ ${GATE_CRITERIA.maxZeroShare} |`);
+  L.push(`| Mode share | ≤ ${GATE_CRITERIA.maxModeShare} |`);
+  L.push(`| Long-tail median > 0 | ${GATE_CRITERIA.requireNonZeroLongTailMedian ? 'Required' : 'Not required'} |`);
   L.push(`| WEAK signals carry the gate | ${GATE_CRITERIA.excludeWeakFromCoverage ? 'No' : 'Yes'} |\n`);
 
-  L.push('## Per-source results\n');
-  L.push('| Source | Intent | Coverage | HEAD | MID | LONG_TAIL | Distinct | Median latency | Counts |');
-  L.push('|---|---|---|---|---|---|---|---|---|');
+  L.push('## Coverage\n');
+  L.push('| Source | Intent | Coverage | HEAD | MID | LONG_TAIL | Median latency | Counts |');
+  L.push('|---|---|---|---|---|---|---|---|');
   for (const m of measurements) {
     const v = evaluation.verdicts.find((x) => x.sourceId === m.source.id)!;
     const pct = (n: { attempted: number; usable: number }) =>
@@ -192,7 +232,20 @@ function renderMarkdown(measurements: SourceMeasurement[], evaluation: ReturnTyp
     L.push(
       `| \`${m.source.id}\` | ${m.source.purchaseIntent} | **${(v.coverage * 100).toFixed(0)}%** ` +
         `| ${pct(m.coverageByStratum.HEAD)} | ${pct(m.coverageByStratum.MID)} | ${pct(m.coverageByStratum.LONG_TAIL)} ` +
-        `| ${m.distinctValueRatio.toFixed(2)} | ${m.medianLatencyMs}ms | ${v.countsTowardGate ? 'YES' : 'no'} |`,
+        `| ${m.medianLatencyMs}ms | ${v.countsTowardGate ? 'YES' : 'no'} |`,
+    );
+  }
+
+  L.push('\n## Informativeness\n');
+  L.push('Coverage says a source answered. This says whether the answer distinguishes anything.\n');
+  L.push('| Source | Distinct | Zero share | Mode share | Median HEAD | MID | LONG_TAIL |');
+  L.push('|---|---|---|---|---|---|---|');
+  for (const m of measurements) {
+    const md = (x: number | null) => (x === null ? '—' : String(x));
+    L.push(
+      `| \`${m.source.id}\` | ${m.distinctValueRatio.toFixed(2)} | ${(m.zeroShare * 100).toFixed(0)}% ` +
+        `| ${(m.modeShare * 100).toFixed(0)}% | ${md(m.medianByStratum.HEAD)} ` +
+        `| ${md(m.medianByStratum.MID)} | ${md(m.medianByStratum.LONG_TAIL)} |`,
     );
   }
 
@@ -240,7 +293,7 @@ async function main() {
         candidateCounts: candidateCounts(),
         gatePasses: evaluation.gatePasses,
         qualifyingSourceIds: evaluation.qualifyingSourceIds,
-        measurements: measurements.map((m) => ({ ...m, source: m.source.id, values: undefined })),
+        measurements: measurements.map((m) => ({ ...m, source: m.source.id })),
         verdicts: evaluation.verdicts,
       },
       null,

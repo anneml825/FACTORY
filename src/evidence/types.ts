@@ -116,6 +116,35 @@ export const GATE_CRITERIA = {
    * rather than applied silently.
    */
   excludeWeakFromCoverage: true,
+
+  // -------------------------------------------------------------------------
+  // ADDED 2026-08-18, AFTER the first run. Disclosed as post-hoc, and it can
+  // only make the gate HARDER to pass.
+  //
+  // Run 1 passed on stackexchange_questions and hn_algolia_mentions at 100%
+  // coverage. Their distinct-value ratios were 0.53 and 0.59, against 0.98 and
+  // 1.00 for the two sources measuring genuinely varying quantities. With 100
+  // candidates, ~half sharing a value is the signature of a metric piling up at
+  // zero and small integers — not of a metric that discriminates.
+  //
+  // The flaw was in minDistinctValueRatio: it catches a source returning ONE
+  // constant, but not a source returning mostly zeros with a few large values.
+  // A search endpoint that always returns a count scores 100% "coverage" while
+  // telling us nothing about a pottery or nail-salon niche.
+  //
+  // These test that specific hypothesis. They are stated here BEFORE the run
+  // that evaluates them.
+  // -------------------------------------------------------------------------
+
+  /** Max share of candidates returning exactly zero. Mostly-zero is not signal. */
+  maxZeroShare: 0.4,
+  /** Max share of candidates sharing the single most common value. */
+  maxModeShare: 0.4,
+  /**
+   * The long tail must carry actual signal. Real opportunities live there, and a
+   * source that only discriminates among head terms cannot drive the search.
+   */
+  requireNonZeroLongTailMedian: true,
 } as const;
 
 export interface SourceMeasurement {
@@ -129,4 +158,10 @@ export interface SourceMeasurement {
   medianLatencyMs: number;
   observedRateLimitNote: string;
   values: number[];
+  /** Share of returned values equal to exactly zero. */
+  zeroShare: number;
+  /** Share of returned values equal to the single most common value. */
+  modeShare: number;
+  /** Median of returned values, per stratum. Long tail is the one that matters. */
+  medianByStratum: Record<CandidateStratum, number | null>;
 }
