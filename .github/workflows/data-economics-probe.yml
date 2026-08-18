@@ -12,8 +12,18 @@ name: Data Economics Probe
 
 on:
   workflow_dispatch:
+  # Re-measure whenever the source adapters, candidate universe, or pass criteria
+  # change — those are exactly the inputs whose change invalidates a prior result.
+  #
+  # This cannot self-trigger: the run writes only to state/, which is outside the
+  # path filter.
+  #
   # Deliberately NOT scheduled. The probe is a measurement, not an ongoing job.
-  # Re-run it when the source set or candidate universe changes.
+  push:
+    paths:
+      - 'src/evidence/**'
+      - '.github/workflows/data-economics-probe.yml'
+      - 'package.json'
 
 permissions:
   contents: write
