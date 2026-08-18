@@ -1,0 +1,83 @@
+name: Phase B Stripe sandbox probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/phase-b-stripe-test-mode
+
+permissions:
+  contents: read
+
+jobs:
+  stripe-sandbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+      FACTORY_PAID_ACTIVITY_HALTED: "1"
+      PHASE_B_WAIT_SECONDS: "900"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Verify the credential-free suite
+        run: node --test src/portfolio/phase-a.test.ts src/portfolio/phase-b-stripe.test.ts
+
+      - name: Detect sandbox credential
+        id: credential
+        shell: bash
+        run: |
+          if [ -n "$STRIPE_SECRET_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "Phase B code is verified; add STRIPE_TEST_SECRET_KEY and re-run this job." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Install Stripe CLI
+        if: steps.credential.outputs.present == 'true'
+        run: npm install --global @stripe/cli
+
+      - name: Generate ephemeral internal event secret
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: echo "FACTORY_INTERNAL_EVENT_SECRET=$(openssl rand -hex 32)" >> "$GITHUB_ENV"
+
+      - name: Start signed sandbox event forwarding
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: |
+          test -n "$STRIPE_SECRET_KEY"
+          stripe listen \
+            --api-key "$STRIPE_SECRET_KEY" \
+            --events checkout.session.completed,checkout.session.async_payment_succeeded,refund.created,charge.dispute.created \
+            --forward-to http://127.0.0.1:4242/stripe-webhook \
+            > "$RUNNER_TEMP/stripe-listen.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/stripe-listen.pid"
+          for attempt in $(seq 1 30); do
+            secret=$(grep -o 'whsec_[A-Za-z0-9_]*' "$RUNNER_TEMP/stripe-listen.log" | head -n 1 || true)
+            if [ -n "$secret" ]; then
+              echo "STRIPE_WEBHOOK_SECRET=$secret" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 1
+          done
+          sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/stripe-listen.log"
+          exit 1
+
+      - name: Run Managed Payments checkout, webhook, fulfillment, refund, dispute, and reconciliation probe
+        if: steps.credential.outputs.present == 'true'
+        run: node src/portfolio/run-stripe-sandbox-probe.ts
+
+      - name: Upload non-secret probe report
+        if: always() && steps.credential.outputs.present == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-b-stripe-sandbox-result
+          path: state/phase-b-stripe-sandbox-result.json
+          if-no-files-found: warn
+          retention-days: 7

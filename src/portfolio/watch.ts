@@ -45,19 +45,35 @@ function requireTransactionFields(event: FunnelEvent): {
 export class InMemoryWatchStore implements WatchAdapter {
   readonly costProfile = { maximumCents: 0, currency: 'USD', bucketName: 'infrastructure' };
   private readonly signingSecret: string;
+  private readonly acceptedEnvironments: ReadonlySet<FunnelEvent['environment']>;
   private readonly eventPayloads = new Map<string, string>();
   private readonly effectFingerprints = new Map<string, string>();
   private readonly eventsByExperiment = new Map<string, FunnelEvent[]>();
   private readonly transactions = new Map<string, MutableTransaction>();
 
-  constructor(signingSecret: string) {
+  constructor(
+    signingSecret: string,
+    acceptedEnvironments: readonly FunnelEvent['environment'][] = ['FIXTURE'],
+  ) {
     this.signingSecret = signingSecret;
+    this.acceptedEnvironments = new Set(acceptedEnvironments);
   }
 
   async ingest(envelope: SignedEventEnvelope): Promise<{ accepted: boolean; duplicate: boolean }> {
     this.verify(envelope);
     const event = JSON.parse(envelope.payload) as FunnelEvent;
-    if (!event.synthetic) throw new EventConflictError('Phase A accepts synthetic events only.');
+    if (!this.acceptedEnvironments.has(event.environment)) {
+      throw new EventConflictError(`WATCH refuses commerce environment ${event.environment}.`);
+    }
+    if (event.environment === 'FIXTURE' && !event.synthetic) {
+      throw new EventConflictError('Fixture WATCH events must be marked synthetic.');
+    }
+    if (
+      event.environment === 'PROVIDER_TEST' &&
+      event.classification === 'ARM_LENGTH_CUSTOMER'
+    ) {
+      throw new EventConflictError('Provider test transactions can never be arm-length revenue.');
+    }
     const prior = this.eventPayloads.get(event.eventId);
     if (prior !== undefined) {
       if (prior !== envelope.payload) {
@@ -150,6 +166,7 @@ export class InMemoryWatchStore implements WatchAdapter {
         experimentId: event.experimentId,
         classification: fields.classification,
         grossCents: fields.amountCents,
+        currency: event.currency ?? 'UNKNOWN',
         fulfilled: false,
         fulfillmentFailed: false,
         hadFulfillmentFailure: false,

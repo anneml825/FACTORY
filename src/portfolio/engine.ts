@@ -132,8 +132,11 @@ export class PhaseAEngine {
 
   async publish(experimentId: string, idempotencyKey: string): Promise<Publication> {
     const record = this.get(experimentId);
-    if (this.put.mode !== 'FIXTURE') {
-      throw new Error('Phase A refuses LIVE PUT adapters.');
+    if (this.put.mode === 'LIVE') {
+      throw new Error('Fixture engine refuses LIVE PUT adapters.');
+    }
+    if (this.put.mode === 'PROVIDER_TEST' && !record.manifest.noncommercialFixture) {
+      throw new Error('Provider-test publication requires an explicitly noncommercial fixture.');
     }
     if (!record.artifact) throw new Error('Publication requires an artifact.');
     if (record.state !== 'STAGED' && record.state !== 'PUBLISHED' && record.state !== 'OBSERVING') {

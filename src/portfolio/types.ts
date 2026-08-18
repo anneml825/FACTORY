@@ -21,6 +21,8 @@ export type TransactionClassification =
   | 'ARM_LENGTH_CUSTOMER'
   | 'OTHER_OR_UNKNOWN';
 
+export type CommerceEnvironment = 'FIXTURE' | 'PROVIDER_TEST' | 'LIVE';
+
 export interface Money {
   amountCents: number;
   currency: string;
@@ -106,8 +108,13 @@ export interface Publication {
   location: string;
   idempotencyKey: string;
   manifestFingerprint: string;
-  mode: 'FIXTURE';
+  mode: CommerceEnvironment;
   status: 'ACTIVE' | 'INACTIVE';
+  providerObjects?: {
+    productId: string;
+    priceId: string;
+    paymentLinkId: string;
+  };
 }
 
 export interface CostRecord {
@@ -156,7 +163,8 @@ export interface FunnelEvent {
   amountCents?: number;
   currency?: string;
   reason?: string;
-  synthetic: true;
+  environment: CommerceEnvironment;
+  synthetic: boolean;
 }
 
 export interface SignedEventEnvelope {
@@ -169,6 +177,7 @@ export interface TransactionSnapshot {
   experimentId: string;
   classification: TransactionClassification;
   grossCents: number;
+  currency: string;
   fulfilled: boolean;
   fulfillmentFailed: boolean;
   hadFulfillmentFailure: boolean;

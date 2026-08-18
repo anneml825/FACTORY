@@ -25,7 +25,7 @@ export interface MakeAdapter extends MeteredAdapter {
 
 export interface PutAdapter extends MeteredAdapter {
   readonly adapterId: string;
-  readonly mode: 'FIXTURE' | 'LIVE';
+  readonly mode: 'FIXTURE' | 'PROVIDER_TEST' | 'LIVE';
   publish(
     manifest: AssetManifest,
     artifact: Artifact,

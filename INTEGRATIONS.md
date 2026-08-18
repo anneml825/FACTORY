@@ -3,9 +3,11 @@
 External services Factory may depend on, and the comparisons required before committing to
 any of them.
 
-**Status: research complete, nothing integrated.** No account has been created, no credential
-exists, no service has been contacted. Every figure below was retrieved from public sources
-on **2026-08-17** and carries the reliability caveat in §5.
+**Status:** historical provider research below; Phase B now contains a credential-free Stripe
+Managed Payments sandbox adapter, but no account credential exists and no provider request has
+been made. Current Stripe-primary findings are in `docs/PHASE_B_STRIPE_SANDBOX.md`. Every figure
+below was retrieved from public sources on **2026-08-17** and carries the reliability caveat in
+§5.
 
 ---
 

@@ -101,6 +101,7 @@ export function syntheticEvent(input: {
     amountCents: input.amountCents,
     currency: input.amountCents === undefined ? undefined : 'USD',
     reason: input.reason,
+    environment: 'FIXTURE',
     synthetic: true,
   };
 }

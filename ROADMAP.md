@@ -26,8 +26,9 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | Owner configuration migration | `DONE` — applied and verified against PostgreSQL 16 |
 | **Capital Authority** | **`DONE`** — 19/19 verified, including concurrency under contention |
 | **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
+| **Phase B Stripe Managed Payments sandbox adapter** | **`BUILT`** — credential-free path verified; real sandbox run blocked on one test key |
 | Live database instance | `BLOCKED` — needs owner Neon account |
-| External MAKE / PUT / ARRIVE / WATCH providers | `NOT STARTED` |
+| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH `BUILT`, not externally verified; MAKE/ARRIVE not started |
 
 **Nothing external has happened.** No account created, no credential issued, no service
 contacted, no deployment, no payment, no publication, no customer interaction.
@@ -63,8 +64,25 @@ exact command and limitations.
 
 **This is executable simulation, not a money spine.** No external system was contacted. No
 real publication, checkout, payment, fulfillment, customer, revenue, refund, dispute, or
-arrival evidence exists. `COMMERCIAL_CLOCK_START` remains unset. Phase B is intentionally
-not started pending owner review.
+arrival evidence exists. `COMMERCIAL_CLOCK_START` remains unset. Phase B was approved on
+2026-08-18. Its credential-free Stripe path is now built; see
+`docs/PHASE_B_STRIPE_SANDBOX.md`. No real provider request has yet occurred.
+
+---
+
+## Phase B — Stripe Managed Payments sandbox
+
+**Status: `BUILT`; `BLOCKED` on one owner-provisioned Stripe sandbox key. Cost: $0.00.**
+
+The implementation creates a noncommercial test Product, Price, and Managed Payments Payment
+Link; accepts only Stripe sandbox credentials and `livemode=false` objects/events; verifies raw
+Stripe signatures; fulfills an attributed fixture; handles duplicate/out-of-order checkout,
+refund, and dispute events; reconciles provider state; and deactivates all provider objects.
+
+Local verification: **20/20 combined Phase A + Phase B tests pass**. These tests use a recording
+Stripe transport, so the status is `BUILT`, not `DONE`. The GitHub Actions probe will perform
+the real provider call after the owner stores `STRIPE_TEST_SECRET_KEY` as a repository Actions
+secret. ARRIVE remains separate and unsolved. Phase C remains prohibited.
 
 ---
 

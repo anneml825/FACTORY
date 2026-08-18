@@ -4,6 +4,13 @@
 **Status:** architecture dry run; no assets generated; no listings created; no credentials requested; **$0 spent**  
 **Owner capital:** **$50.00 intact**
 
+> **Phase B correction, 2026-08-18:** Managed Payments is documented as testable for eligible
+> downloadable digital documents, but account eligibility still requires a real sandbox call.
+> Stripe metadata propagation is not universal: Payment Link metadata reaches the Checkout
+> Session, while PaymentIntent metadata must be set separately. Stripe also does not guarantee
+> webhook ordering. The credential-free implementation and corrected boundary are recorded in
+> `docs/PHASE_B_STRIPE_SANDBOX.md`.
+
 ## Decision
 
 Factory can credibly solve the three reusable primitives without making the owner an uploader:

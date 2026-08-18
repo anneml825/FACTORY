@@ -488,6 +488,7 @@ test('KEEP requires positive contribution after settled Factory cost', () => {
         experimentId: manifest.experimentId,
         classification: 'ARM_LENGTH_CUSTOMER',
         grossCents: 1200,
+        currency: 'USD',
         fulfilled: true,
         fulfillmentFailed: false,
         hadFulfillmentFailure: false,

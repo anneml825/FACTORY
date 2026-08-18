@@ -1,132 +1,88 @@
-# Agent handoff — Phase A MAKE + PUT + WATCH
+# Agent handoff — Phase B Stripe sandbox checkpoint
 
 **Date:** 2026-08-18
 
-**Branch:** `codex/make-put-watch-dry-run`
+**Branch:** `codex/phase-b-stripe-test-mode`
 
-**Status:** Phase A implemented and locally verified; Phase B prohibited pending owner review
+**Status:** credential-free Phase B implementation verified locally; real Stripe sandbox run
+blocked on one owner action
 
 **Cash spent:** $0.00
 
-**Owner setup/operating minutes required:** 0 / 0
+**External commerce actions:** none yet
 
-**External actions:** none
+**Phase C:** prohibited until the owner reviews a completed Phase B sandbox result
 
-Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, and the relevant subsystem
-documents before changing this work.
+Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
+`DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.
 
-## What is executable now
+## Canonical Phase A base
 
-- `src/portfolio/types.ts` — typed `AssetManifest`, event, transaction, cost, and evaluation
-  records.
-- `src/portfolio/state-machine.ts` — explicit lifecycle and hard publication gates.
-- `src/portfolio/renderers.ts` — deterministic attributed HTML and CSV fixture rendering,
-  checksums, functional QA, and fixture-only Value QA.
-- `src/portfolio/ports.ts` — provider-neutral MAKE, PUT, ARRIVE, and WATCH interfaces. Every
-  adapter declares its maximum cost and receives an idempotency key where applicable.
-- `src/portfolio/cost-control.ts` — zero-cost records plus fail-closed routing of every
-  nonzero operation through the existing Capital Authority contract.
-- `src/portfolio/fake-adapters.ts` — fake/local PUT, fixture MAKE/ARRIVE, and synthetic HMAC
-  signing.
-- `src/portfolio/watch.ts` — signature verification, duplicate/conflict detection,
-  transaction attribution, fulfillment state, refunds, and disputes.
-- `src/portfolio/evaluator.ts` — executable KEEP / ITERATE / KILL / INSUFFICIENT_SIGNAL policy.
-- `src/portfolio/engine.ts` — the complete simulated lifecycle orchestrator.
-- `state/PHASE_A_FIXTURE_CATALOG.html` — generated, visibly noncommercial two-item fixture
-  catalog with no checkout.
+Remote branch `codex/make-put-watch-dry-run` ended at handoff commit
+`0e26e9a82cb81f64a8e168b07402bd0b58f9a74e`. Its immutable Phase A snapshot is remote commit
+`62284c1872e947cb09787038bff0cf7822a6ebe5`, content-equivalent to original local commit
+`0b99642401eb8750929bcb3c0c21e06f643052ab` and tree
+`44a7d4a920b9e5ae73e8168806c1f9c28b52a79b`.
 
-## What remains simulated or unproved
+## What is executable without credentials
 
-- PUT is `fixture://` only. No file or listing was published externally.
-- ARRIVE is a test contract only. No provider was selected; no E1 evidence or stranger
-  exposure exists.
-- Checkout, transactions, fulfillment, refunds, and disputes are signed synthetic events.
-- State and WATCH storage are in-memory and are not crash-durable.
-- Spreadsheet output is deterministic CSV, not packaged XLSX. Real workbook packaging and
-  formula-engine verification remain unproved.
-- HMAC verification proves the event boundary, not any provider-specific webhook scheme.
-- The existing PostgreSQL Capital Authority was not re-run in this environment because no
-  `DATABASE_URL` or installed `pg`/`tsx` dependencies are available. Its implementation was
-  not changed. Phase A separately proves that a nonzero adapter cannot execute without an
-  authority and that a halted authority stops the provider call.
-
-Do not describe any of the above as a real publication, payment, customer interaction,
-commercial validation, or live provider verification. `COMMERCIAL_CLOCK_START` is not set.
+- Sandbox-only Stripe HTTP transport with API version `2025-03-31.basil`.
+- Gate-enforced Product -> Price -> Managed Payments Payment Link creation.
+- Stable Stripe idempotency keys plus atomically persisted partial publication progress.
+- Raw Stripe signature verification and normalized provider-test WATCH events.
+- Duplicate event/effect rejection, out-of-order retry, fulfillment failure/recovery.
+- Refund/dispute reconciliation and structurally zero commercial settlement for every test
+  transaction.
+- Link/Price/Product deactivation.
+- GitHub Actions orchestration for a real sandbox probe using Stripe CLI event forwarding.
 
 ## Verification
 
-Run:
-
 ```bash
-node --test src/portfolio/phase-a.test.ts
-node src/portfolio/generate-fixture-catalog.ts
+node --test src/portfolio/phase-a.test.ts src/portfolio/phase-b-stripe.test.ts
+node --check src/portfolio/run-stripe-sandbox-probe.ts
 git diff --check
 ```
 
-Measured result on 2026-08-18:
+Last local result: 20 passed, 0 failed; Node duration 874.276 ms. No Stripe request occurred.
+The provider transport in the tests is a recording fake.
 
-- 12 tests, 12 passed, 0 failed;
-- Node test duration: 759.901 ms;
-- shell wall/user/system: 1.109 / 0.970 / 0.448 seconds;
-- portfolio-module coverage: 94.70% lines, 79.35% branches, 97.67% functions;
-- generated catalog: 1,181 bytes, two fake/local publications.
+## Owner action and resume sequence
 
-`npm test` could not be invoked in this work environment because npm execution requested an
-unavailable network approval. The same configured test command was run directly with Node
-and passed. The database-backed `npm run test:capital` suite was not re-run for the reasons
-above; this is an explicit test limitation, not a skipped failure.
+The owner must use Stripe's sandbox only, activate Managed Payments/accept its terms if the
+Dashboard offers it, and store the sandbox secret key as repository Actions secret
+`STRIPE_TEST_SECRET_KEY`. The key must never be pasted into chat, source, logs, or a commit.
 
-## Invariants covered
+After the secret exists:
 
-- A publication cannot occur without functional QA, Value QA, and a complete passed Arrival
-  gate.
-- A stable PUT retry returns one publication; a changed payload or key conflict fails.
-- Duplicate event IDs cannot duplicate transaction, fulfillment, revenue, refund, dispute,
-  or cost effects. The same ID with a changed payload fails.
-- `experiment_id` cannot change during a transaction lifecycle.
-- Owner/internal purchases remain visible as plumbing but contribute zero arm's-length or
-  eligible revenue and cannot produce E3.
-- Failed fulfillment remains visible and produces zero eligible commercial revenue.
-- Invalid signatures and out-of-order transaction events fail closed.
-- Every adapter declares a maximum cost. Nonzero work requires Capital Authority before the
-  adapter is called; zero-cost fixture work settles explicitly at zero.
+1. Re-run the `Phase B Stripe sandbox probe` Actions run on this branch.
+2. In the live job log, open the noncommercial Stripe test link.
+3. Complete one checkout with Stripe test card `4242 4242 4242 4242`.
+4. Complete a second checkout with dispute test card `4000 0000 0000 0259`.
+5. Inspect the uploaded `phase-b-stripe-sandbox-result` artifact.
+6. Require `passed: true`, all provider objects deactivated, both transactions `OWNER_TEST`,
+   zero eligible arm-length revenue, zero available settled cash, a recorded refund and dispute,
+   and every reconciliation `reconciled: true`.
+7. Record the measured result, update this handoff, and publish the follow-up through the GitHub
+   connector. Do not use shell git push if authentication remains unavailable.
 
-## Architecture findings
+If Managed Payments activation or Product/Price/Payment Link creation is denied, record the
+exact Stripe error. That disproves the account-specific assumption and requires an architecture
+change; do not silently fall back to Stripe direct for live commerce.
 
-Two assumptions were disproved during implementation:
+## Honest limits
 
-1. Capital Authority idempotency alone is not sufficient. It prevents duplicate financial
-   authorization/ledger effects, but the provider must also enforce the same stable
-   idempotency key to prevent duplicate external side effects.
-2. A completed checkout cannot be the commercial-success record. Fulfillment, classification,
-   refund, and dispute state must be joined before revenue becomes eligible for evaluation.
+- Managed Payments is supported by current Stripe documentation for eligible downloadable
+  documents and explicitly has a sandbox flow. This specific account's eligibility is unproved.
+- GitHub Actions + Stripe CLI is a one-time test receiver, not production webhook hosting.
+- WATCH and webhook state remain in-memory during the one-run probe. Provider retries and
+  reconciliation are implemented/tested; production crash durability still requires the
+  PostgreSQL boundary.
+- ARRIVE remains provider-neutral and unsolved. No stranger exposure or E1/E2/E3 evidence exists.
+- No commercial product, live storefront, payout, tax, bank, domain, Cloudflare, or Anthropic
+  credential is involved.
 
-The provider-neutral separation held: ARRIVE remains replaceable without changing MAKE, PUT,
-or WATCH. The next durability boundary is also clear: Phase B needs database constraints for
-events, transactions, effects, and publication keys so process restarts preserve the
-invariants currently proved in memory.
+## Stop condition
 
-## Stop point
-
-Stop here. Do not choose an ARRIVE provider, create accounts, request credentials, spend
-capital, deploy, or begin Phase B until the owner reviews Phase A.
-
-## Canonical GitHub publication
-
-Phase A local commit `0b99642401eb8750929bcb3c0c21e06f643052ab` is canonically
-published on GitHub as content-equivalent remote commit
-`62284c1872e947cb09787038bff0cf7822a6ebe5` on
-`codex/make-put-watch-dry-run`.
-
-Equivalence was verified after publication:
-
-- local tree: `44a7d4a920b9e5ae73e8168806c1f9c28b52a79b`;
-- remote tree: `44a7d4a920b9e5ae73e8168806c1f9c28b52a79b`;
-- tracked files: 95 local / 95 remote;
-- missing files: 0;
-- additional files: 0;
-- path, mode, size, and blob differences: 0.
-
-The remote commit above is the canonical published equivalent of the local Phase A commit.
-This handoff note is a subsequent metadata-only commit and does not alter that immutable
-Phase A snapshot. Phase B remains prohibited pending owner review.
+Stop after requesting the single Stripe sandbox setup action. Do not begin metered MAKE, request
+`ANTHROPIC_API_KEY`, select ARRIVE, create a live storefront, or begin Phase C.
