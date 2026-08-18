@@ -85,6 +85,27 @@ change; do not silently fall back to Stripe direct for live commerce.
 - No commercial product, live storefront, payout, tax, bank, domain, Cloudflare, or Anthropic
   credential is involved.
 
+## Official Stripe planner review — 2026-08-18
+
+The authenticated Stripe connector and implementation planner are available for the account
+named Factory. The planner selected direct web-browser Managed Payments with API-created hosted
+Payment Links for this use case.
+
+**Do not add Connect to Phase B.** Managed Payments explicitly does not support Connect, and
+Factory currently has no third-party sellers or split-payout requirement. Connect becomes
+relevant only if Factory later operates a multi-party marketplace/platform that onboards and
+pays independent recipients.
+
+Read-only account inspection found that account details are not submitted, payment capabilities
+are inactive, and charges/payouts are disabled. Account-specific Managed Payments eligibility
+and sandbox operation therefore remain unproved. No Stripe object was created or modified during
+this review, and no secret was exposed.
+
+The existing implementation matches the planner's minimum architecture. The combined suite was
+re-run after review: 20 passed, 0 failed; Node duration 882.734 ms. Before production—not needed
+for the card-only Phase B probe—make `checkout.session.async_payment_failed` visible rather than
+silently ignored.
+
 ## Owner-labor and ARRIVE clarification — 2026-08-18
 
 The owner does not require zero human contact. Brief reusable `SETUP`, occasional

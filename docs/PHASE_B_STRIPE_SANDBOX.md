@@ -35,6 +35,32 @@ webhook-hosting decision.
 
 ## Managed Payments finding
 
+### Official Stripe planner and Connect decision — 2026-08-18
+
+The authenticated Stripe implementation planner selected:
+
+```text
+Stripe only -> web browser -> digital goods -> Managed Payments
+            -> API-created hosted Payment Links
+```
+
+**Connect is not part of this architecture.** Stripe documents Managed Payments as a direct-
+integration product and explicitly excludes Connect platforms, Express accounts, accounts
+controlled by a platform, and Connect-only Payment Link parameters such as
+`application_fee_amount`, `on_behalf_of`, and `transfer_data`.
+
+Factory is currently the sole seller of Factory-owned assets. Add Connect only if the business
+later onboards independent third-party sellers or service providers and must route customer
+funds, platform fees, or payouts among multiple legal recipients. That would be a new
+multi-party business model and a separate architecture decision—not an enhancement to this
+Phase B money spine.
+
+Read-only inspection through the authenticated Stripe connector found a US direct account named
+Factory, but its account details are not yet submitted, payment capabilities are inactive, and
+charges and payouts are disabled. No sensitive account fields are stored here. This does not
+invalidate credential-free implementation, but account-specific Managed Payments eligibility
+and sandbox execution remain unproved.
+
 The proposed **product context is supported in principle**. Stripe documents Managed Payments
 for digital content and downloads, including downloadable standalone documents under tax code
 `txcd_10503000`. Products must be sold directly, rights must be held, and fulfillment must be
@@ -97,6 +123,10 @@ git diff --check
 Measured locally on 2026-08-18: 20 tests passed, 0 failed; Node reported 874.276 ms for the
 combined test process. No Stripe request was made; Phase B tests use a recording transport.
 
+Re-run after the official Stripe planner review: **20 passed, 0 failed; 882.734 ms**. The local
+working tree was clean before this documentation update. No Stripe object was created or
+modified.
+
 The suite covers:
 
 - Product/Price/Payment Link request shape and `managed_payments[enabled]=true`;
@@ -139,3 +169,8 @@ The provider-independent code is ready. One real sandbox run must still prove:
 
 Until that run passes, Phase B is `BUILT`, not `DONE`. No money spine exists,
 `COMMERCIAL_CLOCK_START` remains unset, and Phase C is prohibited.
+
+Before any production design, add explicit handling and visibility for
+`checkout.session.async_payment_failed`. The Phase B card-only proof does not depend on delayed
+payment methods, but Managed Payments controls payment-method presentation, so a production
+handler may not silently ignore a delayed-payment failure.
