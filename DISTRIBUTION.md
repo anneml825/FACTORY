@@ -13,14 +13,19 @@ acquisition mechanism.
 Factory can build a product. Factory can take a payment. Factory can deliver a file. None of
 that matters if no unrelated human ever sees the offer.
 
-With **$50 of total capital**, meaningful paid acquisition is statistically weak to the point
-of uselessness: a few dollars of ad spend buys too few impressions to distinguish "nobody
-wants this" from "almost nobody saw it." Master Codex §24 states this plainly and
-`EXPERIMENTAL_PROTOCOL.md` §5 forbids running the attempt anyway.
+With **$50 of total capital**, broad paid acquisition is usually statistically weak: a few
+dollars of undifferentiated ad spend may buy too few qualified impressions to distinguish
+"nobody wants this" from "almost nobody saw it." `EXPERIMENTAL_PROTOCOL.md` §5 forbids an
+attempt that cannot return decision-useful signal.
 
-**Factory must therefore find distribution it does not have to buy with cash.** That is the
-central strategic problem of the entire project, and it is not solved. Pretending otherwise
-is explicitly prohibited.
+Factory should prefer reusable, compounding, or pay-on-success distribution, but **$0 is not
+the objective at the expense of learning or revenue**. A modest platform fee, subscription,
+data source, or tightly bounded acquisition test may be proposed when evidence indicates it
+can improve information or commercial value across multiple experiments. Every cent remains
+subject to Capital Authority; a proposal is not spend authorization.
+
+ARRIVE is still the central strategic problem of the project, and it is not solved. Pretending
+otherwise is explicitly prohibited.
 
 ---
 
@@ -85,13 +90,42 @@ owner labor. Build requirements may exceed what Factory can produce autonomously
 
 ---
 
+## ARRIVE is a provider-neutral adapter portfolio
+
+Factory must not couple candidate generation or commerce infrastructure to one universal
+channel. Each ARRIVE adapter owns acquisition-specific publication, attribution, metrics,
+permission constraints, retry/idempotency behavior, and deactivation. MAKE, PUT, checkout,
+fulfillment, and WATCH remain independently replaceable.
+
+An ARRIVE mechanism is not rejected merely because it needs **5–20 minutes of one-time owner
+setup**. Candidate surfaces may include social platforms, visual discovery, marketplaces,
+newsletters, communities, advertising accounts, search/data services, directories, ecosystem
+galleries, and mechanisms not yet identified. Naming a platform is not evidence that it works.
+
+Every ARRIVE proposal must state:
+
+- setup labor and batch-approval labor;
+- recurring owner labor at 1, 10, 100, and 1,000 experiments/posts where applicable;
+- fixed, marginal, and recurring monetary cost;
+- the platform's verified automation permissions and rate limits;
+- qualified-exposure, visit, offer, checkout, and transaction events actually measurable;
+- the reusable capability the setup or cost unlocks;
+- failure, deactivation, concentration, and account-spam controls.
+
+Daily owner posting, manual prospecting, per-listing upload, routine customer messaging, and
+other human execution that scales with normal revenue are not ARRIVE adapters. They are
+`OPERATING` labor and fail the owner-hours objective.
+
+---
+
 ## What is explicitly not solved
 
 Recorded plainly so no later document can imply otherwise:
 
 - **Organic distribution is not solved.** Factory has no audience, no domain authority, no
   reputation, no email list, and no social presence.
-- **Paid acquisition is not viable at $50.** Not "expensive" — statistically uninformative.
+- **Broad, underpowered paid acquisition is not evidence.** A bounded paid mechanism may be
+  proposed only when its expected denominator and information value are explicit.
 - **No mechanism above has been probed.** The Data Economics Probe (Milestone 0B) is the
   first real test of whether *any* of these can be evidenced cheaply enough to search.
 - **Automation permissions are unverified.** Whether any candidate platform's terms permit

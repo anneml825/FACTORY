@@ -155,7 +155,15 @@ Non-cash metered ceilings (e.g. CI minutes) are registered too, with `metered_un
 owner approvals.
 
 Fixed burn is the single most dangerous number at this capital scale: $20/month consumes the
-entire capital base in ten weeks with zero experiments run. Bootstrap targets **$0/month**.
+entire capital base in ten weeks with zero experiments run. Bootstrap starts at **$0/month**,
+but does not worship it: a modest recurring cost may be proposed when evidence indicates that
+the expected information or commercial value across many experiments justifies the burn.
+Approval must specify the reusable capability, expected information gain, owner labor curve,
+minimum commitment, cancellation path, and maximum downside. It is never automatic.
+
+The same rule applies to small one-time expenditures. A $5–15 distribution test, marketplace
+fee, domain, data API, or platform charge can be rational; its small size does not bypass
+Capital Authority, protected buckets, or the global kill switch.
 
 ---
 

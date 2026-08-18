@@ -13,6 +13,9 @@ blocked on one owner action
 
 **Phase C:** prohibited until the owner reviews a completed Phase B sandbox result
 
+**Owner availability:** Stripe sandbox setup is deferred until the owner is at a desktop.
+Do not repeat the request in the meantime.
+
 Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
 `DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.
 
@@ -81,6 +84,26 @@ change; do not silently fall back to Stripe direct for live commerce.
 - ARRIVE remains provider-neutral and unsolved. No stranger exposure or E1/E2/E3 evidence exists.
 - No commercial product, live storefront, payout, tax, bank, domain, Cloudflare, or Anthropic
   credential is involved.
+
+## Owner-labor and ARRIVE clarification — 2026-08-18
+
+The owner does not require zero human contact. Brief reusable `SETUP`, occasional
+`BATCH_APPROVAL`, and rare measured `EXCEPTION` labor are acceptable. Recurring `OPERATING`
+labor that scales with assets, customers, posts, or sales is strongly disfavored and remains
+subject to the owner-hours gate.
+
+Factory may propose modest one-time or recurring costs under Capital Authority when evidence
+shows they buy materially better information or reusable commercial capability. Nothing in
+this clarification authorizes spending.
+
+Every candidate must be structurally complete as
+`BUYER + PROBLEM + OFFER + MAKE + PUT + ARRIVE + WATCH`; an asset without a credible stranger-
+arrival hypothesis is incomplete. ARRIVE remains provider-neutral and should support multiple
+adapters across the portfolio. No ARRIVE provider was selected in this update.
+
+Implementation gap recorded honestly: `owner_intervention.kind` currently has no distinct
+`EXCEPTION` value. Align the schema and reporting before autonomous commercial operation; do
+not claim separate exception metrics until that is implemented and tested.
 
 ## Stop condition
 

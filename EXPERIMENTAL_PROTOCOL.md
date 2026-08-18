@@ -49,6 +49,24 @@ actually be measured, the experiment cannot produce a denominator, and without a
 its result is uninterpretable (§6). **An unmeasurable mechanism fails the gate even if it is
 otherwise plausible.**
 
+### A commercial candidate is a complete system, not an asset idea
+
+Candidate generation must produce this entire tuple:
+
+```
+BUYER + PROBLEM + OFFER + MAKE + PUT + ARRIVE + WATCH
+```
+
+A missing element makes the candidate incomplete. In particular, Factory must not manufacture
+an asset and only afterward ask where customers might come from. Before production work begins,
+the candidate must name a credible stranger-arrival hypothesis and the measurement path that
+could test it.
+
+At E0 the elements are hypotheses and need no evidentiary weight (§17). Structural completeness
+does not pass the Stranger Arrival Test, advance an evidence grade, or authorize launch. The
+ARRIVE hypothesis must still satisfy this section's evidence and instrumentation gate before
+external exposure.
+
 ---
 
 ## 2. Quantitative E1 — no prose-only advancement
@@ -110,6 +128,11 @@ noise. For a defined run it fixes:
 - a constrained pricing pattern
 - common analytics and attribution
 - common experiment schema
+
+A Campaign may fix one primary ARRIVE mechanism for clean learning while the portfolio runs
+other Campaigns through other provider-neutral ARRIVE adapters. Factory should seek a
+diversified mechanism portfolio over time, not one universal channel or one provider coupled
+to MAKE, PUT, or WATCH.
 
 Within the Campaign, **vary the opportunity/niche/problem**. Keep the machinery stable.
 
@@ -520,6 +543,12 @@ Before arm's-length revenue exists, Factory optimizes:
 **The denominator should approach zero.** The objective is not to spend the $50 — it is to
 preserve it while producing as many legitimate contacts with economic reality as possible.
 **Ideally Factory reaches first revenue having spent almost none of the owner capital.**
+
+This is an information-efficiency objective, not a prohibition on useful spending. The $50 is
+risk capital, not a museum exhibit. A bounded $5–15 platform, data, distribution, or
+infrastructure expense can be rational when it unlocks many experiments or materially improves
+decision-useful signal. It is never automatically authorized: Capital Authority, protected
+buckets, the kill switch, and the thresholds below still govern every cent.
 
 ### The rule
 

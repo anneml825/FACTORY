@@ -21,22 +21,29 @@ number of meaningful decisions, leave.
 
 ## Labor categories
 
-Tracked separately in `owner_intervention`, because they mean different things.
-Owner clarification, 2026-08-18:
+Owner clarification, 2026-08-18: autonomy means eliminating human work that scales with
+assets, customers, posts, or sales. It does **not** mean the owner may never touch anything.
 
-| Category | What it is | Counts against autonomy? |
+| Policy category | What it is | Treatment |
 |---|---|---|
-| `SETUP` | Account creation, identity verification, developer/API enrollment, OAuth authorization, secure key provisioning, payout configuration, domain/DNS. **Occasional, one-time.** | **No.** Tracked separately |
-| `APPROVAL` | Meaningful decisions | No, but must stay small and batched |
-| `OPERATING` | Researching opportunities, creating products, publishing listings, distributing, fulfilling orders, moving data between services, monitoring routine jobs, reconciling transactions | **Yes — must remain near zero** |
-| `MAINTENANCE_DEBUG` | Recurring intervention because Factory or an integration cannot run reliably | **Yes, after `COMMERCIAL_CLOCK_START`. The most diagnostic number in the system** |
+| `SETUP` | Account creation, identity verification, developer/API enrollment, OAuth authorization, secure key provisioning, payout configuration, domain/DNS, social-account creation | Acceptable when brief, one-time, and it unlocks reusable automation. Measure separately |
+| `BATCH_APPROVAL` | An occasional review or authorization affecting many experiments | Acceptable when brief, consequential, and batched; never turn it into a per-asset ritual |
+| `EXCEPTION` | Rare KYC, dispute, provider, legal, safety, or technical intervention | Acceptable but measured. If it repeats predictably, reclassify it as operating or maintenance/debug labor |
+| `OPERATING` | Routine research, creation, publication, posting, prospecting, customer messaging, fulfillment, monitoring, reconciliation, or data movement | Strongly disfavored; must remain near zero and is subject to the owner-hours gate |
+
+The current `owner_intervention.kind` storage enum predates this clarification: `SETUP` maps
+directly; `APPROVAL` represents `BATCH_APPROVAL`; `OPERATING` represents routine execution;
+and `MAINTENANCE_DEBUG` represents recurring human recovery. It does not yet have a distinct
+`EXCEPTION` value. That schema/reporting alignment must occur before autonomous commercial
+operation; until then, reports must state the limitation rather than claiming exceptions are
+separately measured.
 
 ### Setup labor is an investment, not a cost to minimize
 
 **Do not reject an otherwise superior search space, data source, distribution mechanism,
 commerce provider, or integration merely because it requires one-time owner setup.**
 
-Working assumption: **~10–15 minutes** of owner setup per integration is acceptable when it
+Working assumption: **~5–20 minutes** of owner setup per integration is acceptable when it
 buys substantial ongoing autonomous capability. Multiple such requests across Factory's life
 are legitimate when each is justified. Still avoid unnecessary accounts, and consolidate
 requests where practical.
@@ -44,13 +51,16 @@ requests where practical.
 **The optimization target is maximum ongoing autonomous economic capability per minute of
 one-time owner setup** — not the absence of setup.
 
-Every such request must state: exactly what the owner does, estimated minutes, whether
-sensitive credentials are involved, where they are entered securely, and what autonomous
+Every such request must state: exactly what the owner does; estimated setup minutes;
+recurring owner minutes at 1, 10, 100, and 1,000 relevant units where applicable; monetary
+cost; whether sensitive credentials are involved; where they are entered securely; what the
+platform permits Factory to automate; the measurable funnel events; and what reusable
 capability it unlocks.
 
 **This does not relax the recurring-labor constraint.** `OPERATING` stays near zero and
-`MAINTENANCE_DEBUG` still counts against the autonomy thesis. A one-time 15-minute account
-setup is acceptable; a 15-minute weekly ritual is not.
+`MAINTENANCE_DEBUG` still counts against the autonomy thesis. A one-time 20-minute account
+setup can be excellent; five minutes per asset, customer, post, or sale is catastrophic at
+portfolio scale.
 
 After `COMMERCIAL_CLOCK_START`, **all human maintenance and debugging required to keep
 Factory functioning counts against the autonomy thesis** (`EXPERIMENTAL_PROTOCOL.md` §12).
