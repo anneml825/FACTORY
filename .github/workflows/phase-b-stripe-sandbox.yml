@@ -2,9 +2,6 @@ name: Phase B Stripe sandbox probe
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - codex/phase-b-stripe-test-mode
 
 permissions:
   contents: read
@@ -17,6 +14,7 @@ jobs:
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
       FACTORY_PAID_ACTIVITY_HALTED: "1"
       PHASE_B_WAIT_SECONDS: "900"
+      PHASE_B_PROBE_ID: ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
 
@@ -45,7 +43,10 @@ jobs:
       - name: Generate ephemeral internal event secret
         if: steps.credential.outputs.present == 'true'
         shell: bash
-        run: echo "FACTORY_INTERNAL_EVENT_SECRET=$(openssl rand -hex 32)" >> "$GITHUB_ENV"
+        run: |
+          secret=$(openssl rand -hex 32)
+          echo "::add-mask::$secret"
+          echo "FACTORY_INTERNAL_EVENT_SECRET=$secret" >> "$GITHUB_ENV"
 
       - name: Start signed sandbox event forwarding
         if: steps.credential.outputs.present == 'true'
@@ -61,6 +62,7 @@ jobs:
           for attempt in $(seq 1 30); do
             secret=$(grep -o 'whsec_[A-Za-z0-9_]*' "$RUNNER_TEMP/stripe-listen.log" | head -n 1 || true)
             if [ -n "$secret" ]; then
+              echo "::add-mask::$secret"
               echo "STRIPE_WEBHOOK_SECRET=$secret" >> "$GITHUB_ENV"
               exit 0
             fi
