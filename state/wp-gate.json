@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T16:02:10.319Z",
+  "runAt": "2026-08-18T16:43:17.703Z",
   "criteria": {
     "minCoverage": 0.6,
     "maxCostPerCandidateUsd": 0.02,
