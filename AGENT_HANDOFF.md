@@ -52,9 +52,16 @@ The provider transport in the tests is a recording fake.
 
 ## Owner action and resume sequence
 
-The owner must use Stripe's sandbox only, activate Managed Payments/accept its terms if the
-Dashboard offers it, and store the sandbox secret key as repository Actions secret
-`STRIPE_TEST_SECRET_KEY`. The key must never be pasted into chat, source, logs, or a commit.
+The owner must select the Factory sandbox (reported Dashboard account ID
+`acct_1U5qkg0pEa3CWQlP`) and store that sandbox's API key as repository Actions secret
+`STRIPE_TEST_SECRET_KEY`. Prefer a restricted `rk_test_` key; the transport also accepts a
+sandbox `sk_test_` key. The key must never be pasted into chat, source, logs, or a commit.
+
+Do **not** require the owner to find a Managed Payments Dashboard tile or complete the general
+live-payments onboarding wizard before this probe. The adapter requests Managed Payments on the
+Payment Link with `managed_payments[enabled]=true`. The sandbox API response is the account-
+specific eligibility test. Only if Stripe rejects that call should the owner complete the exact
+account/eligibility action named by Stripe's error or Dashboard task.
 
 After the secret exists:
 
@@ -100,6 +107,10 @@ Read-only account inspection found that account details are not submitted, payme
 are inactive, and charges/payouts are disabled. Account-specific Managed Payments eligibility
 and sandbox operation therefore remain unproved. No Stripe object was created or modified during
 this review, and no secret was exposed.
+
+The Stripe connector is still authorized to the parent Factory account ending `…gxHgL`, not the
+Factory sandbox ending `…CWQlP`; it cannot currently inspect the sandbox. Do not confuse parent-
+account onboarding status with sandbox readiness.
 
 The existing implementation matches the planner's minimum architecture. The combined suite was
 re-run after review: 20 passed, 0 failed; Node duration 882.734 ms. Before production—not needed

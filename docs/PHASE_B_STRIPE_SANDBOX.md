@@ -61,6 +61,12 @@ charges and payouts are disabled. No sensitive account fields are stored here. T
 invalidate credential-free implementation, but account-specific Managed Payments eligibility
 and sandbox execution remain unproved.
 
+The owner subsequently identified a Factory sandbox with Dashboard account ID
+`acct_1U5qkg0pEa3CWQlP`. Stripe sandboxes have their own account context, API keys, webhooks, and
+objects. The connector remains authorized to the parent Factory account ending `…gxHgL` and
+cannot inspect this sandbox with its current permission scope. Parent onboarding status must not
+be reported as sandbox status.
+
 The proposed **product context is supported in principle**. Stripe documents Managed Payments
 for digital content and downloads, including downloadable standalone documents under tax code
 `txcd_10503000`. Products must be sold directly, rights must be held, and fulfillment must be
@@ -68,9 +74,14 @@ fully automated. The Phase B fixture meets the technical shape but is explicitly
 for sale.
 
 The proposed **account context remains UNKNOWN** until the sandbox call succeeds. Stripe makes
-Managed Payments subject to an account eligibility review, supported business geography,
-Dashboard activation, and acceptance of Managed Payments terms. Code and public documentation
-cannot establish that this specific account is enabled.
+Managed Payments subject to an account eligibility review and supported business geography.
+Code and public documentation cannot establish that this specific sandbox is enabled.
+
+Managed Payments is enabled on the Payment Link API request with
+`managed_payments[enabled]=true`; the owner does not need to find a dedicated Dashboard tile
+first. The general Stripe setup wizard concerns live account activation and is not itself proof
+that the sandbox can or cannot run this probe. If the API rejects the Managed Payments request,
+record the exact error and complete only the specific eligibility/onboarding task it identifies.
 
 Managed Payments is genuinely testable: Stripe's current guide documents test-mode Checkout
 and Payment Links, `managed_payments[enabled]=true`, `cs_test_...` sessions, test cards, and
@@ -160,7 +171,7 @@ The suite covers:
 
 The provider-independent code is ready. One real sandbox run must still prove:
 
-- this Stripe account can activate Managed Payments;
+- this Stripe sandbox accepts `managed_payments[enabled]=true`;
 - the selected digital-document tax code is accepted for the account;
 - Stripe creates the Product, Price, and Payment Link;
 - two hosted test checkouts produce genuine signed webhook events;
