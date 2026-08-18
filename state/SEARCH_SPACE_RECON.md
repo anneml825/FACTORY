@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-18T16:03:17.300Z  
+**Run:** 2026-08-18T19:55:31.045Z  
 **Spaces probed:** 10 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,16 +11,16 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 126ms |
-| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17829 | 267ms |
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 27ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19632 | 759ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 140ms |
-| `pypi_packages` | yes | none | **25%** | 1.00 | 0% | 456 | 29ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 380ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 3092506 | 118ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 113ms |
-| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 246ms |
+| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 80ms |
+| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17829 | 303ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 280ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19633 | 658ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 129ms |
+| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 456 | 23ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 24ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 3092506 | 84ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 44405 | 90ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 262ms |
 
 ## Structure
 
@@ -63,20 +63,20 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19603, invoice=73, booking calendar=44015, seo=4495, inventory=126, form builder=70889886, analytics dashboard=97359, image optimization=4207472, membership=3189, csv import=23159743, time tracking=19632, pdf export=2707
+- **Values:** backup=19604, invoice=73, booking calendar=44017, seo=4495, inventory=126, form builder=70894642, analytics dashboard=97359, image optimization=4207721, membership=3189, csv import=23163828, time tracking=19633, pdf export=2707
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
 - **Note:** Paid apps are the NORM here, not the exception — the strongest monetization profile of any candidate. Business buyers with budgets. Question is whether Factory can build and publish to it autonomously.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=101, invoice=99, booking calendar=510, seo=367, inventory=54, form builder=1341, analytics dashboard=1394, image optimization=1072, membership=45, csv import=1560, time tracking=3142, pdf export=1451
+- **Values:** backup=101, invoice=99, booking calendar=510, seo=367, inventory=54, form builder=1341, analytics dashboard=1394, image optimization=1072, membership=45, csv import=1561, time tracking=3143, pdf export=1452
 
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":3,"404":4,"429":5}
-- **First failure:** HTTP 429
-- **Values:** backup=164, invoice=456, booking calendar=null, seo=null, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
+- **HTTP statuses:** {"200":4,"404":8}
+- **First failure:** HTTP 404
+- **Values:** backup=164, invoice=456, booking calendar=null, seo=31, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
 ### `obsidian_plugins` — Obsidian community plugins
 
@@ -88,13 +88,13 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Pull counts are real usage but heavily inflated by CI. Monetization is very weak.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1277005, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118670, csv import=1411650, time tracking=47195311, pdf export=97904478
+- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1277005, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118705, csv import=1411650, time tracking=47200148, pdf export=97904478
 
 ### `crates_rust` — crates.io / Rust ecosystem
 
 - **Note:** Confirmed reachable. Strong free norm; paid Rust crates are essentially nonexistent.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=86694, invoice=1316, booking calendar=3183, seo=578, inventory=115407387, form builder=2579841, analytics dashboard=20353, image optimization=61720, membership=799649, csv import=18864, time tracking=43999, pdf export=2596
+- **Values:** backup=86709, invoice=1324, booking calendar=3252, seo=578, inventory=115539646, form builder=2582305, analytics dashboard=20353, image optimization=61725, membership=799850, csv import=18864, time tracking=44405, pdf export=2596
 
 ### `homeassistant_hacs` — Home Assistant custom integrations (HACS)
 

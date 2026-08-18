@@ -1,5 +1,5 @@
 {
-  "retrievedAt": "2026-08-18T16:00:56.894Z",
+  "retrievedAt": "2026-08-18T19:52:10.450Z",
   "rows": [
     {
       "query": "restaurant booking",
@@ -13,7 +13,7 @@
         "rating": 94,
         "numRatings": 210,
         "lastUpdated": "2026-07-30 3:00pm GMT",
-        "monthsSinceUpdate": 0.6,
+        "monthsSinceUpdate": 0.7,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -1065,15 +1065,16 @@
         "rating": 90,
         "numRatings": 186,
         "lastUpdated": "2026-08-05 4:02am GMT",
-        "monthsSinceUpdate": 0.4,
-        "supportResolutionPct": 25
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 16.666666666666664
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
+        "only 17% of support threads resolved",
         "only 1 plugins compete"
       ],
-      "score": 4
+      "score": 8
     },
     {
       "query": "real estate agency membership directory",
@@ -2053,7 +2054,7 @@
         "numRatings": 396,
         "lastUpdated": "2026-08-12 7:01am GMT",
         "monthsSinceUpdate": 0.2,
-        "supportResolutionPct": 83.33333333333334
+        "supportResolutionPct": 100
       },
       "demandProven": true,
       "notDominated": true,
@@ -2492,6 +2493,29 @@
   ],
   "ranked": [
     {
+      "query": "real estate agency appointment reminder",
+      "siteType": "real estate agency",
+      "job": "appointment reminder",
+      "matchCount": 1,
+      "top": {
+        "name": "Estatik Real Estate Plugin",
+        "slug": "estatik",
+        "activeInstalls": 10000,
+        "rating": 90,
+        "numRatings": 186,
+        "lastUpdated": "2026-08-05 4:02am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 16.666666666666664
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 17% of support threads resolved",
+        "only 1 plugins compete"
+      ],
+      "score": 8
+    },
+    {
       "query": "event venue booking",
       "siteType": "event venue",
       "job": "booking",
@@ -2536,28 +2560,6 @@
       "score": 4
     },
     {
-      "query": "real estate agency appointment reminder",
-      "siteType": "real estate agency",
-      "job": "appointment reminder",
-      "matchCount": 1,
-      "top": {
-        "name": "Estatik Real Estate Plugin",
-        "slug": "estatik",
-        "activeInstalls": 10000,
-        "rating": 90,
-        "numRatings": 186,
-        "lastUpdated": "2026-08-05 4:02am GMT",
-        "monthsSinceUpdate": 0.4,
-        "supportResolutionPct": 25
-      },
-      "demandProven": true,
-      "notDominated": true,
-      "weakness": [
-        "only 1 plugins compete"
-      ],
-      "score": 4
-    },
-    {
       "query": "hotel booking",
       "siteType": "hotel",
       "job": "booking",
@@ -2592,7 +2594,7 @@
         "numRatings": 396,
         "lastUpdated": "2026-08-12 7:01am GMT",
         "monthsSinceUpdate": 0.2,
-        "supportResolutionPct": 83.33333333333334
+        "supportResolutionPct": 100
       },
       "demandProven": true,
       "notDominated": true,

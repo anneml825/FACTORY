@@ -1,6 +1,6 @@
 # WordPress Opportunity Scan
 
-**Retrieved:** 2026-08-18T16:00:56.894Z  
+**Retrieved:** 2026-08-18T19:52:10.450Z  
 **Queries:** 160 (systematic 20 site types x 8 jobs)  
 **Source:** api.wordpress.org/plugins/info/1.2 · **Cost:** $0.00
 
@@ -18,9 +18,9 @@ not an opportunity, however big its install base — that is the misreading this
 
 | # | Query | Top incumbent | Installs | Rating | Stale (mo) | Weaknesses | Score |
 |---|---|---|---|---|---|---|---|
-| 1 | event venue booking | Events Manager &#8211; Calendar, Booking | 70,000 | 84/100 (547) | 0.4 | only 31% of support threads resolved | **4.85** |
-| 2 | church membership directory | Business Directory Plugin &#8211; Easy L | 10,000 | 92/100 (504) | 0.7 | only 2 plugins compete | **4** |
-| 3 | real estate agency appointment reminder | Estatik Real Estate Plugin | 10,000 | 90/100 (186) | 0.4 | only 1 plugins compete | **4** |
+| 1 | real estate agency appointment reminder | Estatik Real Estate Plugin | 10,000 | 90/100 (186) | 0.5 | only 17% of support threads resolved; only 1 plugins compete | **8** |
+| 2 | event venue booking | Events Manager &#8211; Calendar, Booking | 70,000 | 84/100 (547) | 0.4 | only 31% of support threads resolved | **4.85** |
+| 3 | church membership directory | Business Directory Plugin &#8211; Easy L | 10,000 | 92/100 (504) | 0.7 | only 2 plugins compete | **4** |
 | 4 | hotel booking | MotoPress Hotel Booking | 10,000 | 74/100 (65) | 0.5 | incumbent rated 74/100 | **4** |
 | 5 | event venue appointment reminder | Eventin – Event Calendar, Tickets, Regis | 10,000 | 94/100 (396) | 0.2 | only 3 plugins compete | **4** |
 | 6 | event venue staff scheduling | Sugar Calendar &#8211; Events Calendar,  | 10,000 | 90/100 (24) | 1.1 | only 1 plugins compete | **4** |
