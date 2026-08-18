@@ -1,3 +1,5 @@
+import type { OwnerLaborReconciliation } from '../portfolio/owner-labor.ts';
+import type { CostVerdict } from '../experiments/cost-discipline.ts';
 import type { CommercialExperimentPlan, LaunchGateResult } from './types.ts';
 
 function present(value: string): boolean {
@@ -33,11 +35,29 @@ export function validateCommercialExperimentPlan(plan: CommercialExperimentPlan)
   if (!plan.put.automated || plan.put.ownerOperatingMinutesPerAsset !== 0 || plan.ownerLabor.operatingMinutesPerAsset !== 0) {
     throw new Error('Experiment fails portfolio owner-labor gate: normal operation scales per asset.');
   }
+  if (
+    !Number.isFinite(plan.costDiscipline?.nonInferenceMarginalCashCostUsd) ||
+    plan.costDiscipline.nonInferenceMarginalCashCostUsd < 0
+  ) {
+    throw new Error('Experiment must declare a non-negative non-inference marginal cash cost (§18).');
+  }
+}
+
+export interface LaunchGateState {
+  functionalQaPassed: boolean;
+  valueQaPassed: boolean;
+  /** §18 verdict for this experiment. `null` means the rule was never applied. */
+  costVerdict?: CostVerdict | null;
+  /**
+   * Observed-versus-declared owner labour. `null` means nobody checked, which
+   * fails the gate: a zero-labour claim needs evidence, not a declaration.
+   */
+  ownerLabor?: OwnerLaborReconciliation | null;
 }
 
 export function evaluateLiveLaunchGate(
   plan: CommercialExperimentPlan,
-  state: { functionalQaPassed: boolean; valueQaPassed: boolean },
+  state: LaunchGateState,
 ): LaunchGateResult {
   const reasons: string[] = [];
   if (plan.manifest.noncommercialFixture) reasons.push('noncommercial fixture cannot launch commercially');
@@ -52,5 +72,23 @@ export function evaluateLiveLaunchGate(
   if (!plan.arrive.measurementVerified) reasons.push('ARRIVE measurement instrument is unverified');
   if (!state.functionalQaPassed) reasons.push('functional QA has not passed');
   if (!state.valueQaPassed) reasons.push('Value QA has not passed');
+
+  const verdict = state.costVerdict ?? null;
+  if (!verdict) {
+    reasons.push('pre-revenue cost discipline (§18) has not been assessed');
+  } else {
+    if (!verdict.allowed) reasons.push(`§18 cost discipline blocks this experiment: ${verdict.blocking.join('; ')}`);
+    if (verdict.requiresOwnerAuthorization && !plan.costDiscipline.ownerAuthorization) {
+      reasons.push('§18 requires owner authorization for this spend and none is recorded');
+    }
+  }
+
+  const labor = state.ownerLabor ?? null;
+  if (!labor) {
+    reasons.push('declared owner operating labour has not been reconciled against owner_intervention records');
+  } else if (!labor.truthful) {
+    reasons.push(`declared owner operating labour is contradicted by observation: ${labor.reasons.join('; ')}`);
+  }
+
   return { eligible: reasons.length === 0, reasons };
 }

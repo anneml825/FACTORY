@@ -1,0 +1,62 @@
+name: Phase E always-on edge and accounting
+
+# Manual only, and it contacts nothing external. Every check here runs against a
+# disposable PostgreSQL service and an in-process HTTP server; no provider
+# credential is read and no capital can be spent.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-e-edge
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: factory
+          POSTGRES_PASSWORD: factory_test_only
+          POSTGRES_DB: factory_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U factory -d factory_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://factory:factory_test_only@127.0.0.1:5432/factory_test
+      FACTORY_PAID_ACTIVITY_HALTED: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Apply schema and migrations
+        run: |
+          psql "$TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -f db/schema.sql
+          for migration in db/migrations/*.sql; do
+            psql "$TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"
+          done
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Full test suite
+        run: npm test
+
+      - name: Whitespace check
+        run: git diff --check

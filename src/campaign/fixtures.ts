@@ -95,6 +95,9 @@ export function phaseDIntegrationFixtures(count = 4): CommercialExperimentPlan[]
         exceptionMinutesPerThousand: 0,
         operatingMinutesPerAsset: 0,
       },
+      costDiscipline: {
+        nonInferenceMarginalCashCostUsd: 0,
+      },
     } satisfies CommercialExperimentPlan;
   });
 }

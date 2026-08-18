@@ -1,11 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import type { CapitalAuthorityPort } from '../portfolio/cost-control.ts';
+import { centsCeilingFromMicros } from '../capital/inference-accounting.ts';
+import { InMemoryOwnerLaborLedger } from '../portfolio/owner-labor.ts';
 import { CapitalControlUnavailableError, CostController } from '../portfolio/cost-control.ts';
 import { phaseDIntegrationFixtures } from './fixtures.ts';
 import { evaluateLiveLaunchGate, validateCommercialExperimentPlan } from './gates.ts';
 import {
   FixtureInferenceAdapter,
+  INFERENCE_BUCKET,
   InferenceRouter,
   MeteredInferenceExecutor,
   type InferenceAdapter,
@@ -13,6 +16,7 @@ import {
   type InferenceResponse,
 } from './inference.ts';
 import { CredentialFreeCampaignOrchestrator } from './orchestrator.ts';
+import type { CommercialExperimentPlan } from './types.ts';
 
 function request(overrides: Partial<InferenceRequest> = {}): InferenceRequest {
   return {
@@ -36,7 +40,7 @@ class RecordingMeteredAdapter implements InferenceAdapter {
     qualityScore: number;
     estimatedCostMicros: number;
     credentialState?: 'AVAILABLE' | 'UNAVAILABLE';
-    actualCostCents?: number;
+    actualCostMicros?: number;
   }) {
     this.profile = {
       providerId: input.providerId,
@@ -49,14 +53,18 @@ class RecordingMeteredAdapter implements InferenceAdapter {
       fixtureOnly: false,
     };
     this.estimatedCostMicros = input.estimatedCostMicros;
-    this.actualCostCents = input.actualCostCents ?? 1;
+    this.actualCostMicros = input.actualCostMicros ?? input.estimatedCostMicros;
   }
 
   private readonly estimatedCostMicros: number;
-  private readonly actualCostCents: number;
+  private readonly actualCostMicros: number;
 
   quote() {
-    return { estimatedCostMicros: this.estimatedCostMicros, maximumCostCents: 2 };
+    return {
+      estimatedCostMicros: this.estimatedCostMicros,
+      maximumCostMicros: this.estimatedCostMicros,
+      maximumCostCents: centsCeilingFromMicros(this.estimatedCostMicros),
+    };
   }
 
   async execute(input: InferenceRequest): Promise<InferenceResponse> {
@@ -67,7 +75,7 @@ class RecordingMeteredAdapter implements InferenceAdapter {
       output: `result:${input.task}`,
       inputTokens: input.estimatedInputTokens,
       outputTokens: 10,
-      actualCostCents: this.actualCostCents,
+      actualCostMicros: this.actualCostMicros,
       fixture: false,
     };
   }
@@ -77,14 +85,14 @@ class RecordingAuthority implements CapitalAuthorityPort {
   readonly calls: string[] = [];
   private readonly failReserve: boolean;
   constructor(failReserve = false) { this.failReserve = failReserve; }
-  async reserve(input: { idempotencyKey: string }) {
-    this.calls.push(`reserve:${input.idempotencyKey}`);
+  async reserve(input: { idempotencyKey: string; maxAmountCents: number; bucketName: string }) {
+    this.calls.push(`reserve:${input.idempotencyKey}:${input.bucketName}:${input.maxAmountCents}`);
     if (this.failReserve) throw new Error('kill switch engaged');
     return {
       id: 1,
       idempotencyKey: input.idempotencyKey,
-      bucketName: 'production',
-      maxAmountCents: 2,
+      bucketName: input.bucketName,
+      maxAmountCents: input.maxAmountCents,
       state: 'RESERVED' as const,
       wasAlreadyReserved: false,
     };
@@ -140,9 +148,10 @@ test('metered inference cannot bypass Capital Authority', async () => {
   const authority = new RecordingAuthority();
   const controlled = new MeteredInferenceExecutor(new InferenceRouter([adapter]), new CostController(authority));
   const result = await controlled.execute(request(), { allowFixture: false });
-  assert.equal(result.cost.settledCents, 1);
+  assert.equal(result.attribution.centRecord?.settledCents, 1);
+  assert.equal(result.attribution.centRecord?.bucketName, INFERENCE_BUCKET);
   assert.deepEqual(authority.calls, [
-    'reserve:inference:test-operation',
+    `reserve:inference:test-operation:${INFERENCE_BUCKET}:1`,
     'settle:inference:test-operation:1',
   ]);
 });
@@ -164,7 +173,8 @@ test('fixture inference retries are idempotent and cannot duplicate execution or
   const retry = await executor.execute(request(), { allowFixture: true });
   assert.deepEqual(retry, first);
   assert.equal(adapter.executions, 1);
-  assert.equal(first.cost.settledCents, 0);
+  assert.equal(first.attribution.settlement, 'ZERO_COST');
+  assert.equal(first.attribution.actualCostMicros, 0);
 });
 
 test('initial four-experiment batch prepares concurrently but never publishes', async () => {
@@ -176,10 +186,18 @@ test('initial four-experiment batch prepares concurrently but never publishes', 
   const result = await runner.prepare(phaseDIntegrationFixtures(4));
   assert.equal(result.requestedExperiments, 4);
   assert.equal(result.peakConcurrency, 3);
-  assert.equal(result.ownerOperatingMinutes, 0);
+  assert.equal(result.declaredOwnerOperatingMinutes, 0);
   assert.equal(result.prepared.every((item) => item.state === 'VALUE_QA_PASS'), true);
   assert.equal(result.prepared.every((item) => item.launchGate.eligible === false), true);
   assert.equal(result.prepared.every((item) => item.costs.every((cost) => cost.settledCents === 0)), true);
+  assert.equal(result.inferenceCostMicros, 0);
+  // No owner-labour source was supplied, so the zero-labour claim is unverified
+  // and the gate says so rather than accepting the declaration.
+  assert.equal(result.observedOwnerOperatingMinutes, null);
+  assert.match(
+    result.prepared[0]?.launchGate.reasons.join(' | ') ?? '',
+    /owner operating labour has not been reconciled/,
+  );
 });
 
 test('same architecture prepares 100 independently attributed experiments with bounded concurrency', async () => {
@@ -191,7 +209,7 @@ test('same architecture prepares 100 independently attributed experiments with b
   const result = await runner.prepare(phaseDIntegrationFixtures(100));
   assert.equal(result.requestedExperiments, 100);
   assert.equal(result.peakConcurrency, 12);
-  assert.equal(result.ownerOperatingMinutes, 0);
+  assert.equal(result.declaredOwnerOperatingMinutes, 0);
   assert.equal(new Set(result.prepared.map((item) => item.experimentId)).size, 100);
   assert.equal(result.prepared.every((item) => item.state === 'VALUE_QA_PASS'), true);
   assert.equal(result.prepared.every((item) => item.launchGate.eligible === false), true);
@@ -213,4 +231,109 @@ test('one experiment failure is isolated from the rest of a concurrent batch', a
   assert.equal(result.prepared.filter((item) => item.state === 'FAILED').length, 1);
   assert.equal(result.prepared.filter((item) => item.state === 'VALUE_QA_PASS').length, 4);
   assert.match(result.prepared.find((item) => item.state === 'FAILED')?.error ?? '', /isolated fixture failure/);
+});
+
+// ---------------------------------------------------------------------------
+// §18 pre-revenue cost discipline, wired into execution rather than documented.
+// ---------------------------------------------------------------------------
+
+function costedPlan(overrides: {
+  nonInferenceMarginalCashCostUsd: number;
+  justification?: CommercialExperimentPlan['costDiscipline']['justification'];
+  ownerAuthorization?: { reference: string; authorizedAt: string };
+}): CommercialExperimentPlan[] {
+  const plans = phaseDIntegrationFixtures(1);
+  plans[0].costDiscipline = { ...overrides };
+  return plans;
+}
+
+const FULL_JUSTIFICATION = {
+  whyNoCheaperFalsification: 'No zero-cost surface exposes this denominator.',
+  whyInformationGainJustifiesIt: 'It is the only way to observe a real purchase decision.',
+  alternativeExperimentsSacrificed: 6,
+  whyConcentrateBeforeAnyRevenue: 'The result determines whether the portfolio thesis survives.',
+};
+
+test('REGRESSION: §18 refuses an above-target experiment before any provider call', async () => {
+  const adapter = new FixtureInferenceAdapter();
+  const runner = new CredentialFreeCampaignOrchestrator(
+    new MeteredInferenceExecutor(new InferenceRouter([adapter])),
+    { concurrency: 1, remainingOwnerCapitalUsd: 50 },
+  );
+  // The Etsy shop-setup mistake: 44% of the capital base for one surface.
+  const result = await runner.prepare(costedPlan({ nonInferenceMarginalCashCostUsd: 22 }));
+  const prepared = result.prepared[0];
+  assert.equal(prepared.state, 'FAILED');
+  assert.match(prepared.error ?? '', /§18 pre-revenue cost discipline refused/);
+  assert.equal(prepared.costVerdict?.allowed, false);
+  assert.equal(adapter.executions, 0, 'cost discipline must gate before the provider is called');
+  assert.equal(prepared.launchGate.eligible, false);
+});
+
+test('§18 allows a zero-cost experiment and records the verdict', async () => {
+  const runner = new CredentialFreeCampaignOrchestrator(
+    new MeteredInferenceExecutor(new InferenceRouter([new FixtureInferenceAdapter()])),
+    { concurrency: 1, remainingOwnerCapitalUsd: 50 },
+  );
+  const result = await runner.prepare(costedPlan({ nonInferenceMarginalCashCostUsd: 0 }));
+  assert.equal(result.prepared[0].state, 'VALUE_QA_PASS');
+  assert.equal(result.prepared[0].costVerdict?.allowed, true);
+  assert.equal(result.prepared[0].costVerdict?.requiresOwnerAuthorization, false);
+});
+
+test('§18 demands recorded owner authorization above 10% of remaining capital', async () => {
+  const build = (ownerAuthorization?: { reference: string; authorizedAt: string }) =>
+    new CredentialFreeCampaignOrchestrator(
+      new MeteredInferenceExecutor(new InferenceRouter([new FixtureInferenceAdapter()])),
+      { concurrency: 1, remainingOwnerCapitalUsd: 50 },
+    ).prepare(costedPlan({
+      nonInferenceMarginalCashCostUsd: 6,
+      justification: FULL_JUSTIFICATION,
+      ownerAuthorization,
+    }));
+
+  const unauthorized = (await build()).prepared[0];
+  assert.equal(unauthorized.state, 'FAILED');
+  assert.equal(unauthorized.costVerdict?.requiresOwnerAuthorization, true);
+  assert.match(unauthorized.error ?? '', /requires owner authorization/);
+
+  const authorized = (await build({ reference: 'owner-approval-7', authorizedAt: '2026-08-18T00:00:00.000Z' }))
+    .prepared[0];
+  assert.equal(authorized.state, 'VALUE_QA_PASS');
+});
+
+test('REGRESSION: observed owner labour overrides a declared zero at the launch gate', async () => {
+  const ledger = new InMemoryOwnerLaborLedger('phase-d-test-ledger');
+  const clean = await new CredentialFreeCampaignOrchestrator(
+    new MeteredInferenceExecutor(new InferenceRouter([new FixtureInferenceAdapter()])),
+    { concurrency: 2, ownerLaborSource: ledger },
+  ).prepare(phaseDIntegrationFixtures(2));
+  assert.equal(clean.observedOwnerOperatingMinutes, 0);
+  assert.equal(clean.ownerLaborReconciliation?.truthful, true);
+  assert.ok(
+    !clean.prepared[0].launchGate.reasons.some((reason) => reason.includes('owner operating labour')),
+    'a reconciled zero should not raise an owner-labour reason',
+  );
+
+  ledger.log({
+    interventionId: 'manual-publish-1',
+    occurredAt: '2026-08-18T00:00:00.000Z',
+    kind: 'OPERATING',
+    actualMinutes: 12,
+    reasonHumanRequired: 'the operator published this asset by hand',
+    isRecurring: true,
+    automatable: true,
+    unitsAffected: 1,
+    experimentIds: ['phase-d-fixture-001'],
+  });
+  const dirty = await new CredentialFreeCampaignOrchestrator(
+    new MeteredInferenceExecutor(new InferenceRouter([new FixtureInferenceAdapter()])),
+    { concurrency: 2, ownerLaborSource: ledger },
+  ).prepare(phaseDIntegrationFixtures(2));
+  assert.equal(dirty.observedOwnerOperatingMinutes, 12);
+  assert.equal(dirty.ownerLaborReconciliation?.truthful, false);
+  assert.match(
+    dirty.prepared[0].launchGate.reasons.join(' | '),
+    /declared owner operating labour is contradicted by observation/,
+  );
 });

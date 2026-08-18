@@ -128,11 +128,31 @@ export interface Artifact {
   rendererId: string;
 }
 
+export type QaMode = 'FIXTURE' | 'COMMERCIAL';
+
+/** How a Value QA criterion can legitimately be established. */
+export type ValueQaVerification = 'DETERMINISTIC' | 'MODEL_REVIEW' | 'HUMAN_EXCEPTION';
+
+export type ValueQaCriterionStatus = 'UNASSESSED' | 'PASSED' | 'FAILED';
+
+export interface ValueQaCriterionResult {
+  id: string;
+  requirement: string;
+  verification: ValueQaVerification;
+  status: ValueQaCriterionStatus;
+  evidence: string[];
+  failures: string[];
+  /** Set when the criterion was established by an owner exception rather than by check. */
+  ownerInterventionId: string | null;
+}
+
 export interface QaResult {
   passed: boolean;
   checks: string[];
   failures: string[];
-  mode: 'FIXTURE';
+  mode: QaMode;
+  /** Present for COMMERCIAL Value QA. Fixture QA does not produce criteria. */
+  criteria?: ValueQaCriterionResult[];
 }
 
 export interface Publication {

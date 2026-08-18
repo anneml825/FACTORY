@@ -85,3 +85,131 @@ export function summarizeOwnerLabor(records: readonly OwnerLaborRecord[]): Recor
   }
   return totals;
 }
+
+// ---------------------------------------------------------------------------
+// Observed-versus-declared reconciliation. Phase E remediation.
+//
+// The Phase D gate rejected a plan whose *declared* operating minutes were
+// nonzero. A plan that declares zero and costs five minutes an asset passed it
+// unchallenged. OWNER_AUTONOMY.md is explicit that reclassifying or omitting
+// real owner labour is the single easiest way to fake this metric, so the
+// declaration is now checked against the `owner_intervention` record.
+// ---------------------------------------------------------------------------
+
+export interface OwnerLaborObservation {
+  experimentIds: string[];
+  units: number;
+  observedSetupMinutes: number;
+  observedBatchApprovalMinutes: number;
+  observedExceptionMinutes: number;
+  observedOperatingMinutes: number;
+  observedMaintenanceMinutes: number;
+  windowStart: string;
+  windowEnd: string;
+  source: string;
+}
+
+export interface ObservedOwnerLaborSource {
+  observe(experimentIds: readonly string[]): Promise<OwnerLaborObservation>;
+}
+
+export interface AttributedOwnerLaborRecord extends OwnerLaborRecord {
+  /** Experiments this intervention was actually spent on. */
+  experimentIds: string[];
+}
+
+/**
+ * Minimal in-process ledger with the same shape the `owner_intervention` table
+ * exposes. A PostgreSQL-backed source implements the same interface.
+ */
+export class InMemoryOwnerLaborLedger implements ObservedOwnerLaborSource {
+  private readonly records: AttributedOwnerLaborRecord[] = [];
+
+  private readonly source: string;
+
+  constructor(source = 'in-memory-owner-labor-ledger') {
+    this.source = source;
+  }
+
+  log(record: AttributedOwnerLaborRecord): void {
+    nonNegative(record.actualMinutes, 'actualMinutes');
+    if (this.records.some((existing) => existing.interventionId === record.interventionId)) {
+      throw new Error(`Owner intervention ${record.interventionId} was logged twice.`);
+    }
+    this.records.push(structuredClone(record));
+  }
+
+  async observe(experimentIds: readonly string[]): Promise<OwnerLaborObservation> {
+    const wanted = new Set(experimentIds);
+    const relevant = this.records.filter((record) =>
+      record.experimentIds.some((id) => wanted.has(id)),
+    );
+    const total = (kind: OwnerLaborKind): number =>
+      relevant.filter((record) => record.kind === kind).reduce((sum, record) => sum + record.actualMinutes, 0);
+    const timestamps = relevant.map((record) => record.occurredAt).sort();
+    return {
+      experimentIds: [...experimentIds],
+      units: experimentIds.length,
+      observedSetupMinutes: total('SETUP'),
+      observedBatchApprovalMinutes: total('BATCH_APPROVAL'),
+      observedExceptionMinutes: total('EXCEPTION'),
+      observedOperatingMinutes: total('OPERATING'),
+      observedMaintenanceMinutes: total('MAINTENANCE_DEBUG'),
+      windowStart: timestamps[0] ?? '',
+      windowEnd: timestamps[timestamps.length - 1] ?? '',
+      source: this.source,
+    };
+  }
+}
+
+export interface OwnerLaborReconciliation {
+  truthful: boolean;
+  declaredOperatingMinutes: number;
+  observedOperatingMinutes: number;
+  observedMaintenanceMinutes: number;
+  discrepancyMinutes: number;
+  reasons: string[];
+  observation: OwnerLaborObservation;
+}
+
+/**
+ * `SETUP`, `BATCH_APPROVAL`, and `EXCEPTION` minutes are policy-acceptable when
+ * measured, and are reported rather than penalised. `OPERATING` above what the
+ * plan declared is a falsified claim. `MAINTENANCE_DEBUG` is surfaced because
+ * OWNER_AUTONOMY.md counts it against the autonomy thesis, but it does not by
+ * itself make the declaration untruthful.
+ */
+export function reconcileOwnerLabor(input: {
+  declaredOperatingMinutesPerAsset: number;
+  units: number;
+  observation: OwnerLaborObservation;
+}): OwnerLaborReconciliation {
+  nonNegative(input.declaredOperatingMinutesPerAsset, 'declaredOperatingMinutesPerAsset');
+  if (!Number.isInteger(input.units) || input.units < 1) {
+    throw new Error('Owner-labor reconciliation requires a positive integer unit count.');
+  }
+  const declared = input.declaredOperatingMinutesPerAsset * input.units;
+  const observed = input.observation.observedOperatingMinutes;
+  const reasons: string[] = [];
+  if (observed > declared) {
+    reasons.push(
+      `Plan declared ${declared} operating minute(s) across ${input.units} unit(s); ` +
+        `${observed} were actually logged (source: ${input.observation.source}).`,
+    );
+  }
+  if (input.observation.observedMaintenanceMinutes > 0) {
+    reasons.push(
+      `${input.observation.observedMaintenanceMinutes} maintenance/debug minute(s) observed; ` +
+        'these count against the autonomy thesis after COMMERCIAL_CLOCK_START.',
+    );
+  }
+  return {
+    truthful: observed <= declared,
+    declaredOperatingMinutes: declared,
+    observedOperatingMinutes: observed,
+    observedMaintenanceMinutes: input.observation.observedMaintenanceMinutes,
+    discrepancyMinutes: Math.max(0, observed - declared),
+    reasons,
+    observation: input.observation,
+  };
+}

@@ -120,6 +120,19 @@ workspace has no database service, and 0 failed. Node reported 1.445 seconds; sh
 4. Passing fixture QA is not sufficient to stage an E0 experiment. Evidence and real ARRIVE
    measurement remain independent launch gates.
 
+## Superseded by Phase E
+
+The "Cost precision finding" above understated the defect: the zero-cost fast path was keyed on
+cents, so a sub-cent paid call would have executed with **no reservation, no kill-switch check,
+and no ledger entry** — real spend outside the Capital Authority. Phase E repaired it, replaced
+the nonexistent `production` bucket with `discovery`, wired §18 into execution, and built the
+commercial Value QA contract this document's launch gate assumed. See
+`docs/PHASE_E_REMEDIATION.md`.
+
+The conclusion below — that an inference credential is not the next executable action — was
+correct, and remains correct for a different reason: publishing, not generation, was the binding
+constraint, and the edge that fixes it is built but not deployed.
+
 ## Review stop
 
 Stop here. The next phase must not begin until owner review. No inference credential is presently

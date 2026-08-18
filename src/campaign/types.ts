@@ -1,4 +1,6 @@
 import type { AssetManifest, CostRecord } from '../portfolio/types.ts';
+import type { OwnerLaborReconciliation } from '../portfolio/owner-labor.ts';
+import type { CostVerdict, ExperimentCostCase } from '../experiments/cost-discipline.ts';
 
 export type EvidenceGrade = 'E0' | 'E1';
 export type InferenceTaskKind =
@@ -51,6 +53,18 @@ export interface WatchPlan {
   crashDurable: boolean;
 }
 
+export interface CostDisciplinePlan {
+  /**
+   * Marginal cash cost of running this experiment excluding inference — listing
+   * fees, platform charges, data access, domains. EXPERIMENTAL_PROTOCOL.md §18
+   * is assessed on this plus the quoted inference cost.
+   */
+  nonInferenceMarginalCashCostUsd: number;
+  justification?: ExperimentCostCase['justification'];
+  /** Required when §18 says the spend needs owner authorization. */
+  ownerAuthorization?: { reference: string; authorizedAt: string };
+}
+
 export interface CommercialExperimentPlan {
   schemaVersion: 1;
   campaignId: string;
@@ -69,6 +83,7 @@ export interface CommercialExperimentPlan {
     exceptionMinutesPerThousand: number;
     operatingMinutesPerAsset: number;
   };
+  costDiscipline: CostDisciplinePlan;
 }
 
 export interface LaunchGateResult {
@@ -82,6 +97,9 @@ export interface PreparedExperiment {
   inferenceProviderId: string | null;
   inferenceModelId: string | null;
   costs: CostRecord[];
+  /** Exact inference cost, preserved below cent resolution. */
+  inferenceCostMicros: number;
+  costVerdict: CostVerdict | null;
   launchGate: LaunchGateResult;
   error: string | null;
 }
@@ -91,5 +109,11 @@ export interface CampaignRunResult {
   requestedExperiments: number;
   prepared: PreparedExperiment[];
   peakConcurrency: number;
-  ownerOperatingMinutes: number;
+  /** What the plans claim. Never reported on its own. */
+  declaredOwnerOperatingMinutes: number;
+  /** What `owner_intervention` actually recorded. `null` when unreconciled. */
+  observedOwnerOperatingMinutes: number | null;
+  ownerLaborReconciliation: OwnerLaborReconciliation | null;
+  inferenceCostMicros: number;
+  trancheSettledCents: number | null;
 }

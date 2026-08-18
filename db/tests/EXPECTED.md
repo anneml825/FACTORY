@@ -34,6 +34,14 @@ rejected by the database.
 cents; the ledger row survived both mutation attempts unmodified at its original 5000;
 exactly one evidence row exists — the one with provenance.
 
+## Phase E additions (verified separately)
+
+Migration 004 adds two more database-enforced protections, covered by
+`src/capital/inference-accounting.test.ts` against real PostgreSQL rather than by this SQL
+script: `inference_usage` rejects `UPDATE` and `DELETE` via `reject_inference_usage_mutation()`,
+and `inference_tranche` rejects a settlement above its reservation via
+`settlement_within_reservation`. The `db/tests/run.sh` baseline above is unchanged.
+
 ## What this does and does not establish
 
 **Does:** T7 is the load-bearing one. A model that decides to fabricate a search volume

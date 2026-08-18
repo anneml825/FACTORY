@@ -1,10 +1,11 @@
 name: Phase B Stripe sandbox probe
 
+# Manual only. The push trigger was removed in Phase E: a push to the Phase B
+# branch would have created real Stripe sandbox objects and held a 900-second
+# probe with no human asking for it. A provider probe is an action, not a
+# side effect of committing.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - codex/phase-b-stripe-test-mode
 
 permissions:
   contents: read

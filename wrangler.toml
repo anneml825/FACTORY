@@ -1,0 +1,25 @@
+# Cloudflare Worker configuration for Factory's always-on commerce edge.
+#
+# NOT DEPLOYED. No Cloudflare account exists; this file records the intended
+# deployment shape so the owner setup is a known quantity rather than a
+# discovery. Deploying it is owner setup (see OWNER_AUTONOMY.md), and the
+# download-counter binding must be D1 or a Durable Object before any real
+# checkout — KV cannot enforce a limit atomically.
+
+name = "factory-edge"
+main = "src/edge/worker.ts"
+compatibility_date = "2026-08-18"
+compatibility_flags = ["nodejs_compat"]
+
+# Free tier: 100,000 requests/day, 10 GB-month R2, free R2 egress.
+[[r2_buckets]]
+binding = "ARTIFACTS"
+bucket_name = "factory-artifacts"
+
+[[kv_namespaces]]
+binding = "EDGE_STATE"
+id = "PLACEHOLDER_UNPROVISIONED"
+
+# Secrets are set with `wrangler secret put`, never committed:
+#   STRIPE_WEBHOOK_SECRET, EDGE_DELIVERY_SECRET,
+#   EDGE_INTERNAL_TRAFFIC_TOKEN, WATCH_EVENT_SECRET

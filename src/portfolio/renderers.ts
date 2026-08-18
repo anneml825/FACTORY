@@ -42,7 +42,12 @@ export function renderShortDocument(manifest: AssetManifest): Artifact {
         `  <section>\n    <h2>${escapeHtml(section.heading)}</h2>\n    <p>${escapeHtml(section.body)}</p>\n  </section>`,
     )
     .join('\n');
-  const html = `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>${escapeHtml(source.title)}</title>\n</head>\n<body>\n  <aside>PHASE A NONCOMMERCIAL FIXTURE — NOT FOR SALE</aside>\n  <main data-experiment-id="${escapeHtml(manifest.experimentId)}">\n    <h1>${escapeHtml(source.title)}</h1>\n    <p>${escapeHtml(source.summary)}</p>\n${sections}\n  </main>\n</body>\n</html>\n`;
+  // The fixture banner exists so a fixture can never be mistaken for a product.
+  // A commercial artifact must not carry it, and functional QA checks both ways.
+  const banner = manifest.noncommercialFixture
+    ? '  <aside>PHASE A NONCOMMERCIAL FIXTURE — NOT FOR SALE</aside>\n'
+    : '';
+  const html = `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1">\n  <title>${escapeHtml(source.title)}</title>\n</head>\n<body>\n${banner}  <main data-experiment-id="${escapeHtml(manifest.experimentId)}">\n    <h1>${escapeHtml(source.title)}</h1>\n    <p>${escapeHtml(source.summary)}</p>\n${sections}\n  </main>\n</body>\n</html>\n`;
   const bytes = encoder.encode(html);
   return {
     assetId: manifest.assetId,
@@ -51,7 +56,7 @@ export function renderShortDocument(manifest: AssetManifest): Artifact {
     mediaType: 'text/html; charset=utf-8',
     bytes,
     sha256: digest(bytes),
-    rendererId: 'fixture-short-document-v1',
+    rendererId: manifest.noncommercialFixture ? 'fixture-short-document-v1' : 'short-document-v1',
   };
 }
 
@@ -63,7 +68,10 @@ export function renderSpreadsheet(manifest: AssetManifest): Artifact {
   const rows = [source.columns, ...source.rows]
     .map((row) => row.map(csvCell).join(','))
     .join('\r\n');
-  const csv = `# PHASE A NONCOMMERCIAL FIXTURE — NOT FOR SALE\r\n# experiment_id=${manifest.experimentId}\r\n${rows}\r\n`;
+  const banner = manifest.noncommercialFixture
+    ? '# PHASE A NONCOMMERCIAL FIXTURE — NOT FOR SALE\r\n'
+    : '';
+  const csv = `${banner}# experiment_id=${manifest.experimentId}\r\n${rows}\r\n`;
   const bytes = encoder.encode(csv);
   return {
     assetId: manifest.assetId,
@@ -72,7 +80,7 @@ export function renderSpreadsheet(manifest: AssetManifest): Artifact {
     mediaType: 'text/csv; charset=utf-8',
     bytes,
     sha256: digest(bytes),
-    rendererId: 'fixture-spreadsheet-csv-v1',
+    rendererId: manifest.noncommercialFixture ? 'fixture-spreadsheet-csv-v1' : 'spreadsheet-csv-v1',
   };
 }
 
@@ -84,12 +92,15 @@ export function renderAsset(manifest: AssetManifest): Artifact {
 
 export function runFunctionalQa(manifest: AssetManifest, artifact: Artifact): QaResult {
   const failures: string[] = [];
+  const fixture = manifest.noncommercialFixture;
   const checks = [
     'artifact bytes are non-empty',
     'artifact carries the manifest asset_id',
     'artifact carries the manifest experiment_id',
     'artifact checksum matches rendered bytes',
-    'fixture is visibly marked noncommercial',
+    fixture
+      ? 'fixture is visibly marked noncommercial'
+      : 'commercial artifact does not carry the noncommercial fixture marker',
   ];
   const text = new TextDecoder().decode(artifact.bytes);
   if (artifact.bytes.length === 0) failures.push(checks[0]);
@@ -98,8 +109,11 @@ export function runFunctionalQa(manifest: AssetManifest, artifact: Artifact): Qa
     failures.push(checks[2]);
   }
   if (digest(artifact.bytes) !== artifact.sha256) failures.push(checks[3]);
-  if (!manifest.noncommercialFixture || !text.includes('NONCOMMERCIAL FIXTURE')) failures.push(checks[4]);
-  return { passed: failures.length === 0, checks, failures, mode: 'FIXTURE' };
+  // The marker must be present on a fixture and absent on a commercial artifact.
+  // Both directions matter: an unmarked fixture can be mistaken for a product,
+  // and a marked product tells the buyer it is not for sale.
+  if (text.includes('NONCOMMERCIAL FIXTURE') !== fixture) failures.push(checks[4]);
+  return { passed: failures.length === 0, checks, failures, mode: fixture ? 'FIXTURE' : 'COMMERCIAL' };
 }
 
 export function runFixtureValueQa(manifest: AssetManifest): QaResult {

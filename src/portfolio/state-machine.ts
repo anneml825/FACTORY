@@ -28,6 +28,16 @@ export function assertPublicationGates(record: ExperimentRecord): void {
   if (!record.functionalQa?.passed || !record.valueQa?.passed) {
     throw new Error('Publication refused: functional QA and Value QA must both pass.');
   }
+  // A commercial manifest must have been cleared by the commercial contract,
+  // not by the fixture schema check, and must have a real arrival gate.
+  if (!record.manifest.noncommercialFixture) {
+    if (record.valueQa?.mode !== 'COMMERCIAL' || record.functionalQa?.mode !== 'COMMERCIAL') {
+      throw new Error('Publication refused: a commercial asset requires COMMERCIAL functional and Value QA.');
+    }
+    if (record.manifest.arrivalGate.mode !== 'LIVE') {
+      throw new Error('Publication refused: a commercial asset requires a LIVE arrival gate.');
+    }
+  }
   const gate = record.manifest.arrivalGate;
   if (
     gate.status !== 'PASSED' ||

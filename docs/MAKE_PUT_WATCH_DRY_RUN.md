@@ -187,7 +187,7 @@ incidents, or policy reviews remain **UNKNOWN**, are logged, and never get silen
 |---|---:|---:|---:|---:|---:|---|---|
 | **Cloudflare + Stripe Managed Payments** | **60–90 min once** | 0 | 0 | 0 | 0 | 0 scheduled; exceptional UNKNOWN | **Primary** |
 | Cloudflare + Paddle | 75–120 min once; live approval can take days | 0 | 0 | 0 | 0 | 0 scheduled; exceptional UNKNOWN | Alternate MoR |
-| Etsy Open API v3 | 45–90 min once; shop setup fee UNKNOWN | 0 | 0 | 0 | 0 | OAuth/policy exceptions UNKNOWN | Optional ARRIVE adapter |
+| Etsy Open API v3 | 45–90 min once; **one-time shop setup fee $15–29 (measured 2026-08-18)** | 0 | 0 | 0 | 0 | OAuth/policy exceptions UNKNOWN | Optional ARRIVE adapter; **fails §18 unless owner-authorized** |
 | Shopify + digital-product fulfillment | 45–90 min once | 0 | 0 | 0 | 0 | low scheduled; app/platform changes | Reject pre-revenue: $29/mo |
 | WooCommerce REST + hosting | 90–180 min once | 0 | 0 | 0 | 0 | **30–120 min/month estimated** security/plugin upkeep | Reject as first path |
 | Manual marketplace upload at 5 min/asset | 0–30 min | **5** | **50** | **500** | **5,000** | grows linearly | **Architectural failure** |
@@ -198,7 +198,7 @@ incidents, or policy reviews remain **UNKNOWN**, are logged, and never get silen
 |---|---|---|---|---|---|---|
 | Cloudflare + Stripe MP | yes | yes, API | Factory webhook + R2 | **no** | full first-party funnel + payment webhooks | $0 before sale |
 | Cloudflare + Paddle | yes | yes, API | Factory webhook + R2 | **no** | first-party funnel + Paddle webhooks/reports | $0 before sale |
-| Etsy API | Etsy | Etsy | Etsy instant download | native marketplace, magnitude unproven | paid-order webhook + financial API; impression/view API **unverified** | $0.20/listing plus unknown shop setup fee |
+| Etsy API | Etsy | Etsy | Etsy instant download | native marketplace, magnitude unproven | paid-order webhook + financial API; impression/view API **unverified** | $0.20/listing plus a **one-time $15–29 shop setup fee** |
 | Shopify | Shopify | Shopify | free digital-products app or custom webhook | **no** | orders/webhooks + store analytics | $29/month before apps |
 | WooCommerce | self-hosted | gateway-dependent | native downloadable product | **no** | orders/reports/webhooks | hosting/domain UNKNOWN |
 
@@ -220,9 +220,16 @@ The $0.20 listing fee applies whether or not an item sells, and US processing is
 addition to Etsy's 6.5% transaction fee. Sources: [fee basics](https://help.etsy.com/hc/en-us/articles/360035902374-Etsy-Fee-Basics),
 [payment processing](https://help.etsy.com/hc/en-us/articles/115015628847-What-are-Payment-Processing-Fees-for-Selling-on-Etsy).
 
+**Etsy's one-time shop setup fee is $15–29, not unknown.** That figure was established on
+2026-08-18 and is the reason `EXPERIMENTAL_PROTOCOL.md` §18 exists: it is 30–59% of the entire
+$50 reserve for access to one distribution surface. A later revision of this document downgraded
+the measured figure to "UNKNOWN", which quietly discarded established evidence and made the
+option look cheaper than it is. Restored 2026-08-19. Do not re-downgrade a measured cost to
+UNKNOWN; if it is believed to have changed, re-measure it and say when.
+
 Etsy therefore solves PUT and contributes ARRIVE, but it cannot become the primary Campaign
-until Factory verifies a programmatic exposure/visit denominator. Marketplace presence is not
-a distribution result.
+until Factory verifies a programmatic exposure/visit denominator, and its setup fee must clear
+§18 with recorded owner authorization first. Marketplace presence is not a distribution result.
 
 ---
 

@@ -1,25 +1,127 @@
-# Agent handoff — Phase D credential-free checkpoint
+# Agent handoff — Phase E remediation checkpoint
 
-**Date:** 2026-08-18
+**Date:** 2026-08-19
 
-**Branch:** `codex/phase-d-credential-free`
+**Branch:** `claude/factory-phase-e-remediation`, based on Codex `codex/phase-d-credential-free`
+(`5d34716`), which is **unmodified**.
 
-**Status:** Phase B real-provider proof `PASS`. Phase C controlled engineering proof `DONE`.
-Phase D credential-free campaign/inference infrastructure `DONE`. Genuine commercial ARRIVE and
-metered MAKE remain `UNPROVEN`; no stranger exposure or commercial launch is claimed.
+**Status:** Phase A fixture, Phase B real Stripe sandbox, and Phase C controlled engineering
+proofs stand unchanged. Phase D credential-free campaign/inference infrastructure stands, with
+four defects repaired. Phase E adds the always-on commerce edge. **Genuine commercial ARRIVE,
+metered MAKE, and any commercial claim remain UNPROVEN.**
 
-**Cash spent:** $0.00
+**Cash spent:** $0.00 · **Owner capital consumed:** $0.00 · **Kill switch:** engaged
 
-**External Phase C action:** run `32185055925` created one temporary DEV fixture, retrieved its
-analytics, propagated one ARRIVE reference into one fulfilled USD 12.00 Stripe sandbox owner-test
-transaction, recorded zero eligible commercial revenue, and automatically deactivated both
-surfaces. Direct checks returned DEV 404 and Stripe “The link is no longer active.” No real money.
+**Nothing commercial happened in Phase E.** No product, buyer, problem, offer, niche, listing,
+arrival mechanism, inference provider, credential, account, deployment, or capital.
 
-**Metered MAKE / credentials / commercial launch:** prohibited until the owner reviews this Phase D closeout
+## Phase E remediation checkpoint
 
-## Phase D credential-free checkpoint
+Read `docs/PHASE_E_REMEDIATION.md` first.
 
-Read `docs/PHASE_D_CREDENTIAL_FREE.md` first.
+An independent read-only review of Phase D found four defects. All four are repaired and each
+has a regression test that reproduces the original failure:
+
+1. **No always-on internet-facing component.** Not a product page, not a webhook receiver
+   outside a CI job, not a way to deliver a purchased file — `ProviderTestFulfillment` was an
+   interface with a test stub, and there was no hosting code anywhere. This, not inference, was
+   the binding constraint on a first dollar. `src/edge/` supplies it.
+2. **A sub-cent inference cost would have bypassed the Capital Authority entirely.**
+   `CostController` branched on `maximumCents === 0`, and a real adapter quoting $0.00021 rounds
+   to zero. Real money, no reservation, no kill-switch check, no ledger entry. Now keyed on
+   micros.
+3. **§18 pre-revenue cost discipline was dead code.** `assessExperimentCost` was referenced only
+   by its own self-test. It now runs before any provider call.
+4. **Value QA could not fail anything.** It checked non-empty strings and a positive price, and
+   required `noncommercialFixture: true` so it could never run on a product.
+
+Also repaired: the hard-coded `production` bucket (which does not exist in the schema — every
+metered reservation would have failed), the declared-not-observed owner-labour gate, the Phase B
+workflow's push trigger, and the silent downgrade of Etsy's measured $15–29 setup fee to
+"UNKNOWN".
+
+### The edge
+
+One WHATWG `fetch` handler behind provider-neutral ports, run unchanged by a Node HTTP adapter
+(tested) and by a Cloudflare Worker entry (**not deployed, not verified**).
+
+```
+GET  /p/:experimentId    product page + first-party PRODUCT_VIEW
+POST /e/:experimentId    offer-interaction beacon
+GET  /buy/:experimentId  first-party buy click -> 302 to Stripe with client_reference_id
+POST /webhooks/stripe    signed webhook -> fulfillment -> delivery grant
+GET  /thanks?ref=        post-payment page carrying the signed download link
+GET  /d/:token           signed, expiring, use-limited artifact delivery
+```
+
+**The edge never emits `QUALIFIED_EXPOSURE`.** It counts views of its own page; it cannot know
+an appropriate stranger was exposed. Do not change this. What it supplies is the product-view
+denominator Phase C could not get from a provider. Its `CHECKOUT_STARTED` is labelled in its own
+`reason` field as a first-party buy click, permanently, so it can never be confused with
+Stripe's `checkout.session.created`.
+
+**Commercial serving is off by default** (`allowCommercialListings: false` → 403).
+
+### Accounting rules the next agent must not undo
+
+- Micro-dollars are authoritative; the cent ceiling is derived. An adapter asserting its own
+  disagreeing cent figure is rejected.
+- The zero-cost path is keyed on **micros**. Never re-key it on cents.
+- Reserve `ceil(micros/10,000)` cents per tranche; settle `ceil(sum(micros)/10,000)` **once**.
+  Per-call ceiling would bill 100 cents for $0.021 of inference.
+- Metered inference draws on **`discovery`**, not `validation` (`CONSTITUTION.md` §7:
+  search-and-make spend must not consume the money reserved for buying a denominator).
+
+### Verification
+
+```bash
+npm test                      # 93 tests, 0 skipped, with TEST_DATABASE_URL set
+npx tsc --noEmit
+DATABASE_URL=... ./db/tests/run.sh
+DATABASE_URL=... npx tsx src/capital/authority.test.ts
+```
+
+Measured on 2026-08-19 against local PostgreSQL 16: **93 passed, 0 failed, 0 skipped**, Node
+duration 1.196 s. Capital Authority 19/19. Database invariants unchanged: 10 constitutional
+violations rejected, valid operations succeeded. TypeScript and `git diff --check` clean.
+
+The complete fixture commerce path is exercised **over real HTTP against real PostgreSQL**,
+including tearing the edge down mid-flight and rebuilding it: page → cookie → beacon → buy click
+→ signed webhook → fulfillment → grant → thanks page → signed download → durable WATCH, with the
+funnel replayed from the database, the redelivered webhook refusing to re-fulfill, the download
+limit holding under 12 concurrent requests, and the transaction permanently `OWNER_TEST` at zero
+eligible revenue.
+
+### Still unverified after Phase E
+
+- **The Cloudflare deployment.** `worker.ts` and `wrangler.toml` have never run. The handler is
+  shared with the tested Node adapter, so what is unverified is the binding translation, not the
+  commerce logic. `KvEdgeStateStore.consumeDownload` **throws by design**: KV cannot enforce a
+  download limit atomically. Bind D1 or a Durable Object before serving a real download.
+- **Live Stripe.** Sandbox only.
+- **Commercial ARRIVE.** Unchanged from Phase C: unproven, and the hardest remaining problem.
+- **MAKE quality.** The commercial Value QA contract exists and can fail things. Whether Factory
+  can produce an artifact that passes it honestly is untested, because no artifact has been
+  generated.
+
+### Owner setup that Phase E did not request
+
+Cloudflare account + API token (10–15 min) and R2/D1 provisioning + four Worker secrets
+(5–10 min), recorded as E1–E2 in `OWNER_AUTONOMY.md`. Not requested, on the same rule that
+deferred the inference credential: ask when the next agent will consume it immediately.
+
+### Stop condition observed
+
+Product #1 belongs to Codex. Phase E generated no product, selected no niche, performed no
+market research, chose no inference provider, requested no credential, created no account,
+deployed nothing, published nothing, and spent nothing.
+
+---
+
+## Phase D credential-free checkpoint (historical — see Phase E for repairs)
+
+Read `docs/PHASE_D_CREDENTIAL_FREE.md` first. Four findings below were superseded by Phase E;
+each is annotated in place.
 
 Implemented without credentials or spend:
 
@@ -36,7 +138,10 @@ Implemented without credentials or spend:
 - four-plan integration batch plus a 100-plan scale simulation.
 
 Measured local simulation: 4/4 prepared in 13.174 ms at peak concurrency 3; 100/100 prepared in
-74.254 ms at peak concurrency 12. Both reported zero launch eligibility, zero settled cost, and
+74.254 ms at peak concurrency 12. **These numbers measure local event-loop throughput over
+cloned fixtures with a zero-cost adapter.** Real portfolio concurrency will be bounded by
+provider rate limits and platform policy, neither of which any run has exercised; do not cite
+them as scaling evidence. Both reported zero launch eligibility, zero settled cost, and
 zero owner operating minutes. These are deterministic local measurements, not provider/model
 benchmarks or commercial evidence.
 
@@ -47,6 +152,10 @@ shell wall time 1.771 seconds. TypeScript, runner syntax, and whitespace checks 
 Important finding: routing prices use integer micro-dollars, but Capital Authority settles cents.
 Before any metered adapter is enabled, implement/review exact usage persistence plus batch/provider
 reconciliation so sub-cent calls are neither rounded down nor each charged as a full cent.
+
+> **RESOLVED IN PHASE E**, and it was worse than described here: the zero-cost fast path was
+> keyed on cents, so a sub-cent paid call would have executed with no reservation, no
+> kill-switch check, and no ledger entry at all. See `docs/PHASE_E_REMEDIATION.md`.
 
 No provider-specific credential name is embedded in the new contract. Do not default to Anthropic
 or request any inference credential merely because this layer exists.
@@ -238,7 +347,14 @@ accounting. GitHub Actions run `32185055925` verified it against PostgreSQL.
 
 ## Stop condition
 
-Phase D credential-free implementation is closed for owner review. Stop here. Do not select or
-request an inference-provider credential, enable a metered adapter, generate a commercial product,
-create a live storefront, run another DEV fixture, spend capital, or launch commercially without
-new owner authorization.
+**Current, as of the Phase E remediation checkpoint.** Stop here. Do not generate a commercial
+product, design the first experiment batch, generate further H0 candidates, perform product or
+niche market research, enable a metered adapter, select an inference provider, request any
+credential, deploy the edge, activate live Stripe, run another DEV fixture, spend capital, or
+launch commercially without new owner authorization.
+
+Product #1 and the first real commercial MAKE/ARRIVE campaign belong to the next engineering
+agent, after this remediation has been reviewed.
+
+The earlier Phase D stop condition said the same about metered MAKE and remains in force; Phase E
+changed only which defect is next, not the permission boundary.

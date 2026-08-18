@@ -118,6 +118,22 @@ other human execution that scales with normal revenue are not ARRIVE adapters. T
 
 ---
 
+## Factory now owns its own denominator
+
+Phase E added an always-on edge (`ARCHITECTURE.md` ADR-5). Every ARRIVE mechanism, present and
+future, can now point at a Factory-owned page that counts product views, offer interactions,
+and buy clicks the moment they happen.
+
+This matters because Phase C proved the alternative does not work: DEV's article counter did
+not register a controlled browser load within ten minutes, and Stripe's
+`checkout.session.created` never produced usable attribution. Depending on a provider's own
+analytics for the denominator is depending on an instrument nobody has verified.
+
+**This is not distribution.** The edge measures arrival at the page. It does not cause it, and
+it does not establish that the arrivals were appropriate strangers — the edge deliberately
+never emits `QUALIFIED_EXPOSURE` for exactly that reason. A page nobody reaches counts zero,
+honestly and immediately, which is the point.
+
 ## What is explicitly not solved
 
 Recorded plainly so no later document can imply otherwise:

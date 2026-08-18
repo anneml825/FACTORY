@@ -124,6 +124,8 @@ The goal is that an agent which *decides* to violate a financial rule still fail
   src/experiments/           Campaign, experiment lifecycle, gates
   src/portfolio/             Phase A MAKE / PUT / ARRIVE / WATCH contracts and fixture harness
   src/campaign/              complete experiment plans, provider-neutral inference, Phase D runner
+  src/edge/                  always-on commerce edge: product page, first-party measurement,
+                             webhook reception, signed post-payment delivery
   src/workers/               scout, analyst, producer, qa, publisher, measurement, …
   src/adapters/              external services behind interfaces
   src/dashboard/             owner check-in renderer
@@ -186,9 +188,39 @@ profile with task capabilities, quality score, micro-dollar token prices, creden
 and fixture-only status. Routing chooses the cheapest available model that satisfies the task and
 quality threshold. Any nonzero quote is mediated by Capital Authority before provider execution.
 
-The financial ledger remains cent-denominated. Exact inference attribution is sub-cent, so a
-metered adapter may not be enabled until a reviewed batching/reconciliation policy preserves exact
-usage without rounding every call up or down. See `docs/PHASE_D_CREDENTIAL_FREE.md`.
+The financial ledger remains cent-denominated. Exact inference attribution is sub-cent, which
+Phase E resolved: micro-dollars are authoritative at the quote/settle boundary, the zero-cost
+fast path is keyed on micros so a sub-cent paid call cannot bypass the Capital Authority, one
+whole-cent reservation covers a tranche of calls, exact usage is journalled append-only, and
+settlement rounds the AGGREGATE once. Metered inference draws on the `discovery` bucket
+(`CONSTITUTION.md` §7: search-and-make spend must not consume validation capital). See
+`docs/PHASE_E_REMEDIATION.md`.
+
+### ADR-5 — The always-on commerce edge
+
+Phase D had no internet-facing component: no product page, no webhook receiver outside a CI
+job, and no way to deliver a purchased file. Stripe hosts checkout only; GitHub Actions is a
+batch runner, not a listener. That, not inference, was the binding constraint on a first dollar.
+
+`src/edge/` is one WHATWG `fetch` handler behind provider-neutral ports (`ObjectStore`,
+`EdgeStateStore`, `CatalogStore`), run by a Node HTTP adapter in tests and CI and by a
+Cloudflare Worker in the intended deployment. It supersedes the ADR-1 assumption that
+merchant-of-record pages remove the need for hosting: MoR pages give no first-party
+measurement and no artifact delivery.
+
+Two properties are load-bearing:
+
+- **The edge never emits `QUALIFIED_EXPOSURE`.** It counts views of its own page. Claiming that
+  an appropriate stranger was exposed remains the ARRIVE adapter's job and the Stranger Arrival
+  Test's gate. What the edge supplies is the product-view denominator that Phase C's provider
+  analytics could not deliver in time.
+- **Commercial serving is off by default.** A listing that is not a noncommercial fixture is
+  refused with 403 unless commercial mode is explicitly enabled.
+
+Delivery is a signed, expiring, use-limited grant minted only after a webhook-confirmed
+payment, persisted so a restart cannot void a completed purchase. The Cloudflare KV state store
+deliberately **throws** on the download counter: KV cannot enforce a limit atomically, and a
+real deployment must bind D1 or a Durable Object first.
 
 **Workers are built when the milestone needs them**, not up front. A swarm of agents with
 nothing verified to do is exactly what the Bootstrap Instructions forbid.

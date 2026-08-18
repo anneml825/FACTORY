@@ -1,5 +1,6 @@
 import { assertPublicationGates, transition } from './state-machine.ts';
 import { runFixtureValueQa, runFunctionalQa } from './renderers.ts';
+import { runCommercialValueQa, type CommercialValueQaInput } from './commercial-value-qa.ts';
 import { evaluateExperiment } from './evaluator.ts';
 import type { ArriveAdapter, MakeAdapter, PutAdapter, WatchAdapter } from './ports.ts';
 import { CostController } from './cost-control.ts';
@@ -8,6 +9,7 @@ import type {
   CostRecord,
   ExperimentRecord,
   Publication,
+  QaMode,
   SignedEventEnvelope,
 } from './types.ts';
 
@@ -18,6 +20,12 @@ export class PhaseAEngine {
   private readonly watch: WatchAdapter;
   private readonly costs: CostController;
   private readonly records = new Map<string, ExperimentRecord>();
+  /**
+   * FIXTURE is the default and is what every Phase A-D caller gets. COMMERCIAL
+   * unlocks real manifests, and every gate it relaxes is replaced by a stricter
+   * one: commercial Value QA, a LIVE arrival gate, and no fixture marker.
+   */
+  readonly mode: QaMode;
 
   constructor(dependencies: {
     make: MakeAdapter;
@@ -25,20 +33,25 @@ export class PhaseAEngine {
     arrive: ArriveAdapter;
     watch: WatchAdapter;
     costs?: CostController;
+    mode?: QaMode;
   }) {
     this.make = dependencies.make;
     this.put = dependencies.put;
     this.arrive = dependencies.arrive;
     this.watch = dependencies.watch;
     this.costs = dependencies.costs ?? new CostController();
+    this.mode = dependencies.mode ?? 'FIXTURE';
   }
 
   register(manifest: AssetManifest): ExperimentRecord {
     if (this.records.has(manifest.experimentId)) {
       throw new Error(`Experiment already registered: ${manifest.experimentId}.`);
     }
-    if (!manifest.noncommercialFixture) {
+    if (this.mode === 'FIXTURE' && !manifest.noncommercialFixture) {
       throw new Error('Phase A refuses manifests that are not explicitly noncommercial fixtures.');
+    }
+    if (this.mode === 'COMMERCIAL' && manifest.noncommercialFixture) {
+      throw new Error('The COMMERCIAL engine refuses noncommercial fixture manifests.');
     }
     const record: ExperimentRecord = {
       manifest: structuredClone(manifest),
@@ -95,10 +108,34 @@ export class PhaseAEngine {
     return record;
   }
 
-  valueQa(experimentId: string): ExperimentRecord {
+  /**
+   * In COMMERCIAL mode the caller must supply the evidence the commercial
+   * contract requires. Omitting it fails closed; there is no "assume it passed"
+   * branch, because that is precisely how a Value QA gate becomes decorative.
+   */
+  valueQa(
+    experimentId: string,
+    commercial?: Omit<CommercialValueQaInput, 'manifest' | 'artifact'>,
+  ): ExperimentRecord {
     const record = this.get(experimentId);
     if (record.state !== 'FUNCTIONAL_QA_PASS') {
       throw new Error('Value QA requires FUNCTIONAL_QA_PASS state.');
+    }
+    if (this.mode === 'COMMERCIAL') {
+      if (!record.artifact) throw new Error('Commercial Value QA requires a rendered artifact.');
+      if (!commercial) {
+        throw new Error('Commercial Value QA requires the commercial evidence bundle; refusing to pass by default.');
+      }
+      record.valueQa = runCommercialValueQa({
+        ...commercial,
+        manifest: record.manifest,
+        artifact: record.artifact,
+      });
+      if (!record.valueQa.passed) {
+        throw new Error(`Commercial Value QA failed: ${record.valueQa.failures.join(' | ')}`);
+      }
+      transition(record, 'VALUE_QA_PASS', 'mandatory commercial Value QA passed');
+      return record;
     }
     record.valueQa = runFixtureValueQa(record.manifest);
     if (!record.valueQa.passed) throw new Error('Fixture Value QA failed.');
@@ -133,8 +170,11 @@ export class PhaseAEngine {
 
   async publish(experimentId: string, idempotencyKey: string): Promise<Publication> {
     const record = this.get(experimentId);
-    if (this.put.mode === 'LIVE') {
+    if (this.put.mode === 'LIVE' && this.mode !== 'COMMERCIAL') {
       throw new Error('Fixture engine refuses LIVE PUT adapters.');
+    }
+    if (this.mode === 'COMMERCIAL' && this.put.mode !== 'LIVE') {
+      throw new Error('The COMMERCIAL engine refuses a non-LIVE PUT adapter.');
     }
     if (this.put.mode === 'PROVIDER_TEST' && !record.manifest.noncommercialFixture) {
       throw new Error('Provider-test publication requires an explicitly noncommercial fixture.');

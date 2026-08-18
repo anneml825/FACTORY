@@ -231,5 +231,7 @@ instrument.
 
 The next commercial experiment must start from a real `BUYER + PROBLEM + OFFER` and choose an
 appropriate ARRIVE adapter concurrently with MAKE and PUT. It needs a reliable first-party redirect
-or comparable event source if per-visit attribution matters. Phase D, metered MAKE, and any request
+or comparable event source if per-visit attribution matters — **Phase E built exactly that**: the
+Factory-owned edge counts product views, offer interactions, and buy clicks the moment they
+happen, for any adapter, without depending on a provider's own analytics timeliness. Phase D, metered MAKE, and any request
 for `ANTHROPIC_API_KEY` remain outside this closeout and require owner review.
