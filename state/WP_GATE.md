@@ -1,6 +1,6 @@
 # Data Economics Gate — WordPress search space
 
-**Run:** 2026-08-18T01:02:49.268Z  
+**Run:** 2026-08-18T12:05:10.786Z  
 **Candidates:** 60 WordPress-native, stratified  
 **Cost:** $0.00  
 
@@ -16,7 +16,7 @@
 | Check | Value | Threshold | Result |
 |---|---|---|---|
 | coverage | 1.00 | 0.6 | PASS |
-| distinctCount | 25.00 | 15 | PASS |
+| distinctCount | 26.00 | 15 | PASS |
 | stratumSeparation | 50.00 | 5 | PASS |
 | zeroShare | 0.13 | 0.4 | PASS |
 | modeShare | 0.13 | 0.4 | PASS |
@@ -50,7 +50,7 @@
 | HEAD | sitemap | 10,000,000 |
 | HEAD | user registration | 200,000 |
 | HEAD | multilingual translation | 900,000 |
-| HEAD | gallery slider | 2,000,000 |
+| HEAD | gallery slider | 800,000 |
 | HEAD | custom fields | 2,000,000 |
 | HEAD | ecommerce store | 10,000,000 |
 | HEAD | booking appointments | 90,000 |

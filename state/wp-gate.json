@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T01:02:49.298Z",
+  "runAt": "2026-08-18T12:05:11.170Z",
   "criteria": {
     "minCoverage": 0.6,
     "maxCostPerCandidateUsd": 0.02,
@@ -20,7 +20,7 @@
       "pass": true
     },
     "distinctCount": {
-      "value": 25,
+      "value": 26,
       "threshold": 15,
       "pass": true
     },
@@ -147,7 +147,7 @@
       "id": "wh17",
       "term": "gallery slider",
       "stratum": "HEAD",
-      "value": 2000000
+      "value": 800000
     },
     {
       "id": "wh18",

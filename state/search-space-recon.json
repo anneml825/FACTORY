@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T01:05:26.902Z",
+  "runAt": "2026-08-18T12:06:19.455Z",
   "probeTerms": [
     "backup",
     "invoice",
@@ -16,6 +16,148 @@
   ],
   "results": [
     {
+      "id": "shopify_app_store",
+      "name": "Shopify App Store",
+      "signal": "matching app listings and their review counts",
+      "arrivalMechanism": "App Store search, and in-admin app discovery inside every Shopify store",
+      "monetizationNorm": "PAID_NORMAL",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 0.08333333333333333,
+      "zeroShare": 0,
+      "medianValue": 24,
+      "medianLatencyMs": 154,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 24
+        },
+        {
+          "term": "invoice",
+          "value": 24
+        },
+        {
+          "term": "booking calendar",
+          "value": 24
+        },
+        {
+          "term": "seo",
+          "value": 24
+        },
+        {
+          "term": "inventory",
+          "value": 24
+        },
+        {
+          "term": "form builder",
+          "value": 24
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 24
+        },
+        {
+          "term": "image optimization",
+          "value": 24
+        },
+        {
+          "term": "membership",
+          "value": 24
+        },
+        {
+          "term": "csv import",
+          "value": 24
+        },
+        {
+          "term": "time tracking",
+          "value": 24
+        },
+        {
+          "term": "pdf export",
+          "value": 24
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Strongest monetization of any candidate: Shopify Billing API charges merchants directly, Factory keeps 100% of the first $1M, and there is NO merchant of record to set up and NO payout threshold to clear. Buyers are businesses with revenue. Costs $19 one-time to register. Open question probed here: is there ANY free quantitative signal to screen with?"
+    },
+    {
+      "id": "firefox_addons",
+      "name": "Firefox Add-ons (AMO)",
+      "signal": "average daily users per add-on — a REAL usage number, rare among public catalogues",
+      "arrivalMechanism": "addons.mozilla.org search",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 0.9166666666666666,
+      "zeroShare": 0,
+      "medianValue": 17797,
+      "medianLatencyMs": 253,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 6663
+        },
+        {
+          "term": "invoice",
+          "value": 210664
+        },
+        {
+          "term": "booking calendar",
+          "value": 36104
+        },
+        {
+          "term": "seo",
+          "value": 12339
+        },
+        {
+          "term": "inventory",
+          "value": 8809
+        },
+        {
+          "term": "form builder",
+          "value": 17797
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 46
+        },
+        {
+          "term": "image optimization",
+          "value": 64205
+        },
+        {
+          "term": "membership",
+          "value": 6722
+        },
+        {
+          "term": "csv import",
+          "value": 78289
+        },
+        {
+          "term": "time tracking",
+          "value": 17797
+        },
+        {
+          "term": "pdf export",
+          "value": 3986
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Included as an EVIDENCE CONTROL, not a candidate. AMO publishes true daily-user counts, so it shows what a high-quality catalogue signal looks like. Monetization is near zero, so it cannot be selected — it exists here to calibrate the others."
+    },
+    {
       "id": "wordpress_plugins",
       "name": "WordPress.org plugin directory",
       "signal": "active installs + total downloads + rating for matching plugins",
@@ -29,7 +171,7 @@
       "distinctValueRatio": 0.5833333333333334,
       "zeroShare": 0,
       "medianValue": 5000000,
-      "medianLatencyMs": 13,
+      "medianLatencyMs": 301,
       "httpStatuses": {
         "200": 12
       },
@@ -99,27 +241,27 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 19625,
-      "medianLatencyMs": 678,
+      "medianValue": 19629,
+      "medianLatencyMs": 799,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 19601
+          "value": 19603
         },
         {
           "term": "invoice",
-          "value": 72
+          "value": 73
         },
         {
           "term": "booking calendar",
-          "value": 44002
+          "value": 44008
         },
         {
           "term": "seo",
-          "value": 4494
+          "value": 4495
         },
         {
           "term": "inventory",
@@ -127,15 +269,15 @@
         },
         {
           "term": "form builder",
-          "value": 70868998
+          "value": 70883575
         },
         {
           "term": "analytics dashboard",
-          "value": 97346
+          "value": 97355
         },
         {
           "term": "image optimization",
-          "value": 4206422
+          "value": 4207161
         },
         {
           "term": "membership",
@@ -143,15 +285,15 @@
         },
         {
           "term": "csv import",
-          "value": 23139690
+          "value": 23153912
         },
         {
           "term": "time tracking",
-          "value": 19625
+          "value": 19629
         },
         {
           "term": "pdf export",
-          "value": 2706
+          "value": 2707
         }
       ],
       "failureDetail": null,
@@ -171,7 +313,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1072,
-      "medianLatencyMs": 108,
+      "medianLatencyMs": 144,
       "httpStatuses": {
         "200": 12
       },
@@ -182,7 +324,7 @@
         },
         {
           "term": "invoice",
-          "value": 98
+          "value": 99
         },
         {
           "term": "booking calendar",
@@ -198,11 +340,11 @@
         },
         {
           "term": "form builder",
-          "value": 1339
+          "value": 1340
         },
         {
           "term": "analytics dashboard",
-          "value": 1392
+          "value": 1394
         },
         {
           "term": "image optimization",
@@ -214,15 +356,15 @@
         },
         {
           "term": "csv import",
-          "value": 1558
+          "value": 1560
         },
         {
           "term": "time tracking",
-          "value": 3141
+          "value": 3142
         },
         {
           "term": "pdf export",
-          "value": 1448
+          "value": 1451
         }
       ],
       "failureDetail": null,
@@ -241,21 +383,21 @@
       "coverage": 0.25,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 163,
-      "medianLatencyMs": 21,
+      "medianValue": 164,
+      "medianLatencyMs": 30,
       "httpStatuses": {
         "200": 3,
-        "404": 1,
-        "429": 8
+        "404": 4,
+        "429": 5
       },
       "values": [
         {
           "term": "backup",
-          "value": 163
+          "value": 164
         },
         {
           "term": "invoice",
-          "value": 458
+          "value": 456
         },
         {
           "term": "booking calendar",
@@ -263,7 +405,7 @@
         },
         {
           "term": "seo",
-          "value": 32
+          "value": 31
         },
         {
           "term": "inventory",
@@ -298,7 +440,7 @@
           "value": null
         }
       ],
-      "failureDetail": "HTTP 429",
+      "failureDetail": "HTTP 404",
       "notes": "Free API. Same monetization weakness as npm — paying for a Python library is unusual."
     },
     {
@@ -315,7 +457,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 7294943,
-      "medianLatencyMs": 47,
+      "medianLatencyMs": 316,
       "httpStatuses": {
         "200": 1
       },
@@ -342,7 +484,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1411650,
-      "medianLatencyMs": 84,
+      "medianLatencyMs": 107,
       "httpStatuses": {
         "200": 12
       },
@@ -365,7 +507,7 @@
         },
         {
           "term": "inventory",
-          "value": 1276056
+          "value": 1276795
         },
         {
           "term": "form builder",
@@ -381,7 +523,7 @@
         },
         {
           "term": "membership",
-          "value": 118425
+          "value": 118633
         },
         {
           "term": "csv import",
@@ -389,7 +531,7 @@
         },
         {
           "term": "time tracking",
-          "value": 882737
+          "value": 883838
         },
         {
           "term": "pdf export",
@@ -412,23 +554,23 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 43733,
-      "medianLatencyMs": 96,
+      "medianValue": 43965,
+      "medianLatencyMs": 227,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 86648
+          "value": 86686
         },
         {
           "term": "invoice",
-          "value": 1308
+          "value": 1316
         },
         {
           "term": "booking calendar",
-          "value": 3146
+          "value": 3183
         },
         {
           "term": "seo",
@@ -436,23 +578,23 @@
         },
         {
           "term": "inventory",
-          "value": 115213818
+          "value": 115386578
         },
         {
           "term": "form builder",
-          "value": 2576662
+          "value": 2577969
         },
         {
           "term": "analytics dashboard",
-          "value": 20352
+          "value": 20353
         },
         {
           "term": "image optimization",
-          "value": 61705
+          "value": 61706
         },
         {
           "term": "membership",
-          "value": 799383
+          "value": 799557
         },
         {
           "term": "csv import",
@@ -460,7 +602,7 @@
         },
         {
           "term": "time tracking",
-          "value": 43733
+          "value": 43965
         },
         {
           "term": "pdf export",
@@ -476,39 +618,38 @@
       "signal": "GitHub stars on integration repos as a usage proxy",
       "arrivalMechanism": "HACS in-app browser inside Home Assistant installs",
       "monetizationNorm": "MOSTLY_FREE",
-      "reachable": true,
-      "requiresAuth": false,
+      "reachable": false,
+      "requiresAuth": true,
       "termsAttempted": 12,
-      "termsWithValue": 9,
-      "coverage": 0.75,
-      "distinctValueRatio": 0.8888888888888888,
-      "zeroShare": 0.1111111111111111,
-      "medianValue": 10,
-      "medianLatencyMs": 9417,
+      "termsWithValue": 0,
+      "coverage": 0,
+      "distinctValueRatio": 0,
+      "zeroShare": 0,
+      "medianValue": null,
+      "medianLatencyMs": 19,
       "httpStatuses": {
-        "200": 10,
-        "504": 2
+        "403": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 3560
+          "value": null
         },
         {
           "term": "invoice",
-          "value": 853
+          "value": null
         },
         {
           "term": "booking calendar",
-          "value": 2
+          "value": null
         },
         {
           "term": "seo",
-          "value": 10
+          "value": null
         },
         {
           "term": "inventory",
-          "value": 44
+          "value": null
         },
         {
           "term": "form builder",
@@ -516,19 +657,19 @@
         },
         {
           "term": "analytics dashboard",
-          "value": 245
+          "value": null
         },
         {
           "term": "image optimization",
-          "value": 0
+          "value": null
         },
         {
           "term": "membership",
-          "value": 1
+          "value": null
         },
         {
           "term": "csv import",
-          "value": 1
+          "value": null
         },
         {
           "term": "time tracking",
@@ -539,7 +680,7 @@
           "value": null
         }
       ],
-      "failureDetail": "HTTP 504",
+      "failureDetail": "HTTP 403 — authentication or policy required",
       "notes": "Prosumer audience that already spends money on hardware, which is unusual among the code-adjacent spaces. Stars are a weak usage proxy."
     }
   ]
