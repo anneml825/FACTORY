@@ -1,0 +1,545 @@
+{
+  "runAt": "2026-08-18T00:44:47.984Z",
+  "probeTerms": [
+    "backup",
+    "invoice",
+    "booking calendar",
+    "seo",
+    "inventory",
+    "form builder",
+    "analytics dashboard",
+    "image optimization",
+    "membership",
+    "csv import",
+    "time tracking",
+    "pdf export"
+  ],
+  "results": [
+    {
+      "id": "wordpress_plugins",
+      "name": "WordPress.org plugin directory",
+      "signal": "active installs + total downloads + rating for matching plugins",
+      "arrivalMechanism": "WordPress.org plugin directory search, and the in-admin plugin search inside every WordPress site",
+      "monetizationNorm": "FREEMIUM_NORMAL",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 0.5833333333333334,
+      "zeroShare": 0,
+      "medianValue": 5000000,
+      "medianLatencyMs": 309,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 3000000
+        },
+        {
+          "term": "invoice",
+          "value": 300000
+        },
+        {
+          "term": "booking calendar",
+          "value": 70000
+        },
+        {
+          "term": "seo",
+          "value": 10000000
+        },
+        {
+          "term": "inventory",
+          "value": 7000000
+        },
+        {
+          "term": "form builder",
+          "value": 5000000
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 5000000
+        },
+        {
+          "term": "image optimization",
+          "value": 7000000
+        },
+        {
+          "term": "membership",
+          "value": 300000
+        },
+        {
+          "term": "csv import",
+          "value": 100000
+        },
+        {
+          "term": "time tracking",
+          "value": 10000000
+        },
+        {
+          "term": "pdf export",
+          "value": 300000
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Open documented API, no key. Freemium (free plugin in directory, paid upgrade off-site) is the established norm, so evidence and monetization may both be available."
+    },
+    {
+      "id": "vscode_extensions",
+      "name": "VS Code Marketplace",
+      "signal": "install count for matching extensions",
+      "arrivalMechanism": "Marketplace search, and the in-editor extension search inside every VS Code install",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 1,
+      "zeroShare": 0,
+      "medianValue": 19625,
+      "medianLatencyMs": 636,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 19601
+        },
+        {
+          "term": "invoice",
+          "value": 72
+        },
+        {
+          "term": "booking calendar",
+          "value": 44002
+        },
+        {
+          "term": "seo",
+          "value": 4494
+        },
+        {
+          "term": "inventory",
+          "value": 125
+        },
+        {
+          "term": "form builder",
+          "value": 70868756
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 97344
+        },
+        {
+          "term": "image optimization",
+          "value": 4206408
+        },
+        {
+          "term": "membership",
+          "value": 3189
+        },
+        {
+          "term": "csv import",
+          "value": 23139481
+        },
+        {
+          "term": "time tracking",
+          "value": 19625
+        },
+        {
+          "term": "pdf export",
+          "value": 2706
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Install counts are real usage. Paid extensions are rare, which is a monetization problem."
+    },
+    {
+      "id": "atlassian_marketplace",
+      "name": "Atlassian Marketplace",
+      "signal": "matching paid app listings",
+      "arrivalMechanism": "Marketplace search, plus in-product app discovery inside Jira/Confluence",
+      "monetizationNorm": "PAID_NORMAL",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 1,
+      "zeroShare": 0,
+      "medianValue": 1072,
+      "medianLatencyMs": 166,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 101
+        },
+        {
+          "term": "invoice",
+          "value": 98
+        },
+        {
+          "term": "booking calendar",
+          "value": 510
+        },
+        {
+          "term": "seo",
+          "value": 365
+        },
+        {
+          "term": "inventory",
+          "value": 54
+        },
+        {
+          "term": "form builder",
+          "value": 1339
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 1392
+        },
+        {
+          "term": "image optimization",
+          "value": 1072
+        },
+        {
+          "term": "membership",
+          "value": 45
+        },
+        {
+          "term": "csv import",
+          "value": 1558
+        },
+        {
+          "term": "time tracking",
+          "value": 3141
+        },
+        {
+          "term": "pdf export",
+          "value": 1448
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Paid apps are the NORM here, not the exception — the strongest monetization profile of any candidate. Business buyers with budgets. Question is whether Factory can build and publish to it autonomously."
+    },
+    {
+      "id": "pypi_packages",
+      "name": "PyPI / Python ecosystem",
+      "signal": "recent download counts",
+      "arrivalMechanism": "PyPI search and Google queries for library problems",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": false,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 0,
+      "coverage": 0,
+      "distinctValueRatio": 0,
+      "zeroShare": 0,
+      "medianValue": null,
+      "medianLatencyMs": 26,
+      "httpStatuses": {
+        "404": 3,
+        "429": 9
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": null
+        },
+        {
+          "term": "invoice",
+          "value": null
+        },
+        {
+          "term": "booking calendar",
+          "value": null
+        },
+        {
+          "term": "seo",
+          "value": null
+        },
+        {
+          "term": "inventory",
+          "value": null
+        },
+        {
+          "term": "form builder",
+          "value": null
+        },
+        {
+          "term": "analytics dashboard",
+          "value": null
+        },
+        {
+          "term": "image optimization",
+          "value": null
+        },
+        {
+          "term": "membership",
+          "value": null
+        },
+        {
+          "term": "csv import",
+          "value": null
+        },
+        {
+          "term": "time tracking",
+          "value": null
+        },
+        {
+          "term": "pdf export",
+          "value": null
+        }
+      ],
+      "failureDetail": "HTTP 429",
+      "notes": "Free API. Same monetization weakness as npm — paying for a Python library is unusual."
+    },
+    {
+      "id": "obsidian_plugins",
+      "name": "Obsidian community plugins",
+      "signal": "per-plugin download counts (single public JSON, whole catalogue)",
+      "arrivalMechanism": "In-app community plugin browser, searched by every Obsidian user",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 1,
+      "termsWithValue": 1,
+      "coverage": 1,
+      "distinctValueRatio": 1,
+      "zeroShare": 0,
+      "medianValue": 7294943,
+      "medianLatencyMs": 303,
+      "httpStatuses": {
+        "200": 1
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 7294943
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Entire catalogue with download counts in one public file — near-zero screening cost. Small audience and a strong free norm."
+    },
+    {
+      "id": "dockerhub_images",
+      "name": "Docker Hub",
+      "signal": "pull counts for matching images",
+      "arrivalMechanism": "Docker Hub search",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 1,
+      "zeroShare": 0,
+      "medianValue": 1411650,
+      "medianLatencyMs": 108,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 3092506
+        },
+        {
+          "term": "invoice",
+          "value": 257041
+        },
+        {
+          "term": "booking calendar",
+          "value": 459455
+        },
+        {
+          "term": "seo",
+          "value": 2560
+        },
+        {
+          "term": "inventory",
+          "value": 1276056
+        },
+        {
+          "term": "form builder",
+          "value": 14709212
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 23569395
+        },
+        {
+          "term": "image optimization",
+          "value": 897087408
+        },
+        {
+          "term": "membership",
+          "value": 118425
+        },
+        {
+          "term": "csv import",
+          "value": 1411650
+        },
+        {
+          "term": "time tracking",
+          "value": 882737
+        },
+        {
+          "term": "pdf export",
+          "value": 97904478
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Pull counts are real usage but heavily inflated by CI. Monetization is very weak."
+    },
+    {
+      "id": "crates_rust",
+      "name": "crates.io / Rust ecosystem",
+      "signal": "crate download counts",
+      "arrivalMechanism": "crates.io search",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": true,
+      "requiresAuth": false,
+      "termsAttempted": 12,
+      "termsWithValue": 12,
+      "coverage": 1,
+      "distinctValueRatio": 1,
+      "zeroShare": 0,
+      "medianValue": 43733,
+      "medianLatencyMs": 147,
+      "httpStatuses": {
+        "200": 12
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 86648
+        },
+        {
+          "term": "invoice",
+          "value": 1308
+        },
+        {
+          "term": "booking calendar",
+          "value": 3146
+        },
+        {
+          "term": "seo",
+          "value": 578
+        },
+        {
+          "term": "inventory",
+          "value": 115213818
+        },
+        {
+          "term": "form builder",
+          "value": 2576662
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 20352
+        },
+        {
+          "term": "image optimization",
+          "value": 61705
+        },
+        {
+          "term": "membership",
+          "value": 799383
+        },
+        {
+          "term": "csv import",
+          "value": 18864
+        },
+        {
+          "term": "time tracking",
+          "value": 43733
+        },
+        {
+          "term": "pdf export",
+          "value": 2596
+        }
+      ],
+      "failureDetail": null,
+      "notes": "Confirmed reachable. Strong free norm; paid Rust crates are essentially nonexistent."
+    },
+    {
+      "id": "homeassistant_hacs",
+      "name": "Home Assistant custom integrations (HACS)",
+      "signal": "GitHub stars on integration repos as a usage proxy",
+      "arrivalMechanism": "HACS in-app browser inside Home Assistant installs",
+      "monetizationNorm": "MOSTLY_FREE",
+      "reachable": true,
+      "requiresAuth": true,
+      "termsAttempted": 12,
+      "termsWithValue": 9,
+      "coverage": 0.75,
+      "distinctValueRatio": 0.8888888888888888,
+      "zeroShare": 0.1111111111111111,
+      "medianValue": 10,
+      "medianLatencyMs": 276,
+      "httpStatuses": {
+        "200": 10,
+        "403": 2
+      },
+      "values": [
+        {
+          "term": "backup",
+          "value": 3560
+        },
+        {
+          "term": "invoice",
+          "value": 853
+        },
+        {
+          "term": "booking calendar",
+          "value": 2
+        },
+        {
+          "term": "seo",
+          "value": 10
+        },
+        {
+          "term": "inventory",
+          "value": 44
+        },
+        {
+          "term": "form builder",
+          "value": null
+        },
+        {
+          "term": "analytics dashboard",
+          "value": 245
+        },
+        {
+          "term": "image optimization",
+          "value": 0
+        },
+        {
+          "term": "membership",
+          "value": 1
+        },
+        {
+          "term": "csv import",
+          "value": 1
+        },
+        {
+          "term": "time tracking",
+          "value": null
+        },
+        {
+          "term": "pdf export",
+          "value": null
+        }
+      ],
+      "failureDetail": "HTTP 403 — authentication or policy required",
+      "notes": "Prosumer audience that already spends money on hardware, which is unusual among the code-adjacent spaces. Stars are a weak usage proxy."
+    }
+  ]
+}
