@@ -1,9 +1,8 @@
 # Phase B — Stripe Managed Payments sandbox
 
 **Date:** 2026-08-18  
-**Status:** real Stripe sandbox execution reached the full provider boundary; reconciliation
-recovery is published, and an early checkout-artifact correction is pending one rerun after a
-second run failed closed with no transactions because its live link was not retrievable in time
+**Status:** `DONE` in Stripe sandbox. Run `32173279299` passed the complete provider lifecycle;
+live commerce, durable production hosting, metered MAKE, and ARRIVE remain unstarted
 **Cash spent:** $0.00  
 **Commercial assets:** none; the only manifest is a visibly noncommercial fixture  
 **ARRIVE:** deliberately unsolved and unchanged
@@ -59,8 +58,8 @@ Phase B money spine.
 Read-only inspection through the authenticated Stripe connector found a US direct account named
 Factory, but its account details are not yet submitted, payment capabilities are inactive, and
 charges and payouts are disabled. No sensitive account fields are stored here. This does not
-invalidate credential-free implementation, but account-specific Managed Payments eligibility
-and sandbox execution remain unproved.
+invalidate credential-free implementation. It means only that live parent-account eligibility
+remains unproved; the separate sandbox execution is now proved by run `32173279299`.
 
 The owner subsequently identified a Factory sandbox with Dashboard account ID
 `acct_1U5qkg0pEa3CWQlP`. Stripe sandboxes have their own account context, API keys, webhooks, and
@@ -74,9 +73,10 @@ for digital content and downloads, including downloadable standalone documents u
 fully automated. The Phase B fixture meets the technical shape but is explicitly not a product
 for sale.
 
-The proposed **account context remains UNKNOWN** until the sandbox call succeeds. Stripe makes
-Managed Payments subject to an account eligibility review and supported business geography.
-Code and public documentation cannot establish that this specific sandbox is enabled.
+The sandbox call succeeded: run `32173279299` proves this Factory sandbox accepts
+`managed_payments[enabled]=true` for the fixture Product/Price/Payment Link and Checkout path.
+Stripe still subjects live Managed Payments use to account eligibility review and supported
+business geography, so the result must not be generalized to live eligibility.
 
 Managed Payments is enabled on the Payment Link API request with
 `managed_payments[enabled]=true`; the owner does not need to find a dedicated Dashboard tile
@@ -143,6 +143,9 @@ modified.
 After the first provider run exposed the reconciliation gap: **21 passed, 0 failed; 954.632 ms**.
 The added test proves missing refund/dispute webhooks are backfilled from Stripe with stable
 provider effect IDs, and that repeating recovery duplicates neither refunds nor disputes.
+
+Final verification after the passing provider run: **21 passed, 0 failed; 886.827 ms**. Node
+syntax checking and `git diff --check` also passed.
 
 The suite covers:
 
@@ -212,15 +215,19 @@ The run correctly returned `FAIL`, not success, because WATCH recorded zero disp
 Stripe reconciliation reported the second charge as disputed. Both transactions remained
 ineligible for arm's-length revenue. No capital was spent and no demand evidence was created.
 
-## Remaining gate
+## Passing sandbox result — 2026-08-18
 
-One corrected rerun must prove the missing dispute effect is recovered into WATCH, both
-transactions reconcile, and the final artifact reports `passed: true`. Product eligibility,
-Managed Payments creation, Checkout, fulfillment, refund, owner exclusion, zero settlement, and
-deactivation are already observed provider facts rather than implementation claims.
+GitHub Actions run `32173279299`, attempt 1, completed successfully in 6m 2s. The provider artifact
+reported two USD 13.20 `OWNER_TEST` transactions, both fulfilled; one USD 3.00 refund; one USD
+12.69 dispute; one recovered dispute effect; two fully matching reconciliations; and deactivation
+of the Payment Link, Price, and Product. Booked revenue, available settled cash, eligible
+arm-length revenue, and attributable Factory cost were all exactly zero. The commercial clock
+remained false and ARRIVE remained false.
 
-Until that run passes, Phase B is `BUILT`, not `DONE`. No money spine exists,
-`COMMERCIAL_CLOCK_START` remains unset, and Phase C is prohibited.
+Phase B is `DONE` for the scoped Stripe sandbox proof. This does not create a production money
+spine: webhook hosting and WATCH persistence remain ephemeral, live eligibility is unproved, and
+no commercial or stranger-arrival evidence exists. Phase C remains prohibited pending owner
+review.
 
 Before any production design, add explicit handling and visibility for
 `checkout.session.async_payment_failed`. The Phase B card-only proof does not depend on delayed

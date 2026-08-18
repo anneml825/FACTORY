@@ -4,14 +4,14 @@
 
 **Branch:** `codex/phase-b-stripe-test-mode`
 
-**Status:** reconciliation recovery is published. Corrected run `32171304848` failed closed with
-no transactions because its checkout instructions were trapped inside the still-running Actions
-step. A non-secret early checkout artifact correction is verified locally and awaiting rerun.
+**Status:** Phase B real-provider proof `PASS`. GitHub Actions run `32173279299` completed the
+Managed Payments checkout, signed webhook, fulfillment, refund, dispute recovery, WATCH,
+reconciliation, and deactivation lifecycle. Await owner review; do not begin Phase C.
 
 **Cash spent:** $0.00
 
-**External commerce actions:** Stripe sandbox only — Product, Price, Payment Link, two owner-test
-checkouts, two fulfillments, one refund, reconciliation, and deactivation
+**External commerce actions:** Stripe sandbox only — four owner-test checkouts across two provider
+runs, four fulfillments, two refunds, two disputes, reconciliation, and deactivation. No real money.
 
 **Phase C:** prohibited until the owner reviews a completed Phase B sandbox result
 
@@ -49,9 +49,8 @@ node --check src/portfolio/run-stripe-sandbox-probe.ts
 git diff --check
 ```
 
-Last local result after the first real-run finding: 21 passed, 0 failed; Node duration 954.632 ms.
-The unit tests use a recording transport; the separate GitHub Actions result below is the real
-provider evidence.
+Final local result: 21 passed, 0 failed; Node duration 886.827 ms. The unit tests use a recording
+transport; the separate GitHub Actions result below is the real provider evidence.
 
 ## First real sandbox run
 
@@ -66,24 +65,22 @@ Payments; separate subtotal/tax/fees/proceeds semantics are therefore mandatory 
 GitHub did not automatically mask dynamically generated workflow secrets; the correction masks
 both ephemeral secrets before export. No repository Stripe key was exposed.
 
-## Corrected rerun sequence
+## Passing real sandbox run
 
-1. Publish the checkout-handoff correction through the GitHub connector.
-2. Let the branch push trigger `Phase B Stripe sandbox probe` with a fresh per-attempt idempotency
-   namespace.
-3. Retrieve the early `phase-b-stripe-checkout` artifact while the listener continues running.
-4. Complete the two owner-classified test checkouts with browser automation, with action-time
-   confirmation before submitting them.
-5. Inspect the uploaded `phase-b-stripe-sandbox-result` artifact.
-6. Require `passed: true`, all provider objects deactivated, both transactions `OWNER_TEST`,
-   zero eligible arm-length revenue, zero available settled cash, a recorded refund and dispute,
-   and every reconciliation `reconciled: true`.
-7. Record the measured result, update this handoff, and publish the follow-up through the GitHub
-   connector. Do not use shell git push if authentication remains unavailable.
+Run `32173279299`, attempt 1, completed successfully in 6m 2s. Its final artifact reports:
 
-If Managed Payments activation or Product/Price/Payment Link creation is denied, record the
-exact Stripe error. That disproves the account-specific assumption and requires an architecture
-change; do not silently fall back to Stripe direct for live commerce.
+- `passed: true`, `environment: PROVIDER_TEST`, and Managed Payments requested;
+- two `OWNER_TEST` transactions, each USD 13.20 gross and fulfilled;
+- one USD 3.00 refund and one USD 12.69 dispute;
+- the missing dispute effect recovered once from authoritative Stripe state;
+- both provider reconciliations fully true;
+- zero booked revenue, available settled cash, eligible arm-length revenue, and Factory cost;
+- Product, Price, and Payment Link deactivated;
+- commercial clock false and ARRIVE false.
+
+The cloud browser's Checkout pages remained visually stuck on `Processing`, but both one-time
+submissions reached Stripe and the signed provider events completed the lifecycle. Treat the
+provider artifact and reconciliation—not the client success screen—as the authoritative proof.
 
 Run `32171304848` disproved another orchestration assumption: GitHub does not finalize live job
 logs or a step summary while the long-running probe step is still waiting, so the connector could
@@ -115,17 +112,17 @@ Factory currently has no third-party sellers or split-payout requirement. Connec
 relevant only if Factory later operates a multi-party marketplace/platform that onboards and
 pays independent recipients.
 
-Read-only account inspection found that account details are not submitted, payment capabilities
-are inactive, and charges/payouts are disabled. Account-specific Managed Payments eligibility
-and sandbox operation therefore remain unproved. No Stripe object was created or modified during
-this review, and no secret was exposed.
+Read-only parent-account inspection found that account details are not submitted, payment
+capabilities are inactive, and charges/payouts are disabled. That finding did not describe the
+separate Factory sandbox. Run `32173279299` now proves this sandbox accepts the Phase B Managed
+Payments Product/Price/Payment Link and checkout path. It does not prove live-account eligibility.
 
 The Stripe connector is still authorized to the parent Factory account ending `…gxHgL`, not the
 Factory sandbox ending `…CWQlP`; it cannot currently inspect the sandbox. Do not confuse parent-
 account onboarding status with sandbox readiness.
 
-The existing implementation matches the planner's minimum architecture. The combined suite was
-re-run after review: 20 passed, 0 failed; Node duration 882.734 ms. Before production—not needed
+The existing implementation matches the planner's minimum architecture. The final local suite
+passed 21/21; Node duration 886.827 ms. Before production—not needed
 for the card-only Phase B probe—make `checkout.session.async_payment_failed` visible rather than
 silently ignored.
 

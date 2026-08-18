@@ -191,12 +191,12 @@ a fake/local PUT adapter, signed synthetic WATCH events, attribution, exclusions
 idempotency, zero-cost records, and evaluation. It does **not** use PostgreSQL and does not
 prove any external provider, deployment, payment, arrival mechanism, or durable recovery.
 
-The Phase B Stripe Managed Payments sandbox PUT/WATCH adapter has made real provider requests. A
-first GitHub Actions run created Product/Price/Payment Link objects, completed two owner-test
-Checkouts and fulfillments, observed a refund, reconciled Stripe state, and deactivated every
-provider object. It failed closed because Stripe reported the second charge disputed while WATCH
-had not received the dispute webhook. The corrected adapter repairs missing refund/dispute effects
-idempotently from authoritative provider objects and awaits a proving rerun. It remains restricted
+The Phase B Stripe Managed Payments sandbox PUT/WATCH adapter has passed a real provider run.
+GitHub Actions run `32173279299` created Product/Price/Payment Link objects, completed two
+owner-test Checkouts and fulfillments, observed a refund, recovered a missing dispute effect,
+fully reconciled both transactions, preserved zero commercial settlement, and deactivated every
+provider object. The adapter repairs missing refund/dispute effects idempotently from
+authoritative provider objects. It remains restricted
 to noncommercial fixtures, sandbox keys, and `livemode=false` objects/events. Stripe CLI forwarding
 is ephemeral test infrastructure, not production hosting. External MAKE and ARRIVE adapters plus
 production webhook/WATCH persistence remain unimplemented. `ROADMAP.md` tracks the honest build

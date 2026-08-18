@@ -26,9 +26,9 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | Owner configuration migration | `DONE` — applied and verified against PostgreSQL 16 |
 | **Capital Authority** | **`DONE`** — 19/19 verified, including concurrency under contention |
 | **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
-| **Phase B Stripe Managed Payments sandbox adapter** | **`VERIFYING`** — first real run reached the provider boundary and failed closed on a missing dispute webhook; recovery correction awaits rerun |
+| **Phase B Stripe Managed Payments sandbox adapter** | **`DONE`** — run `32173279299` passed the complete provider-test lifecycle and deactivated all objects |
 | Live database instance | `BLOCKED` — needs owner Neon account |
-| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH externally exercised in sandbox, proving rerun pending; MAKE/ARRIVE not started |
+| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH externally proved in sandbox; MAKE/ARRIVE not started |
 
 **Only provider-test commerce has happened.** Stripe sandbox objects, two owner-test checkouts,
 two fulfillments, one refund, reconciliation, and deactivation occurred. No live publication,
@@ -73,19 +73,18 @@ arrival evidence exists. `COMMERCIAL_CLOCK_START` remains unset. Phase B was app
 
 ## Phase B — Stripe Managed Payments sandbox
 
-**Status: `VERIFYING`; first real sandbox run failed closed on a WATCH dispute gap. Cost: $0.00.**
+**Status: `DONE` for the scoped sandbox proof. Cost: $0.00.**
 
 The implementation creates a noncommercial test Product, Price, and Managed Payments Payment
 Link; accepts only Stripe sandbox credentials and `livemode=false` objects/events; verifies raw
 Stripe signatures; fulfills an attributed fixture; handles duplicate/out-of-order checkout,
 refund, and dispute events; reconciles provider state; and deactivates all provider objects.
 
-Local verification after the provider finding: **21/21 combined Phase A + Phase B tests pass**.
-The first real run established account eligibility and the Product/Price/Payment Link, Checkout,
-fulfillment, refund, owner-exclusion, reconciliation, zero-settlement, and deactivation paths. It
-correctly failed because Stripe provider state was disputed while WATCH lacked the event. The
-correction backfills missing refund/dispute effects idempotently and requires one proving rerun.
-ARRIVE remains separate and unsolved. Phase C remains prohibited.
+Local verification: **21/21 combined Phase A + Phase B tests pass**. Provider run `32173279299`
+then passed Product/Price/Payment Link creation, two owner-test Checkouts, signed webhooks, two
+fulfillments, refund, dispute recovery, full reconciliation, zero commercial settlement, and
+deactivation. ARRIVE remains separate and unsolved. Phase C remains prohibited pending owner
+review.
 
 ---
 
