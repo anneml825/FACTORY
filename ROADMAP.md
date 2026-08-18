@@ -27,8 +27,9 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | **Capital Authority** | **`DONE`** — 19/19 verified, including concurrency under contention |
 | **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
 | **Phase B Stripe Managed Payments sandbox adapter** | **`DONE`** — run `32173279299` passed the complete provider-test lifecycle and deactivated all objects |
+| **Phase C ARRIVE + durable WATCH** | **`BUILT`** — provider-neutral contract, DEV pilot, PostgreSQL WATCH/webhook durability, and local restart tests; real noncommercial probe awaits one scoped DEV credential |
 | Live database instance | `BLOCKED` — needs owner Neon account |
-| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH externally proved in sandbox; MAKE/ARRIVE not started |
+| External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH externally proved in sandbox; DEV ARRIVE adapter built but not externally run; MAKE not started |
 
 **Only provider-test commerce has happened.** Stripe sandbox objects, two owner-test checkouts,
 two fulfillments, one refund, reconciliation, and deactivation occurred. No live publication,
@@ -83,8 +84,22 @@ refund, and dispute events; reconciles provider state; and deactivates all provi
 Local verification: **21/21 combined Phase A + Phase B tests pass**. Provider run `32173279299`
 then passed Product/Price/Payment Link creation, two owner-test Checkouts, signed webhooks, two
 fulfillments, refund, dispute recovery, full reconciliation, zero commercial settlement, and
-deactivation. ARRIVE remains separate and unsolved. Phase C remains prohibited pending owner
-review.
+deactivation. The owner approved Phase C on 2026-08-18; its credential-free implementation is
+built, but the public noncommercial ARRIVE probe has not yet run.
+
+---
+
+## Phase C — provider-neutral ARRIVE + durable WATCH
+
+**Status: `BUILT`; external probe `BLOCKED` on one scoped DEV Community API key. Cost: $0.00.**
+
+Implemented: a provider-neutral activation/measurement/deactivation contract, one DEV
+Community pilot adapter, cumulative-metric idempotency, a crash-durable local journal, an
+append-only PostgreSQL WATCH inbox, durable Stripe webhook/transaction state, explicit
+`EXCEPTION` labor, and visible `checkout.session.async_payment_failed` handling.
+
+No public DEV article has been created yet. No stranger exposure is claimed. See
+`docs/PHASE_C_ARRIVE_DURABLE_WATCH.md`.
 
 ---
 
@@ -124,12 +139,12 @@ locally is not verified in production.
 
 ## Milestone 0B — Data Economics Probe
 
-**Status: `DONE` — gate PASSES for the selected search space. Cost: $0.00.**
+**Status: `DONE` for the historical data probe; no ARRIVE provider selected. Cost: $0.00.**
 
-**Search space selected autonomously: WordPress.org plugin directory.**
-See [`docs/SEARCH_SPACE_SELECTION.md`](docs/SEARCH_SPACE_SELECTION.md).
-Gate result: [`state/WP_GATE.md`](state/WP_GATE.md) — all six checks pass, 50x stratum
-separation, long-tail median 800 active installs.
+The WordPress.org investigation found a developer-data search space, but later semantic review
+invalidated its opportunity conclusions and the owner rejected WordPress as Factory's default
+commercial/ARRIVE path. `state/WP_GATE.md` and `docs/SEARCH_SPACE_SELECTION.md` are historical
+probe records, not current authorization.
 
 The consumer-niche search space remains **FAIL** and is not reopened.
 
@@ -168,7 +183,7 @@ not proceed on model-estimated numbers.
 
 ## Milestone 1 — Money spine
 
-**Status: `NOT STARTED`. `BLOCKED` on owner MoR account.**
+**Status: sandbox proof `DONE`; live money spine `NOT STARTED`.**
 
 One deliberately hand-selected inexpensive offer proving:
 
@@ -192,16 +207,12 @@ attributed profit line, with the transaction flagged `OWNER_TEST`.
 
 ## Milestone 2 — Initial Campaign + Stranger Arrival Mechanism
 
-**Status: `NOT STARTED`.** 0B has passed; surface is selected.
+**Status: `NOT STARTED` commercially. No surface is locked.**
 
-Locked surface: WordPress.org plugin directory. Stranger Arrival Test passes with one
-recorded gap — the directory exposes no search-impression count, so top-of-funnel
-`QUALIFIED EXPOSURES` is not directly observable and a proxy must be established here.
-
-**Attempt-velocity deviation, recorded deliberately:** ~5-day human review per plugin and
-spam risk on bulk submission mean this surface cannot support 30-50 attempts. Per Master
-Codex §17 the Campaign runs fewer attempts with larger measurable denominators each. This
-is a considered trade, not drift.
+WordPress.org is explicitly not selected. Phase C uses DEV Community only for one
+noncommercial empirical infrastructure probe. A later Campaign may choose DEV, Pinterest,
+another adapter, or multiple Campaign-specific adapters based on measured fit; none is a
+universal default.
 
 Lock one distribution surface, one product family, one checkout/fulfillment architecture, one
 pricing pattern, common analytics. Candidate families and their unresolved objections are in

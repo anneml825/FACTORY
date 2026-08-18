@@ -1,25 +1,54 @@
-# Agent handoff — Phase B Stripe sandbox checkpoint
+# Agent handoff — Phase C ARRIVE + durable WATCH checkpoint
 
 **Date:** 2026-08-18
 
-**Branch:** `codex/phase-b-stripe-test-mode`
+**Branch:** `codex/phase-c-arrive-durable-watch`
 
-**Status:** Phase B real-provider proof `PASS`. GitHub Actions run `32173279299` completed the
-Managed Payments checkout, signed webhook, fulfillment, refund, dispute recovery, WATCH,
-reconciliation, and deactivation lifecycle. Await owner review; do not begin Phase C.
+**Status:** Phase B real-provider proof `PASS`. Phase C credential-free implementation is
+`BUILT`; the public noncommercial DEV ARRIVE probe has not run and no stranger exposure is yet
+claimed.
 
 **Cash spent:** $0.00
 
 **External commerce actions:** Stripe sandbox only — four owner-test checkouts across two provider
-runs, four fulfillments, two refunds, two disputes, reconciliation, and deactivation. No real money.
+runs, four fulfillments, two refunds, two disputes, reconciliation, and deactivation. Phase C has
+not yet created its public DEV fixture. No real money.
 
-**Phase C:** prohibited until the owner reviews a completed Phase B sandbox result
+**Phase D / metered MAKE:** prohibited until Phase C passes and the owner reviews it
 
-**Owner setup:** complete. `STRIPE_TEST_SECRET_KEY` exists in GitHub Actions. Never request or
-expose its value.
+**Owner setup:** Stripe is complete. Phase C now needs one scoped `DEVTO_API_KEY` stored directly
+in GitHub Actions. Never request or expose its value in chat or logs.
 
 Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
 `DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.
+
+## Phase C implementation checkpoint
+
+Read `docs/PHASE_C_ARRIVE_DURABLE_WATCH.md` first.
+
+Implemented without credentials:
+
+- provider-neutral ARRIVE gate / activate / measure / deactivate contract;
+- DEV Community pilot adapter with substantial noncommercial fixture content, stable create
+  recovery, per-article analytics, and deactivation;
+- cumulative ARRIVE metric bridge with stable provider-effect IDs and checkpoint-loss recovery;
+- fsynced local WATCH event journal with restart replay;
+- append-only PostgreSQL `watch_event_inbox` plus PostgreSQL Stripe webhook inbox and
+  transaction references;
+- explicit `EXCEPTION` owner-labor storage and reporting;
+- visible, attributed `checkout.session.created` and
+  `checkout.session.async_payment_failed` handling;
+- GitHub Actions workflow with disposable PostgreSQL 16 core verification and an optional real
+  DEV + Stripe sandbox probe.
+
+Local result before connector publication: 28 tests discovered, 26 passed, 2 PostgreSQL tests
+skipped because this build workspace has no database service. TypeScript passed locally. The
+combined Node suite's final pre-commit run reported 2.23 s. The GitHub Actions core job must run both PostgreSQL tests
+before the real probe is requested.
+
+Do not report Phase C `DONE` until the workflow records post-baseline DEV article views, an
+attributed Stripe sandbox checkout start and fulfilled `OWNER_TEST` transaction, zero eligible
+commercial revenue, and deactivation of both provider surfaces.
 
 ## Canonical Phase A base
 
@@ -142,11 +171,12 @@ Every candidate must be structurally complete as
 arrival hypothesis is incomplete. ARRIVE remains provider-neutral and should support multiple
 adapters across the portfolio. No ARRIVE provider was selected in this update.
 
-Implementation gap recorded honestly: `owner_intervention.kind` currently has no distinct
-`EXCEPTION` value. Align the schema and reporting before autonomous commercial operation; do
-not claim separate exception metrics until that is implemented and tested.
+The prior `EXCEPTION` storage gap is resolved by Phase C schema migration 003 and TypeScript
+accounting. It still needs the PostgreSQL Actions verification before being called provider-run
+evidence.
 
 ## Stop condition
 
-Stop after the corrected Phase B result is recorded and published. Do not begin metered MAKE,
-request `ANTHROPIC_API_KEY`, select ARRIVE, create a live storefront, or begin Phase C.
+Complete only the Phase C noncommercial provider probe and report it for owner review. Do not
+begin Phase D, request `ANTHROPIC_API_KEY`, generate a commercial product, create a live
+storefront, or spend capital.

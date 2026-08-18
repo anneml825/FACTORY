@@ -23,6 +23,11 @@ export type TransactionClassification =
 
 export type CommerceEnvironment = 'FIXTURE' | 'PROVIDER_TEST' | 'LIVE';
 
+export type TrafficClassification =
+  | 'OWNER_INTERNAL'
+  | 'STRANGER'
+  | 'OTHER_OR_UNKNOWN';
+
 export interface Money {
   amountCents: number;
   currency: string;
@@ -55,6 +60,36 @@ export interface ArrivalGateRecord {
   quantitativeEvidenceId: string | null;
   measurementInstrument: string | null;
   measurementVerifiedAt: string | null;
+}
+
+export interface ArrivalPublication {
+  arrivalPublicationId: string;
+  experimentId: string;
+  assetId: string;
+  providerId: string;
+  providerObjectId: string;
+  location: string;
+  idempotencyKey: string;
+  requestFingerprint: string;
+  status: 'DRAFT' | 'ACTIVE' | 'INACTIVE';
+  mode: 'FIXTURE' | 'LIVE';
+  activatedAt: string | null;
+  baseline: ArrivalMetrics;
+}
+
+export interface ArrivalMetrics {
+  measuredAt: string;
+  qualifiedExposures: number;
+  visits: number;
+  offerInteractions: number;
+  ownerInternalExposures: number;
+  strangerConfirmedInteractions: number;
+  measurementSource: string;
+  semantics: {
+    qualifiedExposures: string;
+    visits: string;
+    offerInteractions: string;
+  };
 }
 
 export interface EvaluationPolicy {
@@ -135,6 +170,7 @@ export interface ExperimentRecord {
   functionalQa: QaResult | null;
   valueQa: QaResult | null;
   publication: Publication | null;
+  arrivalPublication: ArrivalPublication | null;
   costs: CostRecord[];
   decision: EvaluationResult | null;
 }
@@ -144,6 +180,7 @@ export type FunnelEventType =
   | 'PRODUCT_VIEW'
   | 'OFFER_INTERACTION'
   | 'CHECKOUT_STARTED'
+  | 'CHECKOUT_FAILED'
   | 'CHECKOUT_COMPLETED'
   | 'FULFILLMENT_SUCCEEDED'
   | 'FULFILLMENT_FAILED'
@@ -163,6 +200,10 @@ export interface FunnelEvent {
   amountCents?: number;
   currency?: string;
   reason?: string;
+  /** Aggregate provider observations use quantity; omitted events count as one. */
+  quantity?: number;
+  trafficClassification?: TrafficClassification;
+  arrivalPublicationId?: string;
   environment: CommerceEnvironment;
   synthetic: boolean;
 }
@@ -184,15 +225,30 @@ export interface TransactionSnapshot {
   hadFulfillmentFailure: boolean;
   refundedCents: number;
   disputedCents: number;
+  arrivalPublicationId?: string;
+}
+
+export interface ArrivalFunnelSnapshot {
+  arrivalPublicationId: string;
+  qualifiedExposures: number;
+  productViews: number;
+  offerInteractions: number;
+  checkoutStarts: number;
+  checkoutFailures: number;
+  transactionIds: string[];
 }
 
 export interface FunnelSnapshot {
   experimentId: string;
   qualifiedExposures: number;
+  ownerInternalExposures: number;
+  unknownExposures: number;
   productViews: number;
   offerInteractions: number;
   checkoutStarts: number;
+  checkoutFailures: number;
   transactions: TransactionSnapshot[];
+  arrivalFunnels: ArrivalFunnelSnapshot[];
   grossRevenueCents: number;
   armLengthGrossRevenueCents: number;
   eligibleArmLengthRevenueCents: number;

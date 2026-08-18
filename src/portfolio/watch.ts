@@ -121,13 +121,56 @@ export class InMemoryWatchStore implements WatchAdapter {
           tx.disputedCents === 0,
       )
       .reduce((sum, tx) => sum + tx.grossCents, 0);
+    const arrivalIds = new Set<string>();
+    for (const event of events) {
+      if (event.arrivalPublicationId) arrivalIds.add(event.arrivalPublicationId);
+    }
+    for (const transaction of transactions) {
+      if (transaction.arrivalPublicationId) arrivalIds.add(transaction.arrivalPublicationId);
+    }
+    const arrivalFunnels = [...arrivalIds].sort().map((arrivalPublicationId) => {
+      const attributedEvents = events.filter(
+        (event) => event.arrivalPublicationId === arrivalPublicationId,
+      );
+      return {
+        arrivalPublicationId,
+        qualifiedExposures: this.sumEvents(
+          attributedEvents,
+          'QUALIFIED_EXPOSURE',
+          (event) => event.trafficClassification !== 'OWNER_INTERNAL',
+        ),
+        productViews: this.sumEvents(attributedEvents, 'PRODUCT_VIEW'),
+        offerInteractions: this.sumEvents(attributedEvents, 'OFFER_INTERACTION'),
+        checkoutStarts: this.sumEvents(attributedEvents, 'CHECKOUT_STARTED'),
+        checkoutFailures: this.sumEvents(attributedEvents, 'CHECKOUT_FAILED'),
+        transactionIds: transactions
+          .filter((transaction) => transaction.arrivalPublicationId === arrivalPublicationId)
+          .map((transaction) => transaction.transactionId),
+      };
+    });
     return {
       experimentId,
-      qualifiedExposures: events.filter((event) => event.type === 'QUALIFIED_EXPOSURE').length,
-      productViews: events.filter((event) => event.type === 'PRODUCT_VIEW').length,
-      offerInteractions: events.filter((event) => event.type === 'OFFER_INTERACTION').length,
-      checkoutStarts: events.filter((event) => event.type === 'CHECKOUT_STARTED').length,
+      qualifiedExposures: this.sumEvents(
+        events,
+        'QUALIFIED_EXPOSURE',
+        (event) => event.trafficClassification !== 'OWNER_INTERNAL',
+      ),
+      ownerInternalExposures: this.sumEvents(
+        events,
+        'QUALIFIED_EXPOSURE',
+        (event) => event.trafficClassification === 'OWNER_INTERNAL',
+      ),
+      unknownExposures: this.sumEvents(
+        events,
+        'QUALIFIED_EXPOSURE',
+        (event) => event.trafficClassification === 'OTHER_OR_UNKNOWN',
+      ),
+      productViews: this.sumEvents(events, 'PRODUCT_VIEW'),
+      offerInteractions: this.sumEvents(events, 'OFFER_INTERACTION'),
+      checkoutStarts: this.sumEvents(events, 'CHECKOUT_STARTED'),
+      checkoutFailures: this.sumEvents(events, 'CHECKOUT_FAILED'),
       transactions,
+      arrivalFunnels,
       grossRevenueCents,
       armLengthGrossRevenueCents,
       eligibleArmLengthRevenueCents,
@@ -139,6 +182,19 @@ export class InMemoryWatchStore implements WatchAdapter {
 
   eventCount(): number {
     return [...this.eventsByExperiment.values()].reduce((sum, events) => sum + events.length, 0);
+  }
+
+  clone(): InMemoryWatchStore {
+    const copy = new InMemoryWatchStore(this.signingSecret, [...this.acceptedEnvironments]);
+    for (const [key, value] of this.eventPayloads) copy.eventPayloads.set(key, value);
+    for (const [key, value] of this.effectFingerprints) copy.effectFingerprints.set(key, value);
+    for (const [key, value] of this.eventsByExperiment) {
+      copy.eventsByExperiment.set(key, structuredClone(value));
+    }
+    for (const [key, value] of this.transactions) {
+      copy.transactions.set(key, structuredClone(value));
+    }
+    return copy;
   }
 
   private verify(envelope: SignedEventEnvelope): void {
@@ -155,6 +211,20 @@ export class InMemoryWatchStore implements WatchAdapter {
   }
 
   private apply(event: FunnelEvent): void {
+    const quantity = event.quantity ?? 1;
+    if (!Number.isInteger(quantity) || quantity <= 0) {
+      throw new EventConflictError('Funnel event quantity must be a positive integer.');
+    }
+    if (
+      quantity !== 1 &&
+      event.type !== 'QUALIFIED_EXPOSURE' &&
+      event.type !== 'PRODUCT_VIEW' &&
+      event.type !== 'OFFER_INTERACTION' &&
+      event.type !== 'CHECKOUT_STARTED' &&
+      event.type !== 'CHECKOUT_FAILED'
+    ) {
+      throw new EventConflictError(`${event.type} cannot use aggregate quantity.`);
+    }
     if (event.type === 'CHECKOUT_COMPLETED') {
       const fields = requireTransactionFields(event);
       const existing = this.transactions.get(fields.transactionId);
@@ -173,6 +243,7 @@ export class InMemoryWatchStore implements WatchAdapter {
         hadFulfillmentFailure: false,
         refundedCents: 0,
         disputedCents: 0,
+        arrivalPublicationId: event.arrivalPublicationId,
       });
       return;
     }
@@ -193,6 +264,9 @@ export class InMemoryWatchStore implements WatchAdapter {
       if (!transaction) throw new EventConflictError('Transaction event arrived before checkout completion.');
       if (transaction.experimentId !== event.experimentId) {
         throw new EventConflictError('experiment_id attribution changed across a transaction lifecycle.');
+      }
+      if (transaction.arrivalPublicationId !== event.arrivalPublicationId) {
+        throw new EventConflictError('ARRIVE attribution changed across a transaction lifecycle.');
       }
       if (event.type === 'FULFILLMENT_SUCCEEDED') {
         transaction.fulfilled = true;
@@ -222,9 +296,29 @@ export class InMemoryWatchStore implements WatchAdapter {
   }
 
   private effectIdentity(event: FunnelEvent): { key: string; fingerprint: string } | null {
-    if (event.type === 'CHECKOUT_COMPLETED' && event.transactionId) {
+    return watchEventEffectIdentity(event);
+  }
+
+  private sumEvents(
+    events: FunnelEvent[],
+    type: FunnelEvent['type'],
+    predicate: (event: FunnelEvent) => boolean = () => true,
+  ): number {
+    return events
+      .filter((event) => event.type === type && predicate(event))
+      .reduce((sum, event) => sum + (event.quantity ?? 1), 0);
+  }
+}
+
+export function watchEventEffectIdentity(
+  event: FunnelEvent,
+): { key: string; fingerprint: string } | null {
+    if (
+      (event.type === 'CHECKOUT_COMPLETED' || event.type === 'CHECKOUT_FAILED') &&
+      event.transactionId
+    ) {
       return {
-        key: `checkout:${event.transactionId}`,
+        key: `${event.type}:${event.transactionId}`,
         fingerprint: JSON.stringify({
           type: event.type,
           experimentId: event.experimentId,
@@ -233,6 +327,8 @@ export class InMemoryWatchStore implements WatchAdapter {
           classification: event.classification,
           amountCents: event.amountCents,
           currency: event.currency,
+          reason: event.reason,
+          arrivalPublicationId: event.arrivalPublicationId,
         }),
       };
     }
@@ -253,9 +349,24 @@ export class InMemoryWatchStore implements WatchAdapter {
           effectId: event.effectId,
           amountCents: event.amountCents,
           currency: event.currency,
+          arrivalPublicationId: event.arrivalPublicationId,
+        }),
+      };
+    }
+    if (event.arrivalPublicationId) {
+      return {
+        key: `arrival:${event.arrivalPublicationId}:${event.type}:${event.effectId ?? event.eventId}`,
+        fingerprint: JSON.stringify({
+          type: event.type,
+          experimentId: event.experimentId,
+          assetId: event.assetId,
+          arrivalPublicationId: event.arrivalPublicationId,
+          effectId: event.effectId,
+          quantity: event.quantity ?? 1,
+          trafficClassification: event.trafficClassification,
+          occurredAt: event.occurredAt,
         }),
       };
     }
     return null;
-  }
 }

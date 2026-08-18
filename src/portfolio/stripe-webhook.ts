@@ -26,6 +26,7 @@ export interface StripeTransactionReference {
   classification: Exclude<TransactionClassification, 'ARM_LENGTH_CUSTOMER'>;
   grossCents: number;
   currency: string;
+  arrivalPublicationId: string | null;
 }
 
 export interface StripeWebhookStateStore {
@@ -235,15 +236,67 @@ export class StripeTestWebhookProcessor {
   }
 
   private async dispatch(event: StripeEvent): Promise<StripeWebhookProcessResult> {
+    if (event.type === 'checkout.session.created') return this.checkoutStarted(event);
     if (
       event.type === 'checkout.session.completed' ||
       event.type === 'checkout.session.async_payment_succeeded'
     ) {
       return this.checkoutCompleted(event);
     }
+    if (event.type === 'checkout.session.async_payment_failed') {
+      return this.checkoutFailed(event);
+    }
     if (event.type === 'refund.created') return this.refundCreated(event);
     if (event.type === 'charge.dispute.created') return this.disputeCreated(event);
     return { status: 'IGNORED', eventId: event.id };
+  }
+
+  private async checkoutStarted(event: StripeEvent): Promise<StripeWebhookProcessResult> {
+    const object = event.data.object;
+    const metadata = metadataField(object);
+    this.assertProviderTestMetadata(metadata);
+    const sessionId = textField(object, 'id');
+    if (!sessionId) throw new Error('Checkout Session lacks an ID.');
+    this.assertProviderTestClassification(metadata);
+    await this.ingest({
+      eventId: `stripe:${event.id}:checkout-started`,
+      type: 'CHECKOUT_STARTED',
+      occurredAt: new Date(event.created * 1000).toISOString(),
+      experimentId: metadata.experiment_id,
+      assetId: metadata.asset_id,
+      transactionId: sessionId,
+      effectId: sessionId,
+      classification: metadata.transaction_classification as 'OWNER_TEST' | 'INTERNAL_TEST',
+      arrivalPublicationId: this.arrivalPublicationReference(object) ?? undefined,
+      environment: 'PROVIDER_TEST',
+      synthetic: false,
+    });
+    return { status: 'PROCESSED', eventId: event.id };
+  }
+
+  private async checkoutFailed(event: StripeEvent): Promise<StripeWebhookProcessResult> {
+    const object = event.data.object;
+    const metadata = metadataField(object);
+    this.assertProviderTestMetadata(metadata);
+    const sessionId = textField(object, 'id');
+    const paymentIntentId = textField(object, 'payment_intent');
+    if (!sessionId) throw new Error('Failed Checkout Session lacks an ID.');
+    this.assertProviderTestClassification(metadata);
+    await this.ingest({
+      eventId: `stripe:${event.id}:checkout-failed`,
+      type: 'CHECKOUT_FAILED',
+      occurredAt: new Date(event.created * 1000).toISOString(),
+      experimentId: metadata.experiment_id,
+      assetId: metadata.asset_id,
+      transactionId: paymentIntentId ?? sessionId,
+      effectId: sessionId,
+      classification: metadata.transaction_classification as 'OWNER_TEST' | 'INTERNAL_TEST',
+      arrivalPublicationId: this.arrivalPublicationReference(object) ?? undefined,
+      reason: 'Stripe reported checkout.session.async_payment_failed.',
+      environment: 'PROVIDER_TEST',
+      synthetic: false,
+    });
+    return { status: 'PROCESSED', eventId: event.id };
   }
 
   private async checkoutCompleted(event: StripeEvent): Promise<StripeWebhookProcessResult> {
@@ -259,21 +312,17 @@ export class StripeTestWebhookProcessor {
     if (paymentStatus !== 'paid' && event.type !== 'checkout.session.async_payment_succeeded') {
       throw new Error(`Checkout Session is not paid (payment_status=${paymentStatus ?? 'missing'}).`);
     }
-    const classification = metadata.transaction_classification;
-    if (classification !== 'OWNER_TEST' && classification !== 'INTERNAL_TEST') {
-      throw new StripeWebhookPolicyError(
-        'Provider-test checkout must be explicitly OWNER_TEST or INTERNAL_TEST.',
-      );
-    }
+    const classification = this.providerTestClassification(metadata);
     const reference: StripeTransactionReference = {
       transactionId: paymentIntentId ?? sessionId,
       checkoutSessionId: sessionId,
       paymentIntentId,
       experimentId: metadata.experiment_id,
       assetId: metadata.asset_id,
-      classification,
+      classification: classification as 'OWNER_TEST' | 'INTERNAL_TEST',
       grossCents: amount,
       currency: currency.toUpperCase(),
+      arrivalPublicationId: this.arrivalPublicationReference(object),
     };
     await this.state.saveTransaction(reference);
     await this.ingest({
@@ -285,6 +334,7 @@ export class StripeTestWebhookProcessor {
       transactionId: reference.transactionId,
       effectId: sessionId,
       classification,
+      arrivalPublicationId: reference.arrivalPublicationId ?? undefined,
       amountCents: amount,
       currency: reference.currency,
       environment: 'PROVIDER_TEST',
@@ -307,6 +357,7 @@ export class StripeTestWebhookProcessor {
       transactionId: reference.transactionId,
       effectId: fulfillmentKey,
       reason: fulfillment.reason,
+      arrivalPublicationId: reference.arrivalPublicationId ?? undefined,
       environment: 'PROVIDER_TEST',
       synthetic: false,
     });
@@ -339,6 +390,7 @@ export class StripeTestWebhookProcessor {
       effectId: refundId,
       amountCents: amount,
       currency: (textField(object, 'currency') ?? reference.currency).toUpperCase(),
+      arrivalPublicationId: reference.arrivalPublicationId ?? undefined,
       environment: 'PROVIDER_TEST',
       synthetic: false,
     });
@@ -364,6 +416,7 @@ export class StripeTestWebhookProcessor {
       effectId: disputeId,
       amountCents: amount,
       currency: (textField(object, 'currency') ?? reference.currency).toUpperCase(),
+      arrivalPublicationId: reference.arrivalPublicationId ?? undefined,
       environment: 'PROVIDER_TEST',
       synthetic: false,
     });
@@ -400,6 +453,33 @@ export class StripeTestWebhookProcessor {
         'Stripe object lacks fail-closed Factory provider-test attribution metadata.',
       );
     }
+  }
+
+  private assertProviderTestClassification(metadata: Record<string, string>): void {
+    if (
+      metadata.transaction_classification !== 'OWNER_TEST' &&
+      metadata.transaction_classification !== 'INTERNAL_TEST'
+    ) {
+      throw new StripeWebhookPolicyError(
+        'Provider-test checkout must be explicitly OWNER_TEST or INTERNAL_TEST.',
+      );
+    }
+  }
+
+  private providerTestClassification(
+    metadata: Record<string, string>,
+  ): Exclude<TransactionClassification, 'ARM_LENGTH_CUSTOMER' | 'OTHER_OR_UNKNOWN'> {
+    this.assertProviderTestClassification(metadata);
+    return metadata.transaction_classification as 'OWNER_TEST' | 'INTERNAL_TEST';
+  }
+
+  private arrivalPublicationReference(object: Record<string, unknown>): string | null {
+    const reference = textField(object, 'client_reference_id');
+    if (reference === null) return null;
+    if (!/^factory_arrive_[a-f0-9]{32}$/.test(reference)) {
+      throw new StripeWebhookPolicyError('Checkout Session has an invalid Factory ARRIVE reference.');
+    }
+    return reference;
   }
 
   private async ingest(event: FunnelEvent): Promise<void> {

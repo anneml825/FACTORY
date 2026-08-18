@@ -14,21 +14,23 @@ labor**. Neither outranks the other.
 
 ---
 
-## Status — 2026-08-17
+## Status — 2026-08-18
 
-**Bootstrap complete. Milestone 0A partially built, blocked on owner authorization.**
+**Phase B Stripe sandbox proof passed. Phase C ARRIVE + durable WATCH is built and awaits its
+one noncommercial provider probe.**
 
 | | |
 |---|---|
 | Fixed monthly burn | **$0.00** |
 | Owner capital consumed | **$0.00** |
-| Owner capital at risk | **$0.00** — ceiling ships at zero |
+| Owner capital authorized | **$50.00 maximum lifetime exposure; $0.00 consumed** |
 | Paid activity | **HALTED** — kill switch ships engaged |
 | Arm's-length transactions | **0** |
 | Commercial clock | **not started** |
 
-**Nothing external has occurred.** No account created, no credential issued, no service
-contacted, no deployment, no payment, no publication, no customer interaction.
+**External evidence is sandbox-only.** Stripe test objects and owner-test transactions proved
+PUT/WATCH plumbing; they produced no commercial revenue or demand evidence. No public ARRIVE
+fixture has yet been published.
 
 **→ Start with [`IMPLEMENTATION_BRIEF.md`](IMPLEMENTATION_BRIEF.md).**
 
@@ -67,8 +69,8 @@ contacted, no deployment, no payment, no publication, no customer interaction.
 
 ## Controls are enforced, not described
 
-The protections in `CONSTITUTION.md` live in the database. Nine constitutional violations were
-attempted against a live PostgreSQL instance and **all nine were rejected** — including
+The protections in `CONSTITUTION.md` live in the database. Constitutional violations are
+tested against PostgreSQL—including
 inserting a market statistic with no source or retrieval timestamp, which is `NOT NULL`-blocked
 and therefore cannot be written at all.
 

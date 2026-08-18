@@ -196,6 +196,15 @@ test('publication is impossible before both QA gates and a complete Arrival gate
     async evaluateGate(manifest) {
       return { ...manifest.arrivalGate, adapterId: this.adapterId, status: 'PASSED' };
     },
+    async activate() {
+      throw new Error('incomplete gate must prevent ARRIVE activation');
+    },
+    async measure() {
+      throw new Error('incomplete gate must prevent ARRIVE measurement');
+    },
+    async deactivate(arrival) {
+      return arrival;
+    },
   };
   const incomplete = harness({ arrive: incompleteArrival });
   await incomplete.engine.build(incomplete.manifest.experimentId);
@@ -479,9 +488,12 @@ test('KEEP requires positive contribution after settled Factory cost', () => {
   const snapshot: FunnelSnapshot = {
     experimentId: manifest.experimentId,
     qualifiedExposures: 3,
+    ownerInternalExposures: 0,
+    unknownExposures: 0,
     productViews: 1,
     offerInteractions: 1,
     checkoutStarts: 1,
+    checkoutFailures: 0,
     transactions: [
       {
         transactionId: 'cost-sensitive-tx',
@@ -497,6 +509,7 @@ test('KEEP requires positive contribution after settled Factory cost', () => {
         disputedCents: 0,
       },
     ],
+    arrivalFunnels: [],
     grossRevenueCents: 1200,
     armLengthGrossRevenueCents: 1200,
     eligibleArmLengthRevenueCents: 1200,

@@ -126,12 +126,16 @@ Recorded plainly so no later document can imply otherwise:
   reputation, no email list, and no social presence.
 - **Broad, underpowered paid acquisition is not evidence.** A bounded paid mechanism may be
   proposed only when its expected denominator and information value are explicit.
-- **No mechanism above has been probed.** The Data Economics Probe (Milestone 0B) is the
-  first real test of whether *any* of these can be evidenced cheaply enough to search.
-- **Automation permissions are unverified.** Whether any candidate platform's terms permit
-  autonomous listing creation is unknown and must be checked before a Campaign locks onto it.
-  A mechanism Factory is not permitted to operate autonomously fails the mission even if it
-  sells.
+- **No commercial mechanism has been validated.** Phase C has built a DEV Community adapter for
+  one noncommercial empirical probe; until the external workflow passes, no public exposure is
+  claimed. Even a passing fixture proves instrumentation and permitted automation, not product
+  demand or universal channel fit.
+- **Automation permissions are adapter-specific.** DEV's documented article API and content
+  policy have been checked for the fixture. Pinterest's public-access and batch-approval
+  requirements have been checked and deferred. Every later adapter must repeat this work before
+  a Campaign uses it.
+- **WordPress.org is not selected.** Its earlier data investigation is historical and was
+  rejected as Factory's default commercial/ARRIVE path.
 
 ---
 

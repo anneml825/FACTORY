@@ -3,6 +3,8 @@ import type { ArriveAdapter, MakeAdapter, PutAdapter, SyntheticEventSource } fro
 import { renderAsset } from './renderers.ts';
 import type {
   ArrivalGateRecord,
+  ArrivalMetrics,
+  ArrivalPublication,
   Artifact,
   AssetManifest,
   FunnelEvent,
@@ -56,6 +58,54 @@ export class FixtureArrivalAdapter implements ArriveAdapter {
       quantitativeEvidenceId: 'fixture-evidence-not-e1',
       measurementInstrument: 'in-memory event counter',
       measurementVerifiedAt: '2026-08-18T00:00:00.000Z',
+    };
+  }
+
+  async activate(
+    manifest: AssetManifest,
+    publication: Publication,
+    idempotencyKey: string,
+  ): Promise<ArrivalPublication> {
+    return {
+      arrivalPublicationId: `fixture-arrival-${manifest.experimentId}`,
+      experimentId: manifest.experimentId,
+      assetId: manifest.assetId,
+      providerId: this.adapterId,
+      providerObjectId: `fixture-surface-${manifest.experimentId}`,
+      location: publication.location,
+      idempotencyKey,
+      requestFingerprint: createHash('sha256')
+        .update(JSON.stringify({ manifest, publication }))
+        .digest('hex'),
+      status: 'ACTIVE',
+      mode: 'FIXTURE',
+      activatedAt: '2026-08-18T00:00:00.000Z',
+      baseline: await this.measureFixture(),
+    };
+  }
+
+  async measure(_arrival: ArrivalPublication): Promise<ArrivalMetrics> {
+    return this.measureFixture();
+  }
+
+  async deactivate(arrival: ArrivalPublication, _idempotencyKey: string): Promise<ArrivalPublication> {
+    return { ...arrival, status: 'INACTIVE' };
+  }
+
+  private async measureFixture(): Promise<ArrivalMetrics> {
+    return {
+      measuredAt: '2026-08-18T00:00:00.000Z',
+      qualifiedExposures: 0,
+      visits: 0,
+      offerInteractions: 0,
+      ownerInternalExposures: 0,
+      strangerConfirmedInteractions: 0,
+      measurementSource: 'fixture-only counter',
+      semantics: {
+        qualifiedExposures: 'Synthetic fixture observations only.',
+        visits: 'Synthetic fixture observations only.',
+        offerInteractions: 'Synthetic fixture observations only.',
+      },
     };
   }
 }

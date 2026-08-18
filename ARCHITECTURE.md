@@ -198,6 +198,10 @@ fully reconciled both transactions, preserved zero commercial settlement, and de
 provider object. The adapter repairs missing refund/dispute effects idempotently from
 authoritative provider objects. It remains restricted
 to noncommercial fixtures, sandbox keys, and `livemode=false` objects/events. Stripe CLI forwarding
-is ephemeral test infrastructure, not production hosting. External MAKE and ARRIVE adapters plus
-production webhook/WATCH persistence remain unimplemented. `ROADMAP.md` tracks the honest build
-status.
+is ephemeral test infrastructure, not production hosting.
+
+Phase C now implements the provider-neutral ARRIVE activation/measurement/deactivation contract,
+a first DEV Community noncommercial pilot adapter, an fsynced local WATCH journal, and an
+append-only PostgreSQL WATCH/webhook state boundary. The credential-free restart tests are local;
+the real public DEV probe has not yet run. External MAKE remains unimplemented. `ROADMAP.md`
+tracks the honest build status.

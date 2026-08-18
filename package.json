@@ -4,10 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test src/portfolio/phase-a.test.ts src/portfolio/phase-b-stripe.test.ts",
+    "test": "node --test src/portfolio/phase-a.test.ts src/portfolio/phase-b-stripe.test.ts src/portfolio/phase-c.test.ts src/portfolio/phase-c-postgres.test.ts",
     "test:phase-a": "node --test src/portfolio/phase-a.test.ts",
     "test:phase-b": "node --test src/portfolio/phase-b-stripe.test.ts",
+    "test:phase-c": "node --test src/portfolio/phase-c.test.ts src/portfolio/phase-c-postgres.test.ts",
+    "typecheck": "tsc --noEmit",
     "probe:phase-b:stripe": "node src/portfolio/run-stripe-sandbox-probe.ts",
+    "probe:phase-c:arrive": "node src/portfolio/run-phase-c-arrive-probe.ts",
     "test:capital": "tsx src/capital/authority.test.ts",
     "generate:phase-a-catalog": "node src/portfolio/generate-fixture-catalog.ts"
   },

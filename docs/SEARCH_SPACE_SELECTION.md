@@ -1,7 +1,12 @@
-# Initial Campaign Search Space — Selection
+# Initial Campaign Search Space — superseded investigation
 
-**Date:** 2026-08-18 · **Decision: WordPress.org plugin directory**
-**Selected autonomously on retrieved evidence. Total cost: $0.00.**
+**Date:** 2026-08-18 · **Status: `SUPERSEDED`; not an authorized ARRIVE or Campaign selection**
+**Historical decision recorded below: WordPress.org plugin directory. Total cost: $0.00.**
+
+> Owner correction, 2026-08-18: WordPress was rejected as Factory's default commercial path.
+> Later evidence-semantics review also invalidated the opportunity scan's loose entity matching.
+> This file is preserved as an investigation record. It does not lock a surface, authorize a
+> Campaign, or pass the current Stranger Arrival gate.
 
 Supersedes the recommendation in [`DATA_ECONOMICS_GATE_DECISION.md`](DATA_ECONOMICS_GATE_DECISION.md),
 which is retained as the record of how the consumer-niche space was ruled out.

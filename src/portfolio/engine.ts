@@ -50,6 +50,7 @@ export class PhaseAEngine {
       functionalQa: null,
       valueQa: null,
       publication: null,
+      arrivalPublication: null,
       costs: [],
       decision: null,
     };
@@ -168,8 +169,58 @@ export class PhaseAEngine {
 
   observe(experimentId: string): ExperimentRecord {
     const record = this.get(experimentId);
+    if (this.arrive.mode === 'LIVE' && record.arrivalPublication?.status !== 'ACTIVE') {
+      throw new Error('OBSERVING requires an active real ARRIVE publication.');
+    }
     transition(record, 'OBSERVING', 'fixture WATCH ingestion enabled');
     return record;
+  }
+
+  async activateArrival(experimentId: string, idempotencyKey: string): Promise<ExperimentRecord> {
+    const record = this.get(experimentId);
+    if (record.state !== 'PUBLISHED' || !record.publication) {
+      throw new Error('ARRIVE activation requires a PUBLISHED experiment.');
+    }
+    const result = await this.costs.execute({
+      operationId: `arrive-activate:${experimentId}`,
+      reservationIdempotencyKey: `phase-c:arrive-activate:${idempotencyKey}`,
+      bucketName: this.arrive.costProfile.bucketName,
+      maximumCents: this.arrive.costProfile.maximumCents,
+      currency: this.arrive.costProfile.currency,
+      purpose: 'Phase C provider-neutral ARRIVE activation',
+      actor: 'phase-c-engine',
+      run: async () => ({
+        value: await this.arrive.activate(
+          record.manifest,
+          record.publication as NonNullable<typeof record.publication>,
+          idempotencyKey,
+        ),
+        actualCostCents: this.arrive.costProfile.maximumCents,
+      }),
+    });
+    if (
+      result.value.experimentId !== experimentId ||
+      result.value.assetId !== record.manifest.assetId
+    ) {
+      throw new Error('ARRIVE activation changed experiment/asset attribution.');
+    }
+    if (
+      record.arrivalPublication &&
+      record.arrivalPublication.arrivalPublicationId !== result.value.arrivalPublicationId
+    ) {
+      throw new Error('Idempotent ARRIVE retry returned a different publication.');
+    }
+    record.arrivalPublication = result.value;
+    this.appendCost(record, result.cost);
+    return record;
+  }
+
+  async measureArrival(experimentId: string) {
+    const record = this.get(experimentId);
+    if (!record.arrivalPublication || record.arrivalPublication.status !== 'ACTIVE') {
+      throw new Error('ARRIVE measurement requires an active arrival publication.');
+    }
+    return this.arrive.measure(record.arrivalPublication);
   }
 
   async ingest(experimentId: string, envelope: SignedEventEnvelope): Promise<{ accepted: boolean; duplicate: boolean }> {

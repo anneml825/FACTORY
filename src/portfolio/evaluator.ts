@@ -18,10 +18,14 @@ export function evaluateExperiment(
     };
   }
 
-  if (snapshot.fulfillmentFailures > 0 || snapshot.disputesCents > 0) {
+  if (
+    snapshot.checkoutFailures > 0 ||
+    snapshot.fulfillmentFailures > 0 ||
+    snapshot.disputesCents > 0
+  ) {
     return {
       decision: 'ITERATE',
-      reason: 'Operational integrity requires attention: fulfillment failure or dispute observed.',
+      reason: 'Operational integrity requires attention: checkout, fulfillment, or dispute failure observed.',
       evidenceGrade: snapshot.eligibleArmLengthRevenueCents > 0 ? 'E3' : 'E2',
       ...economics,
       snapshot,

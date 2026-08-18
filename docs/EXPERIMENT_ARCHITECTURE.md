@@ -2,6 +2,11 @@
 
 **Date:** 2026-08-18 · **Cost: $0.00** · 289 hypotheses across four generations.
 
+> **Status: `SUPERSEDED` as a provider-selection record.** The zero-upfront cost analysis is
+> retained, but neither Gumroad nor KDP is a locked ARRIVE surface. Phase C treats ARRIVE as a
+> provider-neutral portfolio and requires empirical mechanism-specific measurement before a
+> Campaign lock.
+
 The owner's correction: **the $50 is a maximum-loss reserve, not a budget.** Optimize
 `(experiments × information per experiment) ÷ owner capital consumed` — a ratio whose
 denominator should approach zero.

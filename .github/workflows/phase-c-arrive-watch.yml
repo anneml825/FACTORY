@@ -1,0 +1,191 @@
+name: Phase C ARRIVE and durable WATCH
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - codex/phase-c-arrive-durable-watch
+
+permissions:
+  contents: read
+
+jobs:
+  durable-watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: factory
+          POSTGRES_PASSWORD: factory_test_only
+          POSTGRES_DB: factory_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U factory -d factory_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://factory:factory_test_only@127.0.0.1:5432/factory_test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Create authoritative schema
+        run: psql "$TEST_DATABASE_URL" -v ON_ERROR_STOP=1 -f db/schema.sql
+
+      - name: Run Phase A, B, and C tests including PostgreSQL restart recovery
+        run: npm test
+
+      - name: Verify database constitutional invariants
+        run: psql "$TEST_DATABASE_URL" -f db/tests/invariants.sql
+
+  real-arrive-probe:
+    needs: durable-watch
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: factory
+          POSTGRES_PASSWORD: factory_test_only
+          POSTGRES_DB: factory_arrive
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U factory -d factory_arrive"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://factory:factory_test_only@127.0.0.1:5432/factory_arrive
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+      DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+      FACTORY_PAID_ACTIVITY_HALTED: "1"
+      PHASE_C_WAIT_SECONDS: "900"
+      PHASE_C_PROBE_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Detect zero-cost provider credentials
+        id: credential
+        shell: bash
+        run: |
+          if [ -n "$STRIPE_SECRET_KEY" ] && [ -n "$DEVTO_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "Core Phase C code passed. Real ARRIVE probe awaits DEVTO_API_KEY; Stripe sandbox secret is reused from Phase B." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Create schema
+        if: steps.credential.outputs.present == 'true'
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/schema.sql
+
+      - name: Install Stripe CLI
+        if: steps.credential.outputs.present == 'true'
+        run: npm install --global @stripe/cli
+
+      - name: Generate ephemeral internal event secret
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: |
+          secret=$(openssl rand -hex 32)
+          echo "::add-mask::$secret"
+          echo "FACTORY_INTERNAL_EVENT_SECRET=$secret" >> "$GITHUB_ENV"
+
+      - name: Start signed Stripe sandbox event forwarding
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: |
+          stripe listen \
+            --api-key "$STRIPE_SECRET_KEY" \
+            --events checkout.session.created,checkout.session.completed,checkout.session.async_payment_succeeded,checkout.session.async_payment_failed \
+            --forward-to http://127.0.0.1:4242/stripe-webhook \
+            > "$RUNNER_TEMP/stripe-listen.log" 2>&1 &
+          for attempt in $(seq 1 30); do
+            secret=$(grep -o 'whsec_[A-Za-z0-9_]*' "$RUNNER_TEMP/stripe-listen.log" | head -n 1 || true)
+            if [ -n "$secret" ]; then
+              echo "::add-mask::$secret"
+              echo "STRIPE_WEBHOOK_SECRET=$secret" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 1
+          done
+          sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/stripe-listen.log"
+          exit 1
+
+      - name: Start public noncommercial ARRIVE probe
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: |
+          : > "$RUNNER_TEMP/phase-c-probe.log"
+          nohup bash -c '
+            node src/portfolio/run-phase-c-arrive-probe.ts
+            echo "$?" > "$RUNNER_TEMP/phase-c-probe.exit"
+          ' > "$RUNNER_TEMP/phase-c-probe.log" 2>&1 &
+          for attempt in $(seq 1 90); do
+            if [ -s state/phase-c-arrive-links.md ]; then
+              exit 0
+            fi
+            if [ -s "$RUNNER_TEMP/phase-c-probe.exit" ]; then
+              sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-c-probe.log"
+              exit "$(cat "$RUNNER_TEMP/phase-c-probe.exit")"
+            fi
+            sleep 1
+          done
+          sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-c-probe.log"
+          exit 1
+
+      - name: Upload non-secret probe links
+        if: steps.credential.outputs.present == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-c-arrive-links
+          path: state/phase-c-arrive-links.md
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Wait for exposure and test transaction
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: |
+          for attempt in $(seq 1 930); do
+            if [ -s "$RUNNER_TEMP/phase-c-probe.exit" ]; then
+              code=$(cat "$RUNNER_TEMP/phase-c-probe.exit")
+              sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-c-probe.log"
+              exit "$code"
+            fi
+            sleep 1
+          done
+          exit 1
+
+      - name: Upload non-secret Phase C result
+        if: always() && steps.credential.outputs.present == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-c-arrive-result
+          path: state/phase-c-arrive-result.json
+          if-no-files-found: warn
+          retention-days: 7

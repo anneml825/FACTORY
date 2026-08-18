@@ -58,7 +58,7 @@ jobs:
           test -n "$STRIPE_SECRET_KEY"
           stripe listen \
             --api-key "$STRIPE_SECRET_KEY" \
-            --events checkout.session.completed,checkout.session.async_payment_succeeded,refund.created,charge.dispute.created \
+            --events checkout.session.created,checkout.session.completed,checkout.session.async_payment_succeeded,checkout.session.async_payment_failed,refund.created,charge.dispute.created \
             --forward-to http://127.0.0.1:4242/stripe-webhook \
             > "$RUNNER_TEMP/stripe-listen.log" 2>&1 &
           echo $! > "$RUNNER_TEMP/stripe-listen.pid"

@@ -31,12 +31,8 @@ assets, customers, posts, or sales. It does **not** mean the owner may never tou
 | `EXCEPTION` | Rare KYC, dispute, provider, legal, safety, or technical intervention | Acceptable but measured. If it repeats predictably, reclassify it as operating or maintenance/debug labor |
 | `OPERATING` | Routine research, creation, publication, posting, prospecting, customer messaging, fulfillment, monitoring, reconciliation, or data movement | Strongly disfavored; must remain near zero and is subject to the owner-hours gate |
 
-The current `owner_intervention.kind` storage enum predates this clarification: `SETUP` maps
-directly; `APPROVAL` represents `BATCH_APPROVAL`; `OPERATING` represents routine execution;
-and `MAINTENANCE_DEBUG` represents recurring human recovery. It does not yet have a distinct
-`EXCEPTION` value. That schema/reporting alignment must occur before autonomous commercial
-operation; until then, reports must state the limitation rather than claiming exceptions are
-separately measured.
+The Phase C schema now stores `EXCEPTION` distinctly. `APPROVAL` remains the database spelling
+for policy-level `BATCH_APPROVAL`; `SETUP`, `OPERATING`, and `MAINTENANCE_DEBUG` map directly.
 
 ### Setup labor is an investment, not a cost to minimize
 

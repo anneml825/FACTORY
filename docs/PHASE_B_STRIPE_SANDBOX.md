@@ -226,10 +226,9 @@ remained false and ARRIVE remained false.
 
 Phase B is `DONE` for the scoped Stripe sandbox proof. This does not create a production money
 spine: webhook hosting and WATCH persistence remain ephemeral, live eligibility is unproved, and
-no commercial or stranger-arrival evidence exists. Phase C remains prohibited pending owner
-review.
+no commercial or stranger-arrival evidence existed in Phase B. The owner approved Phase C on
+2026-08-18; see `docs/PHASE_C_ARRIVE_DURABLE_WATCH.md` for the separate current state.
 
-Before any production design, add explicit handling and visibility for
-`checkout.session.async_payment_failed`. The Phase B card-only proof does not depend on delayed
-payment methods, but Managed Payments controls payment-method presentation, so a production
-handler may not silently ignore a delayed-payment failure.
+Phase C added explicit handling and visibility for `checkout.session.async_payment_failed` and
+`checkout.session.created`. The Phase B card-only proof did not depend on delayed methods, but
+the durable path no longer silently ignores their failure.

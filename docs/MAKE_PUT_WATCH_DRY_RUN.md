@@ -453,10 +453,15 @@ capability unlocked is:
 - signed checkout/refund/dispute webhooks;
 - real provider test-mode reconciliation without generating a commercial asset.
 
-### Phase C — metered MAKE
+### Phase C — provider-neutral ARRIVE + durable WATCH
 
-Only after Phase B proves that an artifact can traverse STAGED -> PUBLISHED -> CHECKOUT ->
-FULFILLED -> WATCHED should Factory request `ANTHROPIC_API_KEY`. At that moment the key unlocks
+Owner-approved 2026-08-18. Establish one real, measurable noncommercial arrival path and move
+WATCH/webhook state behind the PostgreSQL durability boundary before metered generation.
+
+### Phase D — metered MAKE
+
+Only after Phase C proves a measured ARRIVE path plus crash-durable WATCH should Factory request
+`ANTHROPIC_API_KEY`. At that moment the key unlocks
 an executable capability rather than a file pile:
 
 ```text
@@ -473,19 +478,16 @@ authorized inference reservation
 
 **Do not provision `ANTHROPIC_API_KEY` yet.**
 
-Publishing is no longer architecturally hypothetical, but it is not yet executable in this
-repository and no live provider account has verified eligibility. The next highest-leverage
-action is **Factory work, not owner work**: implement Phase A with fixture assets and synthetic
-commerce events at $0.
+This section records the original Phase A decision. Phase A and the Phase B Stripe sandbox proof
+are now complete. The current gate is the Phase C noncommercial ARRIVE provider run described in
+`docs/PHASE_C_ARRIVE_DURABLE_WATCH.md`.
 
 After Phase A, the next highest-leverage **owner** action is Stripe account verification and
 Managed Payments/API authorization—not Anthropic—because it converts the currently documented
 PUT/WATCH path into a tested one. No commerce account is requested by this document; the request
 should be made only when the adapter is ready to consume the credentials immediately.
 
-After Phase B succeeds, `ANTHROPIC_API_KEY` becomes the next highest-leverage owner action. It
-will then make the complete portfolio pipeline materially closer to launch: Factory will be
-able to meter MAKE under Capital Authority and send passing assets directly into a proven
-commercial deployment and observation path.
+After Phase C succeeds, `ANTHROPIC_API_KEY` may become the next highest-leverage owner action.
+It must not be requested while the ARRIVE proof or durable WATCH boundary remains incomplete.
 
 **Kill switch engaged. No capital spent. No asset generated. No listing created.**

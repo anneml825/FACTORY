@@ -7,7 +7,7 @@ rejected by the database.
 
 ## Verified run
 
-**Date:** 2026-08-17 · **Engine:** PostgreSQL 16.10 (Debian, apt) · **Result:** all 12 as expected.
+**Date:** 2026-08-18 · **Engine:** PostgreSQL 16 (GitHub Actions service) · **Result:** all 15 as expected.
 
 | # | Attempted violation | Constitution | Rejected by |
 |---|---|---|---|
@@ -20,12 +20,15 @@ rejected by the database.
 | T7 | Insert a number with no source or retrieval time | §12 / Protocol §2 no invented metrics | `NOT NULL` on `source`, `retrieved_at`, `collection_method`, `reliability_limitations` |
 | T8 | Start the commercial clock with unmet conditions | Protocol §10 | `clock_requires_all_conditions` CHECK |
 | T9 | Owner override with no stated reason | Protocol §11 | `override_requires_reason` CHECK |
+| T13 | Mutate a durable WATCH event | Constitution §12 / audit integrity | `reject_watch_event_mutation()` trigger |
 
 | # | Operation that must succeed | Result |
 |---|---|---|
 | T10 | Insert a fully provenanced evidence signal | inserted |
 | T10 | Settle a reservation within its maximum (80 ≤ 100) | settled |
 | T11 | Start the clock once all seven conditions are true | started |
+| T12 | Record rare owner labor as explicit `EXCEPTION` | inserted separately |
+| T13 | Insert one signed WATCH inbox event before attempting mutation | inserted |
 
 **Post-state confirmed:** kill switch ships `ENGAGED`; owner capital ceiling ships at `0`
 cents; the ledger row survived both mutation attempts unmodified at its original 5000;

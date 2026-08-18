@@ -1,5 +1,7 @@
 import type {
   ArrivalGateRecord,
+  ArrivalMetrics,
+  ArrivalPublication,
   Artifact,
   AssetManifest,
   FunnelEvent,
@@ -43,6 +45,13 @@ export interface ArriveAdapter extends MeteredAdapter {
   readonly adapterId: string;
   readonly mode: 'FIXTURE' | 'LIVE';
   evaluateGate(manifest: AssetManifest, idempotencyKey: string): Promise<ArrivalGateRecord>;
+  activate(
+    manifest: AssetManifest,
+    publication: Publication,
+    idempotencyKey: string,
+  ): Promise<ArrivalPublication>;
+  measure(arrival: ArrivalPublication): Promise<ArrivalMetrics>;
+  deactivate(arrival: ArrivalPublication, idempotencyKey: string): Promise<ArrivalPublication>;
 }
 
 export interface SyntheticEventSource {
