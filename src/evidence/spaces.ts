@@ -41,12 +41,61 @@ export interface SpaceProbe {
   notes: string;
 }
 
+const UA_BROWSER =
+  'Mozilla/5.0 (compatible; FactoryDataEconomicsProbe/0.1; +https://github.com/anneml825/FACTORY)';
+
 const JSON_HEADERS = {
   'User-Agent': 'FactoryDataEconomicsProbe/0.1 (+https://github.com/anneml825/FACTORY)',
   Accept: 'application/json',
 };
 
 export const SPACES: SpaceProbe[] = [
+  {
+    id: 'shopify_app_store',
+    name: 'Shopify App Store',
+    signal: 'matching app listings and their review counts',
+    arrivalMechanism: 'App Store search, and in-admin app discovery inside every Shopify store',
+    monetizationNorm: 'PAID_NORMAL',
+    catalogueIsSearchable: true,
+    notes:
+      'Strongest monetization of any candidate: Shopify Billing API charges merchants directly, ' +
+      'Factory keeps 100% of the first $1M, and there is NO merchant of record to set up and NO ' +
+      'payout threshold to clear. Buyers are businesses with revenue. Costs $19 one-time to ' +
+      'register. Open question probed here: is there ANY free quantitative signal to screen with?',
+    request: (term) => ({
+      url: `https://apps.shopify.com/search?q=${encodeURIComponent(term)}`,
+      init: { headers: { 'User-Agent': UA_BROWSER, Accept: 'text/html' } },
+    }),
+    extract: (body) => {
+      // HTML, not JSON. Count listing anchors as a crude saturation proxy.
+      if (typeof body !== 'string') return null;
+      const matches = body.match(/\/[a-z0-9-]+"[^>]*data-controller="app-card/g);
+      if (matches) return matches.length;
+      const alt = body.match(/class="[^"]*app-card/g);
+      return alt ? alt.length : null;
+    },
+  },
+  {
+    id: 'firefox_addons',
+    name: 'Firefox Add-ons (AMO)',
+    signal: 'average daily users per add-on — a REAL usage number, rare among public catalogues',
+    arrivalMechanism: 'addons.mozilla.org search',
+    monetizationNorm: 'MOSTLY_FREE',
+    catalogueIsSearchable: true,
+    notes:
+      'Included as an EVIDENCE CONTROL, not a candidate. AMO publishes true daily-user counts, ' +
+      'so it shows what a high-quality catalogue signal looks like. Monetization is near zero, ' +
+      'so it cannot be selected — it exists here to calibrate the others.',
+    request: (term) => ({
+      url: `https://addons.mozilla.org/api/v5/addons/search/?q=${encodeURIComponent(term)}&page_size=5`,
+      init: { headers: JSON_HEADERS },
+    }),
+    extract: (body) => {
+      const results = (body as { results?: { average_daily_users?: number }[] })?.results;
+      if (!Array.isArray(results) || !results.length) return null;
+      return results.reduce((max, r) => Math.max(max, r.average_daily_users ?? 0), 0);
+    },
+  },
   {
     id: 'wordpress_plugins',
     name: 'WordPress.org plugin directory',

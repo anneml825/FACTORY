@@ -89,14 +89,13 @@ async function probeSpace(space: SpaceProbe): Promise<SpaceResult> {
       } else {
         reachable = true;
         const text = await res.text();
+        // Some catalogues (Shopify) expose only HTML. Hand the raw text to the
+        // extractor rather than treating non-JSON as a failure.
         let parsed: unknown;
         try {
           parsed = JSON.parse(text);
         } catch {
-          failureDetail ??= 'response was not JSON';
-          values.push({ term, value: null });
-          process.stderr.write('?');
-          continue;
+          parsed = text;
         }
         const v = space.extract(parsed);
         values.push({ term, value: v });

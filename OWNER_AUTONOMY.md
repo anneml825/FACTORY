@@ -21,14 +21,36 @@ number of meaningful decisions, leave.
 
 ## Labor categories
 
-Tracked separately in `owner_intervention`, because they mean different things:
+Tracked separately in `owner_intervention`, because they mean different things.
+Owner clarification, 2026-08-18:
 
-| Category | Counts against autonomy? |
-|---|---|
-| `SETUP` | One-time. Reported separately, does not count against the autonomy thesis |
-| `APPROVAL` | Intended, permanent. Should stay small and batched |
-| `OPERATING` | **Counts.** Running the business |
-| `MAINTENANCE_DEBUG` | **Counts, and is the most diagnostic number in the system** |
+| Category | What it is | Counts against autonomy? |
+|---|---|---|
+| `SETUP` | Account creation, identity verification, developer/API enrollment, OAuth authorization, secure key provisioning, payout configuration, domain/DNS. **Occasional, one-time.** | **No.** Tracked separately |
+| `APPROVAL` | Meaningful decisions | No, but must stay small and batched |
+| `OPERATING` | Researching opportunities, creating products, publishing listings, distributing, fulfilling orders, moving data between services, monitoring routine jobs, reconciling transactions | **Yes — must remain near zero** |
+| `MAINTENANCE_DEBUG` | Recurring intervention because Factory or an integration cannot run reliably | **Yes, after `COMMERCIAL_CLOCK_START`. The most diagnostic number in the system** |
+
+### Setup labor is an investment, not a cost to minimize
+
+**Do not reject an otherwise superior search space, data source, distribution mechanism,
+commerce provider, or integration merely because it requires one-time owner setup.**
+
+Working assumption: **~10–15 minutes** of owner setup per integration is acceptable when it
+buys substantial ongoing autonomous capability. Multiple such requests across Factory's life
+are legitimate when each is justified. Still avoid unnecessary accounts, and consolidate
+requests where practical.
+
+**The optimization target is maximum ongoing autonomous economic capability per minute of
+one-time owner setup** — not the absence of setup.
+
+Every such request must state: exactly what the owner does, estimated minutes, whether
+sensitive credentials are involved, where they are entered securely, and what autonomous
+capability it unlocks.
+
+**This does not relax the recurring-labor constraint.** `OPERATING` stays near zero and
+`MAINTENANCE_DEBUG` still counts against the autonomy thesis. A one-time 15-minute account
+setup is acceptable; a 15-minute weekly ritual is not.
 
 After `COMMERCIAL_CLOCK_START`, **all human maintenance and debugging required to keep
 Factory functioning counts against the autonomy thesis** (`EXPERIMENTAL_PROTOCOL.md` §12).
