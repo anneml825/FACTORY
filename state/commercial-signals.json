@@ -1,0 +1,160 @@
+{
+  "retrievedAt": "2026-08-18T12:20:58.885Z",
+  "terms": [
+    "scheduling software",
+    "invoice automation",
+    "inventory tracking",
+    "appointment reminder",
+    "compliance training",
+    "data migration",
+    "document automation",
+    "route optimization"
+  ],
+  "rows": [
+    {
+      "id": "usaspending_awards",
+      "name": "USAspending.gov federal award transactions",
+      "signalKind": "ACTUAL_TRANSACTIONS",
+      "whatItProves": "Literal purchase records: a buyer paid a named vendor a specific dollar amount to solve a named problem. Not a proxy for demand — it IS demand, settled.",
+      "requiresCredential": false,
+      "credentialNote": null,
+      "setupMinutes": 0,
+      "termsNote": "Public open-government API, explicitly published for programmatic use.",
+      "statuses": {
+        "200": 8
+      },
+      "coverage": 1,
+      "distinctRatio": 1,
+      "nonZeroShare": 0.875,
+      "median": 12602867.95,
+      "max": 71624148.01,
+      "sampleDetail": "10 awards returned",
+      "values": [
+        5074822.58,
+        6688147.82,
+        9823504.96,
+        16112355.72,
+        12602867.95,
+        71624148.01,
+        19949984.32,
+        0
+      ]
+    },
+    {
+      "id": "opencollective_money",
+      "name": "Open Collective — money actually raised by projects",
+      "signalKind": "MONEY_COMMITTED",
+      "whatItProves": "Real money moved to solve a problem, with public ledgers. Shows what people and companies voluntarily fund.",
+      "requiresCredential": false,
+      "credentialNote": null,
+      "setupMinutes": 0,
+      "termsNote": "Public GraphQL API, no key for public data.",
+      "statuses": {
+        "200": 8
+      },
+      "coverage": 1,
+      "distinctRatio": 0.375,
+      "nonZeroShare": 0.25,
+      "median": 0,
+      "max": 7160,
+      "sampleDetail": "10 collectives",
+      "values": [
+        0,
+        0,
+        2239,
+        0,
+        0,
+        0,
+        7160,
+        0
+      ]
+    },
+    {
+      "id": "steam_store",
+      "name": "Steam store — paid products with prices",
+      "signalKind": "PRICE_PLUS_VOLUME",
+      "whatItProves": "Paid catalogue with real prices; reviews act as a purchase proxy.",
+      "requiresCredential": false,
+      "credentialNote": null,
+      "setupMinutes": 0,
+      "termsNote": "Public storefront search endpoint used by the store itself.",
+      "statuses": {
+        "200": 8
+      },
+      "coverage": 1,
+      "distinctRatio": 0.125,
+      "nonZeroShare": 0,
+      "median": 0,
+      "max": 0,
+      "sampleDetail": "",
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "itch_io",
+      "name": "itch.io — indie paid digital goods",
+      "signalKind": "PRICE_PLUS_VOLUME",
+      "whatItProves": "Instant listing, paid digital products, no gatekeeper review.",
+      "requiresCredential": false,
+      "credentialNote": null,
+      "setupMinutes": 0,
+      "termsNote": "Public search page; JSON availability unverified — measured here.",
+      "statuses": {
+        "200": 8
+      },
+      "coverage": 1,
+      "distinctRatio": 0.625,
+      "nonZeroShare": 1,
+      "median": 14,
+      "max": 36,
+      "sampleDetail": "",
+      "values": [
+        6,
+        8,
+        36,
+        6,
+        16,
+        14,
+        16,
+        8
+      ]
+    },
+    {
+      "id": "envato_codecanyon",
+      "name": "Envato / CodeCanyon — per-item SALES COUNTS and prices",
+      "signalKind": "PRICE_PLUS_VOLUME",
+      "whatItProves": "The highest-value missing measurement: actual units sold x actual price, per niche product. Direct willingness-to-pay at item level.",
+      "requiresCredential": true,
+      "credentialNote": "Envato API personal token — free account, entered as a GitHub secret.",
+      "setupMinutes": 10,
+      "termsNote": "Official API with documented endpoints; token is free.",
+      "statuses": {
+        "401": 8
+      },
+      "coverage": 0,
+      "distinctRatio": 0,
+      "nonZeroShare": 0,
+      "median": null,
+      "max": null,
+      "sampleDetail": "",
+      "values": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3439 @@
+{
+  "retrievedAt": "2026-08-18T12:21:21.731Z",
+  "rows": [
+    {
+      "query": "restaurant booking",
+      "siteType": "restaurant",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "restaurant intake form",
+      "siteType": "restaurant",
+      "job": "intake form",
+      "matchCount": 8,
+      "top": {
+        "name": "WPZOOM Forms &#8211; Drag &amp; Drop Contact Form Builder for WordPress",
+        "slug": "wpzoom-forms",
+        "activeInstalls": 10000,
+        "rating": 100,
+        "numRatings": 2,
+        "lastUpdated": "2026-08-07 11:55am GMT",
+        "monthsSinceUpdate": 0.4,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "restaurant appointment reminder",
+      "siteType": "restaurant",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "restaurant membership directory",
+      "siteType": "restaurant",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "PDF Embedder – PDF Viewer &amp; Embed PDF Files for WordPress",
+        "slug": "pdf-embedder",
+        "activeInstalls": 300000,
+        "rating": 94,
+        "numRatings": 516,
+        "lastUpdated": "2026-08-14 4:59pm GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "restaurant invoice quote",
+      "siteType": "restaurant",
+      "job": "invoice quote",
+      "matchCount": 6,
+      "top": {
+        "name": "GeoDirectory &#8211; WP Business Directory Plugin and Classified Listings Directory",
+        "slug": "geodirectory",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 715,
+        "lastUpdated": "2026-08-14 11:12am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "restaurant inventory tracking",
+      "siteType": "restaurant",
+      "job": "inventory tracking",
+      "matchCount": 8,
+      "top": {
+        "name": "Food Menu &#8211; Restaurant Menu &amp; Online Ordering for WooCommerce",
+        "slug": "tlp-food-menu",
+        "activeInstalls": 3000,
+        "rating": 100,
+        "numRatings": 23,
+        "lastUpdated": "2026-08-18 10:37am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "restaurant waiver signature",
+      "siteType": "restaurant",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "restaurant staff scheduling",
+      "siteType": "restaurant",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "dental practice booking",
+      "siteType": "dental practice",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "MPG – Multiple Page Generator, Bulk Landing Pages &amp; Programmatic SEO",
+        "slug": "multiple-pages-generator-by-porthas",
+        "activeInstalls": 2000,
+        "rating": 78,
+        "numRatings": 27,
+        "lastUpdated": "2026-08-12 10:26am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 78/100"
+      ],
+      "score": 3.3
+    },
+    {
+      "query": "dental practice intake form",
+      "siteType": "dental practice",
+      "job": "intake form",
+      "matchCount": 1,
+      "top": {
+        "name": "Secure Forms",
+        "slug": "secure-forms",
+        "activeInstalls": 20,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2025-08-04 7:29pm GMT",
+        "monthsSinceUpdate": 12.5,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "dental practice appointment reminder",
+      "siteType": "dental practice",
+      "job": "appointment reminder",
+      "matchCount": 7,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "dental practice membership directory",
+      "siteType": "dental practice",
+      "job": "membership directory",
+      "matchCount": 1,
+      "top": {
+        "name": "Mika AI Chat",
+        "slug": "mika-ai-chat",
+        "activeInstalls": 0,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-04-30 7:06pm GMT",
+        "monthsSinceUpdate": 3.6,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "dental practice invoice quote",
+      "siteType": "dental practice",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "dental practice inventory tracking",
+      "siteType": "dental practice",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 3
+    },
+    {
+      "query": "dental practice waiver signature",
+      "siteType": "dental practice",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "dental practice staff scheduling",
+      "siteType": "dental practice",
+      "job": "staff scheduling",
+      "matchCount": 6,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio booking",
+      "siteType": "gym fitness studio",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Booking for Appointments and Events Calendar &#8211; Amelia",
+        "slug": "ameliabooking",
+        "activeInstalls": 90000,
+        "rating": 92,
+        "numRatings": 784,
+        "lastUpdated": "2026-08-14 7:31am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 71.42857142857143
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio intake form",
+      "siteType": "gym fitness studio",
+      "job": "intake form",
+      "matchCount": 5,
+      "top": {
+        "name": "Booking for Appointments and Events Calendar &#8211; Amelia",
+        "slug": "ameliabooking",
+        "activeInstalls": 90000,
+        "rating": 92,
+        "numRatings": 784,
+        "lastUpdated": "2026-08-14 7:31am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 71.42857142857143
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio appointment reminder",
+      "siteType": "gym fitness studio",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio membership directory",
+      "siteType": "gym fitness studio",
+      "job": "membership directory",
+      "matchCount": 1,
+      "top": {
+        "name": "Gym Builder – Fitness Studio Booking, Class Schedule, Trainer Profiles, BMI Calculator &amp; Member Management Plugin",
+        "slug": "gym-builder",
+        "activeInstalls": 100,
+        "rating": 100,
+        "numRatings": 7,
+        "lastUpdated": "2026-08-15 7:09am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio invoice quote",
+      "siteType": "gym fitness studio",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio inventory tracking",
+      "siteType": "gym fitness studio",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio waiver signature",
+      "siteType": "gym fitness studio",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "gym fitness studio staff scheduling",
+      "siteType": "gym fitness studio",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Booking for Appointments and Events Calendar &#8211; Amelia",
+        "slug": "ameliabooking",
+        "activeInstalls": 90000,
+        "rating": 92,
+        "numRatings": 784,
+        "lastUpdated": "2026-08-14 7:31am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 71.42857142857143
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "school booking",
+      "siteType": "school",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "school intake form",
+      "siteType": "school",
+      "job": "intake form",
+      "matchCount": 8,
+      "top": {
+        "name": "Formidable Forms &#8211; WordPress Form Builder for Contact Forms, Calculators, Quizzes &amp; More",
+        "slug": "formidable",
+        "activeInstalls": 300000,
+        "rating": 96,
+        "numRatings": 1379,
+        "lastUpdated": "2026-08-12 2:56pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "school appointment reminder",
+      "siteType": "school",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "school membership directory",
+      "siteType": "school",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "Formidable Forms &#8211; WordPress Form Builder for Contact Forms, Calculators, Quizzes &amp; More",
+        "slug": "formidable",
+        "activeInstalls": 300000,
+        "rating": 96,
+        "numRatings": 1379,
+        "lastUpdated": "2026-08-12 2:56pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "school invoice quote",
+      "siteType": "school",
+      "job": "invoice quote",
+      "matchCount": 3,
+      "top": {
+        "name": "Formidable Forms &#8211; WordPress Form Builder for Contact Forms, Calculators, Quizzes &amp; More",
+        "slug": "formidable",
+        "activeInstalls": 300000,
+        "rating": 96,
+        "numRatings": 1379,
+        "lastUpdated": "2026-08-12 2:56pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "school inventory tracking",
+      "siteType": "school",
+      "job": "inventory tracking",
+      "matchCount": 3,
+      "top": {
+        "name": "Optima Express IDX",
+        "slug": "optima-express",
+        "activeInstalls": 10000,
+        "rating": 64,
+        "numRatings": 45,
+        "lastUpdated": "2026-06-10 8:54pm GMT",
+        "monthsSinceUpdate": 2.3,
+        "supportResolutionPct": 0
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 64/100",
+        "only 3 plugins compete"
+      ],
+      "score": 8
+    },
+    {
+      "query": "school waiver signature",
+      "siteType": "school",
+      "job": "waiver signature",
+      "matchCount": 1,
+      "top": {
+        "name": "Digital Signature For Gravity Forms",
+        "slug": "digital-signature-for-gravity-forms",
+        "activeInstalls": 300,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-06-29 9:41am GMT",
+        "monthsSinceUpdate": 1.7,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "school staff scheduling",
+      "siteType": "school",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "church booking",
+      "siteType": "church",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Advanced Form Integration — Connect Forms to 200+ Apps",
+        "slug": "advanced-form-integration",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 90,
+        "lastUpdated": "2026-08-11 3:46am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "church intake form",
+      "siteType": "church",
+      "job": "intake form",
+      "matchCount": 1,
+      "top": {
+        "name": "Advanced Form Integration — Connect Forms to 200+ Apps",
+        "slug": "advanced-form-integration",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 90,
+        "lastUpdated": "2026-08-11 3:46am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "church appointment reminder",
+      "siteType": "church",
+      "job": "appointment reminder",
+      "matchCount": 2,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "church membership directory",
+      "siteType": "church",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "PDF Embedder – PDF Viewer &amp; Embed PDF Files for WordPress",
+        "slug": "pdf-embedder",
+        "activeInstalls": 300000,
+        "rating": 94,
+        "numRatings": 516,
+        "lastUpdated": "2026-08-14 4:59pm GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "church invoice quote",
+      "siteType": "church",
+      "job": "invoice quote",
+      "matchCount": 2,
+      "top": {
+        "name": "GeoDirectory &#8211; WP Business Directory Plugin and Classified Listings Directory",
+        "slug": "geodirectory",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 715,
+        "lastUpdated": "2026-08-14 11:12am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "church inventory tracking",
+      "siteType": "church",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Advanced Form Integration — Connect Forms to 200+ Apps",
+        "slug": "advanced-form-integration",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 90,
+        "lastUpdated": "2026-08-11 3:46am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "church waiver signature",
+      "siteType": "church",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "church staff scheduling",
+      "siteType": "church",
+      "job": "staff scheduling",
+      "matchCount": 3,
+      "top": {
+        "name": "connectDaily Events Calendar Plugin",
+        "slug": "connect-daily-web-calendar",
+        "activeInstalls": 90,
+        "rating": 90,
+        "numRatings": 16,
+        "lastUpdated": "2026-05-24 4:28pm GMT",
+        "monthsSinceUpdate": 2.8,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "nonprofit charity booking",
+      "siteType": "nonprofit charity",
+      "job": "booking",
+      "matchCount": 2,
+      "top": {
+        "name": "Starter Templates – AI-Powered Templates for Elementor &amp; Gutenberg",
+        "slug": "astra-sites",
+        "activeInstalls": 1000000,
+        "rating": 98,
+        "numRatings": 4744,
+        "lastUpdated": "2026-08-12 10:39am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "nonprofit charity intake form",
+      "siteType": "nonprofit charity",
+      "job": "intake form",
+      "matchCount": 1,
+      "top": {
+        "name": "GiveWP &#8211; Donation Plugin and Fundraising Platform",
+        "slug": "give",
+        "activeInstalls": 100000,
+        "rating": 92,
+        "numRatings": 705,
+        "lastUpdated": "2026-08-12 3:49pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 95
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "nonprofit charity appointment reminder",
+      "siteType": "nonprofit charity",
+      "job": "appointment reminder",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "nonprofit charity membership directory",
+      "siteType": "nonprofit charity",
+      "job": "membership directory",
+      "matchCount": 5,
+      "top": {
+        "name": "CartFlows – Funnel Builder &amp; Checkout Plugin for WooCommerce",
+        "slug": "cartflows",
+        "activeInstalls": 200000,
+        "rating": 96,
+        "numRatings": 502,
+        "lastUpdated": "2026-08-11 4:59am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "nonprofit charity invoice quote",
+      "siteType": "nonprofit charity",
+      "job": "invoice quote",
+      "matchCount": 1,
+      "top": {
+        "name": "Buy Me a Coffee – Membership, Paywall &amp; Fundraiser with Stripe &amp; PayPal",
+        "slug": "buy-me-coffee",
+        "activeInstalls": 80,
+        "rating": 80,
+        "numRatings": 1,
+        "lastUpdated": "2026-08-16 6:07am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "nonprofit charity inventory tracking",
+      "siteType": "nonprofit charity",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "SureCart &#8211; Ecommerce Made Easy For Selling Physical Products, Digital Downloads, Subscriptions, Donations, &amp; Payments",
+        "slug": "surecart",
+        "activeInstalls": 80000,
+        "rating": 96,
+        "numRatings": 277,
+        "lastUpdated": "2026-08-17 7:41pm GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 4.9
+    },
+    {
+      "query": "nonprofit charity waiver signature",
+      "siteType": "nonprofit charity",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "nonprofit charity staff scheduling",
+      "siteType": "nonprofit charity",
+      "job": "staff scheduling",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hair salon booking",
+      "siteType": "hair salon",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hair salon intake form",
+      "siteType": "hair salon",
+      "job": "intake form",
+      "matchCount": 4,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hair salon appointment reminder",
+      "siteType": "hair salon",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hair salon membership directory",
+      "siteType": "hair salon",
+      "job": "membership directory",
+      "matchCount": 2,
+      "top": {
+        "name": "Intranet and Extranet with O365 Login",
+        "slug": "o365-wp-restrict",
+        "activeInstalls": 40,
+        "rating": 100,
+        "numRatings": 5,
+        "lastUpdated": "2025-09-08 8:34am GMT",
+        "monthsSinceUpdate": 11.3,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hair salon invoice quote",
+      "siteType": "hair salon",
+      "job": "invoice quote",
+      "matchCount": 2,
+      "top": {
+        "name": "Appointly",
+        "slug": "appointly",
+        "activeInstalls": 100,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-06-10 7:24pm GMT",
+        "monthsSinceUpdate": 2.3,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hair salon inventory tracking",
+      "siteType": "hair salon",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 3
+    },
+    {
+      "query": "hair salon waiver signature",
+      "siteType": "hair salon",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hair salon staff scheduling",
+      "siteType": "hair salon",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic booking",
+      "siteType": "veterinary clinic",
+      "job": "booking",
+      "matchCount": 4,
+      "top": {
+        "name": "PreBook– All-in-One Appointment Booking and Scheduling Solution",
+        "slug": "prebook-appointment-booking",
+        "activeInstalls": 10,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2025-07-27 4:09pm GMT",
+        "monthsSinceUpdate": 12.7,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic intake form",
+      "siteType": "veterinary clinic",
+      "job": "intake form",
+      "matchCount": 1,
+      "top": {
+        "name": "KennelFlow Vet",
+        "slug": "kennelflow-vet",
+        "activeInstalls": 0,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 11:42pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic appointment reminder",
+      "siteType": "veterinary clinic",
+      "job": "appointment reminder",
+      "matchCount": 2,
+      "top": {
+        "name": "PreBook– All-in-One Appointment Booking and Scheduling Solution",
+        "slug": "prebook-appointment-booking",
+        "activeInstalls": 10,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2025-07-27 4:09pm GMT",
+        "monthsSinceUpdate": 12.7,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic membership directory",
+      "siteType": "veterinary clinic",
+      "job": "membership directory",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic invoice quote",
+      "siteType": "veterinary clinic",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic inventory tracking",
+      "siteType": "veterinary clinic",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic waiver signature",
+      "siteType": "veterinary clinic",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "veterinary clinic staff scheduling",
+      "siteType": "veterinary clinic",
+      "job": "staff scheduling",
+      "matchCount": 3,
+      "top": {
+        "name": "PreBook– All-in-One Appointment Booking and Scheduling Solution",
+        "slug": "prebook-appointment-booking",
+        "activeInstalls": 10,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2025-07-27 4:09pm GMT",
+        "monthsSinceUpdate": 12.7,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "real estate agency booking",
+      "siteType": "real estate agency",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "real estate agency intake form",
+      "siteType": "real estate agency",
+      "job": "intake form",
+      "matchCount": 7,
+      "top": {
+        "name": "Formidable Forms &#8211; WordPress Form Builder for Contact Forms, Calculators, Quizzes &amp; More",
+        "slug": "formidable",
+        "activeInstalls": 300000,
+        "rating": 96,
+        "numRatings": 1379,
+        "lastUpdated": "2026-08-12 2:56pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "real estate agency appointment reminder",
+      "siteType": "real estate agency",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "real estate agency membership directory",
+      "siteType": "real estate agency",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "Formidable Forms &#8211; WordPress Form Builder for Contact Forms, Calculators, Quizzes &amp; More",
+        "slug": "formidable",
+        "activeInstalls": 300000,
+        "rating": 96,
+        "numRatings": 1379,
+        "lastUpdated": "2026-08-12 2:56pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "real estate agency invoice quote",
+      "siteType": "real estate agency",
+      "job": "invoice quote",
+      "matchCount": 3,
+      "top": {
+        "name": "Formidable Forms &#8211; WordPress Form Builder for Contact Forms, Calculators, Quizzes &amp; More",
+        "slug": "formidable",
+        "activeInstalls": 300000,
+        "rating": 96,
+        "numRatings": 1379,
+        "lastUpdated": "2026-08-12 2:56pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "real estate agency inventory tracking",
+      "siteType": "real estate agency",
+      "job": "inventory tracking",
+      "matchCount": 4,
+      "top": {
+        "name": "Advanced Form Integration — Connect Forms to 200+ Apps",
+        "slug": "advanced-form-integration",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 90,
+        "lastUpdated": "2026-08-11 3:46am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "real estate agency waiver signature",
+      "siteType": "real estate agency",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "real estate agency staff scheduling",
+      "siteType": "real estate agency",
+      "job": "staff scheduling",
+      "matchCount": 6,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "law firm booking",
+      "siteType": "law firm",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "law firm intake form",
+      "siteType": "law firm",
+      "job": "intake form",
+      "matchCount": 6,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "law firm appointment reminder",
+      "siteType": "law firm",
+      "job": "appointment reminder",
+      "matchCount": 7,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "law firm membership directory",
+      "siteType": "law firm",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "When Last Login",
+        "slug": "when-last-login",
+        "activeInstalls": 50000,
+        "rating": 94,
+        "numRatings": 37,
+        "lastUpdated": "2026-08-13 2:21pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 0
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "law firm invoice quote",
+      "siteType": "law firm",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "law firm inventory tracking",
+      "siteType": "law firm",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Genwave &#8211; AI Agent",
+        "slug": "gen-wave",
+        "activeInstalls": 10,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-12 3:23pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "law firm waiver signature",
+      "siteType": "law firm",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "law firm staff scheduling",
+      "siteType": "law firm",
+      "job": "staff scheduling",
+      "matchCount": 5,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "photographer booking",
+      "siteType": "photographer",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "WPForms &#8211; AI Form Builder for WordPress &#8211; Contact Forms, Payment Forms, Survey Form, Quiz &amp; More",
+        "slug": "wpforms-lite",
+        "activeInstalls": 5000000,
+        "rating": 96,
+        "numRatings": 14363,
+        "lastUpdated": "2026-08-18 11:02am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 86.36363636363636
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "photographer intake form",
+      "siteType": "photographer",
+      "job": "intake form",
+      "matchCount": 2,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "photographer appointment reminder",
+      "siteType": "photographer",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "photographer membership directory",
+      "siteType": "photographer",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "Password Protected — Lock Entire Site, Pages, Posts, Categories, and Partial Content",
+        "slug": "password-protected",
+        "activeInstalls": 300000,
+        "rating": 88,
+        "numRatings": 139,
+        "lastUpdated": "2026-07-30 5:52am GMT",
+        "monthsSinceUpdate": 0.6,
+        "supportResolutionPct": 50
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "photographer invoice quote",
+      "siteType": "photographer",
+      "job": "invoice quote",
+      "matchCount": 8,
+      "top": {
+        "name": "WPForms &#8211; AI Form Builder for WordPress &#8211; Contact Forms, Payment Forms, Survey Form, Quiz &amp; More",
+        "slug": "wpforms-lite",
+        "activeInstalls": 5000000,
+        "rating": 96,
+        "numRatings": 14363,
+        "lastUpdated": "2026-08-18 11:02am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 86.36363636363636
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "photographer inventory tracking",
+      "siteType": "photographer",
+      "job": "inventory tracking",
+      "matchCount": 2,
+      "top": {
+        "name": "EasyCommerce – Agentic AI Ecommerce &amp; Online Store Builder",
+        "slug": "easycommerce",
+        "activeInstalls": 10,
+        "rating": 94,
+        "numRatings": 12,
+        "lastUpdated": "2026-07-29 7:16am GMT",
+        "monthsSinceUpdate": 0.7,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "photographer waiver signature",
+      "siteType": "photographer",
+      "job": "waiver signature",
+      "matchCount": 5,
+      "top": {
+        "name": "Signature Add-On for Gravity Forms",
+        "slug": "gravity-signature-forms-add-on",
+        "activeInstalls": 1000,
+        "rating": 78,
+        "numRatings": 21,
+        "lastUpdated": "2026-08-11 9:05am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 78/100"
+      ],
+      "score": 3
+    },
+    {
+      "query": "photographer staff scheduling",
+      "siteType": "photographer",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "brewery booking",
+      "siteType": "brewery",
+      "job": "booking",
+      "matchCount": 1,
+      "top": {
+        "name": "7Labs Debug &amp; Branding for Commerce7",
+        "slug": "7labs-debug-branding-for-commerce7",
+        "activeInstalls": 0,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-07-24 7:32am GMT",
+        "monthsSinceUpdate": 0.8,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery intake form",
+      "siteType": "brewery",
+      "job": "intake form",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery appointment reminder",
+      "siteType": "brewery",
+      "job": "appointment reminder",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery membership directory",
+      "siteType": "brewery",
+      "job": "membership directory",
+      "matchCount": 1,
+      "top": {
+        "name": "Commerce7 for WordPress",
+        "slug": "wp-commerce7",
+        "activeInstalls": 900,
+        "rating": 100,
+        "numRatings": 1,
+        "lastUpdated": "2026-07-03 7:03pm GMT",
+        "monthsSinceUpdate": 1.5,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery invoice quote",
+      "siteType": "brewery",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery inventory tracking",
+      "siteType": "brewery",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery waiver signature",
+      "siteType": "brewery",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "brewery staff scheduling",
+      "siteType": "brewery",
+      "job": "staff scheduling",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "farm booking",
+      "siteType": "farm",
+      "job": "booking",
+      "matchCount": 3,
+      "top": {
+        "name": "Location Weather – WordPress Weather Forecast, Air Quality &amp; Weather Widget",
+        "slug": "location-weather",
+        "activeInstalls": 10000,
+        "rating": 90,
+        "numRatings": 103,
+        "lastUpdated": "2026-07-23 8:17am GMT",
+        "monthsSinceUpdate": 0.9,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "farm intake form",
+      "siteType": "farm",
+      "job": "intake form",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "farm appointment reminder",
+      "siteType": "farm",
+      "job": "appointment reminder",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "farm membership directory",
+      "siteType": "farm",
+      "job": "membership directory",
+      "matchCount": 2,
+      "top": {
+        "name": "Business Directory Plugin &#8211; Easy Listing Directories for WordPress",
+        "slug": "business-directory-plugin",
+        "activeInstalls": 10000,
+        "rating": 92,
+        "numRatings": 504,
+        "lastUpdated": "2026-07-29 7:42am GMT",
+        "monthsSinceUpdate": 0.7,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "farm invoice quote",
+      "siteType": "farm",
+      "job": "invoice quote",
+      "matchCount": 1,
+      "top": {
+        "name": "SeekMake – Instant 3D Printing Quote Plugin on your Website",
+        "slug": "seekmake",
+        "activeInstalls": 30,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-07-17 9:03am GMT",
+        "monthsSinceUpdate": 1.1,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "farm inventory tracking",
+      "siteType": "farm",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "farm waiver signature",
+      "siteType": "farm",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "farm staff scheduling",
+      "siteType": "farm",
+      "job": "staff scheduling",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hotel booking",
+      "siteType": "hotel",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Forminator Forms – Contact Form, Payment Form &amp; Custom Form Builder",
+        "slug": "forminator",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 2108,
+        "lastUpdated": "2026-08-12 1:10pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 83.33333333333334
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hotel intake form",
+      "siteType": "hotel",
+      "job": "intake form",
+      "matchCount": 6,
+      "top": {
+        "name": "Forminator Forms – Contact Form, Payment Form &amp; Custom Form Builder",
+        "slug": "forminator",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 2108,
+        "lastUpdated": "2026-08-12 1:10pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 83.33333333333334
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hotel appointment reminder",
+      "siteType": "hotel",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hotel membership directory",
+      "siteType": "hotel",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "Business Directory Plugin &#8211; Easy Listing Directories for WordPress",
+        "slug": "business-directory-plugin",
+        "activeInstalls": 10000,
+        "rating": 92,
+        "numRatings": 504,
+        "lastUpdated": "2026-07-29 7:42am GMT",
+        "monthsSinceUpdate": 0.7,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hotel invoice quote",
+      "siteType": "hotel",
+      "job": "invoice quote",
+      "matchCount": 8,
+      "top": {
+        "name": "Everest Forms – Contact Form, Payment Form, Quiz, Survey &amp; Custom Form Builder with AI",
+        "slug": "everest-forms",
+        "activeInstalls": 90000,
+        "rating": 98,
+        "numRatings": 375,
+        "lastUpdated": "2026-08-13 9:01am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hotel inventory tracking",
+      "siteType": "hotel",
+      "job": "inventory tracking",
+      "matchCount": 6,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hotel waiver signature",
+      "siteType": "hotel",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hotel staff scheduling",
+      "siteType": "hotel",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Online Scheduling and Appointment Booking System – Bookly",
+        "slug": "bookly-responsive-appointment-booking-tool",
+        "activeInstalls": 60000,
+        "rating": 88,
+        "numRatings": 572,
+        "lastUpdated": "2026-08-07 1:33pm GMT",
+        "monthsSinceUpdate": 0.4,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop booking",
+      "siteType": "auto repair shop",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop intake form",
+      "siteType": "auto repair shop",
+      "job": "intake form",
+      "matchCount": 3,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "auto repair shop appointment reminder",
+      "siteType": "auto repair shop",
+      "job": "appointment reminder",
+      "matchCount": 7,
+      "top": {
+        "name": "Royal Addons for Elementor – Addons and Templates Kit for Elementor",
+        "slug": "royal-elementor-addons",
+        "activeInstalls": 600000,
+        "rating": 96,
+        "numRatings": 611,
+        "lastUpdated": "2026-08-17 6:52am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop membership directory",
+      "siteType": "auto repair shop",
+      "job": "membership directory",
+      "matchCount": 2,
+      "top": {
+        "name": "Bikit Business Directory",
+        "slug": "bikit-business-directory",
+        "activeInstalls": 100,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2025-12-22 10:04am GMT",
+        "monthsSinceUpdate": 7.9,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop invoice quote",
+      "siteType": "auto repair shop",
+      "job": "invoice quote",
+      "matchCount": 7,
+      "top": {
+        "name": "Cost Calculator Builder",
+        "slug": "cost-calculator-builder",
+        "activeInstalls": 20000,
+        "rating": 90,
+        "numRatings": 393,
+        "lastUpdated": "2026-08-15 6:38pm GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop inventory tracking",
+      "siteType": "auto repair shop",
+      "job": "inventory tracking",
+      "matchCount": 5,
+      "top": {
+        "name": "BrikPanel: WooCommerce Dashboard, Abandoned Cart Recovery, Google Sheets Sync, Inventory Management &amp; Bulk Editor",
+        "slug": "brikpanel-admin-panel-dashboard-for-woocommerce",
+        "activeInstalls": 800,
+        "rating": 100,
+        "numRatings": 40,
+        "lastUpdated": "2026-08-18 9:44am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop waiver signature",
+      "siteType": "auto repair shop",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "auto repair shop staff scheduling",
+      "siteType": "auto repair shop",
+      "job": "staff scheduling",
+      "matchCount": 3,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "tutoring booking",
+      "siteType": "tutoring",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "tutoring intake form",
+      "siteType": "tutoring",
+      "job": "intake form",
+      "matchCount": 7,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "tutoring appointment reminder",
+      "siteType": "tutoring",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "tutoring membership directory",
+      "siteType": "tutoring",
+      "job": "membership directory",
+      "matchCount": 2,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "tutoring invoice quote",
+      "siteType": "tutoring",
+      "job": "invoice quote",
+      "matchCount": 2,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "tutoring inventory tracking",
+      "siteType": "tutoring",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "tutoring waiver signature",
+      "siteType": "tutoring",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "tutoring staff scheduling",
+      "siteType": "tutoring",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Simply Schedule Appointments",
+        "slug": "simply-schedule-appointments",
+        "activeInstalls": 50000,
+        "rating": 100,
+        "numRatings": 155,
+        "lastUpdated": "2026-08-11 10:18pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "event venue booking",
+      "siteType": "event venue",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Events Manager &#8211; Calendar, Bookings, Tickets, and more!",
+        "slug": "events-manager",
+        "activeInstalls": 70000,
+        "rating": 84,
+        "numRatings": 547,
+        "lastUpdated": "2026-08-07 1:23am GMT",
+        "monthsSinceUpdate": 0.4,
+        "supportResolutionPct": 32.608695652173914
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 33% of support threads resolved"
+      ],
+      "score": 4.85
+    },
+    {
+      "query": "event venue intake form",
+      "siteType": "event venue",
+      "job": "intake form",
+      "matchCount": 2,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "event venue appointment reminder",
+      "siteType": "event venue",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Eventin – Event Calendar, Tickets, Registration, Booking &amp; WooCommerce",
+        "slug": "wp-event-solution",
+        "activeInstalls": 10000,
+        "rating": 94,
+        "numRatings": 396,
+        "lastUpdated": "2026-08-12 7:01am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 83.33333333333334
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "event venue membership directory",
+      "siteType": "event venue",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "User Frontend – Membership, User Registration, User Profile, User Directory &amp; Content Restriction with Frontend Post Submission",
+        "slug": "wp-user-frontend",
+        "activeInstalls": 20000,
+        "rating": 82,
+        "numRatings": 534,
+        "lastUpdated": "2026-08-12 11:04am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 50
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "event venue invoice quote",
+      "siteType": "event venue",
+      "job": "invoice quote",
+      "matchCount": 3,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "event venue inventory tracking",
+      "siteType": "event venue",
+      "job": "inventory tracking",
+      "matchCount": 5,
+      "top": {
+        "name": "Food Menu &#8211; Restaurant Menu &amp; Online Ordering for WooCommerce",
+        "slug": "tlp-food-menu",
+        "activeInstalls": 3000,
+        "rating": 100,
+        "numRatings": 23,
+        "lastUpdated": "2026-08-18 10:37am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "event venue waiver signature",
+      "siteType": "event venue",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "event venue staff scheduling",
+      "siteType": "event venue",
+      "job": "staff scheduling",
+      "matchCount": 7,
+      "top": {
+        "name": "Sugar Calendar &#8211; Events Calendar, Event Tickets, and Events Management Platform",
+        "slug": "sugar-calendar-lite",
+        "activeInstalls": 10000,
+        "rating": 90,
+        "numRatings": 24,
+        "lastUpdated": "2026-07-17 3:53pm GMT",
+        "monthsSinceUpdate": 1.1,
+        "supportResolutionPct": 88.88888888888889
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "marina booking",
+      "siteType": "marina",
+      "job": "booking",
+      "matchCount": 2,
+      "top": {
+        "name": "WeatherBot Weather Widget",
+        "slug": "weatherbot",
+        "activeInstalls": 40,
+        "rating": 100,
+        "numRatings": 1,
+        "lastUpdated": "2025-10-21 4:18pm GMT",
+        "monthsSinceUpdate": 9.9,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina intake form",
+      "siteType": "marina",
+      "job": "intake form",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina appointment reminder",
+      "siteType": "marina",
+      "job": "appointment reminder",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina membership directory",
+      "siteType": "marina",
+      "job": "membership directory",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina invoice quote",
+      "siteType": "marina",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina inventory tracking",
+      "siteType": "marina",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina waiver signature",
+      "siteType": "marina",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "marina staff scheduling",
+      "siteType": "marina",
+      "job": "staff scheduling",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community booking",
+      "siteType": "hoa community",
+      "job": "booking",
+      "matchCount": 2,
+      "top": {
+        "name": "Hold My Court",
+        "slug": "hold-my-court",
+        "activeInstalls": 0,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2025-12-06 10:23pm GMT",
+        "monthsSinceUpdate": 8.4,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community intake form",
+      "siteType": "hoa community",
+      "job": "intake form",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community appointment reminder",
+      "siteType": "hoa community",
+      "job": "appointment reminder",
+      "matchCount": 1,
+      "top": {
+        "name": "WebinarPress – Webinar System for WordPress",
+        "slug": "wp-webinarsystem",
+        "activeInstalls": 800,
+        "rating": 82,
+        "numRatings": 40,
+        "lastUpdated": "2026-07-21 9:52am GMT",
+        "monthsSinceUpdate": 0.9,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community membership directory",
+      "siteType": "hoa community",
+      "job": "membership directory",
+      "matchCount": 4,
+      "top": {
+        "name": "WebinarPress – Webinar System for WordPress",
+        "slug": "wp-webinarsystem",
+        "activeInstalls": 800,
+        "rating": 82,
+        "numRatings": 40,
+        "lastUpdated": "2026-07-21 9:52am GMT",
+        "monthsSinceUpdate": 0.9,
+        "supportResolutionPct": null
+      },
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "hoa community invoice quote",
+      "siteType": "hoa community",
+      "job": "invoice quote",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community inventory tracking",
+      "siteType": "hoa community",
+      "job": "inventory tracking",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community waiver signature",
+      "siteType": "hoa community",
+      "job": "waiver signature",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "hoa community staff scheduling",
+      "siteType": "hoa community",
+      "job": "staff scheduling",
+      "matchCount": 0,
+      "top": null,
+      "demandProven": false,
+      "notDominated": true,
+      "weakness": [
+        "no plugins match at all"
+      ],
+      "score": 0
+    },
+    {
+      "query": "library booking",
+      "siteType": "library",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Booking for Appointments and Events Calendar &#8211; Amelia",
+        "slug": "ameliabooking",
+        "activeInstalls": 90000,
+        "rating": 92,
+        "numRatings": 784,
+        "lastUpdated": "2026-08-14 7:31am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 71.42857142857143
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "library intake form",
+      "siteType": "library",
+      "job": "intake form",
+      "matchCount": 8,
+      "top": {
+        "name": "Fluent Forms – Customizable Contact Forms, Survey, Quiz, &amp; Conversational Form Builder",
+        "slug": "fluentform",
+        "activeInstalls": 700000,
+        "rating": 96,
+        "numRatings": 785,
+        "lastUpdated": "2026-08-10 1:59pm GMT",
+        "monthsSinceUpdate": 0.3,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "library appointment reminder",
+      "siteType": "library",
+      "job": "appointment reminder",
+      "matchCount": 8,
+      "top": {
+        "name": "Booking for Appointments and Events Calendar &#8211; Amelia",
+        "slug": "ameliabooking",
+        "activeInstalls": 90000,
+        "rating": 92,
+        "numRatings": 784,
+        "lastUpdated": "2026-08-14 7:31am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 71.42857142857143
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "library membership directory",
+      "siteType": "library",
+      "job": "membership directory",
+      "matchCount": 8,
+      "top": {
+        "name": "Ultimate Member – User Profile, Registration, Login, Member Directory, Content Restriction &amp; Membership Plugin",
+        "slug": "ultimate-member",
+        "activeInstalls": 200000,
+        "rating": 88,
+        "numRatings": 1444,
+        "lastUpdated": "2026-07-06 7:08pm GMT",
+        "monthsSinceUpdate": 1.4,
+        "supportResolutionPct": 96.29629629629629
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "library invoice quote",
+      "siteType": "library",
+      "job": "invoice quote",
+      "matchCount": 8,
+      "top": {
+        "name": "Translate WordPress with GTranslate",
+        "slug": "gtranslate",
+        "activeInstalls": 900000,
+        "rating": 98,
+        "numRatings": 4946,
+        "lastUpdated": "2026-06-05 4:05pm GMT",
+        "monthsSinceUpdate": 2.4,
+        "supportResolutionPct": 96.66666666666667
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "library inventory tracking",
+      "siteType": "library",
+      "job": "inventory tracking",
+      "matchCount": 8,
+      "top": {
+        "name": "Fluent Forms – Customizable Contact Forms, Survey, Quiz, &amp; Conversational Form Builder",
+        "slug": "fluentform",
+        "activeInstalls": 700000,
+        "rating": 96,
+        "numRatings": 785,
+        "lastUpdated": "2026-08-10 1:59pm GMT",
+        "monthsSinceUpdate": 0.3,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": false,
+      "weakness": [],
+      "score": 0
+    },
+    {
+      "query": "library waiver signature",
+      "siteType": "library",
+      "job": "waiver signature",
+      "matchCount": 8,
+      "top": {
+        "name": "Signature Add-On for Gravity Forms",
+        "slug": "gravity-signature-forms-add-on",
+        "activeInstalls": 1000,
+        "rating": 78,
+        "numRatings": 21,
+        "lastUpdated": "2026-08-11 9:05am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 78/100"
+      ],
+      "score": 3
+    },
+    {
+      "query": "library staff scheduling",
+      "siteType": "library",
+      "job": "staff scheduling",
+      "matchCount": 8,
+      "top": {
+        "name": "Booking for Appointments and Events Calendar &#8211; Amelia",
+        "slug": "ameliabooking",
+        "activeInstalls": 90000,
+        "rating": 92,
+        "numRatings": 784,
+        "lastUpdated": "2026-08-14 7:31am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 71.42857142857143
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [],
+      "score": 0
+    }
+  ],
+  "ranked": [
+    {
+      "query": "school inventory tracking",
+      "siteType": "school",
+      "job": "inventory tracking",
+      "matchCount": 3,
+      "top": {
+        "name": "Optima Express IDX",
+        "slug": "optima-express",
+        "activeInstalls": 10000,
+        "rating": 64,
+        "numRatings": 45,
+        "lastUpdated": "2026-06-10 8:54pm GMT",
+        "monthsSinceUpdate": 2.3,
+        "supportResolutionPct": 0
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 64/100",
+        "only 3 plugins compete"
+      ],
+      "score": 8
+    },
+    {
+      "query": "nonprofit charity intake form",
+      "siteType": "nonprofit charity",
+      "job": "intake form",
+      "matchCount": 1,
+      "top": {
+        "name": "GiveWP &#8211; Donation Plugin and Fundraising Platform",
+        "slug": "give",
+        "activeInstalls": 100000,
+        "rating": 92,
+        "numRatings": 705,
+        "lastUpdated": "2026-08-12 3:49pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 95
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "photographer intake form",
+      "siteType": "photographer",
+      "job": "intake form",
+      "matchCount": 2,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "auto repair shop intake form",
+      "siteType": "auto repair shop",
+      "job": "intake form",
+      "matchCount": 3,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "auto repair shop staff scheduling",
+      "siteType": "auto repair shop",
+      "job": "staff scheduling",
+      "matchCount": 3,
+      "top": {
+        "name": "Appointment Booking Plugin – LatePoint | Calendar &amp; Scheduling for WordPress",
+        "slug": "latepoint",
+        "activeInstalls": 100000,
+        "rating": 98,
+        "numRatings": 97,
+        "lastUpdated": "2026-08-02 4:13am GMT",
+        "monthsSinceUpdate": 0.5,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 5
+    },
+    {
+      "query": "nonprofit charity inventory tracking",
+      "siteType": "nonprofit charity",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "SureCart &#8211; Ecommerce Made Easy For Selling Physical Products, Digital Downloads, Subscriptions, Donations, &amp; Payments",
+        "slug": "surecart",
+        "activeInstalls": 80000,
+        "rating": 96,
+        "numRatings": 277,
+        "lastUpdated": "2026-08-17 7:41pm GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 4.9
+    },
+    {
+      "query": "event venue booking",
+      "siteType": "event venue",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "Events Manager &#8211; Calendar, Bookings, Tickets, and more!",
+        "slug": "events-manager",
+        "activeInstalls": 70000,
+        "rating": 84,
+        "numRatings": 547,
+        "lastUpdated": "2026-08-07 1:23am GMT",
+        "monthsSinceUpdate": 0.4,
+        "supportResolutionPct": 32.608695652173914
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 33% of support threads resolved"
+      ],
+      "score": 4.85
+    },
+    {
+      "query": "tutoring membership directory",
+      "siteType": "tutoring",
+      "job": "membership directory",
+      "matchCount": 2,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "tutoring invoice quote",
+      "siteType": "tutoring",
+      "job": "invoice quote",
+      "matchCount": 2,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "event venue intake form",
+      "siteType": "event venue",
+      "job": "intake form",
+      "matchCount": 2,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "event venue invoice quote",
+      "siteType": "event venue",
+      "job": "invoice quote",
+      "matchCount": 3,
+      "top": {
+        "name": "Happyforms &#8211; Form Builder for WordPress: Drag &amp; Drop Contact Forms, Surveys, Payments &amp; Multipurpose Forms",
+        "slug": "happyforms",
+        "activeInstalls": 20000,
+        "rating": 88,
+        "numRatings": 433,
+        "lastUpdated": "2026-07-14 9:07pm GMT",
+        "monthsSinceUpdate": 1.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 4.3
+    },
+    {
+      "query": "church intake form",
+      "siteType": "church",
+      "job": "intake form",
+      "matchCount": 1,
+      "top": {
+        "name": "Advanced Form Integration — Connect Forms to 200+ Apps",
+        "slug": "advanced-form-integration",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 90,
+        "lastUpdated": "2026-08-11 3:46am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "church invoice quote",
+      "siteType": "church",
+      "job": "invoice quote",
+      "matchCount": 2,
+      "top": {
+        "name": "GeoDirectory &#8211; WP Business Directory Plugin and Classified Listings Directory",
+        "slug": "geodirectory",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 715,
+        "lastUpdated": "2026-08-14 11:12am GMT",
+        "monthsSinceUpdate": 0.1,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "church inventory tracking",
+      "siteType": "church",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Advanced Form Integration — Connect Forms to 200+ Apps",
+        "slug": "advanced-form-integration",
+        "activeInstalls": 10000,
+        "rating": 96,
+        "numRatings": 90,
+        "lastUpdated": "2026-08-11 3:46am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "farm booking",
+      "siteType": "farm",
+      "job": "booking",
+      "matchCount": 3,
+      "top": {
+        "name": "Location Weather – WordPress Weather Forecast, Air Quality &amp; Weather Widget",
+        "slug": "location-weather",
+        "activeInstalls": 10000,
+        "rating": 90,
+        "numRatings": 103,
+        "lastUpdated": "2026-07-23 8:17am GMT",
+        "monthsSinceUpdate": 0.9,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 3 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "farm membership directory",
+      "siteType": "farm",
+      "job": "membership directory",
+      "matchCount": 2,
+      "top": {
+        "name": "Business Directory Plugin &#8211; Easy Listing Directories for WordPress",
+        "slug": "business-directory-plugin",
+        "activeInstalls": 10000,
+        "rating": 92,
+        "numRatings": 504,
+        "lastUpdated": "2026-07-29 7:42am GMT",
+        "monthsSinceUpdate": 0.7,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 2 plugins compete"
+      ],
+      "score": 4
+    },
+    {
+      "query": "dental practice booking",
+      "siteType": "dental practice",
+      "job": "booking",
+      "matchCount": 8,
+      "top": {
+        "name": "MPG – Multiple Page Generator, Bulk Landing Pages &amp; Programmatic SEO",
+        "slug": "multiple-pages-generator-by-porthas",
+        "activeInstalls": 2000,
+        "rating": 78,
+        "numRatings": 27,
+        "lastUpdated": "2026-08-12 10:26am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 78/100"
+      ],
+      "score": 3.3
+    },
+    {
+      "query": "dental practice inventory tracking",
+      "siteType": "dental practice",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 3
+    },
+    {
+      "query": "hair salon inventory tracking",
+      "siteType": "hair salon",
+      "job": "inventory tracking",
+      "matchCount": 1,
+      "top": {
+        "name": "Rox Appointment Booking &#8211; Appointment Booking Scheduling Solution",
+        "slug": "rox-appointment-booking",
+        "activeInstalls": 1000,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-13 12:28pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 100
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "only 1 plugins compete"
+      ],
+      "score": 3
+    },
+    {
+      "query": "photographer waiver signature",
+      "siteType": "photographer",
+      "job": "waiver signature",
+      "matchCount": 5,
+      "top": {
+        "name": "Signature Add-On for Gravity Forms",
+        "slug": "gravity-signature-forms-add-on",
+        "activeInstalls": 1000,
+        "rating": 78,
+        "numRatings": 21,
+        "lastUpdated": "2026-08-11 9:05am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 78/100"
+      ],
+      "score": 3
+    },
+    {
+      "query": "library waiver signature",
+      "siteType": "library",
+      "job": "waiver signature",
+      "matchCount": 8,
+      "top": {
+        "name": "Signature Add-On for Gravity Forms",
+        "slug": "gravity-signature-forms-add-on",
+        "activeInstalls": 1000,
+        "rating": 78,
+        "numRatings": 21,
+        "lastUpdated": "2026-08-11 9:05am GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": null
+      },
+      "demandProven": true,
+      "notDominated": true,
+      "weakness": [
+        "incumbent rated 78/100"
+      ],
+      "score": 3
+    }
+  ]
+}
