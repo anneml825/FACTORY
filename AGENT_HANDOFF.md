@@ -110,3 +110,23 @@ invariants currently proved in memory.
 
 Stop here. Do not choose an ARRIVE provider, create accounts, request credentials, spend
 capital, deploy, or begin Phase B until the owner reviews Phase A.
+
+## Canonical GitHub publication
+
+Phase A local commit `0b99642401eb8750929bcb3c0c21e06f643052ab` is canonically
+published on GitHub as content-equivalent remote commit
+`62284c1872e947cb09787038bff0cf7822a6ebe5` on
+`codex/make-put-watch-dry-run`.
+
+Equivalence was verified after publication:
+
+- local tree: `44a7d4a920b9e5ae73e8168806c1f9c28b52a79b`;
+- remote tree: `44a7d4a920b9e5ae73e8168806c1f9c28b52a79b`;
+- tracked files: 95 local / 95 remote;
+- missing files: 0;
+- additional files: 0;
+- path, mode, size, and blob differences: 0.
+
+The remote commit above is the canonical published equivalent of the local Phase A commit.
+This handoff note is a subsequent metadata-only commit and does not alter that immutable
+Phase A snapshot. Phase B remains prohibited pending owner review.
