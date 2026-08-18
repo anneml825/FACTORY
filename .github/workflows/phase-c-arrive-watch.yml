@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: phase-c-arrive-watch
+  cancel-in-progress: false
+
 jobs:
   durable-watch:
     runs-on: ubuntu-latest

@@ -73,7 +73,22 @@ function arrival(baseline = metrics()): ArrivalPublication {
 class RecordingDevToTransport implements DevToTransport {
   readonly requests: DevToRequest[] = [];
   private article: Record<string, unknown> | null = null;
-  totals = { page_views: 1, reactions_count: 0, comments_count: 0 };
+  totals: unknown = {
+    page_views: { total: 1 },
+    reactions: { total: 0 },
+    comments: { total: 0 },
+  };
+
+  seedOrphanedFixture(): void {
+    this.article = {
+      id: 42,
+      title: 'A tiny checklist for testing idempotent event pipelines',
+      description: 'Factory Phase C fixture stale-marker. Noncommercial measurement fixture.',
+      url: 'https://dev.to/factory/fixture-42',
+      published: true,
+      user: { id: 7, name: 'Factory Fixture', username: 'factory-fixture', github_username: null },
+    };
+  }
 
   async request<T>(request: DevToRequest): Promise<T> {
     this.requests.push(structuredClone(request));
@@ -106,7 +121,8 @@ class RecordingDevToTransport implements DevToTransport {
     } else if (request.path === '/api/analytics/totals' || request.path === '/api/analytics/totals?article_id=42') {
       response = this.totals;
     } else if (request.method === 'PUT' && request.path === '/api/articles/42') {
-      response = { ...this.article, published: false };
+      this.article = { ...this.article, published: false };
+      response = this.article;
     } else {
       throw new Error(`Unexpected DEV request: ${request.method} ${request.path}`);
     }
@@ -204,7 +220,7 @@ test('DEV pilot evaluates a measured gate, publishes once, measures, and deactiv
 test('DEV analytics preflight accepts a new account with no aggregate rows', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'factory-devto-empty-analytics-'));
   const transport = new RecordingDevToTransport();
-  transport.totals = [] as unknown as typeof transport.totals;
+  transport.totals = [];
   const adapter = new DevToArriveAdapter({
     transport,
     store: new JsonDevToArrivalStore(join(directory, 'devto.json')),
@@ -214,6 +230,22 @@ test('DEV analytics preflight accepts a new account with no aggregate rows', asy
   assert.equal((await adapter.evaluateGate(shortDocumentFixture(), 'empty-gate')).status, 'PASSED');
   const publication = await adapter.activate(shortDocumentFixture(), providerPublication(), 'empty-arrival');
   assert.equal(publication.baseline.qualifiedExposures, 0);
+});
+
+test('DEV gate unpublishes an exact orphaned Phase C fixture before creating another', async () => {
+  const transport = new RecordingDevToTransport();
+  transport.seedOrphanedFixture();
+  const adapter = new DevToArriveAdapter({
+    transport,
+    expectedPublicName: 'Factory Fixture',
+    expectedPublicUsername: 'factory-fixture',
+  });
+  assert.equal((await adapter.evaluateGate(shortDocumentFixture(), 'orphan-cleanup')).status, 'PASSED');
+  const emergencyUnpublish = transport.requests.find(
+    (request) => request.method === 'PUT' && request.path === '/api/articles/42',
+  );
+  assert.deepEqual(emergencyUnpublish?.body, { article: { published: false } });
+  assert.equal(transport.requests.some((request) => request.method === 'POST'), false);
 });
 
 test('DEV publication fails closed when public identity leaks a personal GitHub handle', async () => {

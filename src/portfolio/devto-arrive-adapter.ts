@@ -66,15 +66,15 @@ interface DevToPublicIdentity {
 }
 
 interface DevToAnalyticsTotals {
-  page_views?: number;
-  reactions_count?: number;
-  comments_count?: number;
-  views?: number;
-  total_views?: number;
-  reactions?: number;
-  total_reactions?: number;
-  comments?: number;
-  total_comments?: number;
+  page_views?: unknown;
+  reactions_count?: unknown;
+  comments_count?: unknown;
+  views?: unknown;
+  total_views?: unknown;
+  reactions?: unknown;
+  total_reactions?: unknown;
+  comments?: unknown;
+  total_comments?: unknown;
 }
 
 interface StoredDevToArrival {
@@ -148,6 +148,13 @@ function integer(value: unknown): number | null {
   return Number.isInteger(value) && (value as number) >= 0 ? value as number : null;
 }
 
+function metricTotal(value: unknown): number | null {
+  const direct = integer(value);
+  if (direct !== null) return direct;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  return integer((value as Record<string, unknown>).total);
+}
+
 function metricObject(value: unknown): DevToAnalyticsTotals | null {
   if (Array.isArray(value)) {
     if (value.length === 0) return null;
@@ -165,9 +172,9 @@ function parseTotals(value: unknown, emptyMeansZero = false): { views: number; r
   const metrics = metricObject(value);
   if (!metrics && emptyMeansZero) return { views: 0, reactions: 0, comments: 0 };
   if (!metrics) throw new Error('DEV analytics response contained no aggregate metrics.');
-  const views = integer(metrics.page_views) ?? integer(metrics.views) ?? integer(metrics.total_views);
-  const reactions = integer(metrics.reactions_count) ?? integer(metrics.reactions) ?? integer(metrics.total_reactions) ?? 0;
-  const comments = integer(metrics.comments_count) ?? integer(metrics.comments) ?? integer(metrics.total_comments) ?? 0;
+  const views = metricTotal(metrics.page_views) ?? metricTotal(metrics.views) ?? metricTotal(metrics.total_views);
+  const reactions = metricTotal(metrics.reactions_count) ?? metricTotal(metrics.reactions) ?? metricTotal(metrics.total_reactions) ?? 0;
+  const comments = metricTotal(metrics.comments_count) ?? metricTotal(metrics.comments) ?? metricTotal(metrics.total_comments) ?? 0;
   if (views === null) {
     throw new Error('DEV analytics response did not expose a recognized non-negative view total.');
   }
@@ -276,6 +283,7 @@ export class DevToArriveAdapter implements ArriveAdapter {
       path: `/api/users/by_username?url=${encodeURIComponent(this.expectedPublicUsername)}`,
     });
     this.assertFactoryIdentity(publicIdentity, 'public profile');
+    await this.cleanupOrphanedFixtures();
     const analyticsPreflight = await this.transport.request<unknown>({
       method: 'GET',
       path: '/api/analytics/totals',
@@ -355,33 +363,48 @@ export class DevToArriveAdapter implements ArriveAdapter {
         },
       },
     });
-    if (!Number.isInteger(article.id) || !article.url) {
-      throw new Error('DEV article creation returned no stable article ID/URL.');
+    try {
+      if (!Number.isInteger(article.id) || !article.url) {
+        throw new Error('DEV article creation returned no stable article ID/URL.');
+      }
+      this.assertFactoryIdentity(article.user, 'created article author');
+      const baseline = await this.measureArticle(article.id);
+      const arrival: ArrivalPublication = {
+        arrivalPublicationId: arrivalId,
+        experimentId: manifest.experimentId,
+        assetId: manifest.assetId,
+        providerId: this.adapterId,
+        providerObjectId: String(article.id),
+        location: article.url,
+        idempotencyKey,
+        requestFingerprint: fingerprint,
+        status: 'ACTIVE',
+        mode: 'LIVE',
+        activatedAt: new Date().toISOString(),
+        baseline,
+      };
+      await this.store.save({
+        experimentId: manifest.experimentId,
+        idempotencyKey,
+        requestFingerprint: fingerprint,
+        articleId: article.id,
+        publication: arrival,
+      });
+      return arrival;
+    } catch (error) {
+      if (Number.isInteger(article.id)) {
+        try {
+          await this.transport.request<DevToArticleSummary>({
+            method: 'PUT',
+            path: `/api/articles/${article.id}`,
+            body: { article: { published: false } },
+          });
+        } catch (cleanupError) {
+          throw new AggregateError([error, cleanupError], 'DEV activation failed and emergency unpublish also failed.');
+        }
+      }
+      throw error;
     }
-    this.assertFactoryIdentity(article.user, 'created article author');
-    const baseline = await this.measureArticle(article.id);
-    const arrival: ArrivalPublication = {
-      arrivalPublicationId: arrivalId,
-      experimentId: manifest.experimentId,
-      assetId: manifest.assetId,
-      providerId: this.adapterId,
-      providerObjectId: String(article.id),
-      location: article.url,
-      idempotencyKey,
-      requestFingerprint: fingerprint,
-      status: 'ACTIVE',
-      mode: 'LIVE',
-      activatedAt: new Date().toISOString(),
-      baseline,
-    };
-    await this.store.save({
-      experimentId: manifest.experimentId,
-      idempotencyKey,
-      requestFingerprint: fingerprint,
-      articleId: article.id,
-      publication: arrival,
-    });
-    return arrival;
   }
 
   async measure(arrival: ArrivalPublication): Promise<ArrivalMetrics> {
@@ -416,6 +439,27 @@ export class DevToArriveAdapter implements ArriveAdapter {
       throw new Error('DEV ARRIVE found duplicate provider articles; refusing to choose silently.');
     }
     return matches[0] ?? null;
+  }
+
+  private async cleanupOrphanedFixtures(): Promise<void> {
+    const articles = await this.transport.request<DevToArticleSummary[]>({
+      method: 'GET',
+      path: '/api/articles/me/all?per_page=1000',
+    });
+    if (!Array.isArray(articles)) throw new Error('DEV article inventory returned a non-array response.');
+    const orphans = articles.filter((article) =>
+      article.published !== false &&
+      article.title === 'A tiny checklist for testing idempotent event pipelines' &&
+      article.description?.startsWith('Factory Phase C fixture ')
+    );
+    for (const orphan of orphans) {
+      if (!Number.isInteger(orphan.id)) throw new Error('DEV orphaned fixture has no stable article ID.');
+      await this.transport.request<DevToArticleSummary>({
+        method: 'PUT',
+        path: `/api/articles/${orphan.id}`,
+        body: { article: { published: false } },
+      });
+    }
   }
 
   private async measureArticle(articleId: number): Promise<ArrivalMetrics> {

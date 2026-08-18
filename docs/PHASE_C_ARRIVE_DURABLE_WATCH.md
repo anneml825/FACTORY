@@ -175,3 +175,12 @@ authenticated JSON response; the just-created article is then measured separatel
 scoped result represented explicitly as zero until DEV's analytics pipeline materializes it. It
 still rejects nonempty unrecognized or multi-record aggregate responses. Neither failed run
 created an article or opened a checkout.
+
+Run `32183291790` reached article creation and disproved two further assumptions. DEV's totals
+payload nests counts as `page_views.total`, `reactions.total`, and `comments.total`, rather than
+returning scalar fields. More importantly, activation measured its baseline before persisting the
+arrival publication, so the schema exception left the newly created fixture outside the runner's
+normal `finally` cleanup handle. The public profile confirmed one orphaned fixture. The correction
+parses both nested and legacy scalar shapes, scans for exact Phase C fixture markers and unpublishes
+orphans before every gate, wraps creation through persistence in emergency unpublish, and prevents
+concurrent probes. Do not claim cleanup success until the next external run verifies it.

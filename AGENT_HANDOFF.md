@@ -11,8 +11,10 @@ claimed.
 **Cash spent:** $0.00
 
 **External commerce actions:** Stripe sandbox only — four owner-test checkouts across two provider
-runs, four fulfillments, two refunds, two disputes, reconciliation, and deactivation. Phase C has
-not yet created its public DEV fixture. No real money.
+runs, four fulfillments, two refunds, two disputes, reconciliation, and deactivation. Phase C run
+`32183291790` created one public DEV fixture, then hit a nested-analytics parser error before state
+persistence. The fixture remained public pending the emergency cleanup correction below. No real
+money.
 
 **Phase D / metered MAKE:** prohibited until Phase C passes and the owner reviews it
 
@@ -25,6 +27,12 @@ and rechecks the created article author. After reviewing the exposure, the owner
 approved `anneml825` in DEV's GitHub field only; every other GitHub value and any occurrence in the
 DEV name, username, or other identity metadata fails before publication. Do not broaden or infer
 this allowlist.
+
+**Urgent provider finding:** run `32183291790` created the fixture, then failed on DEV's nested
+analytics shape before activation state was saved. That exposed a cleanup gap and left one public
+fixture visible on the Factory94 profile. The pending correction adds exact-marker orphan cleanup,
+emergency unpublish around the full create-to-persist interval, nested metric parsing, and workflow
+concurrency. Verify the orphan is unpublished in the next external run before reporting Phase C.
 
 Read `AGENTS.md`, `CONSTITUTION.md`, `EXPERIMENTAL_PROTOCOL.md`, `FINANCIAL_CONTROLS.md`,
 `DISTRIBUTION.md`, and `docs/PHASE_B_STRIPE_SANDBOX.md` before continuing.
