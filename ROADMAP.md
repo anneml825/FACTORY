@@ -25,8 +25,9 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | Database schema | `DONE` — applies to PostgreSQL 16; invariants verified (`db/tests/EXPECTED.md`) |
 | Owner configuration migration | `DONE` — applied and verified against PostgreSQL 16 |
 | **Capital Authority** | **`DONE`** — 19/19 verified, including concurrency under contention |
+| **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
 | Live database instance | `BLOCKED` — needs owner Neon account |
-| Everything else | `NOT STARTED` |
+| External MAKE / PUT / ARRIVE / WATCH providers | `NOT STARTED` |
 
 **Nothing external has happened.** No account created, no credential issued, no service
 contacted, no deployment, no payment, no publication, no customer interaction.
@@ -35,6 +36,35 @@ contacted, no deployment, no payment, no publication, no customer interaction.
 **Owner capital authorized: $50.00** (2026-08-17) — allocated but entirely unspent.
 **Paid activity: HALTED** — the kill switch remains engaged. Authorizing capital is not
 permitting spend, and nothing exists yet that could usefully spend it.
+
+---
+
+## Phase A — MAKE + PUT + WATCH fixture infrastructure
+
+**Status: `DONE` locally. Cost: $0.00. Owner actions: 0.**
+
+Implemented in `src/portfolio/`:
+
+- typed `AssetManifest` and gate-enforced lifecycle state machine;
+- deterministic short-document HTML and spreadsheet CSV fixture renderers;
+- provider-neutral MAKE, PUT, ARRIVE, and WATCH contracts;
+- fake/local PUT and fixture ARRIVE adapters;
+- generated noncommercial fixture catalog;
+- signed synthetic checkout, fulfillment, refund, and dispute events;
+- end-to-end `experiment_id` attribution;
+- owner/internal transaction exclusion;
+- event, publication, fulfillment, revenue, refund, dispute, and cost idempotency;
+- explicit zero-cost reservation/settlement records;
+- KEEP / ITERATE / KILL / INSUFFICIENT_SIGNAL evaluation.
+
+Local verification: **12/12 tests pass** using Node's built-in test runner. The final timed test
+process reported 760 ms; measured shell wall time was 1.109 seconds. See `AGENT_HANDOFF.md` for the
+exact command and limitations.
+
+**This is executable simulation, not a money spine.** No external system was contacted. No
+real publication, checkout, payment, fulfillment, customer, revenue, refund, dispute, or
+arrival evidence exists. `COMMERCIAL_CLOCK_START` remains unset. Phase B is intentionally
+not started pending owner review.
 
 ---
 

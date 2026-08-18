@@ -122,6 +122,7 @@ The goal is that an agent which *decides* to violate a financial rule still fail
   src/capital/               Capital Authority, ledger, reservations, kill switch
   src/evidence/              E1 signal retrieval + persistence, source adapters
   src/experiments/           Campaign, experiment lifecycle, gates
+  src/portfolio/             Phase A MAKE / PUT / ARRIVE / WATCH contracts and fixture harness
   src/workers/               scout, analyst, producer, qa, publisher, measurement, …
   src/adapters/              external services behind interfaces
   src/dashboard/             owner check-in renderer
@@ -182,8 +183,14 @@ nothing verified to do is exactly what the Bootstrap Instructions forbid.
 
 ---
 
-## What does not exist yet
+## What exists and what does not
 
-Nothing in this document is implemented as of this commit. This is the design; `ROADMAP.md`
-tracks build status. Per `AGENTS.md` §5, do not describe any of the above as working until it
-has been built and verified against the real external system.
+The Phase A in-memory fixture path in `src/portfolio/` is implemented and locally verified. It
+executes typed manifests, deterministic HTML/CSV rendering, gate-enforced state transitions,
+a fake/local PUT adapter, signed synthetic WATCH events, attribution, exclusions,
+idempotency, zero-cost records, and evaluation. It does **not** use PostgreSQL and does not
+prove any external provider, deployment, payment, arrival mechanism, or durable recovery.
+
+The external MAKE / PUT / ARRIVE / WATCH adapters and production persistence remain
+unimplemented. `ROADMAP.md` tracks the honest build status. Per `AGENTS.md` §5, fixture success
+must never be described as verification against a real external system.
