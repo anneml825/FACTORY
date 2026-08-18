@@ -1,6 +1,6 @@
 # Data Economics Probe — Results
 
-**Run:** 2026-08-18T12:35:40.785Z  
+**Run:** 2026-08-18T13:05:40.443Z  
 **Candidates:** 100 (HEAD 34 / MID 33 / LONG_TAIL 33)  
 **Marginal cash cost:** $0.00 — all sources free or credential-blocked
 
@@ -28,12 +28,12 @@ search strategy must be redesigned before material validation capital is spent.
 
 | Source | Intent | Coverage | HEAD | MID | LONG_TAIL | Median latency | Counts |
 |---|---|---|---|---|---|---|---|
-| `wordpress_active_installs` | INDIRECT | **100%** | 100% | 100% | 100% | 76ms | no |
-| `wikipedia_pageviews` | WEAK | **57%** | 100% | 70% | 0% | 110ms | no |
-| `wikipedia_search_hits` | WEAK | **100%** | 100% | 100% | 100% | 237ms | no |
-| `stackexchange_questions` | INDIRECT | **100%** | 100% | 100% | 100% | 90ms | no |
-| `hn_algolia_mentions` | INDIRECT | **100%** | 100% | 100% | 100% | 243ms | no |
-| `npm_weekly_downloads` | INDIRECT | **19%** | 26% | 30% | 0% | 27ms | no |
+| `wordpress_active_installs` | INDIRECT | **100%** | 100% | 100% | 100% | 29ms | no |
+| `wikipedia_pageviews` | WEAK | **57%** | 100% | 70% | 0% | 55ms | no |
+| `wikipedia_search_hits` | WEAK | **100%** | 100% | 100% | 100% | 179ms | no |
+| `stackexchange_questions` | INDIRECT | **100%** | 100% | 100% | 100% | 100ms | no |
+| `hn_algolia_mentions` | INDIRECT | **100%** | 100% | 100% | 100% | 238ms | no |
+| `npm_weekly_downloads` | INDIRECT | **19%** | 26% | 30% | 0% | 34ms | no |
 | `etsy_active_listings` | DIRECT | **0%** | 0% | 0% | 0% | 0ms | no |
 
 ## Informativeness
@@ -46,7 +46,7 @@ Coverage says a source answered. This says whether the answer distinguishes anyt
 | `wikipedia_pageviews` | 0.98 | 2% | 4% | 7371 | 2733 | — |
 | `wikipedia_search_hits` | 0.80 | 11% | 11% | 11496 | 661 | 5 |
 | `stackexchange_questions` | 0.53 | 43% | 43% | 2523 | 5 | 0 |
-| `hn_algolia_mentions` | 0.58 | 37% | 37% | 519 | 18 | 0 |
+| `hn_algolia_mentions` | 0.58 | 37% | 37% | 519 | 17 | 0 |
 | `npm_weekly_downloads` | 1.00 | 0% | 5% | 15818249 | 2014027 | — |
 | `etsy_active_listings` | 0.00 | 0% | 0% | — | — | — |
 

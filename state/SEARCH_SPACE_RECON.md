@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-18T12:32:24.541Z  
+**Run:** 2026-08-18T13:02:30.949Z  
 **Spaces probed:** 10 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,16 +11,16 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 170ms |
-| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17797 | 240ms |
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 78ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19629 | 731ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 176ms |
-| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 456 | 76ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 237ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 181ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 175ms |
-| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 316ms |
+| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 171ms |
+| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17797 | 279ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 34ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19630 | 693ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 178ms |
+| `pypi_packages` | yes | none | **17%** | 1.00 | 0% | 458 | 39ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7294943 | 335ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 139ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 43999 | 136ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 302ms |
 
 ## Structure
 
@@ -63,7 +63,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19603, invoice=73, booking calendar=44009, seo=4495, inventory=125, form builder=70884249, analytics dashboard=97356, image optimization=4207193, membership=3189, csv import=23154494, time tracking=19629, pdf export=2707
+- **Values:** backup=19603, invoice=73, booking calendar=44010, seo=4495, inventory=125, form builder=70885070, analytics dashboard=97356, image optimization=4207233, membership=3189, csv import=23155231, time tracking=19630, pdf export=2707
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
@@ -74,9 +74,9 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":4,"404":8}
-- **First failure:** HTTP 404
-- **Values:** backup=164, invoice=456, booking calendar=null, seo=31, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
+- **HTTP statuses:** {"200":2,"404":5,"429":5}
+- **First failure:** HTTP 429
+- **Values:** backup=164, invoice=null, booking calendar=null, seo=null, inventory=458, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
 ### `obsidian_plugins` — Obsidian community plugins
 
@@ -88,7 +88,7 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Pull counts are real usage but heavily inflated by CI. Monetization is very weak.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1276795, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118633, csv import=1411650, time tracking=883838, pdf export=97904478
+- **Values:** backup=3092506, invoice=257041, booking calendar=459455, seo=2560, inventory=1276834, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118633, csv import=1411650, time tracking=883838, pdf export=97904478
 
 ### `crates_rust` — crates.io / Rust ecosystem
 

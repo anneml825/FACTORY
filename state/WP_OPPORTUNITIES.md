@@ -1,6 +1,6 @@
 # WordPress Opportunity Scan
 
-**Retrieved:** 2026-08-18T12:29:45.744Z  
+**Retrieved:** 2026-08-18T13:00:06.338Z  
 **Queries:** 160 (systematic 20 site types x 8 jobs)  
 **Source:** api.wordpress.org/plugins/info/1.2 · **Cost:** $0.00
 
@@ -28,9 +28,9 @@ not an opportunity, however big its install base — that is the misreading this
 | 8 | real estate agency membership directory | Essential Real Estate | 7,000 | 86/100 (52) | 2.6 | only 3 plugins compete | **3.85** |
 | 9 | restaurant appointment reminder | WPCafe &#8211; Restaurant Menu, Online F | 5,000 | 92/100 (108) | 0.1 | only 2 plugins compete | **3.7** |
 | 10 | restaurant inventory tracking | Food Menu &#8211; Restaurant Menu &amp;  | 3,000 | 100/100 (23) | 0 | only 1 plugins compete | **3.48** |
-| 11 | hair salon booking | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0 | only 1 plugins compete | **3.3** |
-| 12 | hair salon appointment reminder | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0 | only 1 plugins compete | **3.3** |
-| 13 | hair salon staff scheduling | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0 | only 1 plugins compete | **3.3** |
+| 11 | hair salon booking | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0.1 | only 1 plugins compete | **3.3** |
+| 12 | hair salon appointment reminder | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0.1 | only 1 plugins compete | **3.3** |
+| 13 | hair salon staff scheduling | Salon Booking System – Appointment Booki | 2,000 | 88/100 (180) | 0.1 | only 1 plugins compete | **3.3** |
 | 14 | real estate agency booking | Autocomplete Location Field for Contact  | 1,000 | 100/100 (13) | 1 | only 1 plugins compete | **3** |
 | 15 | law firm intake form | Clio Grow Form | 1,000 | 46/100 (3) | 4.1 | only 2 plugins compete | **3** |
 | 16 | library inventory tracking | Media Library Tools &#8211; AI-Powered R | 1,000 | 94/100 (13) | 0.3 | only 1 plugins compete | **3** |

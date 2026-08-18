@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-18T12:32:24.540Z",
+  "runAt": "2026-08-18T13:02:30.948Z",
   "probeTerms": [
     "backup",
     "invoice",
@@ -29,7 +29,7 @@
       "distinctValueRatio": 0.08333333333333333,
       "zeroShare": 0,
       "medianValue": 24,
-      "medianLatencyMs": 170,
+      "medianLatencyMs": 171,
       "httpStatuses": {
         "200": 12
       },
@@ -100,7 +100,7 @@
       "distinctValueRatio": 0.9166666666666666,
       "zeroShare": 0,
       "medianValue": 17797,
-      "medianLatencyMs": 240,
+      "medianLatencyMs": 279,
       "httpStatuses": {
         "200": 12
       },
@@ -171,7 +171,7 @@
       "distinctValueRatio": 0.5833333333333334,
       "zeroShare": 0,
       "medianValue": 5000000,
-      "medianLatencyMs": 78,
+      "medianLatencyMs": 34,
       "httpStatuses": {
         "200": 12
       },
@@ -241,8 +241,8 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 19629,
-      "medianLatencyMs": 731,
+      "medianValue": 19630,
+      "medianLatencyMs": 693,
       "httpStatuses": {
         "200": 12
       },
@@ -257,7 +257,7 @@
         },
         {
           "term": "booking calendar",
-          "value": 44009
+          "value": 44010
         },
         {
           "term": "seo",
@@ -269,7 +269,7 @@
         },
         {
           "term": "form builder",
-          "value": 70884249
+          "value": 70885070
         },
         {
           "term": "analytics dashboard",
@@ -277,7 +277,7 @@
         },
         {
           "term": "image optimization",
-          "value": 4207193
+          "value": 4207233
         },
         {
           "term": "membership",
@@ -285,11 +285,11 @@
         },
         {
           "term": "csv import",
-          "value": 23154494
+          "value": 23155231
         },
         {
           "term": "time tracking",
-          "value": 19629
+          "value": 19630
         },
         {
           "term": "pdf export",
@@ -313,7 +313,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1072,
-      "medianLatencyMs": 176,
+      "medianLatencyMs": 178,
       "httpStatuses": {
         "200": 12
       },
@@ -379,15 +379,16 @@
       "reachable": true,
       "requiresAuth": false,
       "termsAttempted": 12,
-      "termsWithValue": 4,
-      "coverage": 0.3333333333333333,
+      "termsWithValue": 2,
+      "coverage": 0.16666666666666666,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 456,
-      "medianLatencyMs": 76,
+      "medianValue": 458,
+      "medianLatencyMs": 39,
       "httpStatuses": {
-        "200": 4,
-        "404": 8
+        "200": 2,
+        "404": 5,
+        "429": 5
       },
       "values": [
         {
@@ -396,7 +397,7 @@
         },
         {
           "term": "invoice",
-          "value": 456
+          "value": null
         },
         {
           "term": "booking calendar",
@@ -404,7 +405,7 @@
         },
         {
           "term": "seo",
-          "value": 31
+          "value": null
         },
         {
           "term": "inventory",
@@ -439,7 +440,7 @@
           "value": null
         }
       ],
-      "failureDetail": "HTTP 404",
+      "failureDetail": "HTTP 429",
       "notes": "Free API. Same monetization weakness as npm — paying for a Python library is unusual."
     },
     {
@@ -456,7 +457,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 7294943,
-      "medianLatencyMs": 237,
+      "medianLatencyMs": 335,
       "httpStatuses": {
         "200": 1
       },
@@ -483,7 +484,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 1411650,
-      "medianLatencyMs": 181,
+      "medianLatencyMs": 139,
       "httpStatuses": {
         "200": 12
       },
@@ -506,7 +507,7 @@
         },
         {
           "term": "inventory",
-          "value": 1276795
+          "value": 1276834
         },
         {
           "term": "form builder",
@@ -554,7 +555,7 @@
       "distinctValueRatio": 1,
       "zeroShare": 0,
       "medianValue": 43999,
-      "medianLatencyMs": 175,
+      "medianLatencyMs": 136,
       "httpStatuses": {
         "200": 12
       },
@@ -625,7 +626,7 @@
       "distinctValueRatio": 0.8888888888888888,
       "zeroShare": 0.1111111111111111,
       "medianValue": 10,
-      "medianLatencyMs": 316,
+      "medianLatencyMs": 302,
       "httpStatuses": {
         "200": 10,
         "403": 2

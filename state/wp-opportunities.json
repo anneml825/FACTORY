@@ -1,5 +1,5 @@
 {
-  "retrievedAt": "2026-08-18T12:29:45.744Z",
+  "retrievedAt": "2026-08-18T13:00:06.338Z",
   "rows": [
     {
       "query": "restaurant booking",
@@ -759,7 +759,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-17 4:39pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.1,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -803,7 +803,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-17 4:39pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.1,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -877,7 +877,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-17 4:39pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.1,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2723,7 +2723,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-17 4:39pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.1,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2745,7 +2745,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-17 4:39pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.1,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2767,7 +2767,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-17 4:39pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.1,
         "supportResolutionPct": 100
       },
       "demandProven": true,
