@@ -73,7 +73,7 @@ function arrival(baseline = metrics()): ArrivalPublication {
 class RecordingDevToTransport implements DevToTransport {
   readonly requests: DevToRequest[] = [];
   private article: Record<string, unknown> | null = null;
-  totals = { views: 1, reactions: 0, comments: 0 };
+  totals = { page_views: 1, reactions_count: 0, comments_count: 0 };
 
   async request<T>(request: DevToRequest): Promise<T> {
     this.requests.push(structuredClone(request));

@@ -50,6 +50,11 @@ Do not report Phase C `DONE` until the workflow records post-baseline DEV articl
 attributed Stripe sandbox checkout start and fulfilled `OWNER_TEST` transaction, zero eligible
 commercial revenue, and deactivation of both provider surfaces.
 
+External run `32180403256` disproved the initial DEV totals-field assumption before publishing:
+the live payload uses `page_views`, `reactions_count`, and `comments_count`. The parser correction
+is implemented; rerun the same noncommercial probe. No public article was created by the failed
+attempt.
+
 ## Canonical Phase A base
 
 Remote branch `codex/make-put-watch-dry-run` ended at handoff commit

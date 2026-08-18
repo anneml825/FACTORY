@@ -152,3 +152,11 @@ are present, it then:
 6. deactivates both provider publications.
 
 Until that run passes, Phase C is `BUILT`, not `DONE`, and no stranger exposure is claimed.
+
+### First external attempt — provider schema correction
+
+Run `32180403256` authenticated successfully but failed closed before publication. DEV's live
+totals payload uses `page_views`, `reactions_count`, and `comments_count`; the first parser had
+implemented the prose documentation as `views`, `reactions`, and `comments`. The adapter now
+accepts the live provider schema while retaining the documented aliases. No article was created,
+no checkout was opened, and the failure artifact recorded cleanup state.

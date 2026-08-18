@@ -57,6 +57,9 @@ interface DevToArticleSummary {
 }
 
 interface DevToAnalyticsTotals {
+  page_views?: number;
+  reactions_count?: number;
+  comments_count?: number;
   views?: number;
   total_views?: number;
   reactions?: number;
@@ -137,9 +140,9 @@ function integer(value: unknown): number | null {
 }
 
 function parseTotals(value: DevToAnalyticsTotals): { views: number; reactions: number; comments: number } {
-  const views = integer(value.views) ?? integer(value.total_views);
-  const reactions = integer(value.reactions) ?? integer(value.total_reactions) ?? 0;
-  const comments = integer(value.comments) ?? integer(value.total_comments) ?? 0;
+  const views = integer(value.page_views) ?? integer(value.views) ?? integer(value.total_views);
+  const reactions = integer(value.reactions_count) ?? integer(value.reactions) ?? integer(value.total_reactions) ?? 0;
+  const comments = integer(value.comments_count) ?? integer(value.comments) ?? integer(value.total_comments) ?? 0;
   if (views === null) {
     throw new Error('DEV analytics response did not expose a recognized non-negative view total.');
   }
