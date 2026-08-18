@@ -504,3 +504,51 @@ DIVERGENT IDEA GENERATION (H0, free, zero evidentiary weight)
   nothing and evidence costs something.
 
 Implemented in `src/ideas/h0.ts`.
+
+---
+
+## 18. Pre-Revenue Experiment Cost Discipline
+
+**The $50 is a maximum-loss reserve, not a budget to spend.**
+
+Before arm's-length revenue exists, Factory optimizes:
+
+```
+(experiments × information per experiment) / owner capital consumed
+```
+
+**The denominator should approach zero.** The objective is not to spend the $50 — it is to
+preserve it while producing as many legitimate contacts with economic reality as possible.
+**Ideally Factory reaches first revenue having spent almost none of the owner capital.**
+
+### The rule
+
+| | |
+|---|---|
+| Default target marginal cost per pre-revenue experiment | **≤ $1** |
+| Strongly preferred | **~$0** |
+| Above target | Permitted **only with explicit justification** |
+| **> 10% of remaining owner capital** | **Requires owner authorization. Exceptional.** |
+
+An experiment above $1 must state all four:
+
+1. why materially cheaper falsification is unavailable;
+2. why the expected information gain justifies consuming finite capital;
+3. **how many alternative experiments are sacrificed by funding it**;
+4. why the opportunity merits concentration *before Factory has demonstrated any ability to
+   generate revenue*.
+
+### Why this exists
+
+Factory nearly committed **30–59% of the entire capital base** to a single Etsy shop setup
+fee. The error was anchoring on an outlier: **Etsy's upfront charge is unusual.** Most digital
+surfaces — KDP, Gumroad, itch.io, Payhip, Draft2Digital, print-on-demand — charge **nothing
+until a sale occurs**, taking a revenue share instead.
+
+A surface that is paid only when Factory is paid converts a fixed capital risk into a variable
+cost, which is exactly the right shape before any revenue exists.
+
+Once arm's-length profit exists, `CONSTITUTION.md` §42 reinvestment rules govern larger
+experiments funded from **realized** available cash.
+
+Implemented in `src/experiments/cost-discipline.ts`.
