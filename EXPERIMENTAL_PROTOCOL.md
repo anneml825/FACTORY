@@ -420,3 +420,87 @@ extrapolation.
 - Evidence grades never rise by argument, only by observation.
 - A stop recommendation is a legitimate, successful output of this system. Producing one on
   time is the protocol working, not the protocol failing.
+
+---
+
+## 16. Evidence Semantics Gate
+
+**No quantitative metric may be used as E1 evidence until its semantics are examined.**
+
+Origin: three separate wrong conclusions, each drawn from a *real number from a real source*.
+A search endpoint returning a count for every query read as "100% coverage" while returning
+zero for most candidates. `active_installs` read as niche demand when the API loose-matches and
+one generic plugin was the "top incumbent" for 16 unrelated verticals. A distinct-value ratio
+read as poor discrimination when it was at its mathematical ceiling.
+
+The common failure was never bad data. It was **unexamined semantics**.
+
+Every material metric must answer, and persist:
+
+1. What exactly does this metric measure — mechanically, not aspirationally?
+2. What proposition is Factory using it to support?
+3. What is the causal/inferential distance between the two?
+4. **Does the retrieved item actually correspond to the entity being analysed?**
+5. What alternative interpretations produce the same number?
+6. **Was semantic relevance verified independently of search rank or keyword matching?**
+7. Is this DIRECT, PROXY, or INFERRED evidence?
+8. What is this metric explicitly *not* sufficient to support?
+
+Plus a mandatory **adversarial check**:
+
+> **What would have to be true for this metric to be technically accurate but economically
+> misleading?**
+
+Every past failure passed a plausibility check and would have failed this one.
+
+### Rules
+
+- **Store the type: `DIRECT` / `PROXY` / `INFERRED`. Never silently promote a proxy to direct.**
+- Questions 4 and 6 are **blocking**. Unverified entity correspondence is the exact defect that
+  invalidated the WordPress opportunity scan.
+- **A real number from a real source is not valid evidence if it does not measure the
+  proposition Factory claims it measures.**
+- The gate blocks on *absence of examination*, not merely on bad results — the failure mode is
+  not looking.
+
+Implemented in `src/evidence/semantics.ts`.
+
+---
+
+## 17. H0 — divergent hypothesis generation is REQUIRED, not merely permitted
+
+**Factory must generate speculative commercial hypotheses freely and in volume.**
+
+This section exists because Factory spent its entire early history without a single populated
+E0, and produced no product ideas at all. §2 forbids advancing E0 → E1 without retrieved
+evidence — correct — but that rule was misapplied to the *generation* of ideas rather than
+their *promotion*. The consequence: the dataset generated the ideas, and **datasets describe
+platforms, not offers.** Every candidate produced was a marketplace rather than a thing to sell.
+
+### The corrected loop
+
+```
+DIVERGENT IDEA GENERATION (H0, free, zero evidentiary weight)
+  → CHEAP REJECTION (stated constraints, no evidence needed)
+  → EVIDENCE RETRIEVAL (survivors only)
+  → EVIDENCE SEMANTICS CHECK (§16)
+  → COMMERCIAL ATTRACTIVENESS
+  → EXPERIMENTABILITY
+  → TINY REAL-WORLD TEST
+  → KILL / ITERATE / SCALE
+```
+
+### Rules
+
+- **Generating an H0 requires no evidence.** It is E0 by definition: "a model believes
+  something may be true."
+- **An H0 carries zero evidentiary weight and may never be cited as evidence** — including as
+  evidence for itself. Generating a plausible idea is not discovering a market.
+- **Promotion out of E0 requires retrieved, semantically-verified external evidence.** §2 and
+  §16 apply in full at that boundary and nowhere earlier.
+- Generate broadly across product *and* customer types. A portfolio of one shape is a portfolio
+  of one bet.
+- **Cheap rejection precedes evidence retrieval**, because rejection on stated constraints costs
+  nothing and evidence costs something.
+
+Implemented in `src/ideas/h0.ts`.
