@@ -1,6 +1,23 @@
 /**
  * WordPress opportunity scanner — SEARCH SPACE -> QUANTITATIVE OPPORTUNITY EVIDENCE.
  *
+ * !! RUN 1 (2026-08-18) PRODUCED INVALID RESULTS. DO NOT TRUST state/WP_OPPORTUNITIES.md
+ * !! FROM THAT RUN. See docs/SCANNER_DEFECT.md.
+ * !!
+ * !! The defect: api.wordpress.org does LOOSE KEYWORD MATCHING. Querying
+ * !! "auto repair shop intake form" returns whatever generic form or booking
+ * !! plugin ranks for "form" — not a plugin serving auto repair shops. Across
+ * !! 114 queries only 55 distinct plugins were returned, and ONE generic booking
+ * !! plugin was the "top incumbent" for 16 different verticals.
+ * !!
+ * !! The scanner assumed "top search result = the incumbent solving this
+ * !! problem". That assumption is false, so every derived figure — installs,
+ * !! rating, staleness, competitor count — described a generic plugin rather
+ * !! than the niche.
+ * !!
+ * !! FIX APPLIED BELOW: a relevance check requiring the returned plugin to
+ * !! actually mention the vertical. Unverified until re-run.
+ *
  * Finds underserved niches in the WordPress plugin directory from retrieved data
  * only. No model-invented numbers: every figure here comes from
  * api.wordpress.org with a retrieval timestamp (EXPERIMENTAL_PROTOCOL.md §2).
@@ -75,12 +92,26 @@ const STALE_MONTHS = 18;           // abandonment threshold
 const POOR_RATING = 80;            // WordPress rating is 0-100
 const POOR_SUPPORT = 50;           // % of support threads resolved
 
-function evaluate(query: string, siteType: string, job: string, plugins: Plugin[]): Row {
+/**
+ * Does this plugin actually serve the vertical, or is it a generic tool that
+ * merely matched a keyword? Requires the site type's distinguishing word to
+ * appear in the plugin's own name or description.
+ */
+function isRelevant(p: Plugin, siteType: string): boolean {
+  const hay = `${p.name} ${p.short_description}`.toLowerCase();
+  const words = siteType.toLowerCase().split(/\s+/).filter((w) => w.length > 3);
+  return words.some((w) => hay.includes(w));
+}
+
+function evaluate(query: string, siteType: string, job: string, all: Plugin[]): Row {
+  // Only plugins that genuinely address the vertical count as incumbents.
+  const plugins = all.filter((p) => isRelevant(p, siteType));
   const top = plugins.length ? plugins.reduce((a, b) => (a.active_installs >= b.active_installs ? a : b)) : null;
   if (!top) {
     return {
       query, siteType, job, matchCount: 0, top: null,
-      demandProven: false, notDominated: true, weakness: ['no plugins match at all'], score: 0,
+      demandProven: false, notDominated: true,
+      weakness: [`no vertical-specific plugin among ${all.length} keyword matches`], score: 0,
     };
   }
 
