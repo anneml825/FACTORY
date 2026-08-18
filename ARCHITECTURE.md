@@ -74,6 +74,25 @@ ignored:**
 since last run prominently. If the scheduler dies, the owner sees a stale clock rather than a
 quiet absence of results — the failure is visible instead of invisible.
 
+### ADR-2a — Evidence retrieval runs in Actions, not in build sessions
+
+Measured 2026-08-18: the agent build container's egress policy **denies general
+internet hosts**. Wikipedia, Etsy, eBay, Google Trends, Reddit, and StackExchange all
+returned `403` at the gateway on `CONNECT`. Only package registries (npm, PyPI, crates.io,
+Go proxy) and GitHub are reachable.
+
+This is a policy denial, not a misconfiguration, and it is not to be routed around.
+
+**Consequence:** no evidence retrieval, Data Economics Probe, or Scout work can run inside a
+build session. All of it belongs in GitHub Actions, which has normal egress — which is where
+Factory's durable work runs anyway (ADR-2), so this costs nothing architecturally.
+
+**The trap it creates:** a probe run in a build session returns near-total failure and *looks
+exactly like* a genuine finding that no data source works. It is not a measurement, and it
+must never be recorded as one. Probe output produced under a blocked egress policy is
+discarded, not committed. This already happened once during development and the output was
+deleted rather than published.
+
 ### ADR-3 — Financial protections live in the database
 
 `CONSTITUTION.md` §8 requires that controls not be prose. Concretely:
