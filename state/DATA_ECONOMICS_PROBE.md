@@ -1,6 +1,6 @@
 # Data Economics Probe — Results
 
-**Run:** 2026-08-18T00:47:14.773Z  
+**Run:** 2026-08-18T00:53:27.318Z  
 **Candidates:** 100 (HEAD 34 / MID 33 / LONG_TAIL 33)  
 **Marginal cash cost:** $0.00 — all sources free or credential-blocked
 
@@ -27,11 +27,12 @@ search strategy must be redesigned before material validation capital is spent.
 
 | Source | Intent | Coverage | HEAD | MID | LONG_TAIL | Median latency | Counts |
 |---|---|---|---|---|---|---|---|
-| `wikipedia_pageviews` | WEAK | **57%** | 100% | 70% | 0% | 58ms | no |
-| `wikipedia_search_hits` | WEAK | **100%** | 100% | 100% | 100% | 206ms | no |
-| `stackexchange_questions` | INDIRECT | **100%** | 100% | 100% | 100% | 65ms | no |
-| `hn_algolia_mentions` | INDIRECT | **100%** | 100% | 100% | 100% | 168ms | no |
-| `npm_weekly_downloads` | INDIRECT | **19%** | 26% | 30% | 0% | 121ms | no |
+| `wordpress_active_installs` | INDIRECT | **100%** | 100% | 100% | 100% | 265ms | no |
+| `wikipedia_pageviews` | WEAK | **57%** | 100% | 70% | 0% | 37ms | no |
+| `wikipedia_search_hits` | WEAK | **100%** | 100% | 100% | 100% | 196ms | no |
+| `stackexchange_questions` | INDIRECT | **100%** | 100% | 100% | 100% | 67ms | no |
+| `hn_algolia_mentions` | INDIRECT | **100%** | 100% | 100% | 100% | 190ms | no |
+| `npm_weekly_downloads` | INDIRECT | **19%** | 26% | 30% | 0% | 27ms | no |
 | `etsy_active_listings` | DIRECT | **0%** | 0% | 0% | 0% | 0ms | no |
 
 ## Informativeness
@@ -40,10 +41,11 @@ Coverage says a source answered. This says whether the answer distinguishes anyt
 
 | Source | Distinct | Zero share | Mode share | Median HEAD | MID | LONG_TAIL |
 |---|---|---|---|---|---|---|
+| `wordpress_active_installs` | 0.28 | 49% | 49% | 40000 | 1000 | 0 |
 | `wikipedia_pageviews` | 0.98 | 2% | 4% | 7317 | 2733 | — |
 | `wikipedia_search_hits` | 0.80 | 11% | 11% | 11493 | 660 | 5 |
 | `stackexchange_questions` | 0.53 | 43% | 43% | 2523 | 5 | 0 |
-| `hn_algolia_mentions` | 0.59 | 37% | 37% | 503 | 17 | 0 |
+| `hn_algolia_mentions` | 0.59 | 37% | 37% | 551 | 18 | 0 |
 | `npm_weekly_downloads` | 1.00 | 0% | 5% | 15818249 | 2014027 | — |
 | `etsy_active_listings` | 0.00 | 0% | 0% | — | — | — |
 
@@ -53,6 +55,7 @@ Failures remain in the denominator. A source that cannot answer has low coverage
 
 | Source | Failures by reason |
 |---|---|
+| `wordpress_active_installs` | none |
 | `wikipedia_pageviews` | NOT_FOUND=43 |
 | `wikipedia_search_hits` | none |
 | `stackexchange_questions` | none |
@@ -61,6 +64,17 @@ Failures remain in the denominator. A source that cannot answer has low coverage
 | `etsy_active_listings` | NO_CREDENTIAL=100 |
 
 ## Notes and limitations
+
+### `wordpress_active_installs`
+
+- **Signal:** active installs of the leading plugin matching the query
+- **Purchase-intent proximity:** INDIRECT
+- **Limitations:** active_installs is bucketed, so values are coarse at high volume. Measures adoption of FREE plugins, not willingness to pay; the freemium upgrade is the unmeasured link. A high number can mean healthy demand or an already-solved problem.
+- **Terms:** Open documented API, no key, no registration. Serves the plugin directory itself, so programmatic querying is its intended use — unlike marketplace APIs restricted to first-party app building.
+- **Observed rate:** No 429 at 4/s over 100 requests.
+- **Note:** 49% of candidates return exactly zero — mostly-zero is not signal.
+- **Note:** 49% of candidates share one value — the metric barely separates them.
+- **Note:** Long-tail median is zero: discriminates only among head terms, where opportunities are not.
 
 ### `wikipedia_pageviews`
 
