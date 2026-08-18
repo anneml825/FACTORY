@@ -38,18 +38,36 @@ That exclusion is the single easiest way to fake this metric, and it is prohibit
 
 ---
 
-## Proposed owner labor budget — requires owner decision
+## Owner labor budget — set by owner
 
-Proposed, pending confirmation:
+Authorized 2026-08-17, revised 2026-08-18 (`db/migrations/002_owner_labor_threshold.sql`):
 
-| Metric | Proposed | Rationale |
+| Metric | Value | Role |
 |---|---|---|
-| Routine operating + maintenance | **≤ 30 min/week** after clock start | Consistent with "check and leave." Above this, Factory is a part-time job |
-| Approvals | **≤ 60 min/month** | Batched, not daily |
-| Autonomy Failure Review trigger | Operating + maintenance > 30 min/week, sustained 2 consecutive weeks | One bad week is noise; two is a pattern |
+| Advisory target | **30 min/week** | Dashboard warns above this. **Gates nothing** |
+| Hard threshold | **60 min/week** | Operating + maintenance/debug after clock start |
+| Review trigger | **1 week above threshold** | Sensitive by design |
+| Approvals | **≤ 60 min/month** | Batched, never daily |
 
-Ships as `OWNER_LABOR_BUDGET_MINUTES_PER_WEEK = 0` until the owner sets it. Zero is the safe
-default: it fails loudly rather than silently permitting unlimited owner labor.
+### Why two lines
+
+The advisory target reflects Master Codex §8 — the mature target is brief checking, "not
+hours of weekly execution." The hard threshold is what actually gates. Tracking both means
+drift is visible early rather than only at the point where it triggers.
+
+### A review is a diagnosis, not a verdict
+
+The trigger is deliberately sensitive; the consequence is deliberately mild. **Crossing 60
+minutes in one week terminates nothing.** It opens a review whose only job is to answer: was
+this an anomalous week, or is this structural?
+
+**Recurring or structural owner labor is the real concern.** A one-off hour spent on a
+genuinely novel problem is not an autonomy failure. The same hour spent every week on the
+same recurring breakage is. Triggering on a single week means the structural case is caught
+in week one instead of week three — which is the whole point of catching it at all.
+
+Pausing experimentation or recommending a stop is one possible **outcome** of a review,
+argued from evidence. It is never automatic.
 
 ---
 

@@ -1,0 +1,58 @@
+name: Data Economics Probe
+
+# Milestone 0B. EXPERIMENTAL_PROTOCOL.md §7.
+#
+# Runs here rather than in a build session because the probe needs real outbound
+# HTTPS to evidence sources, and the agent build container's egress policy denies
+# general internet hosts. GitHub Actions is also Factory's intended durable
+# runtime (ARCHITECTURE.md ADR-2), so this is where it belongs anyway.
+#
+# Cost: $0. Free sources only. No owner capital is touched and the Capital
+# Authority is not involved, because nothing here can spend.
+
+on:
+  workflow_dispatch:
+  # Deliberately NOT scheduled. The probe is a measurement, not an ongoing job.
+  # Re-run it when the source set or candidate universe changes.
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Run probe
+        env:
+          # Absent unless the owner registers an Etsy app. Its absence is a
+          # measured finding (NO_CREDENTIAL), not a reason to skip the source.
+          ETSY_API_KEY: ${{ secrets.ETSY_API_KEY }}
+        run: npx tsx src/evidence/probe.ts
+
+      - name: Upload results
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-economics-probe
+          path: state/
+
+      - name: Commit results
+        run: |
+          git config user.name "factory-probe"
+          git config user.email "noreply@anthropic.com"
+          git add state/
+          if git diff --staged --quiet; then
+            echo "No change in probe results."
+          else
+            git commit -m "Data Economics Probe results ($(date -u +%Y-%m-%dT%H:%MZ))"
+            git push
+          fi

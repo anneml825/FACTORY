@@ -337,6 +337,17 @@ commercial operation, trigger an **AUTONOMY FAILURE REVIEW** — *regardless of 
 evidence grade*. A profitable Factory that the owner is manually keeping alive has failed
 half its mission, and the review is mandatory even when the numbers look good.
 
+**Threshold: 60 minutes/week. A single week above it triggers the review** (owner decision,
+2026-08-18). An advisory target of 30 min/week is shown on the dashboard and gates nothing.
+
+**A review is a diagnosis, not a verdict.** The trigger is deliberately sensitive and the
+consequence deliberately mild: crossing the line never terminates anything automatically.
+The review's purpose is to distinguish an anomalous week from a structural burden —
+*recurring or structural owner labor is the actual concern*. Pausing or stopping is one
+possible **outcome** of the review, reached by argument from evidence, never a mechanical
+result of one bad week. Triggering on a single week means a structural problem surfaces in
+its first week rather than its third.
+
 The review must identify: the recurring source of owner labor; whether it is temporary or
 structural; the automation/redesign path; the cost and expected benefit of fixing it;
 whether commercial evidence justifies the repair; and whether experimentation should pause
