@@ -56,6 +56,7 @@ const arrive = new DevToArriveAdapter({
   expectedPublicName: devToExpectedPublicName,
   expectedPublicUsername: devToExpectedPublicUsername,
   allowedPublicGithubUsername: devToAllowedPublicGithubUsername,
+  controlledFixtureMode: true,
 });
 const watch = await PostgresWatchStore.create({
   pool,
@@ -155,11 +156,11 @@ try {
     `Public DEV fixture: ${arrivalPublication.location}`,
     `Internal attributed Stripe sandbox checkout: ${attributedCheckout.toString()}`,
     '',
-    'Use the internal checkout URL for the owner test; do not open the DEV article from the',
-    'owner account during measurement. Both URLs carry the same ARRIVE reference, while this',
-    'avoids misclassifying the controlled test visit as stranger exposure.',
+    'Open the public DEV fixture exactly once for a controlled engineering visit, then use the',
+    'internal checkout URL for the owner test. Every DEV view in this probe is classified as',
+    'owner/internal: it verifies analytics wiring only and cannot prove stranger arrival.',
     'No real money can move. Any checkout is permanently test-only and excluded from commercial evidence.',
-    'Do not repeatedly open the DEV article from the owner account; activation-time views are already baselined.',
+    'Do not repeat the article visit. Genuine commercial ARRIVE remains UNPROVEN.',
     '',
   ].join('\n');
   await mkdir(dirname(instructionsPath), { recursive: true });
@@ -182,7 +183,8 @@ try {
       (funnel) => funnel.arrivalPublicationId === arrivalPublication?.arrivalPublicationId,
     );
     if (
-      (attributedFunnel?.qualifiedExposures ?? 0) > 0 &&
+      (attributedFunnel?.ownerInternalExposures ?? 0) > 0 &&
+      (attributedFunnel?.ownerInternalProductViews ?? 0) > 0 &&
       (attributedFunnel?.checkoutStarts ?? 0) > 0 &&
       completedTestTransaction
     ) {
@@ -207,8 +209,10 @@ try {
     (funnel) => funnel.arrivalPublicationId === arrivalPublication?.arrivalPublicationId,
   );
   const passed =
-    (attributedFunnel?.qualifiedExposures ?? 0) > 0 &&
-    (attributedFunnel?.productViews ?? 0) > 0 &&
+    (attributedFunnel?.ownerInternalExposures ?? 0) > 0 &&
+    (attributedFunnel?.ownerInternalProductViews ?? 0) > 0 &&
+    (attributedFunnel?.qualifiedExposures ?? 0) === 0 &&
+    (attributedFunnel?.productViews ?? 0) === 0 &&
     (attributedFunnel?.checkoutStarts ?? 0) > 0 &&
     completedTestTransactions > 0 &&
     snapshot.eligibleArmLengthRevenueCents === 0;
@@ -236,9 +240,12 @@ try {
       adapterId: arrive.adapterId,
       publication: arrivalPublication,
       measuredMetrics: finalMetrics,
-      strangerExposureMeasured: (attributedFunnel?.qualifiedExposures ?? 0) > 0,
+      controlledExposureMeasured: (attributedFunnel?.ownerInternalExposures ?? 0) > 0,
+      strangerExposureMeasured: false,
+      genuineCommercialArriveProven: false,
+      commercialArriveStatus: 'UNPROVEN',
       attributedFunnel,
-      evidenceSemantics: 'DEV page views are a PROXY for qualified exposure and a DIRECT visit count; feed impressions and outbound-link clicks are unavailable.',
+      evidenceSemantics: 'DEV page views in this fixture are controlled owner/internal engineering traffic. They verify publication and analytics plumbing only; genuine commercial ARRIVE is UNPROVEN.',
     },
     put: { publication: stripePublication, deactivated: stripeDeactivated },
     watch: { durableStore: 'PostgreSQL watch_event_inbox', snapshot },
@@ -250,6 +257,7 @@ try {
     },
     ownerOperatingMinutes: 0,
     commercialClockStarted: false,
+    engineeringProofOnly: true,
     phaseDStarted: false,
   };
   await mkdir(dirname(resultPath), { recursive: true });

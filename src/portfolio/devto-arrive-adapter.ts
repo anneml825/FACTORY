@@ -249,6 +249,7 @@ export class DevToArriveAdapter implements ArriveAdapter {
   private readonly allowedPublicGithubUsername: string | null;
   private readonly expectedPublicName: string;
   private readonly expectedPublicUsername: string;
+  private readonly controlledFixtureMode: boolean;
 
   constructor(options: {
     transport: DevToTransport;
@@ -257,6 +258,7 @@ export class DevToArriveAdapter implements ArriveAdapter {
     allowedPublicGithubUsername?: string;
     expectedPublicName: string;
     expectedPublicUsername: string;
+    controlledFixtureMode?: boolean;
   }) {
     this.transport = options.transport;
     this.store = options.store ?? new InMemoryDevToArrivalStore();
@@ -264,6 +266,7 @@ export class DevToArriveAdapter implements ArriveAdapter {
     this.allowedPublicGithubUsername = options.allowedPublicGithubUsername?.trim().toLowerCase() || null;
     this.expectedPublicName = options.expectedPublicName.trim();
     this.expectedPublicUsername = options.expectedPublicUsername.trim().toLowerCase();
+    this.controlledFixtureMode = options.controlledFixtureMode ?? false;
     if (!this.expectedPublicName || !this.expectedPublicUsername) {
       throw new Error('DEV publication requires an explicit expected Factory public identity.');
     }
@@ -472,12 +475,16 @@ export class DevToArriveAdapter implements ArriveAdapter {
       qualifiedExposures: totals.views,
       visits: totals.views,
       offerInteractions: totals.reactions + totals.comments,
-      ownerInternalExposures: 0,
-      strangerConfirmedInteractions: totals.reactions + totals.comments,
+      ownerInternalExposures: this.controlledFixtureMode ? totals.views : 0,
+      strangerConfirmedInteractions: this.controlledFixtureMode ? 0 : totals.reactions + totals.comments,
       measurementSource: `DEV per-article analytics totals, article_id=${articleId}`,
       semantics: {
-        qualifiedExposures: 'PROXY: article page views after the activation baseline. DEV does not expose feed impressions; automated traffic may be present.',
-        visits: 'DIRECT: article page views. This is the same provider count as qualified exposure, not an independent funnel stage.',
+        qualifiedExposures: this.controlledFixtureMode
+          ? 'CONTROLLED: article page views are owner/internal engineering traffic and cannot establish stranger arrival.'
+          : 'PROXY: article page views after the activation baseline. DEV does not expose feed impressions; automated traffic may be present.',
+        visits: this.controlledFixtureMode
+          ? 'CONTROLLED: provider-reported article views verify measurement plumbing only.'
+          : 'DIRECT: article page views. This is the same provider count as qualified exposure, not an independent funnel stage.',
         offerInteractions: 'DIRECT: reactions plus comments. DEV does not expose outbound-link clicks through this API.',
       },
     };

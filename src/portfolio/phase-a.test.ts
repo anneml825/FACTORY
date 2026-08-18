@@ -491,6 +491,7 @@ test('KEEP requires positive contribution after settled Factory cost', () => {
     ownerInternalExposures: 0,
     unknownExposures: 0,
     productViews: 1,
+    ownerInternalProductViews: 0,
     offerInteractions: 1,
     checkoutStarts: 1,
     checkoutFailures: 0,

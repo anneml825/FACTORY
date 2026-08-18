@@ -136,8 +136,15 @@ export class ArrivalWatchBridge {
       },
       {
         type: 'PRODUCT_VIEW',
-        current: current.visits,
-        previous: previous.visits,
+        current: current.ownerInternalExposures,
+        previous: previous.ownerInternalExposures,
+        semantic: 'Known owner/internal visit reported separately and excluded from commercial arrival evidence.',
+        classification: 'OWNER_INTERNAL',
+      },
+      {
+        type: 'PRODUCT_VIEW',
+        current: current.visits - current.ownerInternalExposures,
+        previous: previous.visits - previous.ownerInternalExposures,
         semantic: current.semantics.visits,
         classification: 'STRANGER',
       },

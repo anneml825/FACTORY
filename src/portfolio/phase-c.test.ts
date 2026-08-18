@@ -217,6 +217,48 @@ test('DEV pilot evaluates a measured gate, publishes once, measures, and deactiv
   assert.equal(transport.requests.filter((request) => request.method === 'PUT').length, 1);
 });
 
+test('controlled DEV fixture views remain owner/internal and cannot become stranger evidence', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'factory-controlled-arrive-'));
+  const transport = new RecordingDevToTransport();
+  const adapter = new DevToArriveAdapter({
+    transport,
+    store: new JsonDevToArrivalStore(join(directory, 'devto.json')),
+    expectedPublicName: 'Factory Fixture',
+    expectedPublicUsername: 'factory-fixture',
+    controlledFixtureMode: true,
+  });
+  const watch = await JsonJournalWatchStore.create(join(directory, 'watch'), SECRET, ['FIXTURE', 'LIVE']);
+  const bridge = new ArrivalWatchBridge({
+    watch,
+    internalEventSecret: SECRET,
+    checkpoints: new JsonArrivalMetricCheckpointStore(join(directory, 'arrival-checkpoint.json')),
+  });
+  const publication = await adapter.activate(shortDocumentFixture(), providerPublication(), 'controlled-arrival');
+
+  transport.totals = {
+    page_views: { total: 2 },
+    reactions: { total: 1 },
+    comments: { total: 1 },
+  };
+  const measured = await adapter.measure(publication);
+  assert.equal(measured.ownerInternalExposures, 2);
+  assert.equal(measured.strangerConfirmedInteractions, 0);
+  await bridge.ingest(publication, measured);
+
+  const snapshot = watch.snapshot(publication.experimentId);
+  const funnel = snapshot.arrivalFunnels.find(
+    (candidate) => candidate.arrivalPublicationId === publication.arrivalPublicationId,
+  );
+  assert.equal(snapshot.qualifiedExposures, 0);
+  assert.equal(snapshot.ownerInternalExposures, 1);
+  assert.equal(snapshot.productViews, 0);
+  assert.equal(snapshot.ownerInternalProductViews, 1);
+  assert.equal(funnel?.qualifiedExposures, 0);
+  assert.equal(funnel?.ownerInternalExposures, 1);
+  assert.equal(funnel?.productViews, 0);
+  assert.equal(funnel?.ownerInternalProductViews, 1);
+});
+
 test('DEV analytics preflight accepts a new account with no aggregate rows', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'factory-devto-empty-analytics-'));
   const transport = new RecordingDevToTransport();

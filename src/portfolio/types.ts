@@ -231,7 +231,9 @@ export interface TransactionSnapshot {
 export interface ArrivalFunnelSnapshot {
   arrivalPublicationId: string;
   qualifiedExposures: number;
+  ownerInternalExposures: number;
   productViews: number;
+  ownerInternalProductViews: number;
   offerInteractions: number;
   checkoutStarts: number;
   checkoutFailures: number;
@@ -244,6 +246,7 @@ export interface FunnelSnapshot {
   ownerInternalExposures: number;
   unknownExposures: number;
   productViews: number;
+  ownerInternalProductViews: number;
   offerInteractions: number;
   checkoutStarts: number;
   checkoutFailures: number;

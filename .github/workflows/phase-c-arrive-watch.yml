@@ -5,13 +5,19 @@ on:
   push:
     branches:
       - codex/phase-c-arrive-durable-watch
+    paths:
+      - .github/workflows/phase-c-arrive-watch.yml
+      - src/portfolio/**
+      - db/schema.sql
+      - package.json
+      - package-lock.json
 
 permissions:
   contents: read
 
 concurrency:
   group: phase-c-arrive-watch
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   durable-watch:
@@ -82,7 +88,7 @@ jobs:
       DEVTO_EXPECTED_PUBLIC_USERNAME: factory94
       DEVTO_ALLOWED_PUBLIC_GITHUB_USERNAME: anneml825
       FACTORY_PAID_ACTIVITY_HALTED: "1"
-      PHASE_C_WAIT_SECONDS: "900"
+      PHASE_C_WAIT_SECONDS: "600"
       PHASE_C_PROBE_ID: ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
