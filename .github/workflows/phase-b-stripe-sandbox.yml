@@ -74,9 +74,57 @@ jobs:
           sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/stripe-listen.log"
           exit 1
 
-      - name: Run Managed Payments checkout, webhook, fulfillment, refund, dispute, and reconciliation probe
+      - name: Start Managed Payments checkout, webhook, fulfillment, refund, dispute, and reconciliation probe
         if: steps.credential.outputs.present == 'true'
-        run: node src/portfolio/run-stripe-sandbox-probe.ts
+        shell: bash
+        run: |
+          : > "$RUNNER_TEMP/phase-b-probe.log"
+          nohup bash -c '
+            node src/portfolio/run-stripe-sandbox-probe.ts
+            code=$?
+            echo "$code" > "$RUNNER_TEMP/phase-b-probe.exit"
+          ' > "$RUNNER_TEMP/phase-b-probe.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/phase-b-probe.pid"
+
+          for attempt in $(seq 1 90); do
+            if [ -s state/phase-b-stripe-checkout.md ]; then
+              exit 0
+            fi
+            if [ -s "$RUNNER_TEMP/phase-b-probe.exit" ]; then
+              sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-b-probe.log"
+              exit "$(cat "$RUNNER_TEMP/phase-b-probe.exit")"
+            fi
+            sleep 1
+          done
+
+          sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-b-probe.log"
+          exit 1
+
+      - name: Upload non-secret checkout instructions
+        if: steps.credential.outputs.present == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-b-stripe-checkout
+          path: state/phase-b-stripe-checkout.md
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Wait for the sandbox lifecycle result
+        if: steps.credential.outputs.present == 'true'
+        shell: bash
+        run: |
+          for attempt in $(seq 1 930); do
+            if [ -s "$RUNNER_TEMP/phase-b-probe.exit" ]; then
+              code=$(cat "$RUNNER_TEMP/phase-b-probe.exit")
+              sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-b-probe.log"
+              exit "$code"
+            fi
+            sleep 1
+          done
+
+          kill "$(cat "$RUNNER_TEMP/phase-b-probe.pid")" 2>/dev/null || true
+          sed -E 's/(sk|rk|whsec)_[A-Za-z0-9_]+/[REDACTED]/g' "$RUNNER_TEMP/phase-b-probe.log"
+          exit 1
 
       - name: Upload non-secret probe report
         if: always() && steps.credential.outputs.present == 'true'

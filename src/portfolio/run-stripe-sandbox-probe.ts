@@ -19,6 +19,9 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const internalSecret = process.env.FACTORY_INTERNAL_EVENT_SECRET;
 const statePath = resolve(process.env.PHASE_B_STATE_PATH ?? 'state/phase-b-stripe-publication.json');
 const resultPath = resolve(process.env.PHASE_B_RESULT_PATH ?? 'state/phase-b-stripe-sandbox-result.json');
+const instructionsPath = resolve(
+  process.env.PHASE_B_INSTRUCTIONS_PATH ?? 'state/phase-b-stripe-checkout.md',
+);
 const waitSeconds = Number(process.env.PHASE_B_WAIT_SECONDS ?? '900');
 const port = Number(process.env.PHASE_B_WEBHOOK_PORT ?? '4242');
 const probeId = process.env.PHASE_B_PROBE_ID?.trim() || `local-${Date.now()}`;
@@ -153,6 +156,8 @@ try {
     '',
   ].join('\n');
   console.log(instructions);
+  await mkdir(dirname(instructionsPath), { recursive: true });
+  await writeFile(instructionsPath, `${instructions}\n`);
   if (process.env.GITHUB_STEP_SUMMARY) {
     await appendFile(process.env.GITHUB_STEP_SUMMARY, instructions);
   }

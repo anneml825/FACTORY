@@ -4,9 +4,9 @@
 
 **Branch:** `codex/phase-b-stripe-test-mode`
 
-**Status:** first real Stripe sandbox run reached the full provider boundary and failed closed on
-a missing dispute webhook; reconciliation-recovery correction verified locally and awaiting
-publication/rerun
+**Status:** reconciliation recovery is published. Corrected run `32171304848` failed closed with
+no transactions because its checkout instructions were trapped inside the still-running Actions
+step. A non-secret early checkout artifact correction is verified locally and awaiting rerun.
 
 **Cash spent:** $0.00
 
@@ -68,20 +68,29 @@ both ephemeral secrets before export. No repository Stripe key was exposed.
 
 ## Corrected rerun sequence
 
-1. Publish the correction to `codex/phase-b-stripe-test-mode` through the GitHub connector.
+1. Publish the checkout-handoff correction through the GitHub connector.
 2. Let the branch push trigger `Phase B Stripe sandbox probe` with a fresh per-attempt idempotency
    namespace.
-3. Have the owner complete the two test checkouts shown in the running job.
-4. Inspect the uploaded `phase-b-stripe-sandbox-result` artifact.
-5. Require `passed: true`, all provider objects deactivated, both transactions `OWNER_TEST`,
+3. Retrieve the early `phase-b-stripe-checkout` artifact while the listener continues running.
+4. Complete the two owner-classified test checkouts with browser automation, with action-time
+   confirmation before submitting them.
+5. Inspect the uploaded `phase-b-stripe-sandbox-result` artifact.
+6. Require `passed: true`, all provider objects deactivated, both transactions `OWNER_TEST`,
    zero eligible arm-length revenue, zero available settled cash, a recorded refund and dispute,
    and every reconciliation `reconciled: true`.
-6. Record the measured result, update this handoff, and publish the follow-up through the GitHub
+7. Record the measured result, update this handoff, and publish the follow-up through the GitHub
    connector. Do not use shell git push if authentication remains unavailable.
 
 If Managed Payments activation or Product/Price/Payment Link creation is denied, record the
 exact Stripe error. That disproves the account-specific assumption and requires an architecture
 change; do not silently fall back to Stripe direct for live commerce.
+
+Run `32171304848` disproved another orchestration assumption: GitHub does not finalize live job
+logs or a step summary while the long-running probe step is still waiting, so the connector could
+not retrieve the Payment Link in time. The corrected workflow starts the probe in the background,
+ends an initial setup step after the link exists, uploads `phase-b-stripe-checkout`, and waits for
+the lifecycle in a separate step. The timed-out run created no transaction and deactivated its
+temporary provider objects.
 
 ## Honest limits
 

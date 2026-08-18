@@ -1,9 +1,9 @@
 # Phase B — Stripe Managed Payments sandbox
 
 **Date:** 2026-08-18  
-**Status:** real Stripe sandbox execution reached the full provider boundary; the first run
-failed closed on a missing dispute webhook, and an idempotent reconciliation-recovery correction
-is implemented locally pending one rerun
+**Status:** real Stripe sandbox execution reached the full provider boundary; reconciliation
+recovery is published, and an early checkout-artifact correction is pending one rerun after a
+second run failed closed with no transactions because its live link was not retrievable in time
 **Cash spent:** $0.00  
 **Commercial assets:** none; the only manifest is a visibly noncommercial fixture  
 **ARRIVE:** deliberately unsolved and unchanged
@@ -188,6 +188,12 @@ The suite covers:
    produced $13.10 Checkout totals in this sandbox. WATCH correctly records customer gross, but
    live economics must keep catalog subtotal, tax, provider fees, seller proceeds, and settled
    payout separate.
+10. **A step summary is not an early handoff channel for a long-running step.** Run `32171304848`
+    created a fresh test Payment Link, but GitHub did not finalize the step summary or connector
+    job log while that same step remained open waiting for checkout. The run timed out with no
+    transactions and deactivated its temporary objects. The workflow now starts the probe in the
+    background, uploads a non-secret `phase-b-stripe-checkout` artifact in a completed step, and
+    waits for the lifecycle in a separate step.
 
 ## First real sandbox result — failed closed, 2026-08-18
 
