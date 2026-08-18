@@ -142,14 +142,23 @@ function evaluate(measurements: SourceMeasurement[]) {
   const verdicts: Verdict[] = measurements.map((m) => {
     const coverage = m.candidatesWithUsableE1 / m.candidatesAttempted;
     const passesCoverage = coverage >= GATE_CRITERIA.minCoverage;
-    const passesDistinct = m.distinctValueRatio >= GATE_CRITERIA.minDistinctValueRatio;
+    // Quantization-robust replacement for the distinct-value RATIO; see the
+    // guard note in types.ts. Validated not to rescue any previously-failed source.
+    const distinctCount = new Set(m.values).size;
+    const passesDistinct = distinctCount >= GATE_CRITERIA.minDistinctValueCount;
+    const hM = m.medianByStratum.HEAD ?? 0;
+    const mM = m.medianByStratum.MID ?? 0;
+    const lM = m.medianByStratum.LONG_TAIL ?? 0;
+    const sep = Math.min(mM > 0 ? hM / mM : Infinity, lM > 0 ? mM / lM : Infinity);
+    const passesSeparation =
+      hM > mM && mM > lM && sep >= GATE_CRITERIA.minStratumSeparation;
     const passesZeroShare = m.zeroShare <= GATE_CRITERIA.maxZeroShare;
     const passesModeShare = m.modeShare <= GATE_CRITERIA.maxModeShare;
     const longTailMedian = m.medianByStratum.LONG_TAIL;
     const passesLongTail =
       !GATE_CRITERIA.requireNonZeroLongTailMedian || (longTailMedian !== null && longTailMedian > 0);
     const passesDiscrimination =
-      passesDistinct && passesZeroShare && passesModeShare && passesLongTail;
+      passesDistinct && passesSeparation && passesZeroShare && passesModeShare && passesLongTail;
     const weakExcluded = GATE_CRITERIA.excludeWeakFromCoverage && m.source.purchaseIntent === 'WEAK';
     const notes: string[] = [];
     if (!passesZeroShare) {
@@ -161,6 +170,12 @@ function evaluate(measurements: SourceMeasurement[]) {
       notes.push(
         `${(m.modeShare * 100).toFixed(0)}% of candidates share one value — the metric barely separates them.`,
       );
+    }
+    if (!passesDistinct) {
+      notes.push(`Only ${distinctCount} distinct values — too little resolution to rank candidates.`);
+    }
+    if (!passesSeparation) {
+      notes.push('Stratum medians are not ordered head > mid > long-tail with the required separation.');
     }
     if (!passesLongTail) {
       notes.push(
@@ -216,7 +231,8 @@ function renderMarkdown(measurements: SourceMeasurement[], evaluation: ReturnTyp
   L.push(`| Cost per candidate | ≤ $${GATE_CRITERIA.maxCostPerCandidateUsd.toFixed(2)} |`);
   L.push(`| Candidates at $5 | ≥ ${GATE_CRITERIA.minCandidatesAt5Usd} |`);
   L.push(`| Sustainable rate | ≥ ${GATE_CRITERIA.minCandidatesPerDay}/day |`);
-  L.push(`| Distinct-value ratio | ≥ ${GATE_CRITERIA.minDistinctValueRatio} |`);
+  L.push(`| Distinct-value count | ≥ ${GATE_CRITERIA.minDistinctValueCount} |`);
+  L.push(`| Stratum separation | ≥ ${GATE_CRITERIA.minStratumSeparation}x, ordered |`);
   L.push(`| Zero share | ≤ ${GATE_CRITERIA.maxZeroShare} |`);
   L.push(`| Mode share | ≤ ${GATE_CRITERIA.maxModeShare} |`);
   L.push(`| Long-tail median > 0 | ${GATE_CRITERIA.requireNonZeroLongTailMedian ? 'Required' : 'Not required'} |`);

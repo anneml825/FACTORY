@@ -54,16 +54,27 @@ async function main() {
   }
 
   const coverage = values.length / WP_CANDIDATES.length;
-  const distinct = new Set(values).size / (values.length || 1);
+  const distinctCount = new Set(values).size;
+  const distinctRatio = distinctCount / (values.length || 1);
   const zeroShare = values.filter((v) => v === 0).length / (values.length || 1);
   const freq = new Map<number, number>();
   for (const v of values) freq.set(v, (freq.get(v) ?? 0) + 1);
   const modeShare = Math.max(0, ...freq.values()) / (values.length || 1);
   const ltMedian = median(byStratum.LONG_TAIL);
+  const headM = median(byStratum.HEAD) ?? 0;
+  const midM = median(byStratum.MID) ?? 0;
+  const ltM = ltMedian ?? 0;
+  // Adjacent strata must be ordered AND separated by the required factor.
+  const sepHeadMid = midM > 0 ? headM / midM : Infinity;
+  const sepMidLt = ltM > 0 ? midM / ltM : Infinity;
+  const separation = Math.min(sepHeadMid, sepMidLt);
+  const separationOk =
+    headM > midM && midM > ltM && separation >= GATE_CRITERIA.minStratumSeparation;
 
   const checks = {
     coverage: { value: coverage, threshold: GATE_CRITERIA.minCoverage, pass: coverage >= GATE_CRITERIA.minCoverage },
-    distinct: { value: distinct, threshold: GATE_CRITERIA.minDistinctValueRatio, pass: distinct >= GATE_CRITERIA.minDistinctValueRatio },
+    distinctCount: { value: distinctCount, threshold: GATE_CRITERIA.minDistinctValueCount, pass: distinctCount >= GATE_CRITERIA.minDistinctValueCount },
+    stratumSeparation: { value: separation, threshold: GATE_CRITERIA.minStratumSeparation, pass: separationOk },
     zeroShare: { value: zeroShare, threshold: GATE_CRITERIA.maxZeroShare, pass: zeroShare <= GATE_CRITERIA.maxZeroShare },
     modeShare: { value: modeShare, threshold: GATE_CRITERIA.maxModeShare, pass: modeShare <= GATE_CRITERIA.maxModeShare },
     longTailMedian: { value: ltMedian, threshold: '> 0', pass: ltMedian !== null && ltMedian > 0 },

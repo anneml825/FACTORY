@@ -99,9 +99,18 @@ export const GATE_CRITERIA = {
   /** Sustainable candidates per day under observed rate limits. */
   minCandidatesPerDay: 50,
   /**
-   * Distinct-value ratio required for a signal to count as discriminating.
-   * A source returning the same number for every candidate carries no
-   * information regardless of how reliably it responds.
+   * DEPRECATED as a gate criterion — retained and still reported, but no longer
+   * decides the gate. See minDistinctValueCount / minStratumSeparation below.
+   *
+   * Why: this ratio is not computable against a QUANTIZED metric. WordPress
+   * buckets active_installs (0, 200, 300, 800, 1k, 2k, ... 10M). Exactly 25
+   * bucket values exist in the observed range, and all 25 appeared across 60
+   * candidates — so 25/60 = 0.42 was the CEILING, not a shortfall. Reaching 0.5
+   * would require 30 buckets that do not exist. The criterion was measuring
+   * quantization and calling it uninformativeness.
+   *
+   * This is the most gameable moment in the whole probe, so see the guard note
+   * on minDistinctValueCount.
    */
   minDistinctValueRatio: 0.5,
   /**
@@ -145,6 +154,43 @@ export const GATE_CRITERIA = {
    * source that only discriminates among head terms cannot drive the search.
    */
   requireNonZeroLongTailMedian: true,
+
+  // -------------------------------------------------------------------------
+  // REPLACEMENT for minDistinctValueRatio, 2026-08-18. Quantization-robust.
+  //
+  // GUARD — the reason this is not simply moving a goalpost:
+  //
+  //   1. The replaced criterion was provably UNREACHABLE for a quantized metric
+  //      (all 25 existing buckets appeared; 0.42 was the ceiling at n=60).
+  //   2. These replacements were validated against the sources that ALREADY
+  //      FAILED, and they still fail:
+  //        stackexchange_questions — zeroShare 43% > 40%, long-tail median 0
+  //        hn_algolia_mentions     — long-tail median 0
+  //      A criterion change that rescued a previously-correct failure would be
+  //      illegitimate. This one rescues nothing.
+  //   3. modeShare already catches the failure mode the ratio was meant to catch
+  //      ("returns the same number for everything"), and catches it directly.
+  //   4. minStratumSeparation is a NEW requirement with no predecessor — it
+  //      demands the metric actually order the strata, which nothing previously
+  //      required.
+  //
+  // The FAIL under the old criterion stays published in state/WP_GATE.md.
+  // -------------------------------------------------------------------------
+
+  /**
+   * Absolute count of distinct values. Robust to quantization: asks whether the
+   * metric has enough resolution to rank candidates, not what fraction of
+   * candidates got a unique number.
+   */
+  minDistinctValueCount: 15,
+
+  /**
+   * Adjacent stratum medians must differ by at least this factor, in the right
+   * direction. This is the real test of whether a signal orders the world:
+   * a metric that cannot separate broad problems from niche ones cannot drive
+   * a search, however many distinct values it emits.
+   */
+  minStratumSeparation: 5,
 } as const;
 
 export interface SourceMeasurement {
