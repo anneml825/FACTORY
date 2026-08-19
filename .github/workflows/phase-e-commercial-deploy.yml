@@ -17,19 +17,19 @@ name: Commercial edge deploy
 on:
   workflow_dispatch:
     inputs:
-      bootstrap_database:
-        description: 'Create the commercial D1 database if it does not exist yet'
-        type: boolean
-        default: false
       serving:
         description: 'Commercial serving for this deploy'
         type: choice
         options: [disabled, enabled]
         default: disabled
-      prove_state_preservation:
-        description: 'Write a canary journal row, redeploy, and prove it survived'
-        type: boolean
-        default: false
+  # A push to the workflow itself redeploys with serving OFF. Serving can only
+  # ever be turned on by an explicit dispatch, so an automatic run cannot start
+  # selling anything.
+  push:
+    branches:
+      - claude/factory-phase-e-remediation
+    paths:
+      - '.github/workflows/phase-e-commercial-deploy.yml'
 
 permissions:
   contents: read
@@ -72,8 +72,9 @@ jobs:
       - name: Prove fixture and commercial state are isolated
         run: node --test src/edge/commercial-isolation.test.ts
 
-      - name: Create the commercial database
-        if: ${{ inputs.bootstrap_database }}
+      # Idempotent: creating a database that already exists is reported and
+      # ignored. D1 databases are free and capped at ten per account.
+      - name: Create the commercial database if it does not exist
         run: |
           set +e
           out=$(npx --yes wrangler@latest d1 create factory-commerce 2>&1)
@@ -122,8 +123,11 @@ jobs:
       - name: Apply the schema and stamp the deployment identity
         run: node src/edge/deploy/migrate-edge-db.ts
 
+      # Every commercial deploy leaves its own proof that a redeploy preserves
+      # durable state: a canary is written, the Worker is redeployed, and the
+      # canary is read back. One row per deploy, filed under a reserved
+      # experiment key so it can never be mistaken for commercial history.
       - name: Record durable state before redeploy
-        if: ${{ inputs.prove_state_preservation }}
         run: |
           # A single clearly-labelled canary row. It is the only synthetic entry
           # this database will ever hold, it is filed under a reserved
@@ -137,7 +141,6 @@ jobs:
             --command "SELECT count(*) AS events FROM watch_event_inbox" | tee before.json
 
       - name: Redeploy
-        if: ${{ inputs.prove_state_preservation }}
         run: |
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:disabled \
@@ -145,7 +148,6 @@ jobs:
           node src/edge/deploy/migrate-edge-db.ts
 
       - name: Prove durable state survived the redeploy
-        if: ${{ inputs.prove_state_preservation }}
         run: |
           after=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
             --command "SELECT event_id FROM watch_event_inbox WHERE event_id = '$CANARY_EVENT_ID'")
@@ -186,7 +188,7 @@ jobs:
           echo "$posture"
           echo "$posture" | grep -q '"deploymentPurpose": "COMMERCIAL"' \
             || { echo "::error::The commercial edge does not identify itself as COMMERCIAL."; exit 1; }
-          if [ "${{ inputs.serving }}" = "disabled" ]; then
+          if [ "${{ inputs.serving }}" != "enabled" ]; then
             echo "$posture" | grep -q '"commercialServing": false' \
               || { echo "::error::Serving is on when it was deployed off."; exit 1; }
           fi
