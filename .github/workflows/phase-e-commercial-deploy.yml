@@ -30,6 +30,9 @@ on:
       - claude/factory-phase-e-remediation
     paths:
       - '.github/workflows/phase-e-commercial-deploy.yml'
+      - 'src/edge/**'
+      - 'db/edge/**'
+      - 'wrangler.toml'
 
 permissions:
   contents: read

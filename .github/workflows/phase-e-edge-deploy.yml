@@ -19,11 +19,17 @@ on:
         description: 'Skip the proof and only deactivate temporary Stripe objects'
         type: boolean
         default: false
+  # Re-proves the edge whenever the edge changes. The proof exists to catch
+  # exactly the regressions a code change can introduce, and it costs nothing:
+  # free tiers, sandbox Stripe, and a teardown that runs either way.
   push:
     branches:
       - claude/factory-phase-e-remediation
     paths:
       - '.github/workflows/phase-e-edge-deploy.yml'
+      - 'src/edge/**'
+      - 'db/edge/**'
+      - 'wrangler.toml'
 
 permissions:
   contents: read
