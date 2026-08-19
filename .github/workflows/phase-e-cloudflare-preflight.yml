@@ -8,7 +8,7 @@ name: Phase E Cloudflare preflight
 #
 #   1. Does the token authenticate, and what is it actually scoped to?
 #   2. Can a brand-new Free account create a D1 database with no card on file?
-#   3. What does Cloudflare report back — plan, limits, identifiers?
+#   3. What does Cloudflare report back — identifiers, limits, errors?
 #
 # Secrets are GitHub-masked. The token value is never echoed; only the API's own
 # structured verdict about it is printed.
@@ -19,6 +19,7 @@ on:
       - claude/factory-phase-e-remediation
     paths:
       - '.github/workflows/phase-e-cloudflare-preflight.yml'
+      - 'tools/verify/cloudflare-preflight.py'
 
 permissions:
   contents: read
@@ -50,47 +51,23 @@ jobs:
           fi
           echo "Both credentials are present (values never printed)."
 
-      - name: Verify the token
+      - name: Query token and account scope
         run: |
-          # Cloudflare's own verdict on the token: active/expired, and its ID.
           curl -sS -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-            | python3 -c 'import json,sys; d=json.load(sys.stdin); print("success:", d.get("success")); print("status :", (d.get("result") or {}).get("status")); print("errors :", d.get("errors")); print("messages:", [m.get("message") for m in d.get("messages",[])])'
-
-      - name: Confirm account scope
-        run: |
-          # Prints only the account NAME and whether the configured ID matched.
-          # The account ID itself is a masked secret and is not echoed.
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -o verify.json
           curl -sS -X GET "https://api.cloudflare.com/client/v4/accounts" \
-            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
-            | ACC="${CLOUDFLARE_ACCOUNT_ID}" python3 -c '
-import json,os,sys
-d=json.load(sys.stdin)
-print("success:", d.get("success"), "errors:", d.get("errors"))
-res=d.get("result") or []
-print("accounts visible to this token:", len(res))
-want=os.environ["ACC"]
-for a in res:
-    print(" - name:", a.get("name"), "| matches configured id:", a.get("id")==want)
-'
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" -o accounts.json
+          python3 tools/verify/cloudflare-preflight.py
 
       - name: Provision the D1 database
         run: |
-          set +e
-          echo "--- attempting create (expected to fail harmlessly if it already exists) ---"
-          npx --yes wrangler@latest d1 create "$D1_NAME" 2>&1 | sed 's/^/  /'
+          echo "--- create (a harmless failure here means it already exists) ---"
+          npx --yes wrangler@latest d1 create "$D1_NAME" 2>&1 | sed 's/^/  /' || true
           echo "--- authoritative listing ---"
-          set -e
           npx --yes wrangler@latest d1 list --json > d1.json
-          python3 - <<'PY'
-import json
-rows = json.load(open("d1.json"))
-print(f"databases in account: {len(rows)}")
-for r in rows:
-    print(" -", {k: r.get(k) for k in ("name", "uuid", "version", "created_at") if k in r})
-PY
+          python3 tools/verify/cloudflare-preflight.py --databases
 
-      - name: Record what Cloudflare actually reported
+      - name: Ask Cloudflare what it created
         run: |
           npx --yes wrangler@latest d1 info "$D1_NAME" 2>&1 | sed 's/^/  /' || echo "d1 info unavailable"
 
@@ -99,5 +76,9 @@ PY
         uses: actions/upload-artifact@v4
         with:
           name: cloudflare-preflight
-          path: d1.json
+          path: |
+            verify.json
+            accounts.json
+            d1.json
           retention-days: 7
+          if-no-files-found: warn
