@@ -1,0 +1,41 @@
+name: Phase E Cloudflare documentation verification
+
+# Reads PUBLIC Cloudflare documentation only.
+#
+# Why this exists: the build container's egress gateway answers 403 to CONNECT
+# for every *.cloudflare.com host, so the Phase E owner-setup brief could only
+# cite secondary sources for free-tier limits, payment-method requirements, and
+# API-token permission names. ARCHITECTURE.md ADR-2a established that evidence
+# retrieval belongs in Actions for exactly this reason.
+#
+# No credential is read. No Cloudflare account is contacted. No account is
+# created, nothing is deployed, and no capital can be spent.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/factory-phase-e-remediation
+    paths:
+      - 'tools/verify/cloudflare-claims.sh'
+      - '.github/workflows/phase-e-cloudflare-docs.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch and extract official Cloudflare documentation
+        run: bash tools/verify/cloudflare-claims.sh cloudflare-docs
+
+      - name: Upload extracted documentation
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-docs
+          path: cloudflare-docs/
+          retention-days: 7
