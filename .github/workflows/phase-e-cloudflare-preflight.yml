@@ -43,10 +43,31 @@ jobs:
         with:
           node-version: 24
 
+      - name: Diagnose credential visibility
+        env:
+          # Presence probes only. Values are never printed — each is reduced to a
+          # boolean before it reaches the log. `vars` is checked too because the
+          # GitHub UI puts Secrets and Variables on the same page under separate
+          # tabs, and a value entered on the Variables tab is invisible to
+          # `secrets.*`.
+          SECRET_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+          SECRET_ACCOUNT_SET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+          VAR_TOKEN_SET: ${{ vars.CLOUDFLARE_API_TOKEN != '' }}
+          VAR_ACCOUNT_SET: ${{ vars.CLOUDFLARE_ACCOUNT_ID != '' }}
+          VAR_NAMES: ${{ toJSON(vars) }}
+        run: |
+          echo "Actions SECRET  CLOUDFLARE_API_TOKEN  present: $SECRET_TOKEN_SET"
+          echo "Actions SECRET  CLOUDFLARE_ACCOUNT_ID present: $SECRET_ACCOUNT_SET"
+          echo "Actions VARIABLE CLOUDFLARE_API_TOKEN  present: $VAR_TOKEN_SET"
+          echo "Actions VARIABLE CLOUDFLARE_ACCOUNT_ID present: $VAR_ACCOUNT_SET"
+          # Variable NAMES only. Variables are not secret, but their values are
+          # still withheld here on principle.
+          echo "$VAR_NAMES" | python3 -c 'import json,sys; print("variable names defined:", sorted(json.load(sys.stdin).keys()))'
+
       - name: Fail closed if credentials are absent
         run: |
           if [ -z "${CLOUDFLARE_API_TOKEN}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID must both be set."
+            echo "::error::Both values must exist as Actions repository SECRETS on anneml825/FACTORY."
             exit 1
           fi
           echo "Both credentials are present (values never printed)."
