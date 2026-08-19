@@ -1,0 +1,103 @@
+name: Phase E Cloudflare preflight
+
+# Verifies the owner's least-privilege token and provisions ONLY the D1 database.
+#
+# Deliberately does not deploy a Worker, upload an artifact, touch Stripe, or
+# create any commercial object. Its whole job is to answer three questions with
+# real Cloudflare behaviour instead of documentation:
+#
+#   1. Does the token authenticate, and what is it actually scoped to?
+#   2. Can a brand-new Free account create a D1 database with no card on file?
+#   3. What does Cloudflare report back — plan, limits, identifiers?
+#
+# Secrets are GitHub-masked. The token value is never echoed; only the API's own
+# structured verdict about it is printed.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/factory-phase-e-remediation
+    paths:
+      - '.github/workflows/phase-e-cloudflare-preflight.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-e-cloudflare-preflight
+  cancel-in-progress: false
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      D1_NAME: factory-edge
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Fail closed if credentials are absent
+        run: |
+          if [ -z "${CLOUDFLARE_API_TOKEN}" ] || [ -z "${CLOUDFLARE_ACCOUNT_ID}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID must both be set."
+            exit 1
+          fi
+          echo "Both credentials are present (values never printed)."
+
+      - name: Verify the token
+        run: |
+          # Cloudflare's own verdict on the token: active/expired, and its ID.
+          curl -sS -X GET "https://api.cloudflare.com/client/v4/user/tokens/verify" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            | python3 -c 'import json,sys; d=json.load(sys.stdin); print("success:", d.get("success")); print("status :", (d.get("result") or {}).get("status")); print("errors :", d.get("errors")); print("messages:", [m.get("message") for m in d.get("messages",[])])'
+
+      - name: Confirm account scope
+        run: |
+          # Prints only the account NAME and whether the configured ID matched.
+          # The account ID itself is a masked secret and is not echoed.
+          curl -sS -X GET "https://api.cloudflare.com/client/v4/accounts" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            | ACC="${CLOUDFLARE_ACCOUNT_ID}" python3 -c '
+import json,os,sys
+d=json.load(sys.stdin)
+print("success:", d.get("success"), "errors:", d.get("errors"))
+res=d.get("result") or []
+print("accounts visible to this token:", len(res))
+want=os.environ["ACC"]
+for a in res:
+    print(" - name:", a.get("name"), "| matches configured id:", a.get("id")==want)
+'
+
+      - name: Provision the D1 database
+        run: |
+          set +e
+          echo "--- attempting create (expected to fail harmlessly if it already exists) ---"
+          npx --yes wrangler@latest d1 create "$D1_NAME" 2>&1 | sed 's/^/  /'
+          echo "--- authoritative listing ---"
+          set -e
+          npx --yes wrangler@latest d1 list --json > d1.json
+          python3 - <<'PY'
+import json
+rows = json.load(open("d1.json"))
+print(f"databases in account: {len(rows)}")
+for r in rows:
+    print(" -", {k: r.get(k) for k in ("name", "uuid", "version", "created_at") if k in r})
+PY
+
+      - name: Record what Cloudflare actually reported
+        run: |
+          npx --yes wrangler@latest d1 info "$D1_NAME" 2>&1 | sed 's/^/  /' || echo "d1 info unavailable"
+
+      - name: Upload preflight evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloudflare-preflight
+          path: d1.json
+          retention-days: 7
