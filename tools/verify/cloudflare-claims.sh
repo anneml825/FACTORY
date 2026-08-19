@@ -57,6 +57,7 @@ section workers-limits  "Subrequest detail"                  'Subrequests\b' 1 1
 section r2-pricing      "R2 free tier table"                 'Free tier|10 GB / month|Class A Operations' 3 14
 section billing-policy  "Usage-based billing and payment"    'usage-based billing|preauthorize' 2 10
 section workers-dev     "workers.dev suitability"            'business-critical|Free website|come with a workers.dev' 2 6
+section workers-dev     "How to configure workers.dev"       '## Configure .workers.dev.|Manage access to|Disabling .workers.dev' 1 30
 section wrangler-env    "Credential environment variables"   'CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID' 2 6
 section token-permissions "Exact permission names"           '(Workers Scripts|Workers R2 Storage|Account Settings|^\| D1) ' 1 3
 
