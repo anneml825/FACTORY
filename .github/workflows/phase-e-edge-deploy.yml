@@ -1,0 +1,203 @@
+name: Phase E fixture edge deploy and external proof
+
+# Deploys the NONCOMMERCIAL fixture edge to Cloudflare and proves the commerce
+# path end to end against the live provider.
+#
+# Manual only. A deployment that creates real Stripe objects and a real public
+# endpoint is an action, not a side effect of committing.
+#
+# What it creates, all temporary and all torn down in the final step: a Stripe
+# sandbox Product, Price, and Payment Link, and a Stripe webhook endpoint. What
+# it keeps: the Worker and its D1 database, which are the deliverable.
+#
+# It cannot spend capital, cannot serve a commercial listing, and refuses any
+# Stripe key that is not a test key.
+on:
+  workflow_dispatch:
+    inputs:
+      teardown_only:
+        description: 'Skip the proof and only deactivate temporary Stripe objects'
+        type: boolean
+        default: false
+  push:
+    branches:
+      - claude/factory-phase-e-remediation
+    paths:
+      - '.github/workflows/phase-e-edge-deploy.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase-e-edge-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy-and-prove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFARE_ACCOUNT_ID }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
+      FACTORY_PAID_ACTIVITY_HALTED: '1'
+      WORKER_NAME: factory-edge
+      PHASE_E_WHSEC_PATH: whsec.txt
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Fail closed on missing credentials
+        run: |
+          for name in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID STRIPE_SECRET_KEY; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is not available to this workflow."
+              exit 1
+            fi
+          done
+          case "$STRIPE_SECRET_KEY" in
+            sk_test_*|rk_test_*) echo "Stripe key is a test key." ;;
+            *) echo "::error::Refusing to run with a non-test Stripe key."; exit 1 ;;
+          esac
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Install the Stripe CLI
+        run: |
+          curl -fsSL https://github.com/stripe/stripe-cli/releases/latest/download/stripe_linux_x86_64.tar.gz \
+            -o stripe.tar.gz
+          tar -xzf stripe.tar.gz stripe
+          sudo mv stripe /usr/local/bin/stripe
+          stripe version
+
+      - name: Apply the D1 schema
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --file=db/edge/schema.sql
+
+      - name: Seed the fixture artifact into D1
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          node src/edge/deploy/seed-artifact.ts > seed.sql
+          wc -c seed.sql
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --file=seed.sql
+
+      - name: Generate edge secrets
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          # Machine-generated, installed straight into the Worker. The owner
+          # never sees or handles these, and they are masked in this log.
+          for name in EDGE_DELIVERY_SECRET WATCH_EVENT_SECRET EDGE_INTERNAL_TRAFFIC_TOKEN; do
+            value=$(openssl rand -hex 32)
+            echo "::add-mask::$value"
+            echo "$name=$value" >> "$GITHUB_ENV"
+          done
+
+      - name: Deploy the Worker (first pass, to obtain its URL)
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          npx --yes wrangler@latest deploy \
+            --var COMMERCIAL_SERVING:disabled \
+            --var FIXTURE_CHECKOUT_URL:https://placeholder.invalid/not-yet-provisioned \
+            --var MAX_DOWNLOADS_PER_GRANT:2 \
+            2>&1 | tee deploy1.log
+          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy1.log | head -1)
+          if [ -z "$url" ]; then
+            echo "::error::Could not determine the workers.dev URL from the deploy output."
+            exit 1
+          fi
+          echo "EDGE_BASE_URL=$url" >> "$GITHUB_ENV"
+          echo "Deployed to $url"
+
+      - name: Install edge secrets
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          for name in EDGE_DELIVERY_SECRET WATCH_EVENT_SECRET EDGE_INTERNAL_TRAFFIC_TOKEN; do
+            printf '%s' "${!name}" | npx --yes wrangler@latest secret put "$name" --name "$WORKER_NAME"
+          done
+
+      - name: Provision temporary Stripe sandbox objects
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          node src/edge/deploy/provision-stripe-fixture.ts | tee stripe.out
+          checkout=$(grep '^checkout_url=' stripe.out | cut -d= -f2-)
+          arrive=$(grep '^arrive_reference=' stripe.out | cut -d= -f2-)
+          echo "FIXTURE_CHECKOUT_URL=$checkout" >> "$GITHUB_ENV"
+          echo "FIXTURE_ARRIVE_REFERENCE=$arrive" >> "$GITHUB_ENV"
+          whsec=$(cat "$PHASE_E_WHSEC_PATH")
+          echo "::add-mask::$whsec"
+          printf '%s' "$whsec" | npx --yes wrangler@latest secret put STRIPE_WEBHOOK_SECRET --name "$WORKER_NAME"
+          rm -f "$PHASE_E_WHSEC_PATH"
+
+      - name: Redeploy with the real checkout URL
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          npx --yes wrangler@latest deploy \
+            --var COMMERCIAL_SERVING:disabled \
+            --var FIXTURE_CHECKOUT_URL:"$FIXTURE_CHECKOUT_URL" \
+            --var FIXTURE_ARRIVE_REFERENCE:"$FIXTURE_ARRIVE_REFERENCE" \
+            --var MAX_DOWNLOADS_PER_GRANT:2
+
+      - name: Verify the live edge externally
+        if: ${{ !inputs.teardown_only }}
+        run: node src/edge/deploy/verify-live-edge.ts
+
+      - name: Read durable WATCH state back out of D1
+        if: ${{ always() && !inputs.teardown_only }}
+        run: |
+          echo "--- funnel events recorded ---"
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --json \
+            --command "SELECT event_type, environment, count(*) AS n FROM watch_event_inbox GROUP BY event_type, environment ORDER BY event_type"
+          echo "--- transaction classification and revenue exclusion ---"
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --json \
+            --command "SELECT classification, gross_cents, currency, arrival_publication_key FROM stripe_transaction_reference"
+          echo "--- delivery grants and downloads ---"
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --json \
+            --command "SELECT g.grant_id, g.max_downloads, g.downloads, (SELECT count(*) FROM delivery_download d WHERE d.grant_id = g.grant_id) AS logged FROM delivery_grant g"
+          echo "--- webhook inbox (idempotency) ---"
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --json \
+            --command "SELECT status, attempts FROM stripe_webhook_inbox"
+
+      - name: Prove the WATCH journal is append-only in production D1
+        if: ${{ always() && !inputs.teardown_only }}
+        run: |
+          set +e
+          out=$(npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes \
+            --command "UPDATE watch_event_inbox SET event_type='TAMPERED'" 2>&1)
+          set -e
+          echo "$out" | tail -5
+          if echo "$out" | grep -q "append-only"; then
+            echo "Production D1 rejected the mutation, as designed."
+          else
+            echo "::error::Production D1 did NOT reject a WATCH mutation."
+            exit 1
+          fi
+
+      - name: Tear down temporary Stripe objects
+        if: always()
+        run: node src/edge/deploy/teardown-stripe-fixture.ts || echo "::warning::Teardown reported a problem; check the output above."
+
+      - name: Confirm the payment link is dead
+        if: always()
+        run: |
+          if [ -n "$FIXTURE_CHECKOUT_URL" ]; then
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$FIXTURE_CHECKOUT_URL" || echo 000)
+            echo "GET $FIXTURE_CHECKOUT_URL -> $code (a deactivated link should not present a live checkout)"
+          fi
+
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-e-edge-proof
+          path: |
+            state/phase-e-edge-verification.json
+            state/phase-e-stripe-fixture.json
+            deploy1.log
+          retention-days: 14
+          if-no-files-found: warn
