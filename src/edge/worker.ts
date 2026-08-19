@@ -30,7 +30,7 @@ import {
   type D1Like,
 } from './d1-bindings.ts';
 import { FixtureCatalog } from './fixture-catalog.ts';
-import type { EdgeEnvironment } from './types.ts';
+import type { CatalogStore, EdgeEnvironment } from './types.ts';
 
 export interface WorkerEnv {
   EDGE_DB: D1Like;
@@ -38,8 +38,12 @@ export interface WorkerEnv {
   WATCH_EVENT_SECRET: string;
   EDGE_DELIVERY_SECRET: string;
   EDGE_INTERNAL_TRAFFIC_TOKEN: string;
-  /** Stripe sandbox Payment Link the fixture's Buy button redirects to. */
-  FIXTURE_CHECKOUT_URL: string;
+  /**
+   * Stripe Payment Link the fixture's Buy button redirects to. Optional: an
+   * edge with nothing to sell yet is a legitimate state, and it serves an empty
+   * catalog rather than refusing to start.
+   */
+  FIXTURE_CHECKOUT_URL?: string;
   /** Factory ARRIVE reference carried into checkout as client_reference_id. */
   FIXTURE_ARRIVE_REFERENCE?: string;
   /**
@@ -56,6 +60,14 @@ export interface WorkerEnv {
   DELIVERY_TTL_SECONDS?: string;
   MAX_DOWNLOADS_PER_GRANT?: string;
 }
+
+/** Settings the commerce routes cannot run without. Reported by /posture. */
+const REQUIRED_FOR_COMMERCE = [
+  'STRIPE_WEBHOOK_SECRET',
+  'WATCH_EVENT_SECRET',
+  'EDGE_DELIVERY_SECRET',
+  'EDGE_INTERNAL_TRAFFIC_TOKEN',
+] as const satisfies readonly (keyof WorkerEnv)[];
 
 function required(env: WorkerEnv, key: keyof WorkerEnv): string {
   const value = env[key];
@@ -106,10 +118,15 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
   const watchSecret = required(env, 'WATCH_EVENT_SECRET');
   const objects = new D1ObjectStore(env.EDGE_DB);
   const state = new D1EdgeStateStore(env.EDGE_DB);
-  const catalog = new FixtureCatalog({
-    checkoutUrl: required(env, 'FIXTURE_CHECKOUT_URL'),
-    arrivalPublicationId: env.FIXTURE_ARRIVE_REFERENCE || undefined,
-  });
+  // No checkout URL means no listing to serve, not a broken edge. Every
+  // listing lookup then returns null and every product page is a 404, which is
+  // the truthful answer for an edge that has nothing to sell.
+  const catalog: CatalogStore = env.FIXTURE_CHECKOUT_URL
+    ? new FixtureCatalog({
+        checkoutUrl: env.FIXTURE_CHECKOUT_URL,
+        arrivalPublicationId: env.FIXTURE_ARRIVE_REFERENCE || undefined,
+      })
+    : { async get() { return null; } };
   const posture = await readCommercialPosture(env.EDGE_DB);
   const ttlSeconds = positiveInteger(env.DELIVERY_TTL_SECONDS, 3600);
   const maxDownloads = positiveInteger(env.MAX_DOWNLOADS_PER_GRANT, 3);
@@ -168,6 +185,43 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
 
 export default {
   async fetch(request: Request, env: WorkerEnv): Promise<Response> {
+    // Liveness and posture are answered BEFORE any configuration is required.
+    // A diagnostic surface that only works when nothing is wrong is not a
+    // diagnostic surface: the commercial edge's first deploy 503'd on its own
+    // posture check, which is precisely the request that was supposed to
+    // explain the 503.
+    const path = new URL(request.url).pathname;
+    if (path === '/healthz') {
+      return new Response('ok', {
+        status: 200,
+        headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' },
+      });
+    }
+    if (path === '/posture') {
+      const posture = env.EDGE_DB
+        ? await readCommercialPosture(env.EDGE_DB)
+        : { purpose: 'UNKNOWN' as const, authorizations: 0 };
+      const missing = REQUIRED_FOR_COMMERCE.filter((name) => !env[name]);
+      return new Response(
+        `${JSON.stringify(
+          {
+            deploymentPurpose: posture.purpose,
+            commercialServing:
+              env.COMMERCIAL_SERVING === 'enabled' &&
+              posture.purpose === 'COMMERCIAL' &&
+              posture.authorizations > 0,
+            commercialAuthorizations: posture.authorizations,
+            // Names only. Which settings are absent is a deployment fact; their
+            // values never leave the edge.
+            missingConfiguration: missing,
+          },
+          null,
+          2,
+        )}\n`,
+        { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
+      );
+    }
+
     try {
       const environment = await buildEnvironment(env);
       return await createEdgeHandler(environment)(request);

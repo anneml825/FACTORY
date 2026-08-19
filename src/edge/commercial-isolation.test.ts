@@ -65,6 +65,7 @@ async function posture(db: SqliteD1, overrides: Partial<WorkerEnv> = {}) {
     deploymentPurpose: string;
     commercialServing: boolean;
     commercialAuthorizations: number;
+    missingConfiguration: string[];
   };
 }
 
@@ -125,6 +126,43 @@ test('an unstamped or unreadable database is never commercial', async () => {
   assert.equal(degraded.deploymentPurpose, 'UNKNOWN');
   assert.equal(degraded.commercialServing, false);
   assert.equal((await worker.fetch(new Request(`${ORIGIN}/healthz`), env(bare))).status, 200);
+});
+
+test('posture and liveness answer even when the edge cannot serve', async () => {
+  // The state a commercial edge sits in before it has anything to sell: a real
+  // database, no Stripe secret, no listing. It must still be inspectable.
+  const commercial = await database('COMMERCIAL');
+  const bare = { EDGE_DB: commercial } as unknown as WorkerEnv;
+
+  assert.equal((await worker.fetch(new Request(`${ORIGIN}/healthz`), bare)).status, 200);
+
+  const response = await worker.fetch(new Request(`${ORIGIN}/posture`), bare);
+  assert.equal(response.status, 200);
+  const seen = (await response.json()) as {
+    deploymentPurpose: string;
+    commercialServing: boolean;
+    missingConfiguration: string[];
+  };
+  assert.equal(seen.deploymentPurpose, 'COMMERCIAL');
+  assert.equal(seen.commercialServing, false);
+  assert.deepEqual(seen.missingConfiguration.sort(), [
+    'EDGE_DELIVERY_SECRET',
+    'EDGE_INTERNAL_TRAFFIC_TOKEN',
+    'STRIPE_WEBHOOK_SECRET',
+    'WATCH_EVENT_SECRET',
+  ]);
+
+  // Commerce routes still fail closed, and say why in a header.
+  const refused = await worker.fetch(new Request(`${ORIGIN}/p/anything`), bare);
+  assert.equal(refused.status, 503);
+  assert.match(refused.headers.get('x-factory-edge-failure') ?? '', /misconfigured/);
+});
+
+test('an edge with no listing serves 404, not a failure', async () => {
+  const commercial = await database('COMMERCIAL');
+  const configured = env(commercial, { FIXTURE_CHECKOUT_URL: undefined });
+  const response = await worker.fetch(new Request(`${ORIGIN}/p/anything`), configured);
+  assert.equal(response.status, 404, 'nothing to sell is an honest 404, not a broken edge');
 });
 
 // --- immutability -----------------------------------------------------------

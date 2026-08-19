@@ -149,24 +149,6 @@ export function createEdgeHandler(env: EdgeEnvironment): (request: Request) => P
 
     if (url.pathname === '/healthz') return text('ok', 200);
 
-    // Externally readable posture, so a deploy can be *checked* rather than
-    // assumed. It reports whether this edge is serving commercially and why
-    // not; it exposes no secret, no listing, and no buyer data.
-    if (url.pathname === '/posture') {
-      return new Response(
-        `${JSON.stringify(
-          {
-            deploymentPurpose: env.deploymentPurpose,
-            commercialServing: env.allowCommercialListings,
-            commercialAuthorizations: env.commercialAuthorizations,
-          },
-          null,
-          2,
-        )}\n`,
-        { status: 200, headers: { 'content-type': 'application/json', 'cache-control': 'no-store' } },
-      );
-    }
-
     if (segments[0] === 'p' && segments[1] && request.method === 'GET') {
       return productPage(env, request, segments[1]);
     }

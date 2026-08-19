@@ -196,10 +196,20 @@ jobs:
             --var COMMERCIAL_SERVING:enabled \
             --var MAX_DOWNLOADS_PER_GRANT:3
 
+      # curl -f throws away the body and headers on an error status, which is
+      # exactly when they matter. This reads the status and the edge's own
+      # failure reason instead.
       - name: Report the deployed posture
         run: |
-          posture=$(curl -fsS "$COMMERCIAL_BASE_URL/posture")
+          status=$(curl -sS -o posture.json -w '%{http_code}' -D posture.headers "$COMMERCIAL_BASE_URL/posture")
+          echo "GET /posture -> $status"
+          grep -i '^x-factory-edge-failure:' posture.headers || true
+          posture=$(cat posture.json)
           echo "$posture"
+          if [ "$status" != "200" ]; then
+            echo "::error::The commercial edge could not report its posture."
+            exit 1
+          fi
           echo "$posture" | grep -q '"deploymentPurpose": "COMMERCIAL"' \
             || { echo "::error::The commercial edge does not identify itself as COMMERCIAL."; exit 1; }
           if [ "${{ inputs.serving }}" != "enabled" ]; then
