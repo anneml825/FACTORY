@@ -62,6 +62,7 @@ async function posture(db: SqliteD1, overrides: Partial<WorkerEnv> = {}) {
   const response = await worker.fetch(new Request(`${ORIGIN}/posture`), env(db, overrides));
   assert.equal(response.status, 200);
   return (await response.json()) as {
+    buildId: string | null;
     deploymentPurpose: string;
     commercialServing: boolean;
     commercialAuthorizations: number;
@@ -139,10 +140,12 @@ test('posture and liveness answer even when the edge cannot serve', async () => 
   const response = await worker.fetch(new Request(`${ORIGIN}/posture`), bare);
   assert.equal(response.status, 200);
   const seen = (await response.json()) as {
+    buildId: string | null;
     deploymentPurpose: string;
     commercialServing: boolean;
     missingConfiguration: string[];
   };
+  assert.equal(seen.buildId, null, 'an unidentified build reports null, never a guess');
   assert.equal(seen.deploymentPurpose, 'COMMERCIAL');
   assert.equal(seen.commercialServing, false);
   assert.deepEqual(seen.missingConfiguration.sort(), [
@@ -156,6 +159,14 @@ test('posture and liveness answer even when the edge cannot serve', async () => 
   const refused = await worker.fetch(new Request(`${ORIGIN}/p/anything`), bare);
   assert.equal(refused.status, 503);
   assert.match(refused.headers.get('x-factory-edge-failure') ?? '', /misconfigured/);
+});
+
+test('posture reports the build that is answering', async () => {
+  // A deploy returning is not the same as every colo serving it. Callers wait
+  // for this to match the build they deployed before measuring anything.
+  const commercial = await database('COMMERCIAL');
+  const seen = await posture(commercial, { EDGE_BUILD_ID: 'run-123-1' });
+  assert.equal(seen.buildId, 'run-123-1');
 });
 
 test('an edge with no listing serves 404, not a failure', async () => {

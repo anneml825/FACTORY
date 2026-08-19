@@ -83,6 +83,20 @@ and now name the reason in an `x-factory-edge-failure` header.
   Cloudflare refused the deploy — `binding EDGE_DB of type d1 must have a valid
   database_id` — and no Worker was created. There is no partially-live state.
 
+## The intermittent failures were version skew, not code
+
+Three fixture runs failed in ways that looked like defects and were not: a buy
+click that redirected without its ARRIVE reference, and 503s appearing partway
+through an otherwise passing run. `wrangler deploy` returning does not mean
+every Cloudflare colo is serving the new version, so a verifier that starts
+immediately can measure the *previous* build — in one case a build deployed
+before its secrets existed, which is exactly a build that answers 503.
+
+Each deploy now carries an `EDGE_BUILD_ID`, `/posture` reports it, and both
+workflows wait for the build under test to be the one answering before they
+measure anything. This is worth keeping past the fixture: any commercial deploy
+verified immediately after a push is measuring an unknown version.
+
 ## Adjacent hazards found and fixed
 
 * `src/capital/authority.test.ts` ran `DROP SCHEMA public CASCADE` against

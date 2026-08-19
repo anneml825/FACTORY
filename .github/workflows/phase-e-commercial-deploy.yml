@@ -51,6 +51,7 @@ jobs:
       EDGE_TARGET: commercial
       WORKER_NAME: factory-commerce
       WRANGLER_ENV: commercial
+      EDGE_BUILD_ID: ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -121,6 +122,7 @@ jobs:
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:disabled \
             --var MAX_DOWNLOADS_PER_GRANT:3 \
+            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID" \
             2>&1 | tee deploy-closed.log
           url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy-closed.log | head -1)
           if [ -z "$url" ]; then
@@ -158,7 +160,8 @@ jobs:
         run: |
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:disabled \
-            --var MAX_DOWNLOADS_PER_GRANT:3
+            --var MAX_DOWNLOADS_PER_GRANT:3 \
+            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID"
           node src/edge/deploy/migrate-edge-db.ts
 
       - name: Prove durable state survived the redeploy
@@ -194,11 +197,26 @@ jobs:
           fi
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:enabled \
-            --var MAX_DOWNLOADS_PER_GRANT:3
+            --var MAX_DOWNLOADS_PER_GRANT:3 \
+            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID"
 
       # curl -f throws away the body and headers on an error status, which is
       # exactly when they matter. This reads the status and the edge's own
       # failure reason instead.
+      # A deploy returning is not the same as every colo serving it.
+      - name: Wait for the deployed version to be the one answering
+        run: |
+          for attempt in $(seq 1 30); do
+            live=$(curl -sS "$COMMERCIAL_BASE_URL/posture" | grep -o '"buildId": "[^"]*"' | cut -d'"' -f4 || true)
+            if [ "$live" = "$EDGE_BUILD_ID" ]; then
+              echo "Build $EDGE_BUILD_ID is live after $attempt check(s)."
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::error::The deployed build never became the one answering (saw '${live:-none}')."
+          exit 1
+
       - name: Report the deployed posture
         run: |
           status=$(curl -sS -o posture.json -w '%{http_code}' -D posture.headers "$COMMERCIAL_BASE_URL/posture")

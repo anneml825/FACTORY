@@ -57,6 +57,14 @@ export interface WorkerEnv {
    * the filter downgrades and never upgrades.
    */
   OWNER_IDENTITY_MARKERS?: string;
+  /**
+   * Identifies the deployment that is answering. Cloudflare can keep serving an
+   * older version for a short while after a deploy returns, so a verifier that
+   * starts immediately can measure the previous build and report a defect that
+   * does not exist. Reported by /posture so a caller can wait for the version it
+   * meant to test.
+   */
+  EDGE_BUILD_ID?: string;
   DELIVERY_TTL_SECONDS?: string;
   MAX_DOWNLOADS_PER_GRANT?: string;
 }
@@ -205,6 +213,7 @@ export default {
       return new Response(
         `${JSON.stringify(
           {
+            buildId: env.EDGE_BUILD_ID ?? null,
             deploymentPurpose: posture.purpose,
             commercialServing:
               env.COMMERCIAL_SERVING === 'enabled' &&

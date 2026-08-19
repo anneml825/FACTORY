@@ -52,6 +52,7 @@ jobs:
       EDGE_TARGET: fixture
       WORKER_NAME: factory-edge
       PHASE_E_WHSEC_PATH: whsec.txt
+      EDGE_BUILD_ID: ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
 
@@ -173,7 +174,27 @@ jobs:
             --var COMMERCIAL_SERVING:disabled \
             --var FIXTURE_CHECKOUT_URL:"$FIXTURE_CHECKOUT_URL" \
             --var FIXTURE_ARRIVE_REFERENCE:"$FIXTURE_ARRIVE_REFERENCE" \
-            --var MAX_DOWNLOADS_PER_GRANT:2
+            --var MAX_DOWNLOADS_PER_GRANT:2 \
+            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID"
+
+      # `wrangler deploy` returning does not mean every colo is serving the new
+      # version. Verifying immediately measured the PREVIOUS build more than
+      # once — a buy click without its ARRIVE reference, and 503s from a version
+      # deployed before its secrets existed — and reported them as defects in
+      # code that was fine. Wait for the build that is actually under test.
+      - name: Wait for the deployed version to be the one answering
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          for attempt in $(seq 1 30); do
+            live=$(curl -sS "$EDGE_BASE_URL/posture" | grep -o '"buildId": "[^"]*"' | cut -d'"' -f4 || true)
+            if [ "$live" = "$EDGE_BUILD_ID" ]; then
+              echo "Build $EDGE_BUILD_ID is live after $attempt check(s)."
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::error::The deployed build never became the one answering (saw '${live:-none}')."
+          exit 1
 
       - name: Verify the live edge externally
         if: ${{ !inputs.teardown_only }}
