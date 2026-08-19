@@ -191,9 +191,21 @@ export class StripeTestPutAdapter implements PutAdapter {
       });
       assertStripeTestObject(result, `Stripe ${operation.label}`);
     }
+    // The provider objects are now inactive. Local bookkeeping is recorded after
+    // that fact, and a missing record is repaired rather than raised: reporting a
+    // completed deactivation as a failure is worse than a thin durable record,
+    // because it invites a second teardown of surfaces that are already dead.
     const inactive = { ...publication, status: 'INACTIVE' as const };
-    const stored = await this.store.getByExperiment(publication.experimentId);
-    if (!stored) throw new Error('Publication disappeared from durable state during deactivation.');
+    const stored = (await this.store.getByExperiment(publication.experimentId)) ?? {
+      experimentId: publication.experimentId,
+      idempotencyKey: publication.idempotencyKey,
+      publication: null,
+      requestFingerprint: publication.manifestFingerprint,
+      productId,
+      priceId,
+      paymentLinkId,
+      paymentLinkUrl: publication.location,
+    };
     stored.publication = inactive;
     await this.store.save(stored);
     return inactive;

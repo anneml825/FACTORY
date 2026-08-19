@@ -68,6 +68,7 @@ jobs:
         run: npm ci || npm install
 
       - name: Install the Stripe CLI
+        if: ${{ !inputs.teardown_only }}
         run: |
           # The release assets are version-stamped, so `latest/download/<name>`
           # does not resolve. Ask the API for the tag and build the real name.
@@ -183,17 +184,13 @@ jobs:
             exit 1
           fi
 
-      - name: Tear down temporary Stripe objects
+      # Sweeps the sandbox by Factory's fixture metadata rather than by the local
+      # state file, then re-reads Stripe to prove nothing live survived. It fails
+      # the job when a surface remains, because a stranded checkout link is a real
+      # defect and not a warning.
+      - name: Tear down temporary Stripe objects and prove the sandbox is clean
         if: always()
-        run: node src/edge/deploy/teardown-stripe-fixture.ts || echo "::warning::Teardown reported a problem; check the output above."
-
-      - name: Confirm the payment link is dead
-        if: always()
-        run: |
-          if [ -n "$FIXTURE_CHECKOUT_URL" ]; then
-            code=$(curl -s -o /dev/null -w '%{http_code}' "$FIXTURE_CHECKOUT_URL" || echo 000)
-            echo "GET $FIXTURE_CHECKOUT_URL -> $code (a deactivated link should not present a live checkout)"
-          fi
+        run: node src/edge/deploy/teardown-stripe-fixture.ts
 
       - name: Upload evidence
         if: always()
