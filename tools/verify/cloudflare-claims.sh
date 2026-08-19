@@ -2,9 +2,14 @@
 # Phase E — verify Cloudflare deployment claims against OFFICIAL documentation.
 #
 # The build container's egress gateway denies every Cloudflare domain with a 403
-# on CONNECT, so the claims in the Phase E owner-setup brief were secondary-only.
-# ARCHITECTURE.md ADR-2a already established the remedy: retrieve evidence from a
-# GitHub Actions runner, which has unrestricted egress.
+# on CONNECT, so the Phase E owner-setup brief could only cite secondary sources
+# for free-tier limits, payment-method requirements, and API-token permission
+# names. ARCHITECTURE.md ADR-2a already established the remedy: retrieve
+# evidence from a GitHub Actions runner, which has unrestricted egress.
+#
+# Fetches the Markdown rendering of each page (developers.cloudflare.com serves
+# `<page>index.md`), because the numeric limits live in tables that HTML tag
+# stripping destroys.
 #
 # No credential is used. No Cloudflare account is contacted. Read-only, $0.
 set -uo pipefail
@@ -20,67 +25,40 @@ declare -a PAGES=(
   "workers-limits|$BASE/workers/platform/limits/"
   "r2-pricing|$BASE/r2/pricing/"
   "token-permissions|$BASE/fundamentals/api/reference/permissions/"
-  "token-create|$BASE/fundamentals/api/get-started/create-token/"
   "billing-policy|$BASE/billing/understand/billing-policy/"
   "workers-dev|$BASE/workers/configuration/routing/workers-dev/"
   "wrangler-env|$BASE/workers/wrangler/system-environment-variables/"
-  "wrangler-commands|$BASE/workers/wrangler/commands/"
 )
 
-strip_html() {
-  # Drop script/style blocks, then tags, then collapse blank lines.
-  perl -0777 -pe 's{<(script|style)\b.*?</\1>}{}gsi' \
-    | perl -0777 -pe 's{<[^>]+>}{ }gs' \
-    | perl -0777 -pe 's{&nbsp;}{ }gs; s{&amp;}{\&}gs; s{&lt;}{<}gs; s{&gt;}{>}gs; s{&#\d+;}{}gs' \
-    | tr -s ' ' \
-    | sed '/^[[:space:]]*$/d'
-}
-
-echo "### Fetch results"
+echo "### Fetch results (Markdown renderings)"
 for entry in "${PAGES[@]}"; do
   name="${entry%%|*}"; url="${entry#*|}"
-  code=$(curl -sS -L --max-time 45 -o "$OUT/$name.html" -w '%{http_code}' "$url" 2>"$OUT/$name.err" || echo 000)
-  bytes=$(wc -c < "$OUT/$name.html" 2>/dev/null || echo 0)
-  printf '%-20s %s  %8s bytes  %s\n' "$name" "$code" "$bytes" "$url"
-  if [ "$code" = "200" ]; then
-    strip_html < "$OUT/$name.html" > "$OUT/$name.txt"
+  code=$(curl -sS -L --max-time 45 -o "$OUT/$name.md" -w '%{http_code}' "${url}index.md" 2>/dev/null || echo 000)
+  if [ "$code" != "200" ]; then
+    code=$(curl -sS -L --max-time 45 -o "$OUT/$name.md" -w '%{http_code}' "${url%/}.md" 2>/dev/null || echo 000)
   fi
+  printf '%-20s %s  %8s bytes  %sindex.md\n' "$name" "$code" "$(wc -c < "$OUT/$name.md")" "$url"
 done
 
-show() {
-  local file="$1"; shift
-  local label="$1"; shift
+section() {
+  local file="$1" label="$2" pattern="$3" before="${4:-2}" after="${5:-14}"
   echo
-  echo "=== $label  ($file) ==="
-  if [ ! -s "$OUT/$file.txt" ]; then echo "(no text extracted)"; return; fi
-  for pat in "$@"; do
-    echo "--- /$pat/"
-    grep -o -i -E ".{0,180}${pat}.{0,220}" "$OUT/$file.txt" | head -4
-  done
+  echo "=== $label  ($file.md) ==="
+  if [ ! -s "$OUT/$file.md" ]; then echo "(not fetched)"; return; fi
+  grep -n -i -E -B"$before" -A"$after" "$pattern" "$OUT/$file.md" | head -45
 }
 
-show d1-pricing        "D1 free-tier limits and payment requirement" \
-  "rows read" "rows written" "storage" "free plan" "Workers Free" "payment|credit card|billing"
-show d1-limits         "D1 hard limits" \
-  "Databases" "Maximum database size" "Maximum string|Maximum SQL statement|column|row size"
-show workers-pricing   "Workers Free plan" \
-  "100,000 requests" "Free plan" "workers.dev"
-show workers-limits    "Workers subrequest and CPU limits" \
-  "subrequest" "50/1000|Simultaneous open connections|CPU time"
-show r2-pricing        "R2 free tier and payment requirement" \
-  "10 GB|10 GB-month" "Class A|Class B" "free" "payment|credit card"
-show token-permissions "API token permission names" \
-  "Workers Scripts" "Workers R2 Storage" "\bD1\b" "Account Settings" "Workers KV Storage"
-show token-create      "Token creation and scoping" \
-  "Account Resources|Zone Resources" "TTL|expire" "least"
-show billing-policy    "Payment-method policy" \
-  "payment method" "usage-based"
-show workers-dev       "workers.dev subdomain" \
-  "workers.dev" "subdomain" "register|choose"
-show wrangler-env      "Wrangler credential environment variables" \
-  "CLOUDFLARE_API_TOKEN" "CLOUDFLARE_ACCOUNT_ID"
-show wrangler-commands "Wrangler commands Factory needs" \
-  "d1 create" "secret put" "wrangler deploy"
+section d1-pricing      "D1 included limits per plan"        '^\|.*(Rows read|Rows written|Storage)|included limits' 3 12
+section d1-pricing      "D1 free-plan behaviour at the cap"  'exceed the daily limits|Free plan will always' 1 8
+section d1-limits       "D1 hard limits table"               'Databases per account|Maximum database size|Maximum string' 4 10
+section workers-pricing "Workers Free plan limits"           'Requests.*\|.*100,000|100,000 requests' 3 10
+section workers-limits  "Free vs Paid limits table"          '^\|.*(Subrequests|Daily requests|CPU time)' 3 10
+section workers-limits  "Subrequest detail"                  'Subrequests\b' 1 12
+section r2-pricing      "R2 free tier table"                 'Free tier|10 GB / month|Class A Operations' 3 14
+section billing-policy  "Usage-based billing and payment"    'usage-based billing|preauthorize' 2 10
+section workers-dev     "workers.dev suitability"            'business-critical|Free website|come with a workers.dev' 2 6
+section wrangler-env    "Credential environment variables"   'CLOUDFLARE_API_TOKEN|CLOUDFLARE_ACCOUNT_ID' 2 6
+section token-permissions "Exact permission names"           '(Workers Scripts|Workers R2 Storage|Account Settings|^\| D1) ' 1 3
 
 echo
-echo "### Done. Full extracted text uploaded as an artifact."
+echo "### Done. Full Markdown uploaded as an artifact."
