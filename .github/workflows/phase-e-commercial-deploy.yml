@@ -85,16 +85,27 @@ jobs:
 
       # Refuses to go further while wrangler would resolve the fixture database,
       # the placeholder id, or anything other than the commercial binding.
+      # Two checks, because they catch different mistakes. The dry-run proves
+      # wrangler resolves this environment to the commercial binding; reading the
+      # configuration proves the id behind that binding is real and is not the
+      # fixture's. The dry-run alone is not enough — it prints binding names but
+      # not ids, so the first run of this workflow passed it while pointing at an
+      # unprovisioned placeholder.
       - name: Assert the resolved configuration is the commercial one
         run: |
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" --dry-run --outdir /tmp/commercial-build 2>&1 | tee resolve.log
-          grep -q "factory-commerce" resolve.log
-          if grep -q "COMMERCIAL_DATABASE_NOT_YET_PROVISIONED" resolve.log; then
+          grep -q "env.EDGE_DB (factory-commerce)" resolve.log \
+            || { echo "::error::The commercial environment did not resolve to the commercial database."; exit 1; }
+
+          block=$(sed -n '/^\[env\.commercial\]/,$p' wrangler.toml)
+          echo "$block" | grep -q 'database_name = "factory-commerce"' \
+            || { echo "::error::The commercial block does not name the commercial database."; exit 1; }
+          if echo "$block" | grep -q 'COMMERCIAL_DATABASE_NOT_YET_PROVISIONED'; then
             echo "::error::The commercial database has not been provisioned. Bootstrap it and commit the id."
             exit 1
           fi
-          if grep -q "3fa6df57-8c13-4bd1-af87-756a089049b0" resolve.log; then
-            echo "::error::The commercial environment resolved to the FIXTURE database."
+          if echo "$block" | grep -q '3fa6df57-8c13-4bd1-af87-756a089049b0'; then
+            echo "::error::The commercial environment is bound to the FIXTURE database id."
             exit 1
           fi
 

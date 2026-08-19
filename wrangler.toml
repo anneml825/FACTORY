@@ -48,9 +48,10 @@ database_id = "3fa6df57-8c13-4bd1-af87-756a089049b0"
 # The COMMERCIAL edge. Bindings are NOT inherited from the top level, so they
 # are repeated here in full and deliberately point somewhere else.
 #
-# database_id is unset until the bootstrap workflow creates the database. The
-# placeholder is invalid on purpose: a deploy attempted before bootstrap fails
-# rather than silently reaching for the fixture database.
+# Created by commercial-deploy run 32303047677 on 2026-08-19. Before it existed
+# this id was an invalid placeholder, and Cloudflare rejected the deploy with
+# "binding EDGE_DB of type d1 must have a valid database_id" rather than falling
+# back to anything — which is the failure mode this configuration wants.
 # --------------------------------------------------------------------------
 [env.commercial]
 name = "factory-commerce"
@@ -58,4 +59,4 @@ name = "factory-commerce"
 [[env.commercial.d1_databases]]
 binding = "EDGE_DB"
 database_name = "factory-commerce"
-database_id = "COMMERCIAL_DATABASE_NOT_YET_PROVISIONED"
+database_id = "9bb782b4-276b-4e81-a2be-a9e992ab94de"
