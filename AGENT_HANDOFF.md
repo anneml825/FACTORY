@@ -110,7 +110,32 @@ Cloudflare account + API token (10–15 min) and R2/D1 provisioning + four Worke
 (5–10 min), recorded as E1–E2 in `OWNER_AUTONOMY.md`. Not requested, on the same rule that
 deferred the inference credential: ask when the next agent will consume it immediately.
 
-### Stop condition observed
+### Phase E external proof — 2026-08-19
+
+The always-on commerce edge is no longer a simulation. A noncommercial fixture
+Worker is deployed to Cloudflare at `https://factory-edge.whoknowsbruno15.workers.dev`
+with a D1 database, and GitHub Actions run `32291422138` exercised the whole
+path over the public internet: product page, first-party measurement, buy click
+carrying the ARRIVE reference, a Stripe-signed and Stripe-delivered webhook,
+fulfillment, signed download, download-limit enforcement, token tampering,
+and webhook redelivery. 14/14 checks passed. Durable state was read back out of
+production D1 afterwards, and production D1 rejected a WATCH mutation.
+
+Cost $0.00 on free tiers with no card on file. Owner labor was one-time `SETUP`
+(~25 minutes: Cloudflare account, least-privilege API token, two repository
+secrets). Every temporary Stripe object was deactivated and the sandbox was
+proven empty afterwards.
+
+Nothing commercial happened. `COMMERCIAL_SERVING` was deployed as `disabled`,
+the single transaction is `OWNER_TEST` and excluded from eligible revenue, and
+every request came from a runner Factory controls — no stranger has arrived.
+ARRIVE remains unsolved and no ARRIVE mechanism was selected.
+
+Details, including the three defects live providers exposed and the three
+scaling limitations deliberately left in place, are in
+`docs/PHASE_E_EXTERNAL_PROOF.md`.
+
+## Stop condition observed
 
 Product #1 belongs to Codex. Phase E generated no product, selected no niche, performed no
 market research, chose no inference provider, requested no credential, created no account,
@@ -350,7 +375,7 @@ accounting. GitHub Actions run `32185055925` verified it against PostgreSQL.
 **Current, as of the Phase E remediation checkpoint.** Stop here. Do not generate a commercial
 product, design the first experiment batch, generate further H0 candidates, perform product or
 niche market research, enable a metered adapter, select an inference provider, request any
-credential, deploy the edge, activate live Stripe, run another DEV fixture, spend capital, or
+credential, serve a commercial listing from the edge, activate live Stripe, run another DEV fixture, spend capital, or
 launch commercially without new owner authorization.
 
 Product #1 and the first real commercial MAKE/ARRIVE campaign belong to the next engineering
