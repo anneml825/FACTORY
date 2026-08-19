@@ -14,6 +14,7 @@
 
 import { readFile } from 'node:fs/promises';
 import { StripeTestHttpTransport, type StripeTransport } from '../../portfolio/stripe-api.ts';
+import { edgeTargetFromEnvironment } from './edge-targets.ts';
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const outputPath = process.env.PHASE_E_STRIPE_OUTPUT ?? 'state/phase-e-stripe-fixture.json';
@@ -23,6 +24,16 @@ if (!stripeKey.startsWith('sk_test_') && !stripeKey.startsWith('rk_test_')) {
 }
 
 const WEBHOOK_DESCRIPTION_PREFIX = 'Factory Phase E fixture edge';
+
+// Teardown is only ever permitted for a disposable target. Resolving the target
+// here means a commercial invocation stops before it reaches the Stripe API.
+const target = edgeTargetFromEnvironment();
+if (!target.resettable || target.objectScope !== 'FIXTURE') {
+  throw new Error(
+    `Refusing to tear down: the ${target.name} target is not disposable. ` +
+      `Commercial provider objects are never swept by this script.`,
+  );
+}
 
 interface StripeListed {
   id: string;
@@ -53,8 +64,16 @@ async function listAll(path: string, query: Record<string, string> = {}): Promis
   return collected;
 }
 
-/** Factory stamps every fixture object it creates; that stamp is the sweep key. */
+/**
+ * The sweep key. An object is in scope only when it is explicitly stamped
+ * FIXTURE, or when it carries Factory's provider-test markers and no scope at
+ * all — objects created before scoping existed. Anything stamped with another
+ * scope is invisible here, which is what keeps a commercial object safe even if
+ * this script is somehow pointed at an account that holds one.
+ */
 function isFactoryFixture(object: StripeListed): boolean {
+  const scope = object.metadata?.factory_object_scope;
+  if (scope) return scope === 'FIXTURE';
   return (
     object.metadata?.factory_environment === 'PROVIDER_TEST' ||
     object.metadata?.factory_test_transaction === 'true'
@@ -137,6 +156,7 @@ const clean =
 process.stdout.write(
   `${JSON.stringify(
     {
+      target: target.name,
       sweptAt: new Date().toISOString(),
       recordedCheckoutUrl: recorded.checkoutUrl ?? null,
       actions,

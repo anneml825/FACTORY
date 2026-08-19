@@ -41,6 +41,9 @@ jobs:
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFARE_ACCOUNT_ID }}
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_TEST_SECRET_KEY }}
       FACTORY_PAID_ACTIVITY_HALTED: '1'
+      # Every script resolves its Worker, its database, and its Stripe object
+      # scope from this one word. Nothing here names a database directly.
+      EDGE_TARGET: fixture
       WORKER_NAME: factory-edge
       PHASE_E_WHSEC_PATH: whsec.txt
     steps:
@@ -85,16 +88,23 @@ jobs:
       # is HMAC-signed under the secret current when each event was written, so a
       # journal carried over from a previous run cannot be verified and the edge
       # fails closed on every route. The fixture database is therefore reset per
-      # proof. See db/edge/reset-fixture.sql for why this is fixture-only.
+      # proof.
+      #
+      # The reset goes through a script that refuses to run unless the target is
+      # resettable AND the database itself is stamped FIXTURE, so this step
+      # cannot reach commercial data even if EDGE_TARGET were wrong.
+      #
+      # Stamped first, then reset. The reset refuses to run against a database it
+      # cannot identify, so the identity has to exist before it does — and
+      # stamping is additive, guarded, and a no-op on an already-stamped
+      # database, so doing it first is safe on a database that predates it.
+      - name: Stamp the deployment identity
+        if: ${{ !inputs.teardown_only }}
+        run: node src/edge/deploy/migrate-edge-db.ts
+
       - name: Reset the fixture D1 database
         if: ${{ !inputs.teardown_only }}
-        run: |
-          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --file=db/edge/reset-fixture.sql
-
-      - name: Apply the D1 schema
-        if: ${{ !inputs.teardown_only }}
-        run: |
-          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --file=db/edge/schema.sql
+        run: node src/edge/deploy/reset-fixture-db.ts
 
       - name: Seed the fixture artifact into D1
         if: ${{ !inputs.teardown_only }}
@@ -162,6 +172,18 @@ jobs:
       - name: Verify the live edge externally
         if: ${{ !inputs.teardown_only }}
         run: node src/edge/deploy/verify-live-edge.ts
+
+      # The posture endpoint is how a deploy is checked rather than assumed. A
+      # fixture edge must report itself a fixture and must not be serving
+      # commercially, whatever any variable says.
+      - name: Assert the fixture edge is not serving commercially
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          posture=$(curl -fsS "$EDGE_BASE_URL/posture")
+          echo "$posture"
+          echo "$posture" | grep -q '"deploymentPurpose": "FIXTURE"'
+          echo "$posture" | grep -q '"commercialServing": false'
+          echo "$posture" | grep -q '"commercialAuthorizations": 0'
 
       - name: Read durable WATCH state back out of D1
         if: ${{ !cancelled() && !inputs.teardown_only && env.EDGE_BASE_URL != '' }}

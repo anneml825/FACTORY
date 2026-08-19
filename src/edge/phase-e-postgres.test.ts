@@ -135,6 +135,8 @@ test('the edge survives a restart with durable WATCH, webhook state, and deliver
       deliverySecret: DELIVERY_SECRET,
       internalTrafficToken: 'phase-e-owner-internal',
       allowCommercialListings: false,
+      deploymentPurpose: 'FIXTURE' as const,
+      commercialAuthorizations: 0,
       now: () => new Date(NOW_SECONDS * 1000),
       deliveryTtlSeconds: 3600,
       maxDownloadsPerGrant: 1,

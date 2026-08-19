@@ -15,6 +15,7 @@ import { StripeTestPutAdapter } from '../../portfolio/stripe-put-adapter.ts';
 import { JsonStripePublicationStore } from '../../portfolio/stripe-publication-store.ts';
 import { fixtureArtifact, fixtureManifest } from '../fixture-catalog.ts';
 import { fixtureArriveReference } from './fixture-identity.ts';
+import { edgeTargetFromEnvironment } from './edge-targets.ts';
 
 const stripeKey = process.env.STRIPE_SECRET_KEY;
 const workerUrl = process.env.EDGE_BASE_URL;
@@ -31,9 +32,15 @@ const transport = new StripeTestHttpTransport(stripeKey);
 const manifest = fixtureManifest();
 const artifact = fixtureArtifact();
 
+const target = edgeTargetFromEnvironment();
+if (target.objectScope !== 'FIXTURE') {
+  throw new Error('This script provisions fixture objects only.');
+}
+
 const put = new StripeTestPutAdapter({
   transport,
   store: new JsonStripePublicationStore(statePath),
+  objectScope: target.objectScope,
 });
 
 // Scoped to the run. Stripe replays a cached response for a reused idempotency

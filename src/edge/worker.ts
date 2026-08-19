@@ -18,6 +18,7 @@
  */
 
 import { createHmac } from 'node:crypto';
+import { normalizeOwnerMarkers } from '../portfolio/arms-length-policy.ts';
 import { StripeTestWebhookProcessor } from '../portfolio/stripe-webhook.ts';
 import type { FunnelEvent, SignedEventEnvelope } from '../portfolio/types.ts';
 import { createEdgeHandler, EdgeDeliveryFulfillment } from './router.ts';
@@ -41,8 +42,17 @@ export interface WorkerEnv {
   FIXTURE_CHECKOUT_URL: string;
   /** Factory ARRIVE reference carried into checkout as client_reference_id. */
   FIXTURE_ARRIVE_REFERENCE?: string;
-  /** Must be the exact string "enabled" to serve a commercial listing. */
+  /**
+   * Must be the exact string "enabled" to serve a commercial listing — and even
+   * then, only if the database agrees (see `readCommercialPosture`).
+   */
   COMMERCIAL_SERVING?: string;
+  /**
+   * Owner email addresses or `@domains`, comma-separated. A buyer matching one
+   * of these can never be recorded as an arm's-length customer. Empty is safe:
+   * the filter downgrades and never upgrades.
+   */
+  OWNER_IDENTITY_MARKERS?: string;
   DELIVERY_TTL_SECONDS?: string;
   MAX_DOWNLOADS_PER_GRANT?: string;
 }
@@ -64,6 +74,32 @@ function positiveInteger(value: string | undefined, fallback: number): number {
   return parsed;
 }
 
+/**
+ * Ask the database what this deployment is and whether launch was authorized.
+ *
+ * One query, so it costs one of D1's fifty per invocation. Every failure mode
+ * resolves to "not commercial": an older database without these tables, an
+ * unreadable row, an unexpected value. The edge must be able to serve the
+ * fixture when this is unavailable, but it must never serve commercially on the
+ * strength of a query it could not run.
+ */
+async function readCommercialPosture(
+  db: D1Like,
+): Promise<{ purpose: 'FIXTURE' | 'COMMERCIAL' | 'UNKNOWN'; authorizations: number }> {
+  try {
+    const row = await db
+      .prepare(
+        'SELECT (SELECT purpose FROM edge_deployment_identity WHERE singleton = 1) AS purpose, ' +
+          '(SELECT count(*) FROM commercial_launch_authorization) AS authorizations',
+      )
+      .first<{ purpose: string | null; authorizations: number | null }>();
+    const purpose = row?.purpose === 'COMMERCIAL' || row?.purpose === 'FIXTURE' ? row.purpose : 'UNKNOWN';
+    return { purpose, authorizations: Number(row?.authorizations ?? 0) };
+  } catch {
+    return { purpose: 'UNKNOWN', authorizations: 0 };
+  }
+}
+
 async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
   if (!env.EDGE_DB) throw new Error('Edge misconfigured: the EDGE_DB D1 binding is missing.');
 
@@ -74,6 +110,7 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
     checkoutUrl: required(env, 'FIXTURE_CHECKOUT_URL'),
     arrivalPublicationId: env.FIXTURE_ARRIVE_REFERENCE || undefined,
   });
+  const posture = await readCommercialPosture(env.EDGE_DB);
   const ttlSeconds = positiveInteger(env.DELIVERY_TTL_SECONDS, 3600);
   const maxDownloads = positiveInteger(env.MAX_DOWNLOADS_PER_GRANT, 3);
 
@@ -105,6 +142,7 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
       state: new D1StripeWebhookStateStore(env.EDGE_DB),
       watch,
       fulfillment,
+      armsLengthPolicy: { ownerMarkers: normalizeOwnerMarkers(env.OWNER_IDENTITY_MARKERS) },
     }),
     signEvent(event: FunnelEvent): SignedEventEnvelope {
       const payload = JSON.stringify(event);
@@ -112,9 +150,16 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
     },
     deliverySecret: required(env, 'EDGE_DELIVERY_SECRET'),
     internalTrafficToken: required(env, 'EDGE_INTERNAL_TRAFFIC_TOKEN'),
-    // Anything other than the exact string "enabled" leaves commercial serving
-    // off. There is no truthiness here on purpose.
-    allowCommercialListings: env.COMMERCIAL_SERVING === 'enabled',
+    // Three independent conditions, all read from different places: the
+    // deployed variable, the database's own identity, and an owner
+    // authorization row. Starting to serve commercially takes all three;
+    // stopping takes any one. There is no truthiness here on purpose.
+    allowCommercialListings:
+      env.COMMERCIAL_SERVING === 'enabled' &&
+      posture.purpose === 'COMMERCIAL' &&
+      posture.authorizations > 0,
+    deploymentPurpose: posture.purpose,
+    commercialAuthorizations: posture.authorizations,
     now: () => new Date(),
     deliveryTtlSeconds: ttlSeconds,
     maxDownloadsPerGrant: maxDownloads,

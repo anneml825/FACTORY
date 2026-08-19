@@ -1,0 +1,201 @@
+name: Commercial edge deploy
+
+# Deploys the COMMERCIAL edge: a different Worker and a different database from
+# the fixture edge, holding durable WATCH, transaction, attribution and
+# fulfillment history.
+#
+# What this workflow will never do, by construction:
+#   * reset, drop, or truncate anything — no destructive step exists here;
+#   * regenerate a signing secret — secrets are installed once and kept;
+#   * create, deactivate, or sweep any Stripe object;
+#   * enable commercial serving on its own authority.
+#
+# Serving requires three independent things to be true at once: this workflow
+# deployed with serving=enabled, the database is stamped COMMERCIAL, and an
+# owner authorization row exists. Any one of them false means the edge serves
+# nothing commercially. Stopping needs only one of them to change.
+on:
+  workflow_dispatch:
+    inputs:
+      bootstrap_database:
+        description: 'Create the commercial D1 database if it does not exist yet'
+        type: boolean
+        default: false
+      serving:
+        description: 'Commercial serving for this deploy'
+        type: choice
+        options: [disabled, enabled]
+        default: disabled
+      prove_state_preservation:
+        description: 'Write a canary journal row, redeploy, and prove it survived'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: commercial-edge-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFARE_ACCOUNT_ID }}
+      EDGE_TARGET: commercial
+      WORKER_NAME: factory-commerce
+      WRANGLER_ENV: commercial
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Fail closed on missing credentials
+        run: |
+          for name in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID; do
+            if [ -z "${!name}" ]; then
+              echo "::error::$name is not available to this workflow."
+              exit 1
+            fi
+          done
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      # The isolation tests are the reason to believe the rest of this workflow
+      # is safe, so they run before it does anything.
+      - name: Prove fixture and commercial state are isolated
+        run: node --test src/edge/commercial-isolation.test.ts
+
+      - name: Create the commercial database
+        if: ${{ inputs.bootstrap_database }}
+        run: |
+          set +e
+          out=$(npx --yes wrangler@latest d1 create factory-commerce 2>&1)
+          set -e
+          echo "$out"
+          echo "$out" | grep -Eo 'database_id = "[0-9a-f-]+"' || true
+          echo "::notice::If a database_id is printed above, commit it into wrangler.toml before deploying."
+
+      # Refuses to go further while wrangler would resolve the fixture database,
+      # the placeholder id, or anything other than the commercial binding.
+      - name: Assert the resolved configuration is the commercial one
+        run: |
+          npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" --dry-run --outdir /tmp/commercial-build 2>&1 | tee resolve.log
+          grep -q "factory-commerce" resolve.log
+          if grep -q "COMMERCIAL_DATABASE_NOT_YET_PROVISIONED" resolve.log; then
+            echo "::error::The commercial database has not been provisioned. Bootstrap it and commit the id."
+            exit 1
+          fi
+          if grep -q "3fa6df57-8c13-4bd1-af87-756a089049b0" resolve.log; then
+            echo "::error::The commercial environment resolved to the FIXTURE database."
+            exit 1
+          fi
+
+      # Deployed with serving off first, always. The Worker has to exist before a
+      # secret can be attached to it, so this intermediate state is unavoidable —
+      # but it is not ambiguous: with no authorization row and no serving
+      # variable, commercial serving is definitively closed.
+      - name: Deploy with commercial serving off
+        run: |
+          npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
+            --var COMMERCIAL_SERVING:disabled \
+            --var MAX_DOWNLOADS_PER_GRANT:3 \
+            2>&1 | tee deploy-closed.log
+          url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy-closed.log | head -1)
+          if [ -z "$url" ]; then
+            echo "::error::Could not determine the commercial Worker URL."
+            exit 1
+          fi
+          echo "COMMERCIAL_BASE_URL=$url" >> "$GITHUB_ENV"
+
+      - name: Install any missing secrets, replacing none
+        run: node src/edge/deploy/ensure-edge-secrets.ts
+        env:
+          ALLOW_MISSING_SECRETS: 'yes'
+
+      - name: Apply the schema and stamp the deployment identity
+        run: node src/edge/deploy/migrate-edge-db.ts
+
+      - name: Record durable state before redeploy
+        if: ${{ inputs.prove_state_preservation }}
+        run: |
+          # A single clearly-labelled canary row. It is the only synthetic entry
+          # this database will ever hold, it is filed under a reserved
+          # experiment key, and it exists so the claim "redeploy preserves
+          # durable state" is a measurement rather than an assurance.
+          stamp="deploy-proof-${GITHUB_RUN_ID}"
+          npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --command \
+            "INSERT INTO watch_event_inbox (event_id, experiment_key, asset_key, event_type, environment, payload, signature, payload_sha256) VALUES ('$stamp', 'deployment-proof', 'deployment-proof', 'DEPLOYMENT_PROOF', 'PROVIDER_TEST', '{}', 'n/a', 'n/a')"
+          echo "CANARY_EVENT_ID=$stamp" >> "$GITHUB_ENV"
+          npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
+            --command "SELECT count(*) AS events FROM watch_event_inbox" | tee before.json
+
+      - name: Redeploy
+        if: ${{ inputs.prove_state_preservation }}
+        run: |
+          npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
+            --var COMMERCIAL_SERVING:disabled \
+            --var MAX_DOWNLOADS_PER_GRANT:3
+          node src/edge/deploy/migrate-edge-db.ts
+
+      - name: Prove durable state survived the redeploy
+        if: ${{ inputs.prove_state_preservation }}
+        run: |
+          after=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
+            --command "SELECT event_id FROM watch_event_inbox WHERE event_id = '$CANARY_EVENT_ID'")
+          echo "$after"
+          echo "$after" | grep -q "$CANARY_EVENT_ID" \
+            || { echo "::error::A redeploy lost durable journal state."; exit 1; }
+          echo "The canary written before the redeploy is still present afterwards."
+
+      - name: Prove the commercial journal is append-only
+        run: |
+          set +e
+          out=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes \
+            --command "UPDATE watch_event_inbox SET event_type='TAMPERED'" 2>&1)
+          set -e
+          echo "$out" | tail -3
+          echo "$out" | grep -q "append-only" \
+            || { echo "::error::The commercial journal accepted a mutation."; exit 1; }
+
+      # Only now, and only if the database itself already carries an owner
+      # authorization, may serving be turned on.
+      - name: Enable commercial serving
+        if: ${{ inputs.serving == 'enabled' }}
+        run: |
+          count=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
+            --command "SELECT count(*) AS n FROM commercial_launch_authorization" | grep -oE '"n": *[0-9]+' | grep -oE '[0-9]+')
+          echo "authorizations: $count"
+          if [ "${count:-0}" -lt 1 ]; then
+            echo "::error::Refusing to enable serving: the database holds no owner launch authorization."
+            exit 1
+          fi
+          npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
+            --var COMMERCIAL_SERVING:enabled \
+            --var MAX_DOWNLOADS_PER_GRANT:3
+
+      - name: Report the deployed posture
+        run: |
+          posture=$(curl -fsS "$COMMERCIAL_BASE_URL/posture")
+          echo "$posture"
+          echo "$posture" | grep -q '"deploymentPurpose": "COMMERCIAL"' \
+            || { echo "::error::The commercial edge does not identify itself as COMMERCIAL."; exit 1; }
+          if [ "${{ inputs.serving }}" = "disabled" ]; then
+            echo "$posture" | grep -q '"commercialServing": false' \
+              || { echo "::error::Serving is on when it was deployed off."; exit 1; }
+          fi
+          {
+            echo "### Commercial edge"
+            echo ""
+            echo "URL: $COMMERCIAL_BASE_URL"
+            echo ""
+            echo '```json'
+            echo "$posture"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

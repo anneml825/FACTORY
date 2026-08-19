@@ -19,7 +19,15 @@ on:
   # path filter.
   #
   # Deliberately NOT scheduled. The probe is a measurement, not an ongoing job.
+  #
+  # Restricted to the default branch. This job commits its results back to
+  # whatever ref triggered it, so an unrestricted push trigger meant any feature
+  # branch could have a commit appended to it mid-work — including, once there
+  # is one, a branch being deployed commercially. A measurement must not rewrite
+  # the branch it was measured from.
   push:
+    branches:
+      - claude/factory-autonomous-business-p3h3a1
     paths:
       - 'src/evidence/**'
       - '.github/workflows/data-economics-probe.yml'

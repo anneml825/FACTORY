@@ -38,8 +38,13 @@ function metadata(
   manifest: AssetManifest,
   artifact: Artifact,
   idempotencyKey: string,
+  objectScope: string,
 ): Record<string, string> {
   return {
+    // The scope is what lets a teardown written for one edge be blind to the
+    // other's objects. Without it, "delete Factory's test objects" and "delete
+    // the fixture's test objects" are the same sweep.
+    factory_object_scope: objectScope,
     factory_environment: 'PROVIDER_TEST',
     factory_test_transaction: 'true',
     transaction_classification: 'OWNER_TEST',
@@ -57,15 +62,19 @@ export class StripeTestPutAdapter implements PutAdapter {
   private readonly transport: StripeTransport;
   private readonly store: StripePublicationStore;
   private readonly taxCode: string;
+  private readonly objectScope: string;
 
   constructor(options: {
     transport: StripeTransport;
     store?: StripePublicationStore;
     taxCode?: string;
+    /** Stamped into every created object. Defaults to the fixture scope. */
+    objectScope?: string;
   }) {
     this.transport = options.transport;
     this.store = options.store ?? new InMemoryStripePublicationStore();
     this.taxCode = options.taxCode ?? 'txcd_10503000';
+    this.objectScope = options.objectScope ?? 'FIXTURE';
   }
 
   async publish(
@@ -96,7 +105,7 @@ export class StripeTestPutAdapter implements PutAdapter {
       await this.store.save(progress);
     }
 
-    const objectMetadata = metadata(manifest, artifact, idempotencyKey);
+    const objectMetadata = metadata(manifest, artifact, idempotencyKey, this.objectScope);
     if (!progress.productId) {
       const product = await this.transport.request<StripeObject>({
         method: 'POST',

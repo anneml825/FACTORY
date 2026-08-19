@@ -119,3 +119,65 @@ CREATE TABLE IF NOT EXISTS delivery_download (
     grant_id      TEXT NOT NULL REFERENCES delivery_grant (grant_id),
     downloaded_at TEXT NOT NULL
 );
+
+-- --------------------------------------------------------------------------
+-- Deployment identity. Stamped once, immutable afterwards.
+--
+-- This row is what makes FIXTURE and COMMERCIAL databases impossible to
+-- confuse at the point of action rather than at the point of configuration.
+-- Every destructive script re-reads it and refuses to act when the purpose is
+-- not the one that script was written for, so pointing the fixture reset at
+-- the commercial database fails instead of succeeding quietly.
+-- --------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS edge_deployment_identity (
+    singleton      INTEGER PRIMARY KEY CHECK (singleton = 1),
+    purpose        TEXT NOT NULL CHECK (purpose IN ('FIXTURE', 'COMMERCIAL')),
+    database_label TEXT NOT NULL,
+    schema_version INTEGER NOT NULL,
+    stamped_at     TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+-- The purpose is the safety property, so the database refuses to change it.
+CREATE TRIGGER IF NOT EXISTS edge_deployment_identity_purpose_immutable
+BEFORE UPDATE ON edge_deployment_identity
+WHEN NEW.purpose <> OLD.purpose
+BEGIN
+    SELECT RAISE(ABORT, 'edge deployment purpose is immutable');
+END;
+
+CREATE TRIGGER IF NOT EXISTS edge_deployment_identity_no_delete
+BEFORE DELETE ON edge_deployment_identity
+BEGIN
+    SELECT RAISE(ABORT, 'edge deployment identity cannot be deleted');
+END;
+
+-- --------------------------------------------------------------------------
+-- Commercial launch authorization. Append-only.
+--
+-- Serving a commercial listing needs two independent things to be true: the
+-- COMMERCIAL_SERVING variable must be exactly "enabled", and a row must exist
+-- here. Turning serving OFF needs only one of them to change, so the asymmetry
+-- runs in the safe direction — launching is deliberate, stopping is immediate.
+--
+-- This records THAT launch was authorized and by whom. It deliberately says
+-- nothing about what is being sold; product and channel are not this layer's
+-- business.
+-- --------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS commercial_launch_authorization (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    authorized_at TEXT NOT NULL DEFAULT (datetime('now')),
+    authorized_by TEXT NOT NULL,
+    scope_note    TEXT NOT NULL
+);
+
+CREATE TRIGGER IF NOT EXISTS commercial_launch_authorization_no_update
+BEFORE UPDATE ON commercial_launch_authorization
+BEGIN
+    SELECT RAISE(ABORT, 'commercial_launch_authorization is append-only');
+END;
+
+CREATE TRIGGER IF NOT EXISTS commercial_launch_authorization_no_delete
+BEFORE DELETE ON commercial_launch_authorization
+BEGIN
+    SELECT RAISE(ABORT, 'commercial_launch_authorization is append-only');
+END;

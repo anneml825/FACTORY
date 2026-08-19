@@ -52,7 +52,37 @@ async function expectThrows(name: string, fn: () => Promise<unknown>, ctor: Func
 
 const pool = new pg.Pool({ connectionString: DATABASE_URL, max: 30 });
 
+/**
+ * `DROP SCHEMA public CASCADE` is the most destructive statement in this
+ * repository. It is correct against a scratch database and unrecoverable
+ * against a durable one, and the only thing that decided which it was hitting
+ * was whatever DATABASE_URL happened to hold. It now asks the database first.
+ *
+ * The check is deliberately positive — the database must SAY it is disposable —
+ * so a database that has never heard of this convention is refused rather than
+ * assumed safe.
+ */
+async function assertDisposableDatabase(): Promise<void> {
+  const marker = await pool.query<{ present: boolean }>(
+    "SELECT to_regclass('public.disposable_test_database') IS NOT NULL AS present",
+  );
+  if (marker.rows[0]?.present) return;
+
+  const named = await pool.query<{ name: string }>('SELECT current_database() AS name');
+  const name = named.rows[0]?.name ?? '(unknown)';
+  if (/test|scratch|ci|tmp/i.test(name)) return;
+
+  throw new Error(
+    `Refusing to drop the schema of database "${name}". It carries no ` +
+      'disposable_test_database marker table and its name does not identify it as a ' +
+      'test database. Create the marker table, or point DATABASE_URL at a scratch ' +
+      'database. Durable WATCH, transaction and owner-labor history lives in ' +
+      'databases this statement would destroy.',
+  );
+}
+
 async function resetSchema() {
+  await assertDisposableDatabase();
   await pool.query('DROP SCHEMA public CASCADE; CREATE SCHEMA public;');
   await pool.query(readFileSync(join(HERE, '../../db/schema.sql'), 'utf8'));
 }

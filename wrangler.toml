@@ -1,9 +1,18 @@
-# Cloudflare Worker configuration for Factory's always-on commerce edge.
+# Cloudflare Worker configuration for Factory's edges.
 #
-# NOT YET DEPLOYED. The D1 database below is real, created by preflight run
-# 32286922617 on 2026-08-19. A D1 database_id is an identifier, not a
-# credential: it grants nothing without an API token, and Cloudflare's own docs
-# put it in this file. The token and account ID stay in GitHub secrets.
+# There are two, and they must never be confused. The top-level configuration is
+# the FIXTURE edge: disposable, reset on every proof, and the only one any
+# destructive script will touch. `[env.commercial]` is the COMMERCIAL edge:
+# a different Worker, a different database, never reset, and refused by every
+# script that drops anything.
+#
+# Names are duplicated from src/edge/deploy/edge-targets.ts, which is the single
+# source of truth every script resolves through; the isolation test asserts the
+# two do not drift apart.
+#
+# A D1 database_id is an identifier, not a credential: it grants nothing without
+# an API token, and Cloudflare's own docs put it in this file. The token and
+# account ID stay in GitHub secrets.
 #
 # The download-counter binding must be D1 or a Durable Object before any real
 # checkout — KV cannot enforce a limit atomically.
@@ -28,3 +37,25 @@ database_id = "3fa6df57-8c13-4bd1-af87-756a089049b0"
 # Secrets are set with `wrangler secret put`, never committed:
 #   STRIPE_WEBHOOK_SECRET, EDGE_DELIVERY_SECRET,
 #   EDGE_INTERNAL_TRAFFIC_TOKEN, WATCH_EVENT_SECRET
+#
+# On the fixture edge they are regenerated per proof, which is why the fixture
+# database is reset alongside them. On the commercial edge they are installed
+# once and never replaced: WATCH_EVENT_SECRET and EDGE_DELIVERY_SECRET sign
+# durable history, so replacing either would invalidate records that are
+# supposed to be permanent.
+
+# --------------------------------------------------------------------------
+# The COMMERCIAL edge. Bindings are NOT inherited from the top level, so they
+# are repeated here in full and deliberately point somewhere else.
+#
+# database_id is unset until the bootstrap workflow creates the database. The
+# placeholder is invalid on purpose: a deploy attempted before bootstrap fails
+# rather than silently reaching for the fixture database.
+# --------------------------------------------------------------------------
+[env.commercial]
+name = "factory-commerce"
+
+[[env.commercial.d1_databases]]
+binding = "EDGE_DB"
+database_name = "factory-commerce"
+database_id = "COMMERCIAL_DATABASE_NOT_YET_PROVISIONED"

@@ -101,8 +101,18 @@ export interface EdgeEnvironment {
    * are excluded from every stranger-facing count.
    */
   internalTrafficToken: string;
-  /** Phase E is fixture-only. Serving a commercial listing requires this flag. */
+  /**
+   * Serving a commercial listing requires this flag, and the flag is only ever
+   * true when three independent things agree: the database says it is a
+   * COMMERCIAL deployment, an owner authorization row exists in that database,
+   * and the COMMERCIAL_SERVING variable is exactly "enabled". Any one of them
+   * turning false turns serving off.
+   */
   allowCommercialListings: boolean;
+  /** What the database says this deployment is. Reported, never inferred. */
+  deploymentPurpose: 'FIXTURE' | 'COMMERCIAL' | 'UNKNOWN';
+  /** How many owner launch authorizations the database holds. */
+  commercialAuthorizations: number;
   now(): Date;
   deliveryTtlSeconds: number;
   maxDownloadsPerGrant: number;

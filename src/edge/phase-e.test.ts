@@ -107,6 +107,8 @@ async function harness(options: {
     deliverySecret: DELIVERY_SECRET,
     internalTrafficToken: INTERNAL_TRAFFIC_TOKEN,
     allowCommercialListings: options.allowCommercialListings ?? false,
+    deploymentPurpose: 'FIXTURE' as const,
+    commercialAuthorizations: 0,
     now: () => clock.value,
     deliveryTtlSeconds: 3600,
     maxDownloadsPerGrant: 2,

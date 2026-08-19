@@ -1,6 +1,7 @@
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import type { WatchAdapter } from './ports.ts';
 import type { StripeTransport } from './stripe-api.ts';
+import { resolveArmsLength, type ArmsLengthPolicy } from './arms-length-policy.ts';
 import type {
   FunnelEvent,
   SignedEventEnvelope,
@@ -139,6 +140,16 @@ function integerField(object: Record<string, unknown>, field: string): number | 
   return Number.isInteger(value) ? (value as number) : null;
 }
 
+/** Stripe puts the buyer's address under `customer_details` on a Session. */
+function buyerEmailField(object: Record<string, unknown>): string | null {
+  const details = object.customer_details;
+  if (details && typeof details === 'object') {
+    const email = (details as Record<string, unknown>).email;
+    if (typeof email === 'string' && email.length > 0) return email;
+  }
+  return textField(object, 'customer_email');
+}
+
 function metadataField(object: Record<string, unknown>): Record<string, string> {
   const value = object.metadata;
   if (!value || typeof value !== 'object') return {};
@@ -173,6 +184,7 @@ export class StripeTestWebhookProcessor {
   private readonly fulfillment: ProviderTestFulfillment;
   private readonly transport: StripeTransport | null;
   private readonly nowSeconds: () => number;
+  private readonly armsLengthPolicy: ArmsLengthPolicy;
 
   constructor(options: {
     webhookSecret: string;
@@ -182,6 +194,11 @@ export class StripeTestWebhookProcessor {
     fulfillment: ProviderTestFulfillment;
     transport?: StripeTransport;
     nowSeconds?: () => number;
+    /**
+     * Owner identity markers used to refuse an arm's-length claim. Empty by
+     * default, and empty is safe here: the filter can only ever downgrade.
+     */
+    armsLengthPolicy?: ArmsLengthPolicy;
   }) {
     this.webhookSecret = options.webhookSecret;
     this.state = options.state ?? new InMemoryStripeWebhookStateStore();
@@ -190,6 +207,7 @@ export class StripeTestWebhookProcessor {
     this.fulfillment = options.fulfillment;
     this.transport = options.transport ?? null;
     this.nowSeconds = options.nowSeconds ?? (() => Math.floor(Date.now() / 1000));
+    this.armsLengthPolicy = options.armsLengthPolicy ?? { ownerMarkers: [] };
   }
 
   async process(payload: string, signatureHeader: string): Promise<StripeWebhookProcessResult> {
@@ -312,7 +330,17 @@ export class StripeTestWebhookProcessor {
     if (paymentStatus !== 'paid' && event.type !== 'checkout.session.async_payment_succeeded') {
       throw new Error(`Checkout Session is not paid (payment_status=${paymentStatus ?? 'missing'}).`);
     }
-    const classification = this.providerTestClassification(metadata);
+    // Provider-test rules already refuse ARM_LENGTH_CUSTOMER outright, so this
+    // filter changes nothing today. It sits on the write path anyway, because
+    // the moment a commercial classification path exists it must not be
+    // possible to record an arm's-length sale without passing through it.
+    const declared = this.providerTestClassification(metadata);
+    const armsLength = resolveArmsLength({
+      declared,
+      buyerEmail: buyerEmailField(object),
+      policy: this.armsLengthPolicy,
+    });
+    const classification = armsLength.classification as typeof declared;
     const reference: StripeTransactionReference = {
       transactionId: paymentIntentId ?? sessionId,
       checkoutSessionId: sessionId,
