@@ -452,3 +452,18 @@ test('deactivation disables link, price, and product using idempotent provider r
   assert.ok(transport.requests.slice(-3).every((request) => request.form?.active === false));
   assert.ok(transport.requests.slice(-3).every((request) => request.idempotencyKey));
 });
+
+test('deactivation still reports success when the durable record is missing', async () => {
+  // The external teardown runs in a fresh workspace, so the publication store is
+  // routinely empty by the time it deactivates. Raising there once reported a
+  // completed deactivation as a failure and left a live checkout link behind.
+  const transport = new RecordingStripeTransport();
+  const adapter = new StripeTestPutAdapter({ transport });
+  const { engine, manifest } = await stagedEngine(adapter);
+  const publication = await engine.publish(manifest.experimentId, 'phase-b:orphan:publish');
+
+  const orphaned = new StripeTestPutAdapter({ transport });
+  const inactive = await orphaned.deactivate(publication, 'phase-b:orphan');
+  assert.equal(inactive.status, 'INACTIVE');
+  assert.ok(transport.requests.slice(-3).every((request) => request.form?.active === false));
+});

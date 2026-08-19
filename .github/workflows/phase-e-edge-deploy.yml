@@ -81,6 +81,16 @@ jobs:
           sudo mv stripe /usr/local/bin/stripe
           stripe version
 
+      # Each run installs freshly generated signing secrets, and the WATCH journal
+      # is HMAC-signed under the secret current when each event was written, so a
+      # journal carried over from a previous run cannot be verified and the edge
+      # fails closed on every route. The fixture database is therefore reset per
+      # proof. See db/edge/reset-fixture.sql for why this is fixture-only.
+      - name: Reset the fixture D1 database
+        if: ${{ !inputs.teardown_only }}
+        run: |
+          npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --file=db/edge/reset-fixture.sql
+
       - name: Apply the D1 schema
         if: ${{ !inputs.teardown_only }}
         run: |

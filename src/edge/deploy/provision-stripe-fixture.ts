@@ -36,7 +36,17 @@ const put = new StripeTestPutAdapter({
   store: new JsonStripePublicationStore(statePath),
 });
 
-const publication = await put.publish(manifest, artifact, `phase-e-edge:${manifest.experimentId}`);
+// Scoped to the run. Stripe replays a cached response for a reused idempotency
+// key for 24 hours, so a stable key would hand this run the previous run's
+// Product/Price/Payment Link — which teardown deactivated at the end of that
+// run. The proof would then redirect buyers to a dead checkout while reporting
+// success. Each proof creates its own objects; teardown sweeps them by metadata.
+const runScope = process.env.GITHUB_RUN_ID ?? String(Date.now());
+const publication = await put.publish(
+  manifest,
+  artifact,
+  `phase-e-edge:${manifest.experimentId}:${runScope}`,
+);
 
 // The endpoint secret is returned only at creation, so it is captured here and
 // installed straight into the Worker without ever being printed.
