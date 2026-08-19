@@ -39,8 +39,15 @@ function wrangler(args: string[], input?: string): string {
   });
 }
 
-function environmentArgs(edge: EdgeTarget): string[] {
-  return edge.wranglerEnvironment ? ['--env', edge.wranglerEnvironment] : [];
+/**
+ * Deliberately empty. Passing `--name X --env Y` together makes wrangler look
+ * for a Worker called `X-Y`, which does not exist: the environment block already
+ * sets the Worker's real name, so naming the script is enough and naming it
+ * twice is wrong. Discovered when this refused to find a Worker that had just
+ * been deployed successfully one step earlier.
+ */
+function environmentArgs(_edge: EdgeTarget): string[] {
+  return [];
 }
 
 function existingSecretNames(edge: EdgeTarget): Set<string> {

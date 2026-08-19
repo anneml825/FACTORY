@@ -41,6 +41,12 @@ interface Check {
 const checks: Check[] = [];
 let failures = 0;
 
+/** The edge reports why it failed closed; a bare 503 is not a diagnosis. */
+function failureReason(response: Response): string {
+  const reason = response.headers.get('x-factory-edge-failure');
+  return reason ? ` — edge says: ${reason}` : '';
+}
+
 function record(name: string, passed: boolean, observed: string): void {
   checks.push({ name, passed, observed });
   if (!passed) failures++;
@@ -54,7 +60,11 @@ async function sleep(ms: number): Promise<void> {
 // --- 1. liveness ------------------------------------------------------------
 {
   const response = await fetch(`${baseUrl}/healthz`);
-  record('edge is reachable on the public internet', response.status === 200, `GET /healthz -> ${response.status}`);
+  record(
+    'edge is reachable on the public internet',
+    response.status === 200,
+    `GET /healthz -> ${response.status}${failureReason(response)}`,
+  );
 }
 
 // --- 2. product page + first-party measurement ------------------------------
@@ -164,9 +174,11 @@ let downloadToken: string | null = null;
 {
   let html = '';
   let status = 0;
+  let lastFailure = '';
   for (let attempt = 0; attempt < 15 && !downloadToken; attempt++) {
     const response = await fetch(`${baseUrl}/thanks?session_id=${encodeURIComponent(triggeredSessionId ?? 'unknown')}`);
     status = response.status;
+    lastFailure = failureReason(response) || `, body: ${(await response.clone().text()).slice(0, 100)}`;
     html = await response.text();
     downloadToken = html.match(/href="\/d\/([^"]+)"/)?.[1] ?? null;
     if (!downloadToken) await sleep(3000);
@@ -174,7 +186,7 @@ let downloadToken: string | null = null;
   record(
     'webhook fulfillment produced a signed download grant',
     Boolean(downloadToken),
-    `GET /thanks -> ${status}${downloadToken ? ', signed link issued' : `, no grant after 15 polls (${html.slice(0, 120)})`}`,
+    `GET /thanks -> ${status}${downloadToken ? ', signed link issued' : `, no grant after 15 polls${lastFailure}`}`,
   );
 }
 

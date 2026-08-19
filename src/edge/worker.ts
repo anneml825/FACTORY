@@ -172,12 +172,21 @@ export default {
       const environment = await buildEnvironment(env);
       return await createEdgeHandler(environment)(request);
     } catch (error) {
-      // Misconfiguration must not look like a working edge. 503, no detail to
-      // the caller, message only in the Worker log.
-      console.error('edge failure:', error instanceof Error ? error.message : String(error));
+      // Misconfiguration must not look like a working edge, so the body stays
+      // opaque. The reason goes in a header: an edge that fails closed without
+      // saying why is only half a safety property — the two runs it took to
+      // find the last one were spent guessing at a blank 503. Every message
+      // that reaches here is one Factory wrote itself and names a
+      // configuration fact, never a secret or a buyer.
+      const reason = error instanceof Error ? error.message : String(error);
+      console.error('edge failure:', reason);
       return new Response('The edge is not correctly configured.', {
         status: 503,
-        headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'no-store' },
+        headers: {
+          'content-type': 'text/plain; charset=utf-8',
+          'cache-control': 'no-store',
+          'x-factory-edge-failure': reason.replaceAll(/[\r\n]+/g, ' ').slice(0, 200),
+        },
       });
     }
   },
