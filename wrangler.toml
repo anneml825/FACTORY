@@ -11,14 +11,17 @@ main = "src/edge/worker.ts"
 compatibility_date = "2026-08-18"
 compatibility_flags = ["nodejs_compat"]
 
-# Free tier: 100,000 requests/day, 10 GB-month R2, free R2 egress.
-[[r2_buckets]]
-binding = "ARTIFACTS"
-bucket_name = "factory-artifacts"
-
-[[kv_namespaces]]
-binding = "EDGE_STATE"
-id = "PLACEHOLDER_UNPROVISIONED"
+# Verified against official docs on 2026-08-19 (docs/PHASE_E_CLOUDFLARE_VERIFICATION.md):
+# Workers Free gives 100,000 requests/day and 50 subrequests per invocation; D1 Free
+# gives 5M rows read/day, 100k rows written/day, 10 databases, 500 MB per database.
+#
+# KV is NOT used: it cannot enforce a download limit atomically. D1 is the state store.
+# R2 is deferred — it is a usage-based billing service subject to card preauthorization,
+# and the fixture artifact is ~1 KB, so D1 holds it for the fixture proof only.
+[[d1_databases]]
+binding = "EDGE_DB"
+database_name = "factory-edge"
+database_id = "PLACEHOLDER_UNPROVISIONED"
 
 # Secrets are set with `wrangler secret put`, never committed:
 #   STRIPE_WEBHOOK_SECRET, EDGE_DELIVERY_SECRET,
