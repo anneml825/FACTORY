@@ -69,7 +69,12 @@ jobs:
 
       - name: Install the Stripe CLI
         run: |
-          curl -fsSL https://github.com/stripe/stripe-cli/releases/latest/download/stripe_linux_x86_64.tar.gz \
+          # The release assets are version-stamped, so `latest/download/<name>`
+          # does not resolve. Ask the API for the tag and build the real name.
+          version=$(curl -fsSL https://api.github.com/repos/stripe/stripe-cli/releases/latest \
+            | python3 -c 'import json,sys; print(json.load(sys.stdin)["tag_name"].lstrip("v"))')
+          echo "stripe-cli version $version"
+          curl -fsSL "https://github.com/stripe/stripe-cli/releases/download/v${version}/stripe_${version}_linux_x86_64.tar.gz" \
             -o stripe.tar.gz
           tar -xzf stripe.tar.gz stripe
           sudo mv stripe /usr/local/bin/stripe
@@ -148,7 +153,7 @@ jobs:
         run: node src/edge/deploy/verify-live-edge.ts
 
       - name: Read durable WATCH state back out of D1
-        if: ${{ always() && !inputs.teardown_only }}
+        if: ${{ !cancelled() && !inputs.teardown_only && env.EDGE_BASE_URL != '' }}
         run: |
           echo "--- funnel events recorded ---"
           npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes --json \
@@ -164,7 +169,7 @@ jobs:
             --command "SELECT status, attempts FROM stripe_webhook_inbox"
 
       - name: Prove the WATCH journal is append-only in production D1
-        if: ${{ always() && !inputs.teardown_only }}
+        if: ${{ !cancelled() && !inputs.teardown_only && env.EDGE_BASE_URL != '' }}
         run: |
           set +e
           out=$(npx --yes wrangler@latest d1 execute "$WORKER_NAME" --remote --yes \
