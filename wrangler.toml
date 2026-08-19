@@ -1,9 +1,11 @@
 # Cloudflare Worker configuration for Factory's always-on commerce edge.
 #
-# NOT DEPLOYED. No Cloudflare account exists; this file records the intended
-# deployment shape so the owner setup is a known quantity rather than a
-# discovery. Deploying it is owner setup (see OWNER_AUTONOMY.md), and the
-# download-counter binding must be D1 or a Durable Object before any real
+# NOT YET DEPLOYED. The D1 database below is real, created by preflight run
+# 32286922617 on 2026-08-19. A D1 database_id is an identifier, not a
+# credential: it grants nothing without an API token, and Cloudflare's own docs
+# put it in this file. The token and account ID stay in GitHub secrets.
+#
+# The download-counter binding must be D1 or a Durable Object before any real
 # checkout — KV cannot enforce a limit atomically.
 
 name = "factory-edge"
@@ -21,7 +23,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "EDGE_DB"
 database_name = "factory-edge"
-database_id = "PLACEHOLDER_UNPROVISIONED"
+database_id = "3fa6df57-8c13-4bd1-af87-756a089049b0"
 
 # Secrets are set with `wrangler secret put`, never committed:
 #   STRIPE_WEBHOOK_SECRET, EDGE_DELIVERY_SECRET,

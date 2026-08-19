@@ -93,9 +93,9 @@ jobs:
           npx --yes wrangler@latest d1 list --json > d1.json
           python3 tools/verify/cloudflare-preflight.py --databases
 
-      - name: Ask Cloudflare what it created
-        run: |
-          npx --yes wrangler@latest d1 info "$D1_NAME" 2>&1 | sed 's/^/  /' || echo "d1 info unavailable"
+      # `wrangler d1 info <name>` resolves the ID from wrangler.toml rather than
+      # from the name argument, so it failed against the placeholder ID on the
+      # first run. The authoritative listing above already answers the question.
 
       - name: Upload preflight evidence
         if: always()

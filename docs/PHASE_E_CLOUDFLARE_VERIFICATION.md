@@ -127,10 +127,22 @@ Source: <https://developers.cloudflare.com/workers/wrangler/system-environment-v
 4. **The R2 payment-method claim is weaker than stated.** Official docs confirm preauthorization
    for usage-based services including R2, not an explicit enable-time card requirement.
 
-## Not verified, and why
+## Confirmed against the live provider — preflight run 32286922617, 2026-08-19
 
-- **Whether a brand-new account can create a D1 database without a card.** The documentation
-  implies yes; only an actual account can prove it. This is the first thing the deploy will test.
+The decisive unknown is now answered by Cloudflare itself, not by documentation:
+
+- **A brand-new Workers Free account created a D1 database with no payment method on file.**
+  `wrangler d1 create factory-edge` returned `Successfully created DB 'factory-edge' in region
+  WNAM`, and `d1 list` confirms exactly one database, `3fa6df57-8c13-4bd1-af87-756a089049b0`,
+  created `2026-08-19T18:22:31.528Z`. No card was entered anywhere. Option A holds.
+- **The least-privilege token works.** `/user/tokens/verify` returned `success: true`,
+  `status: active`, "This API Token is valid and active" — with only Account Settings Read,
+  Workers Scripts Edit, and D1 Edit, and no Zone permissions.
+- **Scope is exactly one account**, and it matches the configured account ID.
+
+Cost: $0.00. Owner setup consumed: the account, subdomain, token, and two GitHub secrets.
+
+## Not verified, and why
 - **Whether `wrangler` can register a workers.dev subdomain non-interactively.** Docs say accounts
   come with one and it is configured in the dashboard, so the owner step remains.
 - The presence of `STRIPE_TEST_SECRET_KEY` in the repository secret store. Phase B run
