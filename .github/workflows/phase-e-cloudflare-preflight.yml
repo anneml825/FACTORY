@@ -33,8 +33,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      # The owner's secrets are stored as CLOUDFARE_* (missing the "L"). Renaming
+      # a GitHub secret means re-entering its value, and Cloudflare shows an API
+      # token exactly once — so accept either spelling rather than force a new
+      # token to be minted. The correctly-spelled name wins if it ever exists.
+      # Wrangler always receives the correct CLOUDFLARE_* environment variable.
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CLOUDFARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || secrets.CLOUDFARE_ACCOUNT_ID }}
       D1_NAME: factory-edge
     steps:
       - uses: actions/checkout@v4
@@ -52,14 +57,14 @@ jobs:
           # `secrets.*`.
           SECRET_TOKEN_SET: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
           SECRET_ACCOUNT_SET: ${{ secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
-          VAR_TOKEN_SET: ${{ vars.CLOUDFLARE_API_TOKEN != '' }}
-          VAR_ACCOUNT_SET: ${{ vars.CLOUDFLARE_ACCOUNT_ID != '' }}
+          TYPO_TOKEN_SET: ${{ secrets.CLOUDFARE_API_TOKEN != '' }}
+          TYPO_ACCOUNT_SET: ${{ secrets.CLOUDFARE_ACCOUNT_ID != '' }}
           VAR_NAMES: ${{ toJSON(vars) }}
         run: |
-          echo "Actions SECRET  CLOUDFLARE_API_TOKEN  present: $SECRET_TOKEN_SET"
-          echo "Actions SECRET  CLOUDFLARE_ACCOUNT_ID present: $SECRET_ACCOUNT_SET"
-          echo "Actions VARIABLE CLOUDFLARE_API_TOKEN  present: $VAR_TOKEN_SET"
-          echo "Actions VARIABLE CLOUDFLARE_ACCOUNT_ID present: $VAR_ACCOUNT_SET"
+          echo "SECRET CLOUDFLARE_API_TOKEN  present: $SECRET_TOKEN_SET"
+          echo "SECRET CLOUDFLARE_ACCOUNT_ID present: $SECRET_ACCOUNT_SET"
+          echo "SECRET CLOUDFARE_API_TOKEN   present: $TYPO_TOKEN_SET   (owner's spelling)"
+          echo "SECRET CLOUDFARE_ACCOUNT_ID  present: $TYPO_ACCOUNT_SET   (owner's spelling)"
           # Variable NAMES only. Variables are not secret, but their values are
           # still withheld here on principle.
           echo "$VAR_NAMES" | python3 -c 'import json,sys; print("variable names defined:", sorted(json.load(sys.stdin).keys()))'
