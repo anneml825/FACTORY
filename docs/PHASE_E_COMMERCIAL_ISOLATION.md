@@ -1,9 +1,10 @@
 # Fixture and commercial edges: separation, and what is proven
 
 Status: **implemented and externally proven.** Commercial deploy run
-[`32303974898`](https://github.com/anneml825/FACTORY/actions/runs/32303974898),
-fixture proof run
-[`32303650447`](https://github.com/anneml825/FACTORY/actions/runs/32303650447).
+[`32304390962`](https://github.com/anneml825/FACTORY/actions/runs/32304390962)
+and fixture proof run
+[`32304390932`](https://github.com/anneml825/FACTORY/actions/runs/32304390932),
+both at commit `843441e`, both green.
 
 Nothing commercial has been served, no product exists, and no launch has been
 authorized. What exists is the machinery underneath those decisions, built so
@@ -69,11 +70,13 @@ and now name the reason in an `x-factory-edge-failure` header.
 * **Secrets persist and are never replaced.** The second commercial deploy
   reported `WATCH_EVENT_SECRET: already set, left alone` for all three
   generated secrets. Replacing a non-rotatable secret is refused outright.
-* **The identity is stamped once.** `stamped_at` was identical across deploys —
-  re-running the migration is a no-op, never a change.
-* **Redeploy preserves durable state.** A canary row was written to the
-  commercial journal, the Worker was redeployed, the schema re-applied, and the
-  canary read back. Two canaries from two separate deploys are both present.
+* **The identity is stamped once.** `stamped_at` stayed `2026-08-19 21:24:28`
+  across four separate deploys — re-running the migration is a no-op, never a
+  change.
+* **Redeploy preserves durable state.** A canary row is written to the
+  commercial journal, the Worker redeployed, the schema re-applied, and the
+  canary read back — on every deploy. All four canaries from four separate
+  deploys are still present, so nothing has been lost across any of them.
 * **The commercial journal is append-only in production.** `UPDATE
   watch_event_inbox` was rejected by the live database.
 * **The fixture proof still passes end to end** — 14 external checks against the
@@ -94,8 +97,14 @@ before its secrets existed, which is exactly a build that answers 503.
 
 Each deploy now carries an `EDGE_BUILD_ID`, `/posture` reports it, and both
 workflows wait for the build under test to be the one answering before they
-measure anything. This is worth keeping past the fixture: any commercial deploy
-verified immediately after a push is measuring an unknown version.
+measure anything. The gate then measured the skew directly: the fixture run
+logged `Build 32304390932-1 is live after 12 check(s)` — roughly 22 seconds
+during which the old version was still serving. That is exactly the window the
+earlier runs were measuring in, and with the gate in place the fixture proof
+passed 14/14.
+
+This is worth keeping past the fixture: any commercial deploy verified
+immediately after a push is measuring an unknown version.
 
 ## Adjacent hazards found and fixed
 
