@@ -135,6 +135,36 @@ Details, including the three defects live providers exposed and the three
 scaling limitations deliberately left in place, are in
 `docs/PHASE_E_EXTERNAL_PROOF.md`.
 
+## Product-independent commercial readiness — 2026-08-19
+
+The fixture edge and a commercial edge are now separate Workers on separate D1
+databases, and the separation is enforced in three independent places: a single
+source of truth for names (`src/edge/deploy/edge-targets.ts`), an immutable
+identity stamp inside each database, and a refusal in every destructive script
+that re-reads that stamp. Fixture teardown cannot see commercial Stripe objects.
+The commercial deploy path has no reset step, regenerates no secret, and creates
+or deletes no provider object.
+
+Commercial serving requires three independent things to agree — the deployed
+variable, the database's stamped purpose, and an owner authorization row — so
+starting takes three deliberate acts and stopping takes one. `GET /posture`
+reports the result and answers even while the edge is failing closed.
+
+Proven externally on the live commercial database: secrets are installed once
+and left alone, the identity stamp is written once, a redeploy preserves durable
+journal state, and the journal is append-only in production. The fixture proof
+still passes its 14 external checks and asserts its own posture is FIXTURE.
+
+Two adjacent hazards were fixed: the capital suite's `DROP SCHEMA public
+CASCADE` now requires the database to identify itself as disposable, and the
+Data Economics Probe no longer commits results back to whatever branch triggered
+it.
+
+Nothing commercial exists. No product, no channel, no pricing, no live payments,
+no launch authorization. `docs/PHASE_E_COMMERCIAL_ISOLATION.md` records what is
+proven and what was deliberately deferred because it depends on Product #1 or
+ARRIVE.
+
 ## Stop condition observed
 
 Product #1 belongs to Codex. Phase E generated no product, selected no niche, performed no

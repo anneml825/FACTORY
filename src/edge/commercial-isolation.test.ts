@@ -289,6 +289,38 @@ test('wrangler.toml and edge-targets.ts have not drifted apart', () => {
   );
 });
 
+test('each workflow names the target it declares, and only that one', () => {
+  // Both workflows still spell a Worker name into an env var for the handful of
+  // raw wrangler calls that take one. That duplication is where drift would
+  // start, so it is asserted rather than trusted.
+  for (const [file, name] of [
+    ['.github/workflows/phase-e-edge-deploy.yml', 'fixture'],
+    ['.github/workflows/phase-e-commercial-deploy.yml', 'commercial'],
+  ] as const) {
+    const workflow = readFileSync(file, 'utf8');
+    const target = edgeTarget(name);
+    const other = edgeTarget(name === 'fixture' ? 'commercial' : 'fixture');
+    assert.match(workflow, new RegExp(`^      EDGE_TARGET: ${target.name}$`, 'm'), file);
+    assert.match(workflow, new RegExp(`^      WORKER_NAME: ${target.workerName}$`, 'm'), file);
+    // Only as a wrangler argument: the commercial workflow legitimately mentions
+    // the fixture database id in a guard that refuses it, and reads a header
+    // whose name happens to contain "factory-edge".
+    assert.ok(
+      !new RegExp(`d1\\s+execute\\s+${other.databaseName}\\b`).test(workflow),
+      `${file} must never run a d1 command against the ${other.name} database`,
+    );
+    assert.ok(
+      !workflow.includes(`database_name = "${other.databaseName}"`),
+      `${file} must never assert the ${other.name} database name`,
+    );
+  }
+
+  // Only the fixture workflow may reach the reset at all.
+  const commercial = readFileSync('.github/workflows/phase-e-commercial-deploy.yml', 'utf8');
+  assert.ok(!commercial.includes('reset-fixture'), 'the commercial workflow has no reset step');
+  assert.ok(!commercial.includes('teardown-stripe'), 'the commercial workflow tears down nothing');
+});
+
 // --- arm's-length ------------------------------------------------------------
 
 test('the arm\'s-length filter can only ever downgrade', () => {
