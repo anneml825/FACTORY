@@ -54,16 +54,26 @@ Read, in order:
 
 ## Verification status
 
-Local final verification and the corrected dormant-edge redeployment proof are
-recorded in the completion commit and its documentation. If this paragraph still
-says the proof is pending, do not infer success from the earlier Phase E run: the
-old commercial canary method was invalid because it wrote unsigned deployment
-records into WATCH.
+The corrected dormant-edge proof is GitHub Actions run
+[`32374482792`](https://github.com/anneml825/FACTORY/actions/runs/32374482792), which passed in
+1m29s. It observed the exact `redeployed` build for five consecutive checks, then received the
+normal empty-catalog `404` with no edge-failure header. Final posture was `200`, COMMERCIAL,
+`commercialServing: false`, and zero launch authorizations. Stable secrets and the 2026-08-19
+database identity stamp survived redeploy; a deployment canary survived in
+`edge_deploy_canary`; both WATCH append-only triggers were present; WATCH contained no operational
+canary.
 
-At the time this handoff was authored, the remediation suite passed locally with
-no failures; PostgreSQL-dependent tests skip when `TEST_DATABASE_URL` is absent.
-The deployed commercial edge must remain dormant and must report
-`commercialServing: false`.
+Two prior reproof attempts are evidence-bearing failures rather than hidden history. Run
+`32373686632` proved the four exact invalid canaries were removed, but its empty-table UPDATE
+could not exercise a row trigger. Run `32374094985` passed the route but exposed Cloudflare
+version skew between one matching check and the next posture request. The final workflow uses a
+non-mutating trigger-definition check and requires five consecutive exact build IDs plus an exact
+final build assertion.
+
+The final local suite discovered 127 tests: 121 passed, 6 PostgreSQL-dependent tests skipped
+because this workspace had no `TEST_DATABASE_URL`, and 0 failed (Node duration 813 ms; shell wall
+862 ms). TypeScript passed in 5.06 s; every workflow YAML file parsed; `git diff --check` passed.
+The deployed commercial edge remains dormant.
 
 ## Correctly deferred work and activation conditions
 

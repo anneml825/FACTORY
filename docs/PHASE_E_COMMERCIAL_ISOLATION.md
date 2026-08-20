@@ -1,7 +1,7 @@
 # Fixture and commercial edges: separation, and what is proven
 
-Status: **implemented; historical resource-separation proof is valid, corrected ordinary-route
-redeployment proof pending.** Commercial deploy run
+Status: **implemented and externally re-proven.** Corrected dormant-edge run
+[`32374482792`](https://github.com/anneml825/FACTORY/actions/runs/32374482792) is green. Historical commercial deploy run
 [`32304390962`](https://github.com/anneml825/FACTORY/actions/runs/32304390962)
 and fixture proof run
 [`32304390932`](https://github.com/anneml825/FACTORY/actions/runs/32304390932),
@@ -14,6 +14,10 @@ both at commit `843441e`, both green.
 > contains no commerce, and requires a normal unknown product route to return `404` after
 > redeploy. The historical run remains evidence for resource separation, not for a healthy
 > commercial application route.
+
+The corrected run supplies that missing evidence: the exact redeployed build stabilized, an
+ordinary catalog route returned `404` without an edge-failure header, and final posture remained
+COMMERCIAL with serving off and zero launch authorizations.
 
 Nothing commercial has been served, no product exists, and no launch has been
 authorized. What exists is the machinery underneath those decisions, built so
@@ -82,11 +86,13 @@ and now name the reason in an `x-factory-edge-failure` header.
 * **The identity is stamped once.** `stamped_at` stayed `2026-08-19 21:24:28`
   across four separate deploys — re-running the migration is a no-op, never a
   change.
-* **Historical redeploy persistence was observed, but its canary location was defective.**
-  The corrected workflow writes operational canaries only to `edge_deploy_canary`; WATCH is
-  reserved exclusively for valid signed funnel events.
-* **The commercial journal is append-only in production.** `UPDATE
-  watch_event_inbox` was rejected by the live database.
+* **Corrected redeploy persistence is proven.** Run `32374482792` wrote its operational canary
+  only to `edge_deploy_canary`, redeployed, and read the same canary back. WATCH is reserved
+  exclusively for signed funnel events.
+* **The commercial journal is append-only in production.** The live database exposes both exact
+  no-update and no-delete trigger definitions. An earlier populated-database run also rejected an
+  UPDATE. The corrected empty-WATCH proof is non-mutating because a row trigger cannot fire when
+  an UPDATE matches zero rows.
 * **The fixture proof still passes end to end** — 14 external checks against the
   live fixture edge — and asserts its own posture is `FIXTURE` with commercial
   serving off.
@@ -105,7 +111,11 @@ before its secrets existed, which is exactly a build that answers 503.
 
 Each deploy now carries an `EDGE_BUILD_ID`, `/posture` reports it, and both
 workflows wait for the build under test to be the one answering before they
-measure anything. The gate then measured the skew directly: the fixture run
+measure anything. One corrected commercial run demonstrated that a single match was still too
+weak: its next posture request reached the earlier `closed` build. The commercial gate now
+requires five consecutive exact build IDs and reasserts that exact ID in the final posture.
+Run `32374482792` reached five consecutive matches on attempt 12 and then passed the ordinary
+route and final-posture checks. The earlier fixture gate also measured skew directly: it
 logged `Build 32304390932-1 is live after 12 check(s)` — roughly 22 seconds
 during which the old version was still serving. That is exactly the window the
 earlier runs were measuring in, and with the gate in place the fixture proof

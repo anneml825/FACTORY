@@ -200,7 +200,7 @@ created. That selection belongs with the first real product batch.
 
 ## What is proven, and by what
 
-The current complete local suite discovers 125 tests: 119 pass, 6 PostgreSQL-dependent tests
+The current complete local suite discovers 127 tests: 121 pass, 6 PostgreSQL-dependent tests
 skip when this workspace has no `TEST_DATABASE_URL`, and 0 fail. TypeScript and workflow YAML
 also validate. Earlier Phase E runs exercised the PostgreSQL and public fixture paths; see
 `AGENT_HANDOFF.md` and `docs/PHASE_E_EXTERNAL_PROOF.md` for the evidence boundaries.
@@ -212,11 +212,9 @@ from the database and the transaction permanently `OWNER_TEST` at zero eligible 
 
 ## What remains unverified or deliberately inactive
 
-- **Corrected commercial-route redeployment:** the Worker and D1 bindings have run externally,
-  but the earlier commercial deploy wrote operational canaries into signed WATCH and therefore
-  did not prove a healthy ordinary application route. The corrected manual deploy moves canaries
-  outside WATCH, performs a narrowly fenced cleanup, and requires an unknown product route to
-  return `404`; its new run evidence belongs in `docs/PHASE_E_COMMERCIAL_ISOLATION.md`.
+The corrected commercial-route redeployment is now proven by run `32374482792`; see
+`docs/PHASE_E_COMMERCIAL_ISOLATION.md`. The following remain deliberately inactive:
+
 - **KV fulfillment is intentionally unsupported.** `KvEdgeStateStore.consumeDownload` throws by
   design because KV cannot enforce a download limit atomically. The deployed proof uses D1.
 - **Live Stripe.** Sandbox only, as before.

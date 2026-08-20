@@ -28,7 +28,7 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
 | **Phase B Stripe Managed Payments sandbox adapter** | **`DONE`** — run `32173279299` passed the complete provider-test lifecycle and deactivated all objects |
 | **Phase C ARRIVE + durable WATCH** | **`DONE` as an engineering proof** — temporary DEV publication/analytics/deactivation, attributed Stripe sandbox transaction, PostgreSQL durability, and zero commercial evidence |
-| **Phase E always-on commerce edge + required review remediation** | **`DONE` locally; external re-proof pending** — fixture and dormant commercial Workers/D1 were previously deployed; the approved remediation removes invalid unsigned WATCH canaries, scopes launch grants, completes §9 Value QA, makes inference tranches restartable, and adds durable owner-labor evidence. No commercial serving |
+| **Phase E always-on commerce edge + required review remediation** | **`DONE` and externally re-proven** — run `32374482792` proves the dormant commercial route, stable redeployed build, durable canary outside WATCH, append-only guards, and fail-closed posture. The remediation also scopes launch grants, completes §9 Value QA, makes inference tranches restartable, and adds durable owner-labor evidence. No commercial serving |
 | Live database instance | `BLOCKED` — needs owner Neon account |
 | External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH and DEV publication/measurement plumbing externally exercised; genuine commercial ARRIVE and metered MAKE not started |
 
@@ -109,7 +109,7 @@ transaction and remained excluded from commercial evidence. See
 
 ## Phase E — remediation and commercial readiness
 
-**Status: `DONE` locally for the repair pass; safe commercial-edge redeploy proof pending. Cost: $0.00. No product, no mechanism.**
+**Status: `DONE` for the repair pass and safe dormant-edge redeploy proof. Cost: $0.00. No product, no mechanism.**
 
 An independent read-only review of Phase D found that Factory had no internet-facing component
 at all, that a sub-cent inference cost would have bypassed the Capital Authority entirely, that
@@ -140,7 +140,9 @@ Cloudflare fixture and dormant commercial Workers plus separate D1 databases are
 the free plan. Commercial serving remains false. The earlier commercial deploy proof wrote
 four invalid unsigned canaries into WATCH; the required remediation moves canaries to
 `edge_deploy_canary` and includes a fenced one-time cleanup plus a normal-route `404` smoke
-test. Until that redeploy is green, external remediation status remains pending.
+test. Run `32374482792` is green: the exact redeployed build answered five consecutive posture
+checks, an ordinary missing-product route returned `404` without an edge-failure header, posture
+remained `commercialServing: false`, and the database reported zero launch authorizations.
 
 ---
 
