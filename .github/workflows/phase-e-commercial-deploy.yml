@@ -171,15 +171,24 @@ jobs:
             || { echo "::error::A redeploy lost durable deployment state."; exit 1; }
           echo "The canary written before the redeploy is still present afterwards."
 
-      - name: Prove the commercial journal is append-only
+      # WATCH may correctly be empty on a dormant commercial edge. An UPDATE
+      # of an empty table changes zero rows and therefore cannot exercise a row
+      # trigger. Verify the installed database guards themselves without
+      # polluting WATCH with an operational test event.
+      - name: Prove the commercial journal has both append-only guards
         run: |
-          set +e
-          out=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes \
-            --command "UPDATE watch_event_inbox SET event_type='TAMPERED'" 2>&1)
-          set -e
-          echo "$out" | tail -3
-          echo "$out" | grep -q "append-only" \
-            || { echo "::error::The commercial journal accepted a mutation."; exit 1; }
+          guards=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
+            --command "SELECT name, sql FROM sqlite_master WHERE type='trigger' AND name IN ('watch_event_inbox_no_update','watch_event_inbox_no_delete') ORDER BY name")
+          echo "$guards"
+          echo "$guards" | grep -q 'watch_event_inbox_no_update' \
+            || { echo "::error::WATCH has no no-update trigger."; exit 1; }
+          echo "$guards" | grep -q 'watch_event_inbox_no_delete' \
+            || { echo "::error::WATCH has no no-delete trigger."; exit 1; }
+          count=$(echo "$guards" | grep -o 'watch_event_inbox is append-only' | wc -l | tr -d ' ')
+          if [ "$count" != "2" ]; then
+            echo "::error::WATCH append-only trigger definitions are incomplete."
+            exit 1
+          fi
 
       # Only now, and only if the database itself already carries an owner
       # authorization, may serving be turned on.

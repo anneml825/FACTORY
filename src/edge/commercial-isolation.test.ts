@@ -397,6 +397,14 @@ test('provider-changing and state-writing workflows are manual-only', () => {
   }
 });
 
+test('the dormant-edge append-only proof does not require polluting an empty WATCH journal', () => {
+  const workflow = readFileSync('.github/workflows/phase-e-commercial-deploy.yml', 'utf8');
+  assert.match(workflow, /sqlite_master/);
+  assert.match(workflow, /watch_event_inbox_no_update/);
+  assert.match(workflow, /watch_event_inbox_no_delete/);
+  assert.doesNotMatch(workflow, /UPDATE watch_event_inbox SET event_type='TAMPERED'/);
+});
+
 test('deployment canaries are durable operational state, not WATCH telemetry', async () => {
   const commercial = await database('COMMERCIAL');
   commercial.db.exec(
