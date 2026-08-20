@@ -12,26 +12,9 @@ name: Data Economics Probe
 
 on:
   workflow_dispatch:
-  # Re-measure whenever the source adapters, candidate universe, or pass criteria
-  # change — those are exactly the inputs whose change invalidates a prior result.
-  #
-  # This cannot self-trigger: the run writes only to state/, which is outside the
-  # path filter.
-  #
-  # Deliberately NOT scheduled. The probe is a measurement, not an ongoing job.
-  #
-  # Restricted to the default branch. This job commits its results back to
-  # whatever ref triggered it, so an unrestricted push trigger meant any feature
-  # branch could have a commit appended to it mid-work — including, once there
-  # is one, a branch being deployed commercially. A measurement must not rewrite
-  # the branch it was measured from.
-  push:
-    branches:
-      - claude/factory-autonomous-business-p3h3a1
-    paths:
-      - 'src/evidence/**'
-      - '.github/workflows/data-economics-probe.yml'
-      - 'package.json'
+  # Manual only. This zero-cost probe reads external providers and commits state
+  # back to the triggering branch; neither is an acceptable hidden side effect
+  # of pushing unrelated code.
 
 permissions:
   contents: write
@@ -80,7 +63,7 @@ jobs:
       - name: Commit results
         run: |
           git config user.name "factory-probe"
-          git config user.email "noreply@anthropic.com"
+          git config user.email "factory-probe@users.noreply.github.com"
           git add state/
           if git diff --staged --quiet; then
             echo "No change in probe results."

@@ -36,8 +36,13 @@ export type CommercialCriterionId =
   | 'VERIFIABLE_CORRECTNESS'
   | 'PROVENANCE_RIGHTS'
   | 'FREE_ALTERNATIVE_IDENTIFIED'
+  | 'PAID_ALTERNATIVE_COMPARISON'
   | 'DIFFERENTIATION_VS_ALTERNATIVE'
-  | 'USABILITY_COMPLETENESS';
+  | 'ACCURACY_INTERNAL_CONSISTENCY'
+  | 'USABILITY_COMPLETENESS'
+  | 'PRESENTATION_BUYER_COMPREHENSION'
+  | 'SLOP_REPETITION_HALLUCINATION'
+  | 'PRICE_VALUE_DEFENSIBILITY';
 
 interface CriterionSpec {
   id: CommercialCriterionId;
@@ -52,6 +57,13 @@ export const COMMERCIAL_VALUE_QA_CRITERIA: readonly CriterionSpec[] = [
     id: 'PROMISE_FULFILLED',
     requirement:
       'An executed check demonstrates that the artifact actually produces the outcome the manifest promises.',
+    verification: 'DETERMINISTIC',
+    escalatable: false,
+  },
+  {
+    id: 'PAID_ALTERNATIVE_COMPARISON',
+    requirement:
+      'At least one relevant paid alternative is identified with price, retrieval time, and a concrete quality comparison.',
     verification: 'DETERMINISTIC',
     escalatable: false,
   },
@@ -91,9 +103,37 @@ export const COMMERCIAL_VALUE_QA_CRITERIA: readonly CriterionSpec[] = [
     escalatable: false,
   },
   {
+    id: 'ACCURACY_INTERNAL_CONSISTENCY',
+    requirement:
+      'Executed consistency checks and an independent review find no accuracy or internal-consistency defect.',
+    verification: 'MODEL_REVIEW',
+    escalatable: false,
+  },
+  {
     id: 'USABILITY_COMPLETENESS',
     requirement:
       'The artifact is complete and usable by the named buyer without missing parts, confirmed by an independent model review.',
+    verification: 'MODEL_REVIEW',
+    escalatable: false,
+  },
+  {
+    id: 'PRESENTATION_BUYER_COMPREHENSION',
+    requirement:
+      'An independent review confirms that the named buyer can understand the offer and use the presented artifact.',
+    verification: 'MODEL_REVIEW',
+    escalatable: false,
+  },
+  {
+    id: 'SLOP_REPETITION_HALLUCINATION',
+    requirement:
+      'An independent review checks repetition, filler, hallucination, broken output, and obvious AI slop.',
+    verification: 'MODEL_REVIEW',
+    escalatable: false,
+  },
+  {
+    id: 'PRICE_VALUE_DEFENSIBILITY',
+    requirement:
+      'The asking price has a concrete value justification relative to free and paid alternatives, confirmed independently.',
     verification: 'MODEL_REVIEW',
     escalatable: false,
   },
@@ -131,6 +171,15 @@ export interface FreeAlternativeRecord {
   substantiveOverlap: SubstantiveOverlap;
 }
 
+export interface PaidAlternativeRecord {
+  name: string;
+  url: string;
+  retrievedAt: string;
+  priceCents: number;
+  currency: string;
+  concreteComparison: string;
+}
+
 export interface DifferentiationClaim {
   claim: string;
   /** How a sceptical buyer could confirm the claim without trusting Factory. */
@@ -138,6 +187,8 @@ export interface DifferentiationClaim {
 }
 
 export interface ModelReviewRecord {
+  evidenceId: string;
+  artifactSha256: string;
   criterionId: CommercialCriterionId;
   reviewerProviderId: string;
   reviewerModelId: string;
@@ -147,10 +198,22 @@ export interface ModelReviewRecord {
 }
 
 export interface OwnerExceptionRecord {
+  evidenceId: string;
+  artifactSha256: string;
   criterionId: CommercialCriterionId;
   ownerInterventionId: string;
   reason: string;
   recordedAt: string;
+}
+
+/**
+ * The QA function does not trust caller-supplied IDs. A production resolver
+ * checks append-only PostgreSQL evidence; tests may use an explicit allow-list.
+ */
+export interface CommercialQaEvidenceResolver {
+  verifyModelReview(record: ModelReviewRecord): Promise<boolean>;
+  verifyOwnerException(record: OwnerExceptionRecord): Promise<boolean>;
+  readonly source: string;
 }
 
 export interface CommercialValueQaInput {
@@ -166,7 +229,10 @@ export interface CommercialValueQaInput {
   sources: SourceRecord[];
   originalWorkAttestation: string | null;
   freeAlternative: FreeAlternativeRecord | null;
+  paidAlternatives: PaidAlternativeRecord[];
   differentiation: DifferentiationClaim[];
+  accuracyChecks: ExecutedCheck[];
+  priceJustification: string;
   modelReviews: ModelReviewRecord[];
   ownerExceptions: OwnerExceptionRecord[];
 }
@@ -302,13 +368,29 @@ class CriterionBuilder {
   }
 }
 
-export function runCommercialValueQa(input: CommercialValueQaInput): QaResult {
-  const builder = new CriterionBuilder(input.ownerExceptions);
+export async function runCommercialValueQa(
+  input: CommercialValueQaInput,
+  resolver: CommercialQaEvidenceResolver,
+): Promise<QaResult> {
   const { manifest, artifact } = input;
 
   if (manifest.noncommercialFixture) {
     throw new TypeError('Commercial Value QA received a noncommercial fixture manifest.');
   }
+
+  const verifiedReviews = new Set<string>();
+  for (const review of input.modelReviews) {
+    if (review.artifactSha256 === artifact.sha256 && await resolver.verifyModelReview(review)) {
+      verifiedReviews.add(review.evidenceId);
+    }
+  }
+  const verifiedExceptions: OwnerExceptionRecord[] = [];
+  for (const exception of input.ownerExceptions) {
+    if (exception.artifactSha256 === artifact.sha256 && await resolver.verifyOwnerException(exception)) {
+      verifiedExceptions.push(exception);
+    }
+  }
+  const builder = new CriterionBuilder(verifiedExceptions);
 
   // --- PROMISE_FULFILLED ----------------------------------------------------
   const promise = manifest.promise?.trim() ?? '';
@@ -432,6 +514,23 @@ export function runCommercialValueQa(input: CommercialValueQaInput): QaResult {
   }
   builder.passIfClean('FREE_ALTERNATIVE_IDENTIFIED');
 
+  // --- PAID_ALTERNATIVE_COMPARISON ----------------------------------------
+  if (input.paidAlternatives.length === 0) {
+    builder.fail('PAID_ALTERNATIVE_COMPARISON', 'No relevant paid alternative was compared.');
+  }
+  for (const paid of input.paidAlternatives) {
+    if (!paid.name.trim() || !httpUrl(paid.url) || !isoTimestamp(paid.retrievedAt)) {
+      builder.fail('PAID_ALTERNATIVE_COMPARISON', 'A paid alternative lacks a name, URL, or retrieval timestamp.');
+    }
+    if (!Number.isInteger(paid.priceCents) || paid.priceCents <= 0 || !/^[A-Z]{3}$/.test(paid.currency)) {
+      builder.fail('PAID_ALTERNATIVE_COMPARISON', `Paid alternative ${paid.name || '(unnamed)'} has an invalid price.`);
+    }
+    if (paid.concreteComparison.trim().length < 20) {
+      builder.fail('PAID_ALTERNATIVE_COMPARISON', `Paid alternative ${paid.name || '(unnamed)'} lacks a concrete comparison.`);
+    }
+  }
+  builder.passIfClean('PAID_ALTERNATIVE_COMPARISON');
+
   // --- DIFFERENTIATION_VS_ALTERNATIVE --------------------------------------
   const requiredClaims = alternative?.substantiveOverlap === 'SUBSTANTIAL' ? 2 : 1;
   if (input.differentiation.length < requiredClaims) {
@@ -455,8 +554,20 @@ export function runCommercialValueQa(input: CommercialValueQaInput): QaResult {
       );
     }
   }
-  applyModelReview(builder, input, 'DIFFERENTIATION_VS_ALTERNATIVE');
+  applyModelReview(builder, input, 'DIFFERENTIATION_VS_ALTERNATIVE', verifiedReviews, resolver.source);
   builder.passIfClean('DIFFERENTIATION_VS_ALTERNATIVE');
+
+  // --- ACCURACY_INTERNAL_CONSISTENCY --------------------------------------
+  if (input.accuracyChecks.length === 0) {
+    builder.fail('ACCURACY_INTERNAL_CONSISTENCY', 'No accuracy/internal-consistency check was executed.');
+  }
+  for (const accuracy of input.accuracyChecks) {
+    if (!accuracy.executed || !accuracy.passed || accuracy.evidence.length === 0) {
+      builder.fail('ACCURACY_INTERNAL_CONSISTENCY', `Accuracy check ${accuracy.checkId} did not pass with evidence.`);
+    }
+  }
+  applyModelReview(builder, input, 'ACCURACY_INTERNAL_CONSISTENCY', verifiedReviews, resolver.source);
+  builder.passIfClean('ACCURACY_INTERNAL_CONSISTENCY');
 
   // --- USABILITY_COMPLETENESS ----------------------------------------------
   if (artifact.bytes.length < MINIMUM_USABLE_ARTIFACT_BYTES) {
@@ -468,8 +579,19 @@ export function runCommercialValueQa(input: CommercialValueQaInput): QaResult {
   if (!manifest.buyer.trim() || !manifest.problem.trim()) {
     builder.fail('USABILITY_COMPLETENESS', 'Usability cannot be assessed without a named buyer and problem.');
   }
-  applyModelReview(builder, input, 'USABILITY_COMPLETENESS');
+  applyModelReview(builder, input, 'USABILITY_COMPLETENESS', verifiedReviews, resolver.source);
   builder.passIfClean('USABILITY_COMPLETENESS');
+
+  // --- PRESENTATION / SLOP / PRICE ----------------------------------------
+  applyModelReview(builder, input, 'PRESENTATION_BUYER_COMPREHENSION', verifiedReviews, resolver.source);
+  builder.passIfClean('PRESENTATION_BUYER_COMPREHENSION');
+  applyModelReview(builder, input, 'SLOP_REPETITION_HALLUCINATION', verifiedReviews, resolver.source);
+  builder.passIfClean('SLOP_REPETITION_HALLUCINATION');
+  if (input.priceJustification.trim().length < 40) {
+    builder.fail('PRICE_VALUE_DEFENSIBILITY', 'Price justification is not substantive.');
+  }
+  applyModelReview(builder, input, 'PRICE_VALUE_DEFENSIBILITY', verifiedReviews, resolver.source);
+  builder.passIfClean('PRICE_VALUE_DEFENSIBILITY');
 
   builder.applyEscalations();
 
@@ -493,6 +615,8 @@ function applyModelReview(
   builder: CriterionBuilder,
   input: CommercialValueQaInput,
   criterionId: CommercialCriterionId,
+  verifiedReviews: ReadonlySet<string>,
+  resolverSource: string,
 ): void {
   const reviews = input.modelReviews.filter((review) => review.criterionId === criterionId);
   if (reviews.length === 0) {
@@ -500,6 +624,13 @@ function applyModelReview(
     return;
   }
   for (const review of reviews) {
+    if (!verifiedReviews.has(review.evidenceId)) {
+      builder.fail(
+        criterionId,
+        `Model review ${review.evidenceId || '(missing ID)'} was not resolved against durable artifact-hashed evidence.`,
+      );
+      continue;
+    }
     if (review.verdict !== 'PASS') {
       builder.fail(criterionId, `Model review returned ${review.verdict}: ${review.rationale}`);
       continue;
@@ -522,6 +653,10 @@ function applyModelReview(
       );
       continue;
     }
-    builder.evidence(criterionId, `Reviewed by ${review.reviewerProviderId}/${review.reviewerModelId}.`);
+    builder.evidence(
+      criterionId,
+      `Durable evidence ${review.evidenceId} resolved by ${resolverSource}; reviewed by ` +
+        `${review.reviewerProviderId}/${review.reviewerModelId}.`,
+    );
   }
 }

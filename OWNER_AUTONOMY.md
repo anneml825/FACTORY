@@ -114,15 +114,16 @@ argued from evidence. It is never automatic.
 GitHub's secret store — **not pasted into an agent session**. It is not a bank or payout
 credential.
 
-### Phase E — always-on commerce edge (not yet requested)
+### Phase E — always-on commerce edge (setup completed)
 
-Phase E built the edge but did not deploy it. Deploying is owner setup, and it is stated here
-so the next agent inherits a known quantity rather than a discovery.
+The owner completed the Cloudflare/GitHub setup and Factory deployed separate fixture and
+dormant commercial Workers/D1 databases on the free plan. No public commercial identity,
+product, or serving authorization exists.
 
 | # | Action | Why a human | Est. | Recurring | Automatable |
 |---|---|---|---|---|---|
-| E1 | Create a Cloudflare account and an API token scoped to Workers + R2 | Account creation requires identity | 10–15 min | No | No |
-| E2 | Provision one R2 bucket and one D1 database, then set four Worker secrets | Provisioning is bound to the account | 5–10 min | No | No |
+| E1 | Create Cloudflare account and scoped Workers/D1 API token | Account creation requires identity | completed | No | No |
+| E2 | Provision separate fixture/commercial Workers and D1 databases; set Worker secrets | Provisioning is bound to the account | completed | No | No |
 
 **What it unlocks:** a permanent product page, a first-party exposure/view/click denominator
 for every future ARRIVE mechanism, an always-on Stripe webhook endpoint, and signed
@@ -133,8 +134,7 @@ are published by API into the same edge.
 provider's own interface or GitHub's secret store. It is **not** a bank, card, or payout
 credential, and it must never be pasted into an agent session.
 
-**Not yet requested.** It is only worth spending when the next agent is ready to consume it
-immediately — the same rule that deferred the inference credential.
+No further Cloudflare owner setup is requested by the Phase E remediation.
 
 **D1, not KV, for the download counter.** KV cannot enforce a download limit atomically;
 `KvEdgeStateStore.consumeDownload` throws rather than silently handing out unlimited downloads.

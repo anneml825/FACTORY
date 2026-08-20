@@ -159,12 +159,15 @@ export function createEdgeHandler(env: EdgeEnvironment): (request: Request) => P
       return buyClick(env, request, segments[1]);
     }
     if (url.pathname === '/webhooks/stripe' && request.method === 'POST') {
+      if (env.commerceReady === false) return text('Commerce is not configured.', 503);
       return stripeWebhook(env, request);
     }
     if (url.pathname === '/thanks' && request.method === 'GET') {
+      if (env.commerceReady === false) return text('Commerce is not configured.', 503);
       return thanks(env, url);
     }
     if (segments[0] === 'd' && segments[1] && request.method === 'GET') {
+      if (env.commerceReady === false) return text('Commerce is not configured.', 503);
       return deliver(env, segments.slice(1).join('/'));
     }
     return text('Not found.', 404);

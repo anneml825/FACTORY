@@ -26,6 +26,7 @@ import type { TransactionClassification } from '../portfolio/types.ts';
 const SCHEMA = readFileSync('db/edge/schema.sql', 'utf8');
 const RESET = readFileSync('db/edge/reset-fixture.sql', 'utf8');
 const ORIGIN = 'https://factory-edge.workers.dev';
+const SCOPE_DIGEST = 'a'.repeat(64);
 
 async function database(purpose: 'FIXTURE' | 'COMMERCIAL' | null): Promise<SqliteD1> {
   const db = new SqliteD1();
@@ -33,7 +34,7 @@ async function database(purpose: 'FIXTURE' | 'COMMERCIAL' | null): Promise<Sqlit
   if (purpose) {
     db.db.exec(
       `INSERT OR IGNORE INTO edge_deployment_identity (singleton, purpose, database_label, schema_version)
-       VALUES (1, '${purpose}', 'test-${purpose.toLowerCase()}', 2)`,
+       VALUES (1, '${purpose}', 'test-${purpose.toLowerCase()}', 3)`,
     );
   }
   const artifact = fixtureArtifact();
@@ -54,6 +55,8 @@ function env(db: SqliteD1, overrides: Partial<WorkerEnv> = {}): WorkerEnv {
     EDGE_DELIVERY_SECRET: 'isolation-delivery',
     EDGE_INTERNAL_TRAFFIC_TOKEN: 'isolation-internal',
     FIXTURE_CHECKOUT_URL: 'https://buy.stripe.com/test_isolation',
+    OWNER_IDENTITY_MARKERS: 'owner@factory.invalid',
+    COMMERCIAL_SCOPE_DIGEST: SCOPE_DIGEST,
     ...overrides,
   };
 }
@@ -72,7 +75,9 @@ async function posture(db: SqliteD1, overrides: Partial<WorkerEnv> = {}) {
 
 function authorize(db: SqliteD1): void {
   db.db.exec(
-    "INSERT INTO commercial_launch_authorization (authorized_by, scope_note) VALUES ('owner', 'test')",
+    `INSERT INTO commercial_launch_grant
+       (authorization_key, scope_kind, scope_digest, expires_at, authorized_by, scope_note)
+     VALUES ('authorization-test', 'DEPLOYMENT', '${SCOPE_DIGEST}', '2099-01-01T00:00:00.000Z', 'owner', 'test')`,
   );
 }
 
@@ -86,6 +91,22 @@ test('commercial serving needs the variable, the purpose, and an authorization',
   assert.equal(
     (await posture(commercial, { COMMERCIAL_SERVING: 'enabled' })).commercialServing,
     true,
+  );
+  assert.equal(
+    (await posture(commercial, {
+      COMMERCIAL_SERVING: 'enabled',
+      COMMERCIAL_SCOPE_DIGEST: 'b'.repeat(64),
+    })).commercialServing,
+    false,
+    'authorization for one scope cannot enable another scope',
+  );
+  assert.equal(
+    (await posture(commercial, {
+      COMMERCIAL_SERVING: 'enabled',
+      OWNER_IDENTITY_MARKERS: ' , ',
+    })).commercialServing,
+    false,
+    'empty normalized owner markers cannot enable commercial serving',
   );
 
   // Remove any one of the three and serving stops.
@@ -101,6 +122,19 @@ test('commercial serving needs the variable, the purpose, and an authorization',
     (await posture(unauthorized, { COMMERCIAL_SERVING: 'enabled' })).commercialServing,
     false,
     'an authorized variable is not an authorized launch',
+  );
+
+  const expired = await database('COMMERCIAL');
+  expired.db.exec(
+    `INSERT INTO commercial_launch_grant
+       (authorization_key, scope_kind, scope_digest, expires_at, authorized_by, scope_note)
+     VALUES ('authorization-expired', 'DEPLOYMENT', '${SCOPE_DIGEST}',
+       '2020-01-01T00:00:00.000Z', 'owner', 'expired test')`,
+  );
+  assert.equal(
+    (await posture(expired, { COMMERCIAL_SERVING: 'enabled' })).commercialServing,
+    false,
+    'expired authorization cannot serve',
   );
 
   const fixture = await database('FIXTURE');
@@ -122,7 +156,7 @@ test('an unstamped or unreadable database is never commercial', async () => {
   // than fail, but must still refuse to call itself commercial.
   const bare = new SqliteD1();
   bare.applySchema(SCHEMA);
-  bare.db.exec('DROP TABLE commercial_launch_authorization');
+  bare.db.exec('DROP TABLE commercial_launch_grant');
   const degraded = await posture(bare, { COMMERCIAL_SERVING: 'enabled' });
   assert.equal(degraded.deploymentPurpose, 'UNKNOWN');
   assert.equal(degraded.commercialServing, false);
@@ -133,7 +167,7 @@ test('posture and liveness answer even when the edge cannot serve', async () => 
   // The state a commercial edge sits in before it has anything to sell: a real
   // database, no Stripe secret, no listing. It must still be inspectable.
   const commercial = await database('COMMERCIAL');
-  const bare = { EDGE_DB: commercial } as unknown as WorkerEnv;
+  const bare = { EDGE_DB: commercial, WATCH_EVENT_SECRET: 'isolation-watch' } as WorkerEnv;
 
   assert.equal((await worker.fetch(new Request(`${ORIGIN}/healthz`), bare)).status, 200);
 
@@ -149,16 +183,22 @@ test('posture and liveness answer even when the edge cannot serve', async () => 
   assert.equal(seen.deploymentPurpose, 'COMMERCIAL');
   assert.equal(seen.commercialServing, false);
   assert.deepEqual(seen.missingConfiguration.sort(), [
+    'COMMERCIAL_SCOPE_DIGEST',
     'EDGE_DELIVERY_SECRET',
     'EDGE_INTERNAL_TRAFFIC_TOKEN',
+    'OWNER_IDENTITY_MARKERS',
     'STRIPE_WEBHOOK_SECRET',
-    'WATCH_EVENT_SECRET',
   ]);
 
-  // Commerce routes still fail closed, and say why in a header.
+  // A normal empty-catalog route exercises WATCH replay and reaches the
+  // application. Credential-dependent commerce routes still fail closed.
   const refused = await worker.fetch(new Request(`${ORIGIN}/p/anything`), bare);
-  assert.equal(refused.status, 503);
-  assert.match(refused.headers.get('x-factory-edge-failure') ?? '', /misconfigured/);
+  assert.equal(refused.status, 404);
+  assert.equal(refused.headers.get('x-factory-edge-failure'), null);
+  assert.equal(
+    (await worker.fetch(new Request(`${ORIGIN}/webhooks/stripe`, { method: 'POST' }), bare)).status,
+    503,
+  );
 });
 
 test('posture reports the build that is answering', async () => {
@@ -191,7 +231,7 @@ test('a database cannot be repurposed once stamped', async () => {
   // Re-stamping is a no-op, never a change.
   commercial.db.exec(
     `INSERT OR IGNORE INTO edge_deployment_identity (singleton, purpose, database_label, schema_version)
-     VALUES (1, 'FIXTURE', 'someone-elses-label', 2)`,
+     VALUES (1, 'FIXTURE', 'someone-elses-label', 3)`,
   );
   const row = commercial.db.prepare('SELECT purpose FROM edge_deployment_identity').get() as {
     purpose: string;
@@ -199,17 +239,26 @@ test('a database cannot be repurposed once stamped', async () => {
   assert.equal(row.purpose, 'COMMERCIAL');
 });
 
-test('launch authorizations are append-only', async () => {
+test('launch grants and revocations are scoped, expiring, revocable, and append-only', async () => {
   const commercial = await database('COMMERCIAL');
   authorize(commercial);
   assert.throws(
-    () => commercial.db.exec("UPDATE commercial_launch_authorization SET authorized_by = 'someone'"),
+    () => commercial.db.exec("UPDATE commercial_launch_grant SET authorized_by = 'someone'"),
     /append-only/,
   );
   assert.throws(
-    () => commercial.db.exec('DELETE FROM commercial_launch_authorization'),
+    () => commercial.db.exec('DELETE FROM commercial_launch_grant'),
     /append-only/,
   );
+  commercial.db.exec(
+    "INSERT INTO commercial_launch_revocation (revocation_key, authorization_key, revoked_by, reason) " +
+      "VALUES ('revoke-test', 'authorization-test', 'owner', 'test stop')",
+  );
+  assert.equal(
+    (await posture(commercial, { COMMERCIAL_SERVING: 'enabled' })).commercialServing,
+    false,
+  );
+  assert.throws(() => commercial.db.exec('DELETE FROM commercial_launch_revocation'), /append-only/);
 });
 
 // --- the reset --------------------------------------------------------------
@@ -257,7 +306,7 @@ test('applying the schema to a populated database preserves every durable row', 
     ['watch_event_inbox', 1],
     ['stripe_transaction_reference', 1],
     ['delivery_grant', 1],
-    ['commercial_launch_authorization', 1],
+    ['commercial_launch_grant', 1],
   ] as const) {
     const row = commercial.db.prepare(`SELECT count(*) AS n FROM ${table}`).get() as { n: number };
     assert.equal(row.n, expected, `${table} survived a repeated schema apply`);
@@ -330,6 +379,39 @@ test('each workflow names the target it declares, and only that one', () => {
   const commercial = readFileSync('.github/workflows/phase-e-commercial-deploy.yml', 'utf8');
   assert.ok(!commercial.includes('reset-fixture'), 'the commercial workflow has no reset step');
   assert.ok(!commercial.includes('teardown-stripe'), 'the commercial workflow tears down nothing');
+  assert.ok(!commercial.includes('INSERT INTO watch_event_inbox'), 'deploy canaries never enter WATCH');
+  assert.match(commercial, /INSERT INTO edge_deploy_canary/);
+});
+
+test('provider-changing and state-writing workflows are manual-only', () => {
+  for (const file of [
+    '.github/workflows/phase-e-edge-deploy.yml',
+    '.github/workflows/phase-e-commercial-deploy.yml',
+    '.github/workflows/phase-e-cloudflare-preflight.yml',
+    '.github/workflows/data-economics-probe.yml',
+  ]) {
+    const workflow = readFileSync(file, 'utf8');
+    assert.match(workflow, /^  workflow_dispatch:/m, `${file} has an explicit manual trigger`);
+    assert.doesNotMatch(workflow, /^  push:/m, `${file} cannot mutate a provider or state on push`);
+    assert.doesNotMatch(workflow, /^  schedule:/m, `${file} cannot mutate a provider or state on a schedule`);
+  }
+});
+
+test('deployment canaries are durable operational state, not WATCH telemetry', async () => {
+  const commercial = await database('COMMERCIAL');
+  commercial.db.exec(
+    "INSERT INTO edge_deploy_canary (canary_id, build_id, purpose) VALUES ('c1', 'build-1', 'COMMERCIAL')",
+  );
+  commercial.db.exec(SCHEMA);
+  assert.equal(
+    (commercial.db.prepare('SELECT count(*) AS n FROM edge_deploy_canary').get() as { n: number }).n,
+    1,
+  );
+  assert.equal(
+    (commercial.db.prepare('SELECT count(*) AS n FROM watch_event_inbox').get() as { n: number }).n,
+    0,
+  );
+  assert.throws(() => commercial.db.exec('DELETE FROM edge_deploy_canary'), /append-only/);
 });
 
 // --- arm's-length ------------------------------------------------------------

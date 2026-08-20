@@ -131,7 +131,7 @@ request `CONSTITUTION.md` §8 is meant to prevent.
 | Dashboard | **Markdown committed to repo** | $0 | Read on GitHub from any device. No hosting, no ToS question |
 | Web hosting | **None at bootstrap; superseded by ADR-5** | $0 | Vercel Hobby is non-commercial-use; Pro is ~$20/mo = 40% of capital monthly. Phase E replaced the MoR-page assumption with a Factory-owned Cloudflare edge at $0 fixed burn — see `ARCHITECTURE.md` ADR-5 |
 | Model inference | Provider-neutral adapter registry | $0 through Phase E | Per-task capability/quality/micro-cost routing; no provider or credential selected. Nonzero calls are mediated by Capital Authority against the **`discovery`** bucket, reserved per tranche and settled on the aggregate (`docs/PHASE_E_REMEDIATION.md`) |
-| Edge hosting + object storage | **Cloudflare Workers + R2 + D1** (built, **not deployed**) | $0 within free limits | Supersedes "no web hosting at bootstrap": MoR pages give no first-party measurement and cannot deliver a file. Owner setup E1–E2 in `OWNER_AUTONOMY.md` |
+| Edge hosting + object storage | **Cloudflare Workers + D1** (fixture + dormant commercial edges deployed); R2 deferred | $0 within measured free-plan use | Separate Workers/D1 databases provide first-party measurement, webhook reception, and fixture delivery. Commercial serving is fail-closed; real artifacts require R2 before binary delivery |
 
 **Target fixed monthly burn at bootstrap: $0.00.**
 

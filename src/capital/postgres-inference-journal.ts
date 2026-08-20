@@ -12,6 +12,7 @@ import {
   UsageJournalConflictError,
   type InferenceUsageJournal,
   type InferenceUsageRecord,
+  type InferenceTrancheJournalRecord,
 } from './inference-accounting.ts';
 
 interface UsageRow {
@@ -26,6 +27,34 @@ interface UsageRow {
   output_tokens: number;
   cost_micros: string;
   recorded_at: Date;
+}
+
+interface TrancheRow {
+  tranche_id: string;
+  bucket_name: string;
+  reservation_idempotency_key: string;
+  maximum_micros: string;
+  reserved_cents: number;
+  exact_micros: string | null;
+  settled_cents: number | null;
+  closed_at: Date | null;
+}
+
+function toTranche(row: TrancheRow): InferenceTrancheJournalRecord {
+  return {
+    trancheId: row.tranche_id,
+    bucketName: row.bucket_name,
+    reservationIdempotencyKey: row.reservation_idempotency_key,
+    maximumMicros: Number(row.maximum_micros),
+    reservedCents: row.reserved_cents,
+    exactMicros: row.exact_micros === null ? null : Number(row.exact_micros),
+    settledCents: row.settled_cents,
+    closedAt: row.closed_at?.toISOString() ?? null,
+  };
+}
+
+function sameUsage(a: InferenceUsageRecord, b: InferenceUsageRecord): boolean {
+  return (Object.keys(a) as (keyof InferenceUsageRecord)[]).every((key) => a[key] === b[key]);
 }
 
 function toRecord(row: UsageRow): InferenceUsageRecord {
@@ -49,6 +78,50 @@ export class PostgresInferenceUsageJournal implements InferenceUsageJournal {
 
   constructor(pool: Pool) {
     this.pool = pool;
+  }
+
+  async ensureTranche(record: InferenceTrancheJournalRecord): Promise<InferenceTrancheJournalRecord> {
+    await this.pool.query(
+      `INSERT INTO inference_tranche
+         (tranche_id, bucket_name, reservation_idempotency_key, maximum_micros, reserved_cents)
+       VALUES ($1, $2, $3, $4, $5) ON CONFLICT (tranche_id) DO NOTHING`,
+      [record.trancheId, record.bucketName, record.reservationIdempotencyKey, record.maximumMicros, record.reservedCents],
+    );
+    const result = await this.pool.query<TrancheRow>(
+      'SELECT * FROM inference_tranche WHERE tranche_id=$1',
+      [record.trancheId],
+    );
+    const prior = result.rows[0] ? toTranche(result.rows[0]) : null;
+    if (!prior) throw new UsageJournalConflictError(`Tranche ${record.trancheId} could not be read back.`);
+    if (
+      prior.bucketName !== record.bucketName ||
+      prior.reservationIdempotencyKey !== record.reservationIdempotencyKey ||
+      prior.maximumMicros !== record.maximumMicros ||
+      prior.reservedCents !== record.reservedCents
+    ) {
+      throw new UsageJournalConflictError(`Tranche ${record.trancheId} was reopened with different semantics.`);
+    }
+    return prior;
+  }
+
+  async closeTranche(input: {
+    trancheId: string; exactMicros: number; settledCents: number; closedAt: string;
+  }): Promise<InferenceTrancheJournalRecord> {
+    await this.pool.query(
+      `UPDATE inference_tranche SET exact_micros=$2, settled_cents=$3, closed_at=$4
+       WHERE tranche_id=$1 AND closed_at IS NULL`,
+      [input.trancheId, input.exactMicros, input.settledCents, input.closedAt],
+    );
+    const result = await this.pool.query<TrancheRow>(
+      'SELECT * FROM inference_tranche WHERE tranche_id=$1',
+      [input.trancheId],
+    );
+    const prior = result.rows[0] ? toTranche(result.rows[0]) : null;
+    if (!prior) throw new UsageJournalConflictError(`Tranche ${input.trancheId} could not be read back.`);
+    if (prior.exactMicros !== input.exactMicros || prior.settledCents !== input.settledCents || !prior.closedAt) {
+      throw new UsageJournalConflictError(`Tranche ${input.trancheId} closed with different totals.`);
+    }
+    return prior;
   }
 
   async append(record: InferenceUsageRecord): Promise<{ appended: boolean; duplicate: boolean }> {
@@ -81,7 +154,7 @@ export class PostgresInferenceUsageJournal implements InferenceUsageJournal {
     );
     const prior = existing.rows[0] ? toRecord(existing.rows[0]) : null;
     if (!prior) throw new UsageJournalConflictError(`Usage ${record.usageId} could not be read back.`);
-    if (prior.costMicros !== record.costMicros || prior.experimentId !== record.experimentId) {
+    if (!sameUsage(prior, record)) {
       throw new UsageJournalConflictError(
         `Usage ${record.usageId} was re-recorded with different values; the journal is append-only.`,
       );

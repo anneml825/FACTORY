@@ -1,6 +1,10 @@
 import { assertPublicationGates, transition } from './state-machine.ts';
 import { runFixtureValueQa, runFunctionalQa } from './renderers.ts';
-import { runCommercialValueQa, type CommercialValueQaInput } from './commercial-value-qa.ts';
+import {
+  runCommercialValueQa,
+  type CommercialQaEvidenceResolver,
+  type CommercialValueQaInput,
+} from './commercial-value-qa.ts';
 import { evaluateExperiment } from './evaluator.ts';
 import type { ArriveAdapter, MakeAdapter, PutAdapter, WatchAdapter } from './ports.ts';
 import { CostController } from './cost-control.ts';
@@ -19,6 +23,7 @@ export class PhaseAEngine {
   private readonly arrive: ArriveAdapter;
   private readonly watch: WatchAdapter;
   private readonly costs: CostController;
+  private readonly commercialQaEvidenceResolver: CommercialQaEvidenceResolver | null;
   private readonly records = new Map<string, ExperimentRecord>();
   /**
    * FIXTURE is the default and is what every Phase A-D caller gets. COMMERCIAL
@@ -34,6 +39,7 @@ export class PhaseAEngine {
     watch: WatchAdapter;
     costs?: CostController;
     mode?: QaMode;
+    commercialQaEvidenceResolver?: CommercialQaEvidenceResolver;
   }) {
     this.make = dependencies.make;
     this.put = dependencies.put;
@@ -41,6 +47,7 @@ export class PhaseAEngine {
     this.watch = dependencies.watch;
     this.costs = dependencies.costs ?? new CostController();
     this.mode = dependencies.mode ?? 'FIXTURE';
+    this.commercialQaEvidenceResolver = dependencies.commercialQaEvidenceResolver ?? null;
   }
 
   register(manifest: AssetManifest): ExperimentRecord {
@@ -113,10 +120,15 @@ export class PhaseAEngine {
    * contract requires. Omitting it fails closed; there is no "assume it passed"
    * branch, because that is precisely how a Value QA gate becomes decorative.
    */
+  valueQa(experimentId: string): ExperimentRecord;
+  valueQa(
+    experimentId: string,
+    commercial: Omit<CommercialValueQaInput, 'manifest' | 'artifact'>,
+  ): Promise<ExperimentRecord>;
   valueQa(
     experimentId: string,
     commercial?: Omit<CommercialValueQaInput, 'manifest' | 'artifact'>,
-  ): ExperimentRecord {
+  ): ExperimentRecord | Promise<ExperimentRecord> {
     const record = this.get(experimentId);
     if (record.state !== 'FUNCTIONAL_QA_PASS') {
       throw new Error('Value QA requires FUNCTIONAL_QA_PASS state.');
@@ -126,20 +138,29 @@ export class PhaseAEngine {
       if (!commercial) {
         throw new Error('Commercial Value QA requires the commercial evidence bundle; refusing to pass by default.');
       }
-      record.valueQa = runCommercialValueQa({
-        ...commercial,
-        manifest: record.manifest,
-        artifact: record.artifact,
-      });
-      if (!record.valueQa.passed) {
-        throw new Error(`Commercial Value QA failed: ${record.valueQa.failures.join(' | ')}`);
+      if (!this.commercialQaEvidenceResolver) {
+        throw new Error('Commercial Value QA requires a durable evidence resolver.');
       }
-      transition(record, 'VALUE_QA_PASS', 'mandatory commercial Value QA passed');
-      return record;
+      return this.runCommercialValueQa(record, commercial);
     }
     record.valueQa = runFixtureValueQa(record.manifest);
     if (!record.valueQa.passed) throw new Error('Fixture Value QA failed.');
     transition(record, 'VALUE_QA_PASS', 'mandatory fixture Value QA passed');
+    return record;
+  }
+
+  private async runCommercialValueQa(
+    record: ExperimentRecord,
+    commercial: Omit<CommercialValueQaInput, 'manifest' | 'artifact'>,
+  ): Promise<ExperimentRecord> {
+    record.valueQa = await runCommercialValueQa(
+      { ...commercial, manifest: record.manifest, artifact: record.artifact as NonNullable<typeof record.artifact> },
+      this.commercialQaEvidenceResolver as CommercialQaEvidenceResolver,
+    );
+    if (!record.valueQa.passed) {
+      throw new Error(`Commercial Value QA failed: ${record.valueQa.failures.join(' | ')}`);
+    }
+    transition(record, 'VALUE_QA_PASS', 'mandatory commercial Value QA passed against durable evidence');
     return record;
   }
 

@@ -105,15 +105,67 @@ export interface InferenceUsageRecord {
  * record of what the cent-denominated ledger rounded.
  */
 export interface InferenceUsageJournal {
+  ensureTranche(record: InferenceTrancheJournalRecord): Promise<InferenceTrancheJournalRecord>;
+  closeTranche(input: {
+    trancheId: string;
+    exactMicros: number;
+    settledCents: number;
+    closedAt: string;
+  }): Promise<InferenceTrancheJournalRecord>;
   append(record: InferenceUsageRecord): Promise<{ appended: boolean; duplicate: boolean }>;
   totalMicrosForTranche(trancheId: string): Promise<number>;
   totalMicrosForExperiment(experimentId: string): Promise<number>;
   records(trancheId: string): Promise<InferenceUsageRecord[]>;
 }
 
+export interface InferenceTrancheJournalRecord {
+  trancheId: string;
+  bucketName: string;
+  reservationIdempotencyKey: string;
+  maximumMicros: number;
+  reservedCents: number;
+  exactMicros: number | null;
+  settledCents: number | null;
+  closedAt: string | null;
+}
+
 export class InMemoryInferenceUsageJournal implements InferenceUsageJournal {
   private readonly byUsageId = new Map<string, InferenceUsageRecord>();
   private readonly order: string[] = [];
+  private readonly tranches = new Map<string, InferenceTrancheJournalRecord>();
+
+  async ensureTranche(record: InferenceTrancheJournalRecord): Promise<InferenceTrancheJournalRecord> {
+    const prior = this.tranches.get(record.trancheId);
+    if (prior) {
+      if (
+        prior.bucketName !== record.bucketName ||
+        prior.reservationIdempotencyKey !== record.reservationIdempotencyKey ||
+        prior.maximumMicros !== record.maximumMicros ||
+        prior.reservedCents !== record.reservedCents
+      ) {
+        throw new UsageJournalConflictError(`Tranche ${record.trancheId} was reopened with different semantics.`);
+      }
+      return structuredClone(prior);
+    }
+    this.tranches.set(record.trancheId, structuredClone(record));
+    return structuredClone(record);
+  }
+
+  async closeTranche(input: {
+    trancheId: string; exactMicros: number; settledCents: number; closedAt: string;
+  }): Promise<InferenceTrancheJournalRecord> {
+    const prior = this.tranches.get(input.trancheId);
+    if (!prior) throw new UsageJournalConflictError(`Unknown tranche ${input.trancheId}.`);
+    if (prior.closedAt) {
+      if (prior.exactMicros !== input.exactMicros || prior.settledCents !== input.settledCents) {
+        throw new UsageJournalConflictError(`Closed tranche ${input.trancheId} was reclosed with different totals.`);
+      }
+      return structuredClone(prior);
+    }
+    const closed = { ...prior, ...input };
+    this.tranches.set(input.trancheId, closed);
+    return structuredClone(closed);
+  }
 
   async append(record: InferenceUsageRecord): Promise<{ appended: boolean; duplicate: boolean }> {
     assertNonNegativeInteger(record.costMicros, 'costMicros');
@@ -201,6 +253,9 @@ export class InferenceTranche {
     journal: InferenceUsageJournal;
     actor: string;
     reservationIdempotencyKey: string;
+    drawnMicros: number;
+    callCount: number;
+    closed: boolean;
   }) {
     this.trancheId = input.trancheId;
     this.bucketName = input.bucketName;
@@ -210,6 +265,9 @@ export class InferenceTranche {
     this.journal = input.journal;
     this.actor = input.actor;
     this.reservationIdempotencyKey = input.reservationIdempotencyKey;
+    this.drawnMicros = input.drawnMicros;
+    this.callCount = input.callCount;
+    this.closed = input.closed;
   }
 
   static async open(input: {
@@ -228,13 +286,40 @@ export class InferenceTranche {
     const bucketName = input.bucketName ?? INFERENCE_BUCKET;
     const reservedCents = centsCeilingFromMicros(input.maximumMicros);
     const reservationIdempotencyKey = `inference-tranche:${input.trancheId}`;
-    await input.authority.reserve({
+    const reservation = await input.authority.reserve({
       bucketName,
       maxAmountCents: reservedCents,
       purpose: input.purpose,
       idempotencyKey: reservationIdempotencyKey,
       actor: input.actor,
     });
+    if (
+      reservation.bucketName !== bucketName ||
+      reservation.maxAmountCents !== reservedCents ||
+      reservation.idempotencyKey !== reservationIdempotencyKey
+    ) {
+      throw new UsageJournalConflictError(
+        `Capital reservation ${reservationIdempotencyKey} was reused with different tranche semantics.`,
+      );
+    }
+    const durable = await input.journal.ensureTranche({
+      trancheId: input.trancheId,
+      bucketName,
+      reservationIdempotencyKey,
+      maximumMicros: input.maximumMicros,
+      reservedCents,
+      exactMicros: null,
+      settledCents: null,
+      closedAt: null,
+    });
+    const records = await input.journal.records(input.trancheId);
+    const drawnMicros = records.reduce((sum, record) => sum + record.costMicros, 0);
+    if (drawnMicros > input.maximumMicros && !durable.closedAt) {
+      throw new TrancheExhaustedError(
+        `Restarted tranche ${input.trancheId} already drew ${drawnMicros} micros against ` +
+          `${input.maximumMicros}; provider activity remains halted pending reconciliation.`,
+      );
+    }
     return new InferenceTranche({
       trancheId: input.trancheId,
       bucketName,
@@ -244,6 +329,9 @@ export class InferenceTranche {
       journal: input.journal,
       actor: input.actor,
       reservationIdempotencyKey,
+      drawnMicros,
+      callCount: records.length,
+      closed: durable.closedAt !== null,
     });
   }
 
@@ -288,7 +376,14 @@ export class InferenceTranche {
   }
 
   async close(): Promise<TrancheCloseResult> {
-    if (this.closed) throw new TrancheExhaustedError(`Tranche ${this.trancheId} is already closed.`);
+    if (this.closed) {
+      const exactMicros = await this.journal.totalMicrosForTranche(this.trancheId);
+      const settledCents = centsCeilingFromMicros(exactMicros);
+      return {
+        trancheId: this.trancheId, reservedCents: this.reservedCents, exactMicros, settledCents,
+        unusedCents: this.reservedCents - settledCents, callCount: this.callCount,
+      };
+    }
     const exactMicros = await this.journal.totalMicrosForTranche(this.trancheId);
     const settledCents = centsCeilingFromMicros(exactMicros);
     if (settledCents > this.reservedCents) {
@@ -297,6 +392,12 @@ export class InferenceTranche {
       );
     }
     await this.authority.settle(this.reservationIdempotencyKey, settledCents, this.actor);
+    await this.journal.closeTranche({
+      trancheId: this.trancheId,
+      exactMicros,
+      settledCents,
+      closedAt: new Date().toISOString(),
+    });
     this.closed = true;
     return {
       trancheId: this.trancheId,
@@ -310,6 +411,12 @@ export class InferenceTranche {
 
   async abandon(reason: string): Promise<void> {
     if (this.closed) return;
+    if (this.drawnMicros > 0) {
+      throw new InferenceReconciliationError(
+        `Tranche ${this.trancheId} has ${this.drawnMicros} incurred micros; its reservation cannot be released ` +
+          'until provider usage is reconciled and settled.',
+      );
+    }
     this.closed = true;
     await this.authority.release(this.reservationIdempotencyKey, this.actor, reason);
   }

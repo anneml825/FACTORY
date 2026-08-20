@@ -15,7 +15,7 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 
 ---
 
-## Current state — 2026-08-18
+## Current state — 2026-08-20
 
 | Item | Status |
 |---|---|
@@ -28,7 +28,7 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | **MAKE / PUT / ARRIVE / WATCH Phase A fixture infrastructure** | **`DONE` locally** — 12/12 tests; all commerce and arrival behavior simulated |
 | **Phase B Stripe Managed Payments sandbox adapter** | **`DONE`** — run `32173279299` passed the complete provider-test lifecycle and deactivated all objects |
 | **Phase C ARRIVE + durable WATCH** | **`DONE` as an engineering proof** — temporary DEV publication/analytics/deactivation, attributed Stripe sandbox transaction, PostgreSQL durability, and zero commercial evidence |
-| **Phase E always-on commerce edge + accounting repair** | **`DONE` locally and in CI** — product page, first-party denominator, webhook reception, signed delivery, durable restart; sub-cent Capital Authority bypass closed; §18 enforced in code; commercial Value QA and COMMERCIAL mode built. Cloudflare deployment `NOT VERIFIED` |
+| **Phase E always-on commerce edge + required review remediation** | **`DONE` locally; external re-proof pending** — fixture and dormant commercial Workers/D1 were previously deployed; the approved remediation removes invalid unsigned WATCH canaries, scopes launch grants, completes §9 Value QA, makes inference tranches restartable, and adds durable owner-labor evidence. No commercial serving |
 | Live database instance | `BLOCKED` — needs owner Neon account |
 | External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH and DEV publication/measurement plumbing externally exercised; genuine commercial ARRIVE and metered MAKE not started |
 
@@ -109,7 +109,7 @@ transaction and remained excluded from commercial evidence. See
 
 ## Phase E — remediation and commercial readiness
 
-**Status: `DONE` for the repair pass. Cost: $0.00. Owner actions: 0. No product, no mechanism.**
+**Status: `DONE` locally for the repair pass; safe commercial-edge redeploy proof pending. Cost: $0.00. No product, no mechanism.**
 
 An independent read-only review of Phase D found that Factory had no internet-facing component
 at all, that a sub-cent inference cost would have bypassed the Capital Authority entirely, that
@@ -136,8 +136,11 @@ Delivered:
 **Nothing commercial happened.** No product, buyer, niche, listing, arrival mechanism,
 inference provider, credential, or capital. See `docs/PHASE_E_REMEDIATION.md`.
 
-**Cloudflare is not deployed.** `worker.ts` and `wrangler.toml` record the intended shape; the
-tested adapter is Node HTTP. Deployment is owner setup and has not occurred.
+Cloudflare fixture and dormant commercial Workers plus separate D1 databases are deployed on
+the free plan. Commercial serving remains false. The earlier commercial deploy proof wrote
+four invalid unsigned canaries into WATCH; the required remediation moves canaries to
+`edge_deploy_canary` and includes a fenced one-time cleanup plus a normal-route `404` smoke
+test. Until that redeploy is green, external remediation status remains pending.
 
 ---
 

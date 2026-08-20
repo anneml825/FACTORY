@@ -16,7 +16,7 @@
 
 import type { WatchAdapter } from '../portfolio/ports.ts';
 import type { CommerceEnvironment, FunnelEvent, SignedEventEnvelope } from '../portfolio/types.ts';
-import type { StripeTestWebhookProcessor } from '../portfolio/stripe-webhook.ts';
+import type { StripeWebhookProcessResult } from '../portfolio/stripe-webhook.ts';
 
 export interface StoredObject {
   bytes: Uint8Array;
@@ -91,7 +91,9 @@ export interface EdgeEnvironment {
   catalog: CatalogStore;
   state: EdgeStateStore;
   watch: WatchAdapter;
-  stripe: StripeTestWebhookProcessor;
+  stripe: { process(payload: string, signatureHeader: string): Promise<StripeWebhookProcessResult> };
+  /** False when a dormant edge lacks any credential required for commerce. */
+  commerceReady?: boolean;
   /** Signs first-party funnel events for the WATCH store. */
   signEvent(event: FunnelEvent): SignedEventEnvelope;
   /** HMAC secret for delivery tokens. Never leaves the edge. */

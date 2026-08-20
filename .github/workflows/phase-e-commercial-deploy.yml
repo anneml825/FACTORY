@@ -5,15 +5,16 @@ name: Commercial edge deploy
 # fulfillment history.
 #
 # What this workflow will never do, by construction:
-#   * reset, drop, or truncate anything — no destructive step exists here;
+#   * reset, drop, or truncate commercial history. One fenced migration removes
+#     only the known unsigned legacy canaries after proving there is no commerce;
 #   * regenerate a signing secret — secrets are installed once and kept;
 #   * create, deactivate, or sweep any Stripe object;
 #   * enable commercial serving on its own authority.
 #
-# Serving requires three independent things to be true at once: this workflow
-# deployed with serving=enabled, the database is stamped COMMERCIAL, and an
-# owner authorization row exists. Any one of them false means the edge serves
-# nothing commercially. Stopping needs only one of them to change.
+# Manual only: this workflow changes a deployed provider resource. Serving
+# requires an enabled deployment, a COMMERCIAL database identity, a complete
+# configuration, and an unexpired/unrevoked owner grant matching the exact
+# scope digest. Any one false stops serving.
 on:
   workflow_dispatch:
     inputs:
@@ -22,17 +23,10 @@ on:
         type: choice
         options: [disabled, enabled]
         default: disabled
-  # A push to the workflow itself redeploys with serving OFF. Serving can only
-  # ever be turned on by an explicit dispatch, so an automatic run cannot start
-  # selling anything.
-  push:
-    branches:
-      - claude/factory-phase-e-remediation
-    paths:
-      - '.github/workflows/phase-e-commercial-deploy.yml'
-      - 'src/edge/**'
-      - 'db/edge/**'
-      - 'wrangler.toml'
+      scope_digest:
+        description: 'Authorized 64-character SHA-256 scope (required only when enabling)'
+        type: string
+        required: false
 
 permissions:
   contents: read
@@ -51,7 +45,7 @@ jobs:
       EDGE_TARGET: commercial
       WORKER_NAME: factory-commerce
       WRANGLER_ENV: commercial
-      EDGE_BUILD_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+      EDGE_BUILD_BASE: ${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -67,6 +61,10 @@ jobs:
               exit 1
             fi
           done
+          if [ "${{ inputs.serving }}" = "enabled" ] && ! printf '%s' "${{ inputs.scope_digest }}" | grep -Eq '^[a-f0-9]{64}$'; then
+            echo "::error::Enabling requires the exact authorized 64-character SHA-256 scope digest."
+            exit 1
+          fi
 
       - name: Install dependencies
         run: npm ci || npm install
@@ -119,10 +117,11 @@ jobs:
       # variable, commercial serving is definitively closed.
       - name: Deploy with commercial serving off
         run: |
+          build_id="${EDGE_BUILD_BASE}-closed"
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:disabled \
             --var MAX_DOWNLOADS_PER_GRANT:3 \
-            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID" \
+            --var EDGE_BUILD_ID:"$build_id" \
             2>&1 | tee deploy-closed.log
           url=$(grep -oE 'https://[a-z0-9.-]+\.workers\.dev' deploy-closed.log | head -1)
           if [ -z "$url" ]; then
@@ -139,38 +138,37 @@ jobs:
       - name: Apply the schema and stamp the deployment identity
         run: node src/edge/deploy/migrate-edge-db.ts
 
-      # Every commercial deploy leaves its own proof that a redeploy preserves
-      # durable state: a canary is written, the Worker is redeployed, and the
-      # canary is read back. One row per deploy, filed under a reserved
-      # experiment key so it can never be mistaken for commercial history.
+      - name: Repair only the known legacy unsigned WATCH canaries
+        run: node src/edge/deploy/repair-legacy-commercial-watch-canaries.ts
+        env:
+          I_AUTHORIZE_LEGACY_CANARY_REPAIR: 'yes'
+
+      # Operational persistence evidence lives outside signed commercial WATCH.
       - name: Record durable state before redeploy
         run: |
-          # A single clearly-labelled canary row. It is the only synthetic entry
-          # this database will ever hold, it is filed under a reserved
-          # experiment key, and it exists so the claim "redeploy preserves
-          # durable state" is a measurement rather than an assurance.
           stamp="deploy-proof-${GITHUB_RUN_ID}"
           npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --command \
-            "INSERT INTO watch_event_inbox (event_id, experiment_key, asset_key, event_type, environment, payload, signature, payload_sha256) VALUES ('$stamp', 'deployment-proof', 'deployment-proof', 'DEPLOYMENT_PROOF', 'PROVIDER_TEST', '{}', 'n/a', 'n/a')"
-          echo "CANARY_EVENT_ID=$stamp" >> "$GITHUB_ENV"
+            "INSERT INTO edge_deploy_canary (canary_id, build_id, purpose) VALUES ('$stamp', '${EDGE_BUILD_BASE}-closed', 'COMMERCIAL')"
+          echo "CANARY_ID=$stamp" >> "$GITHUB_ENV"
           npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
-            --command "SELECT count(*) AS events FROM watch_event_inbox" | tee before.json
+            --command "SELECT count(*) AS canaries FROM edge_deploy_canary" | tee before.json
 
       - name: Redeploy
         run: |
+          build_id="${EDGE_BUILD_BASE}-redeployed"
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:disabled \
             --var MAX_DOWNLOADS_PER_GRANT:3 \
-            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID"
+            --var EDGE_BUILD_ID:"$build_id"
           node src/edge/deploy/migrate-edge-db.ts
 
       - name: Prove durable state survived the redeploy
         run: |
           after=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
-            --command "SELECT event_id FROM watch_event_inbox WHERE event_id = '$CANARY_EVENT_ID'")
+            --command "SELECT canary_id FROM edge_deploy_canary WHERE canary_id = '$CANARY_ID'")
           echo "$after"
-          echo "$after" | grep -q "$CANARY_EVENT_ID" \
-            || { echo "::error::A redeploy lost durable journal state."; exit 1; }
+          echo "$after" | grep -q "$CANARY_ID" \
+            || { echo "::error::A redeploy lost durable deployment state."; exit 1; }
           echo "The canary written before the redeploy is still present afterwards."
 
       - name: Prove the commercial journal is append-only
@@ -188,8 +186,9 @@ jobs:
       - name: Enable commercial serving
         if: ${{ inputs.serving == 'enabled' }}
         run: |
+          scope="${{ inputs.scope_digest }}"
           count=$(npx --yes wrangler@latest d1 execute factory-commerce --remote --yes --json \
-            --command "SELECT count(*) AS n FROM commercial_launch_authorization" | grep -oE '"n": *[0-9]+' | grep -oE '[0-9]+')
+            --command "SELECT count(*) AS n FROM commercial_launch_grant g WHERE g.scope_digest='$scope' AND datetime(g.expires_at)>datetime('now') AND NOT EXISTS (SELECT 1 FROM commercial_launch_revocation r WHERE r.authorization_key=g.authorization_key)" | grep -oE '"n": *[0-9]+' | grep -oE '[0-9]+')
           echo "authorizations: $count"
           if [ "${count:-0}" -lt 1 ]; then
             echo "::error::Refusing to enable serving: the database holds no owner launch authorization."
@@ -197,8 +196,9 @@ jobs:
           fi
           npx --yes wrangler@latest deploy --env "$WRANGLER_ENV" \
             --var COMMERCIAL_SERVING:enabled \
+            --var COMMERCIAL_SCOPE_DIGEST:"$scope" \
             --var MAX_DOWNLOADS_PER_GRANT:3 \
-            --var EDGE_BUILD_ID:"$EDGE_BUILD_ID"
+            --var EDGE_BUILD_ID:"${EDGE_BUILD_BASE}-enabled"
 
       # curl -f throws away the body and headers on an error status, which is
       # exactly when they matter. This reads the status and the edge's own
@@ -206,16 +206,37 @@ jobs:
       # A deploy returning is not the same as every colo serving it.
       - name: Wait for the deployed version to be the one answering
         run: |
+          if [ "${{ inputs.serving }}" = "enabled" ]; then
+            expected="${EDGE_BUILD_BASE}-enabled"
+          else
+            expected="${EDGE_BUILD_BASE}-redeployed"
+          fi
           for attempt in $(seq 1 30); do
             live=$(curl -sS "$COMMERCIAL_BASE_URL/posture" | grep -o '"buildId": "[^"]*"' | cut -d'"' -f4 || true)
-            if [ "$live" = "$EDGE_BUILD_ID" ]; then
-              echo "Build $EDGE_BUILD_ID is live after $attempt check(s)."
+            if [ "$live" = "$expected" ]; then
+              echo "Build $expected is live after $attempt check(s)."
               exit 0
             fi
             sleep 2
           done
           echo "::error::The deployed build never became the one answering (saw '${live:-none}')."
           exit 1
+
+      - name: Prove an ordinary application route survives WATCH replay
+        run: |
+          status=$(curl -sS -o smoke.body -w '%{http_code}' -D smoke.headers \
+            "$COMMERCIAL_BASE_URL/p/__factory_missing_experiment__")
+          echo "GET /p/__factory_missing_experiment__ -> $status"
+          cat smoke.body
+          if [ "$status" != "404" ]; then
+            grep -i '^x-factory-edge-failure:' smoke.headers || true
+            echo "::error::Expected the normal empty-catalog application response (404)."
+            exit 1
+          fi
+          if grep -qi '^x-factory-edge-failure:' smoke.headers; then
+            echo "::error::Normal application route carried an edge failure header."
+            exit 1
+          fi
 
       - name: Report the deployed posture
         run: |
@@ -233,6 +254,11 @@ jobs:
           if [ "${{ inputs.serving }}" != "enabled" ]; then
             echo "$posture" | grep -q '"commercialServing": false' \
               || { echo "::error::Serving is on when it was deployed off."; exit 1; }
+          else
+            echo "$posture" | grep -q '"commercialServing": true' \
+              || { echo "::error::The final enabled deployment did not reach enabled posture."; exit 1; }
+            echo "$posture" | grep -q '"missingConfiguration": \[\]' \
+              || { echo "::error::Enabled posture is missing required configuration."; exit 1; }
           fi
           {
             echo "### Commercial edge"

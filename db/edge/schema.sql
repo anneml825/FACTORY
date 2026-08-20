@@ -152,7 +152,32 @@ BEGIN
 END;
 
 -- --------------------------------------------------------------------------
--- Commercial launch authorization. Append-only.
+-- Deployment canaries. Operational persistence evidence is not commerce
+-- telemetry and therefore must never be written to the signed WATCH journal.
+-- This table is append-only for the same auditability reason, but its rows are
+-- not replayed into funnel state and cannot be mistaken for buyer activity.
+-- --------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS edge_deploy_canary (
+    canary_id    TEXT PRIMARY KEY,
+    build_id     TEXT NOT NULL,
+    purpose      TEXT NOT NULL CHECK (purpose IN ('FIXTURE', 'COMMERCIAL')),
+    recorded_at  TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TRIGGER IF NOT EXISTS edge_deploy_canary_no_update
+BEFORE UPDATE ON edge_deploy_canary
+BEGIN
+    SELECT RAISE(ABORT, 'edge_deploy_canary is append-only');
+END;
+
+CREATE TRIGGER IF NOT EXISTS edge_deploy_canary_no_delete
+BEFORE DELETE ON edge_deploy_canary
+BEGIN
+    SELECT RAISE(ABORT, 'edge_deploy_canary is append-only');
+END;
+
+-- --------------------------------------------------------------------------
+-- Commercial launch authorization. Append-only and scope-bound.
 --
 -- Serving a commercial listing needs two independent things to be true: the
 -- COMMERCIAL_SERVING variable must be exactly "enabled", and a row must exist
@@ -180,4 +205,54 @@ CREATE TRIGGER IF NOT EXISTS commercial_launch_authorization_no_delete
 BEFORE DELETE ON commercial_launch_authorization
 BEGIN
     SELECT RAISE(ABORT, 'commercial_launch_authorization is append-only');
+END;
+
+-- `commercial_launch_authorization` above is retained as historical schema so
+-- an existing database can be migrated additively. Runtime serving ignores it.
+-- New grants bind authorization to one exact artifact/manifest or deployment
+-- digest and expire. Revocation is another append-only fact, never an UPDATE.
+CREATE TABLE IF NOT EXISTS commercial_launch_grant (
+    authorization_key TEXT PRIMARY KEY,
+    scope_kind         TEXT NOT NULL CHECK (scope_kind IN ('ARTIFACT_MANIFEST', 'DEPLOYMENT')),
+    scope_digest       TEXT NOT NULL CHECK (length(scope_digest) = 64),
+    expires_at         TEXT NOT NULL,
+    authorized_at      TEXT NOT NULL DEFAULT (datetime('now')),
+    authorized_by      TEXT NOT NULL CHECK (length(trim(authorized_by)) > 0),
+    scope_note         TEXT NOT NULL CHECK (length(trim(scope_note)) > 0)
+);
+
+CREATE INDEX IF NOT EXISTS commercial_launch_grant_scope_idx
+    ON commercial_launch_grant (scope_digest, expires_at);
+
+CREATE TRIGGER IF NOT EXISTS commercial_launch_grant_no_update
+BEFORE UPDATE ON commercial_launch_grant
+BEGIN
+    SELECT RAISE(ABORT, 'commercial_launch_grant is append-only');
+END;
+
+CREATE TRIGGER IF NOT EXISTS commercial_launch_grant_no_delete
+BEFORE DELETE ON commercial_launch_grant
+BEGIN
+    SELECT RAISE(ABORT, 'commercial_launch_grant is append-only');
+END;
+
+CREATE TABLE IF NOT EXISTS commercial_launch_revocation (
+    revocation_key     TEXT PRIMARY KEY,
+    authorization_key TEXT NOT NULL REFERENCES commercial_launch_grant (authorization_key),
+    revoked_at         TEXT NOT NULL DEFAULT (datetime('now')),
+    revoked_by         TEXT NOT NULL CHECK (length(trim(revoked_by)) > 0),
+    reason             TEXT NOT NULL CHECK (length(trim(reason)) > 0),
+    UNIQUE (authorization_key)
+);
+
+CREATE TRIGGER IF NOT EXISTS commercial_launch_revocation_no_update
+BEFORE UPDATE ON commercial_launch_revocation
+BEGIN
+    SELECT RAISE(ABORT, 'commercial_launch_revocation is append-only');
+END;
+
+CREATE TRIGGER IF NOT EXISTS commercial_launch_revocation_no_delete
+BEFORE DELETE ON commercial_launch_revocation
+BEGIN
+    SELECT RAISE(ABORT, 'commercial_launch_revocation is append-only');
 END;

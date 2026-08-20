@@ -76,7 +76,7 @@ export function edgeTargetFromEnvironment(): EdgeTarget {
 }
 
 /** The schema version this checkout expects a database to be at. */
-export const EDGE_SCHEMA_VERSION = 2;
+export const EDGE_SCHEMA_VERSION = 3;
 
 /** Secrets every edge needs. Regenerating any of these breaks durable history. */
 export const REQUIRED_EDGE_SECRETS = [

@@ -155,7 +155,10 @@ Pushing the Phase E remediation commit fired the **Data Economics Probe**, which
 retrieval and committed `6bf2557` back to this branch. The cause is that probe's `push` path filter
 including `package.json`, which Phase E edited to register new test scripts.
 
+**Resolved 2026-08-20:** the Data Economics Probe is now manual-only. Provider-changing edge
+deploy/preflight workflows are also manual-only. A repository push has no provider mutation or
+probe-state commit side effect.
+
 This is the same hazard Phase E removed from the Phase B Stripe workflow: a provider probe running
 as a side effect of committing unrelated code. It cost $0 and touched only free sources, so nothing
-was harmed. It is recorded here rather than fixed, because the evidence pipeline is outside this
-deployment task's scope. **Codex should narrow that path filter.**
+was harmed. The trigger is now removed; future probe execution requires an explicit manual action.

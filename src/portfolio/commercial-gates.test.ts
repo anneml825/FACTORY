@@ -5,7 +5,11 @@ import { FixtureArrivalAdapter, FixtureMakeAdapter, FakeLocalPutProvider } from 
 import { InMemoryWatchStore } from './watch.ts';
 import { shortDocumentFixture } from './fixtures.ts';
 import { renderAsset, runFixtureValueQa, runFunctionalQa } from './renderers.ts';
-import { runCommercialValueQa, type CommercialValueQaInput } from './commercial-value-qa.ts';
+import {
+  runCommercialValueQa,
+  type CommercialQaEvidenceResolver,
+  type CommercialValueQaInput,
+} from './commercial-value-qa.ts';
 import { assertPublicationGates } from './state-machine.ts';
 import {
   InMemoryOwnerLaborLedger,
@@ -15,6 +19,8 @@ import {
 import type { AssetManifest, ExperimentRecord } from './types.ts';
 import type { MakeAdapter, PutAdapter } from './ports.ts';
 import { ArriveAdapterRegistry } from './arrive-registry.ts';
+import { PostgresOwnerLaborSource } from './postgres-owner-labor.ts';
+import type { Pool } from 'pg';
 
 /**
  * A SYNTHETIC commercial manifest. It is not a product, not a niche, and not a
@@ -45,7 +51,14 @@ function syntheticCommercialManifest(): AssetManifest {
   };
 }
 
+const evidenceResolver: CommercialQaEvidenceResolver = {
+  source: 'test-explicit-durable-allow-list',
+  async verifyModelReview(record) { return record.evidenceId.startsWith('durable-model-'); },
+  async verifyOwnerException(record) { return record.evidenceId.startsWith('durable-owner-'); },
+};
+
 function completeEvidence(
+  artifactSha256: string,
   overrides: Partial<Omit<CommercialValueQaInput, 'manifest' | 'artifact'>> = {},
 ): Omit<CommercialValueQaInput, 'manifest' | 'artifact'> {
   return {
@@ -74,46 +87,65 @@ function completeEvidence(
       howObtainedFree: 'downloadable without an account from the publisher',
       substantiveOverlap: 'PARTIAL',
     },
+    paidAlternatives: [{
+      name: 'A synthetic paid comparison',
+      url: 'https://example.org/paid-template',
+      retrievedAt: '2026-08-18T00:00:00.000Z',
+      priceCents: 1200,
+      currency: 'USD',
+      concreteComparison: 'The paid comparison lacks the 12 derived-total columns in this fixture.',
+    }],
     differentiation: [
       {
         claim: 'computes 12 derived totals the free template leaves for the buyer to calculate by hand',
         verifiableBy: 'open both files and compare the derived-total columns',
       },
     ],
+    accuracyChecks: [{
+      checkId: 'internal-consistency', description: 'recompute all derived totals',
+      executed: true, passed: true, evidence: ['all 12 derived totals matched the independent recomputation'],
+    }],
+    priceJustification:
+      'The synthetic asking price is below the compared paid alternative while including 12 additional checked calculations.',
     modelReviews: [
-      {
-        criterionId: 'DIFFERENTIATION_VS_ALTERNATIVE',
+      ...([
+        ['DIFFERENTIATION_VS_ALTERNATIVE', 'The derived-total columns are present here and absent in the named free template.'],
+        ['ACCURACY_INTERNAL_CONSISTENCY', 'All displayed derived totals agree with the independently recomputed fixture values.'],
+        ['USABILITY_COMPLETENESS', 'Every section the promise implies is present and the artifact needs no missing companion file.'],
+        ['PRESENTATION_BUYER_COMPREHENSION', 'The named synthetic buyer can identify the inputs, outputs, and purchase contents without ambiguity.'],
+        ['SLOP_REPETITION_HALLUCINATION', 'The artifact contains no repeated filler, unsupported claims, broken sections, or obvious model slop.'],
+        ['PRICE_VALUE_DEFENSIBILITY', 'The price comparison is concrete and the extra checked calculations are visible in the artifact.'],
+      ] as const).map(([criterionId, rationale], index) => ({
+        evidenceId: `durable-model-${index + 1}`,
+        artifactSha256,
+        criterionId,
         reviewerProviderId: 'reviewer-provider',
         reviewerModelId: 'reviewer-model',
         reviewedAt: '2026-08-18T01:00:00.000Z',
-        verdict: 'PASS',
-        rationale: 'The derived-total columns are present here and absent in the named free template.',
-      },
-      {
-        criterionId: 'USABILITY_COMPLETENESS',
-        reviewerProviderId: 'reviewer-provider',
-        reviewerModelId: 'reviewer-model',
-        reviewedAt: '2026-08-18T01:00:00.000Z',
-        verdict: 'PASS',
-        rationale: 'Every section the promise implies is present and the artifact needs no missing companion file.',
-      },
+        verdict: 'PASS' as const,
+        rationale,
+      })),
     ],
     ownerExceptions: [],
     ...overrides,
   };
 }
 
-function qa(overrides: Partial<Omit<CommercialValueQaInput, 'manifest' | 'artifact'>> = {}) {
+async function qa(overrides: Partial<Omit<CommercialValueQaInput, 'manifest' | 'artifact'>> = {}) {
   const manifest = syntheticCommercialManifest();
-  return runCommercialValueQa({ ...completeEvidence(overrides), manifest, artifact: renderAsset(manifest) });
+  const artifact = renderAsset(manifest);
+  return runCommercialValueQa(
+    { ...completeEvidence(artifact.sha256, overrides), manifest, artifact },
+    evidenceResolver,
+  );
 }
 
 // ---------------------------------------------------------------------------
 // The defect this file exists for: Value QA that cannot fail anything.
 // ---------------------------------------------------------------------------
 
-test('a complete evidence bundle passes and reports how each criterion was established', () => {
-  const result = qa();
+test('a complete evidence bundle passes and reports how each criterion was established', async () => {
+  const result = await qa();
   assert.equal(result.passed, true, result.failures.join(' | '));
   assert.equal(result.mode, 'COMMERCIAL');
   const modes = Object.fromEntries((result.criteria ?? []).map((c) => [c.id, c.verification]));
@@ -122,10 +154,10 @@ test('a complete evidence bundle passes and reports how each criterion was estab
   assert.equal((result.criteria ?? []).every((c) => c.status === 'PASSED'), true);
 });
 
-test('REGRESSION: a technically valid artifact that duplicates a free alternative fails', () => {
+test('REGRESSION: a technically valid artifact that duplicates a free alternative fails', async () => {
   // The old fixture Value QA checked non-empty strings and a positive price.
   // This artifact would have sailed through it.
-  const result = qa({
+  const result = await qa({
     freeAlternative: {
       name: 'The identical free checklist',
       url: 'https://example.org/free-template',
@@ -138,53 +170,72 @@ test('REGRESSION: a technically valid artifact that duplicates a free alternativ
   assert.match(result.failures.join(' | '), /substantively identical/);
 });
 
-test('REGRESSION: differentiation that asserts value without asserting a difference fails', () => {
-  const result = qa({
+test('REGRESSION: differentiation that asserts value without asserting a difference fails', async () => {
+  const result = await qa({
     differentiation: [{ claim: 'higher quality and more comprehensive', verifiableBy: 'read both of them' }],
   });
   assert.equal(result.passed, false);
   assert.match(result.failures.join(' | '), /without asserting a checkable difference/);
 });
 
-test('a differentiation claim with no way for a buyer to confirm it fails', () => {
-  const result = qa({
+test('a differentiation claim with no way for a buyer to confirm it fails', async () => {
+  const result = await qa({
     differentiation: [{ claim: 'computes 12 derived totals the free template omits', verifiableBy: 'trust us' }],
   });
   assert.equal(result.passed, false);
   assert.match(result.failures.join(' | '), /no way for a buyer to confirm/);
 });
 
-test('omitting the free-alternative comparison is a failure, not an omission', () => {
-  const result = qa({ freeAlternative: null });
+test('omitting the free-alternative comparison is a failure, not an omission', async () => {
+  const result = await qa({ freeAlternative: null });
   assert.equal(result.passed, false);
   assert.match(result.failures.join(' | '), /is a claim, not an omission/);
 });
 
-test('a model may not mark its own work', () => {
-  const result = qa({
+test('a model may not mark its own work', async () => {
+  const result = await qa({
     generatorIdentity: { providerId: 'reviewer-provider', modelId: 'reviewer-model' },
   });
   assert.equal(result.passed, false);
   assert.match(result.failures.join(' | '), /may not mark its own work/);
 });
 
-test('a rubber-stamped review with no rationale fails', () => {
-  const evidence = completeEvidence();
-  const result = qa({
+test('a rubber-stamped review with no rationale fails', async () => {
+  const evidence = completeEvidence(renderAsset(syntheticCommercialManifest()).sha256);
+  const result = await qa({
     modelReviews: evidence.modelReviews.map((review) => ({ ...review, rationale: 'looks fine' })),
   });
   assert.equal(result.passed, false);
   assert.match(result.failures.join(' | '), /without a substantive rationale/);
 });
 
-test('a missing model review fails closed rather than defaulting to pass', () => {
-  const result = qa({ modelReviews: [] });
+test('the complete Experimental Protocol section 9 surface fails closed when omitted', async () => {
+  for (const [field, value, expected] of [
+    ['paidAlternatives', [], /No relevant paid alternative/],
+    ['accuracyChecks', [], /No accuracy\/internal-consistency check/],
+    ['priceJustification', '', /Price justification is not substantive/],
+  ] as const) {
+    const result = await qa({ [field]: value });
+    assert.equal(result.passed, false);
+    assert.match(result.failures.join(' | '), expected);
+  }
+});
+
+test('model evidence must resolve durably against the exact artifact hash', async () => {
+  const evidence = completeEvidence('b'.repeat(64));
+  const result = await qa({ modelReviews: evidence.modelReviews });
+  assert.equal(result.passed, false);
+  assert.match(result.failures.join(' | '), /not resolved against durable artifact-hashed evidence/);
+});
+
+test('a missing model review fails closed rather than defaulting to pass', async () => {
+  const result = await qa({ modelReviews: [] });
   assert.equal(result.passed, false);
   assert.match(result.failures.join(' | '), /No independent model review was recorded/);
 });
 
-test('a promise check that does not reference the promise fails', () => {
-  const result = qa({
+test('a promise check that does not reference the promise fails', async () => {
+  const result = await qa({
     promiseCheck: {
       checkId: 'unrelated',
       description: 'verifies that the file opens',
@@ -197,8 +248,8 @@ test('a promise check that does not reference the promise fails', () => {
   assert.match(result.failures.join(' | '), /does not reference the promise/);
 });
 
-test('unsourced factual claims fail the Verifiable Correctness constraint', () => {
-  const result = qa({
+test('unsourced factual claims fail the Verifiable Correctness constraint', async () => {
+  const result = await qa({
     factualClaims: [{ claim: 'the 2026 filing deadline is in April', primarySourceUrl: '', retrievedAt: '' }],
     makesNoExternalFactualClaims: null,
   });
@@ -206,7 +257,7 @@ test('unsourced factual claims fail the Verifiable Correctness constraint', () =
   assert.match(result.failures.join(' | '), /no primary-source URL/);
 });
 
-test('provenance may be escalated to a logged owner exception; promise fulfilment may not', () => {
+test('provenance may be escalated to a logged owner exception; promise fulfilment may not', async () => {
   const uncleared = {
     sources: [
       {
@@ -218,13 +269,16 @@ test('provenance may be escalated to a logged owner exception; promise fulfilmen
       },
     ],
   };
-  const blocked = qa(uncleared);
+  const blocked = await qa(uncleared);
   assert.equal(blocked.passed, false);
 
-  const escalated = qa({
+  const artifactSha256 = renderAsset(syntheticCommercialManifest()).sha256;
+  const escalated = await qa({
     ...uncleared,
     ownerExceptions: [
       {
+        evidenceId: 'durable-owner-42',
+        artifactSha256,
         criterionId: 'PROVENANCE_RIGHTS',
         ownerInterventionId: 'owner-intervention-42',
         reason: 'Owner reviewed the licence directly and accepted the risk.',
@@ -238,10 +292,12 @@ test('provenance may be escalated to a logged owner exception; promise fulfilmen
   assert.equal(provenance?.ownerInterventionId, 'owner-intervention-42');
 
   // A criterion Factory must verify itself cannot be waived by the owner.
-  const waived = qa({
+  const waived = await qa({
     promiseCheck: { checkId: 'x', description: 'x', executed: false, passed: false, evidence: [] },
     ownerExceptions: [
       {
+        evidenceId: 'durable-owner-43',
+        artifactSha256,
         criterionId: 'PROMISE_FULFILLED',
         ownerInterventionId: 'owner-intervention-43',
         reason: 'Owner is confident it works.',
@@ -253,10 +309,11 @@ test('provenance may be escalated to a logged owner exception; promise fulfilmen
   assert.match(waived.failures.join(' | '), /is not escalatable/);
 });
 
-test('commercial Value QA refuses a noncommercial fixture manifest', () => {
+test('commercial Value QA refuses a noncommercial fixture manifest', async () => {
   const manifest = shortDocumentFixture();
-  assert.throws(
-    () => runCommercialValueQa({ ...completeEvidence(), manifest, artifact: renderAsset(manifest) }),
+  const artifact = renderAsset(manifest);
+  await assert.rejects(
+    runCommercialValueQa({ ...completeEvidence(artifact.sha256), manifest, artifact }, evidenceResolver),
     TypeError,
   );
   // ...and the fixture check is preserved unchanged for fixtures.
@@ -297,6 +354,7 @@ function commercialEngine(put: PutAdapter = new LivePutProvider()): PhaseAEngine
     arrive: new FixtureArrivalAdapter(),
     watch: new InMemoryWatchStore('commercial-gate-test-secret'),
     mode: 'COMMERCIAL',
+    commercialQaEvidenceResolver: evidenceResolver,
   });
 }
 
@@ -333,11 +391,14 @@ test('a commercial asset advances only when the commercial evidence passes', asy
   // The commercial artifact must NOT carry the fixture marker.
   assert.ok(!new TextDecoder().decode(functional.artifact?.bytes as Uint8Array).includes('NONCOMMERCIAL FIXTURE'));
 
-  assert.throws(
-    () => engine.valueQa(manifest.experimentId, completeEvidence({ modelReviews: [] })),
+  await assert.rejects(
+    engine.valueQa(manifest.experimentId, completeEvidence(functional.artifact?.sha256 as string, { modelReviews: [] })),
     /Commercial Value QA failed/,
   );
-  const record = engine.valueQa(manifest.experimentId, completeEvidence());
+  const record = await engine.valueQa(
+    manifest.experimentId,
+    completeEvidence(functional.artifact?.sha256 as string),
+  );
   assert.equal(record.state, 'VALUE_QA_PASS');
   assert.equal(record.valueQa?.mode, 'COMMERCIAL');
 });
@@ -348,7 +409,11 @@ test('a commercial asset cannot publish behind a FIXTURE arrival gate', async ()
   engine.register(manifest);
   await engine.build(manifest.experimentId);
   engine.functionalQa(manifest.experimentId);
-  engine.valueQa(manifest.experimentId, completeEvidence());
+  const record = engine.get(manifest.experimentId);
+  await engine.valueQa(
+    manifest.experimentId,
+    completeEvidence(record.artifact?.sha256 as string),
+  );
   await engine.stage(manifest.experimentId);
   await assert.rejects(
     engine.publish(manifest.experimentId, 'idem-1'),
@@ -477,6 +542,24 @@ test('the ledger attributes interventions to the experiments they were spent on'
     actualMinutes: 5, reasonHumanRequired: 'x', isRecurring: true,
     automatable: true, unitsAffected: 1, experimentIds: ['e1'],
   }), /logged twice/);
+});
+
+test('the durable PostgreSQL source reconciles all owner-labor categories by experiment key', async () => {
+  const rows = [
+    { kind: 'SETUP', actual_minutes: 15, occurred_at: new Date('2026-08-18T00:00:00.000Z') },
+    { kind: 'APPROVAL', actual_minutes: 4, occurred_at: new Date('2026-08-18T00:05:00.000Z') },
+    { kind: 'EXCEPTION', actual_minutes: 3, occurred_at: new Date('2026-08-18T00:06:00.000Z') },
+    { kind: 'OPERATING', actual_minutes: 2, occurred_at: new Date('2026-08-18T00:07:00.000Z') },
+    { kind: 'MAINTENANCE_DEBUG', actual_minutes: 1, occurred_at: new Date('2026-08-18T00:08:00.000Z') },
+  ];
+  const pool = { async query() { return { rows }; } } as unknown as Pool;
+  const observed = await new PostgresOwnerLaborSource(pool).observe(['e1', 'e2']);
+  assert.equal(observed.observedSetupMinutes, 15);
+  assert.equal(observed.observedBatchApprovalMinutes, 4);
+  assert.equal(observed.observedExceptionMinutes, 3);
+  assert.equal(observed.observedOperatingMinutes, 2);
+  assert.equal(observed.observedMaintenanceMinutes, 1);
+  assert.equal(observed.source, 'postgresql-owner_intervention');
 });
 
 // ---------------------------------------------------------------------------

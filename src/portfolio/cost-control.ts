@@ -11,6 +11,29 @@ export class CapitalControlUnavailableError extends Error {
   }
 }
 
+export class PostExecutionSettlementPendingError extends Error {
+  readonly pendingCost: CostRecord;
+  readonly cause: unknown;
+
+  constructor(operation: CostedOperation<unknown>, reservedCents: number, cause: unknown) {
+    super(
+      `Operation ${operation.operationId} may have incurred provider cost; reservation remains ` +
+        'open for provider reconciliation.',
+    );
+    this.name = 'PostExecutionSettlementPendingError';
+    this.cause = cause;
+    this.pendingCost = {
+      operationId: operation.operationId,
+      reservationIdempotencyKey: operation.reservationIdempotencyKey,
+      bucketName: operation.bucketName,
+      maximumCents: reservedCents,
+      settledCents: 0,
+      currency: operation.currency,
+      status: 'SETTLEMENT_PENDING',
+    };
+  }
+}
+
 export interface CostedOperation<T> {
   operationId: string;
   reservationIdempotencyKey: string;
@@ -82,7 +105,11 @@ export class CostController {
       actor: operation.actor,
     });
 
+    let providerExecutionStarted = false;
     try {
+      // From this point onward a thrown error cannot prove the provider did not
+      // bill. The reservation therefore remains committed for reconciliation.
+      providerExecutionStarted = true;
       const result = await operation.run();
       const actualMicros = result.actualCostMicros ?? result.actualCostCents * MICROS_PER_CENT;
       if (actualMicros > maximumMicros) {
@@ -110,10 +137,13 @@ export class CostController {
         },
       };
     } catch (error) {
+      if (providerExecutionStarted) {
+        throw new PostExecutionSettlementPendingError(operation, reserveCents, error);
+      }
       await this.capitalAuthority.release(
         operation.reservationIdempotencyKey,
         operation.actor,
-        'operation failed before settlement',
+        'operation failed before provider execution',
       );
       throw error;
     }

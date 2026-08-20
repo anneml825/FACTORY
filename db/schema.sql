@@ -260,6 +260,51 @@ CREATE INDEX customer_transaction_class_idx ON customer_transaction (classificat
 -- OWNER LABOR
 -- ============================================================================
 
+-- Exact sub-cent model usage. One tranche is backed by one whole-cent Capital
+-- Authority reservation; individual calls remain exact in micro-dollars.
+CREATE TABLE inference_tranche (
+    id                          BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tranche_id                  TEXT NOT NULL UNIQUE,
+    bucket_name                 TEXT NOT NULL,
+    reservation_idempotency_key TEXT NOT NULL UNIQUE,
+    maximum_micros              BIGINT NOT NULL CHECK (maximum_micros > 0),
+    reserved_cents              INTEGER NOT NULL CHECK (reserved_cents > 0),
+    settled_cents               INTEGER CHECK (settled_cents >= 0),
+    exact_micros                BIGINT CHECK (exact_micros >= 0),
+    opened_at                   TIMESTAMPTZ NOT NULL DEFAULT now(),
+    closed_at                   TIMESTAMPTZ,
+    CONSTRAINT settlement_within_reservation
+        CHECK (settled_cents IS NULL OR settled_cents <= reserved_cents),
+    CONSTRAINT closed_tranche_is_settled
+        CHECK (closed_at IS NULL OR (settled_cents IS NOT NULL AND exact_micros IS NOT NULL))
+);
+
+CREATE TABLE inference_usage (
+    id              BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    usage_id        TEXT NOT NULL UNIQUE,
+    tranche_id      TEXT NOT NULL REFERENCES inference_tranche (tranche_id),
+    experiment_key  TEXT NOT NULL,
+    operation_id    TEXT NOT NULL,
+    provider_id     TEXT NOT NULL,
+    model_id        TEXT NOT NULL,
+    task            TEXT NOT NULL,
+    input_tokens    INTEGER NOT NULL CHECK (input_tokens >= 0),
+    output_tokens   INTEGER NOT NULL CHECK (output_tokens >= 0),
+    cost_micros     BIGINT NOT NULL CHECK (cost_micros >= 0),
+    recorded_at     TIMESTAMPTZ NOT NULL
+);
+CREATE INDEX inference_usage_tranche_idx ON inference_usage (tranche_id);
+CREATE INDEX inference_usage_experiment_idx ON inference_usage (experiment_key);
+
+CREATE OR REPLACE FUNCTION reject_inference_usage_mutation() RETURNS TRIGGER AS $$
+BEGIN
+    RAISE EXCEPTION 'inference_usage is append-only.';
+END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER inference_usage_append_only
+    BEFORE UPDATE OR DELETE ON inference_usage
+    FOR EACH ROW EXECUTE FUNCTION reject_inference_usage_mutation();
+
 CREATE TABLE owner_intervention (
     id                      BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     occurred_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -277,6 +322,17 @@ CREATE TABLE owner_intervention (
 );
 
 CREATE INDEX owner_intervention_kind_idx ON owner_intervention (kind, occurred_at DESC);
+
+-- String experiment keys are used by the provider-neutral portfolio engine.
+-- This append-only attribution table connects them to durable owner labor
+-- without overloading the later campaign experiment's numeric primary key.
+CREATE TABLE owner_intervention_experiment (
+    owner_intervention_id BIGINT NOT NULL REFERENCES owner_intervention (id),
+    experiment_key        TEXT NOT NULL,
+    PRIMARY KEY (owner_intervention_id, experiment_key)
+);
+CREATE INDEX owner_intervention_experiment_key_idx
+    ON owner_intervention_experiment (experiment_key);
 
 -- ============================================================================
 -- DURABLE ARRIVE + WATCH
@@ -536,6 +592,45 @@ CREATE TABLE value_qa_review (
     reviewed_at                 TIMESTAMPTZ NOT NULL DEFAULT now(),
     reviewer                    TEXT NOT NULL
 );
+
+-- Artifact-bound evidence used by the executable commercial Value QA gate.
+-- Model review evidence is also bound to one exact inference_usage record.
+CREATE TABLE value_qa_model_evidence (
+    evidence_id          TEXT PRIMARY KEY,
+    artifact_sha256      TEXT NOT NULL CHECK (artifact_sha256 ~ '^[a-f0-9]{64}$'),
+    criterion_id         TEXT NOT NULL,
+    usage_id              TEXT NOT NULL REFERENCES inference_usage (usage_id),
+    reviewer_provider_id TEXT NOT NULL,
+    reviewer_model_id    TEXT NOT NULL,
+    verdict               TEXT NOT NULL CHECK (verdict IN ('PASS', 'FAIL')),
+    rationale_sha256      TEXT NOT NULL CHECK (rationale_sha256 ~ '^[a-f0-9]{64}$'),
+    reviewed_at           TIMESTAMPTZ NOT NULL,
+    recorded_at           TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE value_qa_owner_exception_evidence (
+    evidence_id           TEXT PRIMARY KEY,
+    artifact_sha256       TEXT NOT NULL CHECK (artifact_sha256 ~ '^[a-f0-9]{64}$'),
+    criterion_id          TEXT NOT NULL,
+    owner_intervention_id BIGINT NOT NULL REFERENCES owner_intervention (id),
+    reason_sha256         TEXT NOT NULL CHECK (reason_sha256 ~ '^[a-f0-9]{64}$'),
+    recorded_at           TIMESTAMPTZ NOT NULL
+);
+
+CREATE OR REPLACE FUNCTION reject_phase_e_evidence_mutation() RETURNS TRIGGER AS $$
+BEGIN
+    RAISE EXCEPTION 'Phase E evidence tables are append-only.';
+END;
+$$ LANGUAGE plpgsql;
+CREATE TRIGGER owner_intervention_experiment_append_only
+    BEFORE UPDATE OR DELETE ON owner_intervention_experiment
+    FOR EACH ROW EXECUTE FUNCTION reject_phase_e_evidence_mutation();
+CREATE TRIGGER value_qa_model_evidence_append_only
+    BEFORE UPDATE OR DELETE ON value_qa_model_evidence
+    FOR EACH ROW EXECUTE FUNCTION reject_phase_e_evidence_mutation();
+CREATE TRIGGER value_qa_owner_exception_evidence_append_only
+    BEFORE UPDATE OR DELETE ON value_qa_owner_exception_evidence
+    FOR EACH ROW EXECUTE FUNCTION reject_phase_e_evidence_mutation();
 
 -- ============================================================================
 -- DATA ECONOMICS GATE

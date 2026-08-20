@@ -34,10 +34,10 @@ import type { CatalogStore, EdgeEnvironment } from './types.ts';
 
 export interface WorkerEnv {
   EDGE_DB: D1Like;
-  STRIPE_WEBHOOK_SECRET: string;
-  WATCH_EVENT_SECRET: string;
-  EDGE_DELIVERY_SECRET: string;
-  EDGE_INTERNAL_TRAFFIC_TOKEN: string;
+  STRIPE_WEBHOOK_SECRET?: string;
+  WATCH_EVENT_SECRET?: string;
+  EDGE_DELIVERY_SECRET?: string;
+  EDGE_INTERNAL_TRAFFIC_TOKEN?: string;
   /**
    * Stripe Payment Link the fixture's Buy button redirects to. Optional: an
    * edge with nothing to sell yet is a legitimate state, and it serves an empty
@@ -51,6 +51,8 @@ export interface WorkerEnv {
    * then, only if the database agrees (see `readCommercialPosture`).
    */
   COMMERCIAL_SERVING?: string;
+  /** SHA-256 of the exact authorized deployment or artifact/manifest bundle. */
+  COMMERCIAL_SCOPE_DIGEST?: string;
   /**
    * Owner email addresses or `@domains`, comma-separated. A buyer matching one
    * of these can never be recorded as an arm's-length customer. Empty is safe:
@@ -76,6 +78,27 @@ const REQUIRED_FOR_COMMERCE = [
   'EDGE_DELIVERY_SECRET',
   'EDGE_INTERNAL_TRAFFIC_TOKEN',
 ] as const satisfies readonly (keyof WorkerEnv)[];
+
+const REQUIRED_FOR_COMMERCIAL_ACTIVATION = [
+  'OWNER_IDENTITY_MARKERS',
+  'COMMERCIAL_SCOPE_DIGEST',
+] as const satisfies readonly (keyof WorkerEnv)[];
+
+function missingConfiguration(
+  env: WorkerEnv,
+  purpose: 'FIXTURE' | 'COMMERCIAL' | 'UNKNOWN',
+): (keyof WorkerEnv)[] {
+  const settings = purpose === 'COMMERCIAL'
+    ? [...REQUIRED_FOR_COMMERCE, ...REQUIRED_FOR_COMMERCIAL_ACTIVATION]
+    : REQUIRED_FOR_COMMERCE;
+  return settings.filter((name) => {
+    const value = env[name];
+    if (typeof value !== 'string' || value.trim().length === 0) return true;
+    if (name === 'OWNER_IDENTITY_MARKERS') return normalizeOwnerMarkers(value).length === 0;
+    if (name === 'COMMERCIAL_SCOPE_DIGEST') return !/^[a-f0-9]{64}$/.test(value);
+    return false;
+  });
+}
 
 function required(env: WorkerEnv, key: keyof WorkerEnv): string {
   const value = env[key];
@@ -105,13 +128,21 @@ function positiveInteger(value: string | undefined, fallback: number): number {
  */
 async function readCommercialPosture(
   db: D1Like,
+  scopeDigest: string | undefined,
 ): Promise<{ purpose: 'FIXTURE' | 'COMMERCIAL' | 'UNKNOWN'; authorizations: number }> {
   try {
     const row = await db
       .prepare(
         'SELECT (SELECT purpose FROM edge_deployment_identity WHERE singleton = 1) AS purpose, ' +
-          '(SELECT count(*) FROM commercial_launch_authorization) AS authorizations',
+          `(SELECT count(*) FROM commercial_launch_grant g
+             WHERE g.scope_digest = ?1
+               AND datetime(g.expires_at) > datetime('now')
+               AND NOT EXISTS (
+                 SELECT 1 FROM commercial_launch_revocation r
+                 WHERE r.authorization_key = g.authorization_key
+               )) AS authorizations`,
       )
+      .bind(scopeDigest ?? '')
       .first<{ purpose: string | null; authorizations: number | null }>();
     const purpose = row?.purpose === 'COMMERCIAL' || row?.purpose === 'FIXTURE' ? row.purpose : 'UNKNOWN';
     return { purpose, authorizations: Number(row?.authorizations ?? 0) };
@@ -135,7 +166,9 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
         arrivalPublicationId: env.FIXTURE_ARRIVE_REFERENCE || undefined,
       })
     : { async get() { return null; } };
-  const posture = await readCommercialPosture(env.EDGE_DB);
+  const posture = await readCommercialPosture(env.EDGE_DB, env.COMMERCIAL_SCOPE_DIGEST);
+  const missing = missingConfiguration(env, posture.purpose);
+  const commerceReady = missing.length === 0;
   const ttlSeconds = positiveInteger(env.DELIVERY_TTL_SECONDS, 3600);
   const maxDownloads = positiveInteger(env.MAX_DOWNLOADS_PER_GRANT, 3);
 
@@ -161,20 +194,27 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
     catalog,
     state,
     watch,
-    stripe: new StripeTestWebhookProcessor({
-      webhookSecret: required(env, 'STRIPE_WEBHOOK_SECRET'),
-      internalEventSecret: watchSecret,
-      state: new D1StripeWebhookStateStore(env.EDGE_DB),
-      watch,
-      fulfillment,
-      armsLengthPolicy: { ownerMarkers: normalizeOwnerMarkers(env.OWNER_IDENTITY_MARKERS) },
-    }),
+    stripe: env.STRIPE_WEBHOOK_SECRET
+      ? new StripeTestWebhookProcessor({
+          webhookSecret: env.STRIPE_WEBHOOK_SECRET,
+          internalEventSecret: watchSecret,
+          state: new D1StripeWebhookStateStore(env.EDGE_DB),
+          watch,
+          fulfillment,
+          armsLengthPolicy: { ownerMarkers: normalizeOwnerMarkers(env.OWNER_IDENTITY_MARKERS) },
+        })
+      : {
+          async process() {
+            throw new Error('Stripe webhook processing is not configured.');
+          },
+        },
+    commerceReady,
     signEvent(event: FunnelEvent): SignedEventEnvelope {
       const payload = JSON.stringify(event);
       return { payload, signature: createHmac('sha256', watchSecret).update(payload).digest('hex') };
     },
-    deliverySecret: required(env, 'EDGE_DELIVERY_SECRET'),
-    internalTrafficToken: required(env, 'EDGE_INTERNAL_TRAFFIC_TOKEN'),
+    deliverySecret: env.EDGE_DELIVERY_SECRET ?? '',
+    internalTrafficToken: env.EDGE_INTERNAL_TRAFFIC_TOKEN ?? '',
     // Three independent conditions, all read from different places: the
     // deployed variable, the database's own identity, and an owner
     // authorization row. Starting to serve commercially takes all three;
@@ -182,7 +222,8 @@ async function buildEnvironment(env: WorkerEnv): Promise<EdgeEnvironment> {
     allowCommercialListings:
       env.COMMERCIAL_SERVING === 'enabled' &&
       posture.purpose === 'COMMERCIAL' &&
-      posture.authorizations > 0,
+      posture.authorizations > 0 &&
+      commerceReady,
     deploymentPurpose: posture.purpose,
     commercialAuthorizations: posture.authorizations,
     now: () => new Date(),
@@ -207,9 +248,9 @@ export default {
     }
     if (path === '/posture') {
       const posture = env.EDGE_DB
-        ? await readCommercialPosture(env.EDGE_DB)
+        ? await readCommercialPosture(env.EDGE_DB, env.COMMERCIAL_SCOPE_DIGEST)
         : { purpose: 'UNKNOWN' as const, authorizations: 0 };
-      const missing = REQUIRED_FOR_COMMERCE.filter((name) => !env[name]);
+      const missing = missingConfiguration(env, posture.purpose);
       return new Response(
         `${JSON.stringify(
           {
@@ -218,7 +259,8 @@ export default {
             commercialServing:
               env.COMMERCIAL_SERVING === 'enabled' &&
               posture.purpose === 'COMMERCIAL' &&
-              posture.authorizations > 0,
+              posture.authorizations > 0 &&
+              missing.length === 0,
             commercialAuthorizations: posture.authorizations,
             // Names only. Which settings are absent is a deployment fact; their
             // values never leave the edge.

@@ -2,7 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { Pool } from 'pg';
-import { CapitalControlUnavailableError, CostController, type CapitalAuthorityPort } from '../portfolio/cost-control.ts';
+import {
+  CapitalControlUnavailableError,
+  CostController,
+  PostExecutionSettlementPendingError,
+  type CapitalAuthorityPort,
+} from '../portfolio/cost-control.ts';
 import {
   INFERENCE_BUCKET,
   InMemoryInferenceUsageJournal,
@@ -102,6 +107,24 @@ test('REGRESSION: a sub-cent operation reserves a whole cent through the Authori
   });
   assert.deepEqual(authority.calls, [`reserve:${INFERENCE_BUCKET}:1`, 'settle:1']);
   assert.equal(result.cost.settledCents, 1);
+});
+
+test('post-execution failures keep the reservation open for provider reconciliation', async () => {
+  const authority = new RecordingAuthority();
+  await assert.rejects(
+    new CostController(authority).execute({
+      operationId: 'provider-uncertain', reservationIdempotencyKey: 'provider-uncertain',
+      bucketName: INFERENCE_BUCKET, maximumCents: 1, currency: 'USD',
+      purpose: 'prove post-execution settlement safety', actor: 'test',
+      run: async () => { throw new Error('transport failed after provider accepted request'); },
+    }),
+    (error: unknown) => {
+      assert.ok(error instanceof PostExecutionSettlementPendingError);
+      assert.equal(error.pendingCost.status, 'SETTLEMENT_PENDING');
+      return true;
+    },
+  );
+  assert.deepEqual(authority.calls, [`reserve:${INFERENCE_BUCKET}:1`]);
 });
 
 test('REGRESSION: an adapter cannot assert a cent ceiling that disagrees with its micros', async () => {
@@ -221,6 +244,52 @@ test('a duplicate call does not draw the tranche down twice', async () => {
   assert.equal(tranche.remainingMicros, 600);
 });
 
+test('a tranche resumes from durable usage after restart and cannot redraw spent micros', async () => {
+  const authority = new RecordingAuthority();
+  const journal = new InMemoryInferenceUsageJournal();
+  const first = await InferenceTranche.open({
+    trancheId: 'batch-restart', maximumMicros: 1000, purpose: 'restart', actor: 'test', authority, journal,
+  });
+  await first.record(usage(1, 400));
+  const resumed = await InferenceTranche.open({
+    trancheId: 'batch-restart', maximumMicros: 1000, purpose: 'restart', actor: 'test', authority, journal,
+  });
+  assert.equal(resumed.remainingMicros, 600);
+  assert.deepEqual(await resumed.record(usage(1, 400)), { duplicate: true });
+  await resumed.record(usage(2, 600));
+  assert.equal((await resumed.close()).callCount, 2);
+  const reopened = await InferenceTranche.open({
+    trancheId: 'batch-restart', maximumMicros: 1000, purpose: 'restart', actor: 'test', authority, journal,
+  });
+  assert.throws(() => reopened.assertAdmits(1), /closed/);
+  assert.equal((await reopened.close()).exactMicros, 1000, 'close is idempotent after restart');
+});
+
+test('tranche idempotency validates every durable reservation semantic', async () => {
+  const authority = new RecordingAuthority();
+  const journal = new InMemoryInferenceUsageJournal();
+  await InferenceTranche.open({
+    trancheId: 'batch-semantics', maximumMicros: 1000, purpose: 'first', actor: 'test', authority, journal,
+  });
+  await assert.rejects(
+    InferenceTranche.open({
+      trancheId: 'batch-semantics', maximumMicros: 2000, purpose: 'changed', actor: 'test', authority, journal,
+    }),
+    UsageJournalConflictError,
+  );
+});
+
+test('an incurred tranche cannot be abandoned and released', async () => {
+  const authority = new RecordingAuthority();
+  const journal = new InMemoryInferenceUsageJournal();
+  const tranche = await InferenceTranche.open({
+    trancheId: 'batch-incurred', maximumMicros: 1000, purpose: 'incurred', actor: 'test', authority, journal,
+  });
+  await tranche.record(usage(1, 400));
+  await assert.rejects(tranche.abandon('transport failed'), /cannot be released/);
+  assert.deepEqual(authority.calls, [`reserve:${INFERENCE_BUCKET}:1`]);
+});
+
 test('a tranche refuses work beyond its ceiling before the provider is called', async () => {
   const journal = new InMemoryInferenceUsageJournal();
   const tranche = await InferenceTranche.open({
@@ -307,6 +376,7 @@ test('PostgreSQL usage journal is append-only at the database level', { skip: !D
     assert.deepEqual(await journal.append(record), { appended: true, duplicate: false });
     assert.deepEqual(await journal.append(record), { appended: false, duplicate: true });
     await assert.rejects(journal.append({ ...record, costMicros: 5 }), UsageJournalConflictError);
+    await assert.rejects(journal.append({ ...record, modelId: 'different-model' }), UsageJournalConflictError);
     assert.equal(await journal.totalMicrosForTranche(trancheId), SUB_CENT_MICROS);
 
     await assert.rejects(

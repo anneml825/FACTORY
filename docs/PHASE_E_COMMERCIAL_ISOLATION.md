@@ -1,10 +1,19 @@
 # Fixture and commercial edges: separation, and what is proven
 
-Status: **implemented and externally proven.** Commercial deploy run
+Status: **implemented; historical resource-separation proof is valid, corrected ordinary-route
+redeployment proof pending.** Commercial deploy run
 [`32304390962`](https://github.com/anneml825/FACTORY/actions/runs/32304390962)
 and fixture proof run
 [`32304390932`](https://github.com/anneml825/FACTORY/actions/runs/32304390932),
 both at commit `843441e`, both green.
+
+> **2026-08-20 correction:** the historical commercial run proved database persistence but
+> its canary method was invalid: it inserted unsigned operational rows into signed WATCH.
+> Those rows made ordinary route replay fail. The successor remediation moves canaries to
+> `edge_deploy_canary`, narrowly removes the four invalid rows only after proving the database
+> contains no commerce, and requires a normal unknown product route to return `404` after
+> redeploy. The historical run remains evidence for resource separation, not for a healthy
+> commercial application route.
 
 Nothing commercial has been served, no product exists, and no launch has been
 authorized. What exists is the machinery underneath those decisions, built so
@@ -43,14 +52,14 @@ No single mistake is sufficient to cross them.
 | Reset | every run | **no reset step exists** |
 | Secrets | regenerated per run | installed once, never replaced |
 | Stripe objects | created and swept per run | none; teardown cannot see them |
-| Serving | never commercial | off unless three conditions agree |
+| Serving | never commercial | off unless identity, complete config, exact scoped grant, and enabled deploy agree |
 
-## Commercial serving needs three things to agree
+## Commercial serving is scope-bound and fail-closed
 
-The deployed `COMMERCIAL_SERVING` variable must be exactly `enabled`, the
-database must be stamped `COMMERCIAL`, and the database must hold an owner row
-in `commercial_launch_authorization`. Starting takes all three; stopping takes
-any one. The asymmetry runs in the safe direction.
+The deployed `COMMERCIAL_SERVING` variable must be exactly `enabled`, the database must be
+stamped `COMMERCIAL`, all required credentials plus nonempty owner markers must exist, and an
+unexpired/unrevoked `commercial_launch_grant` must match the exact SHA-256 scope digest.
+Revocation is append-only. Starting needs every condition; stopping needs any one to fail.
 
 `GET /posture` reports the result, so a deploy is checked rather than assumed:
 
@@ -73,10 +82,9 @@ and now name the reason in an `x-factory-edge-failure` header.
 * **The identity is stamped once.** `stamped_at` stayed `2026-08-19 21:24:28`
   across four separate deploys — re-running the migration is a no-op, never a
   change.
-* **Redeploy preserves durable state.** A canary row is written to the
-  commercial journal, the Worker redeployed, the schema re-applied, and the
-  canary read back — on every deploy. All four canaries from four separate
-  deploys are still present, so nothing has been lost across any of them.
+* **Historical redeploy persistence was observed, but its canary location was defective.**
+  The corrected workflow writes operational canaries only to `edge_deploy_canary`; WATCH is
+  reserved exclusively for valid signed funnel events.
 * **The commercial journal is append-only in production.** `UPDATE
   watch_event_inbox` was rejected by the live database.
 * **The fixture proof still passes end to end** — 14 external checks against the
@@ -113,9 +121,9 @@ immediately after a push is measuring an unknown version.
   as disposable — a marker table, or a name containing test/scratch/ci/tmp —
   and refuses otherwise. The check is positive on purpose: a database that has
   never heard of the convention is refused rather than assumed safe.
-* The Data Economics Probe committed its results back to any branch that
-  triggered it. It is now restricted to the default branch: a measurement must
-  not rewrite the branch it was measured from.
+* The Data Economics Probe and every provider-changing Cloudflare/Stripe workflow are now
+  manual-only. Pushing code cannot deploy, provision, create provider objects, or commit probe
+  measurements as a hidden side effect.
 * `wrangler secret list --name X --env Y` looks for a Worker called `X-Y`.
   The environment block already sets the name, so the script names it once.
 

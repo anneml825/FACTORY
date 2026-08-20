@@ -26,8 +26,9 @@ binding constraint on a first dollar was infrastructure, not generation — and 
 have bought files with nowhere to go.
 
 `src/edge/` is that component. One WHATWG `fetch` handler, run unchanged by a Node HTTP adapter
-(`server.ts`, what the tests exercise) and by a Cloudflare Worker entry (`worker.ts`, **not
-deployed and not verified**).
+(`server.ts`, what the tests exercise) and by a deployed Cloudflare Worker entry (`worker.ts`).
+The fixture edge and dormant commercial edge use separate Workers and D1 databases; genuine
+commercial serving remains disabled and unproven.
 
 ```
 GET  /p/:experimentId    product page + first-party PRODUCT_VIEW
@@ -126,8 +127,13 @@ product exists**, deliberately — that is the only moment the criteria can be s
 | `VERIFIABLE_CORRECTNESS` | DETERMINISTIC | no |
 | `PROVENANCE_RIGHTS` | DETERMINISTIC | **yes**, with a logged `owner_intervention` |
 | `FREE_ALTERNATIVE_IDENTIFIED` | DETERMINISTIC | no |
+| `PAID_ALTERNATIVE_COMPARISON` | DETERMINISTIC | no |
 | `DIFFERENTIATION_VS_ALTERNATIVE` | MODEL_REVIEW | no |
+| `ACCURACY_INTERNAL_CONSISTENCY` | MODEL_REVIEW + executed checks | no |
 | `USABILITY_COMPLETENESS` | MODEL_REVIEW | no |
+| `PRESENTATION_BUYER_COMPREHENSION` | MODEL_REVIEW | no |
+| `SLOP_REPETITION_HALLUCINATION` | MODEL_REVIEW | no |
+| `PRICE_VALUE_DEFENSIBILITY` | MODEL_REVIEW | no |
 
 Fail-closed throughout: `UNASSESSED` fails. Specific refusals worth naming —
 
@@ -146,6 +152,10 @@ Fail-closed throughout: `UNASSESSED` fails. Specific refusals worth naming —
   **not** waive `PROMISE_FULFILLED` — a thing Factory must verify itself cannot be voted away.
 
 Fixture Value QA is untouched and still runs for fixtures.
+
+Commercial model reviews and owner exceptions are accepted only when a resolver confirms an
+append-only PostgreSQL evidence row bound to the exact artifact SHA-256. A caller-supplied ID
+alone cannot pass the gate.
 
 ---
 
@@ -190,18 +200,24 @@ created. That selection belongs with the first real product batch.
 
 ## What is proven, and by what
 
-93 tests pass, 0 skipped, against real PostgreSQL 16. See `AGENT_HANDOFF.md` for the run detail.
+The current complete local suite discovers 125 tests: 119 pass, 6 PostgreSQL-dependent tests
+skip when this workspace has no `TEST_DATABASE_URL`, and 0 fail. TypeScript and workflow YAML
+also validate. Earlier Phase E runs exercised the PostgreSQL and public fixture paths; see
+`AGENT_HANDOFF.md` and `docs/PHASE_E_EXTERNAL_PROOF.md` for the evidence boundaries.
 
 The complete fixture commerce path is exercised **over real HTTP against real PostgreSQL**,
 including a mid-flight restart: page → cookie → beacon → buy click → signed webhook →
 fulfillment → grant → thanks page → signed download → durable WATCH, with the funnel replayed
 from the database and the transaction permanently `OWNER_TEST` at zero eligible revenue.
 
-## What remains unverified
+## What remains unverified or deliberately inactive
 
-- **The Cloudflare deployment.** `worker.ts` and `wrangler.toml` have never run. The handler is
-  shared with the tested Node adapter, so what is unverified is the binding translation, not
-  the commerce logic. `KvEdgeStateStore.consumeDownload` **throws by design**: KV cannot enforce
-  a download limit atomically, and pretending otherwise would hand out unlimited downloads.
+- **Corrected commercial-route redeployment:** the Worker and D1 bindings have run externally,
+  but the earlier commercial deploy wrote operational canaries into signed WATCH and therefore
+  did not prove a healthy ordinary application route. The corrected manual deploy moves canaries
+  outside WATCH, performs a narrowly fenced cleanup, and requires an unknown product route to
+  return `404`; its new run evidence belongs in `docs/PHASE_E_COMMERCIAL_ISOLATION.md`.
+- **KV fulfillment is intentionally unsupported.** `KvEdgeStateStore.consumeDownload` throws by
+  design because KV cannot enforce a download limit atomically. The deployed proof uses D1.
 - **Live Stripe.** Sandbox only, as before.
 - **Any commercial claim whatsoever.** No product, no stranger, no revenue, no arrival.

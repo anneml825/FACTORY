@@ -3,13 +3,14 @@
  *
  * Safe to run against a COMMERCIAL database: every statement in schema.sql is
  * `CREATE ... IF NOT EXISTS`, so applying it is additive and repeatable, and the
- * identity stamp is `INSERT OR IGNORE`, so it can never rewrite a stamp that is
- * already there. Nothing in this path drops, truncates, or updates a row.
+ * identity stamp is `INSERT OR IGNORE`, so it can never rewrite purpose or
+ * label. The only UPDATE advances the numeric schema version after the additive
+ * schema succeeds; it is guarded by the immutable purpose and exact label.
  */
 
 import { d1Execute } from './wrangler-d1.ts';
 import { stampIdentity, tryReadIdentity } from './edge-identity.ts';
-import { edgeTargetFromEnvironment } from './edge-targets.ts';
+import { EDGE_SCHEMA_VERSION, edgeTargetFromEnvironment } from './edge-targets.ts';
 
 const target = edgeTargetFromEnvironment();
 
@@ -27,7 +28,16 @@ if (existing && existing.purpose !== target.purpose) {
 }
 
 d1Execute(target, { file: 'db/edge/schema.sql' });
-const identity = stampIdentity(target);
+let identity = stampIdentity(target);
+if (identity.schema_version < EDGE_SCHEMA_VERSION) {
+  d1Execute(target, {
+    command:
+      `UPDATE edge_deployment_identity SET schema_version=${EDGE_SCHEMA_VERSION} ` +
+      `WHERE singleton=1 AND purpose='${target.purpose}' AND database_label='${target.databaseName}' ` +
+      `AND schema_version < ${EDGE_SCHEMA_VERSION}`,
+  });
+  identity = stampIdentity(target);
+}
 
 process.stdout.write(
   `${JSON.stringify({ target: target.name, database: target.databaseName, identity }, null, 2)}\n`,

@@ -372,7 +372,7 @@ test('Capital Authority is required before any nonzero adapter can execute', asy
   assert.equal(providerCalls, 0);
 });
 
-test('cost controller reserves before execution, settles once, and releases failed work', async () => {
+test('cost controller reserves before execution, settles once, and retains uncertain failed work', async () => {
   const calls: string[] = [];
   const authority: CapitalAuthorityPort = {
     async reserve(request) {
@@ -427,9 +427,9 @@ test('cost controller reserves before execution, settles once, and releases fail
         throw new Error('synthetic provider failure');
       },
     }),
-    /synthetic provider failure/,
+    /reservation remains open for provider reconciliation/,
   );
-  assert.deepEqual(calls.slice(-3), ['reserve:cost-failure:5', 'run:failure', 'release:cost-failure']);
+  assert.deepEqual(calls.slice(-2), ['reserve:cost-failure:5', 'run:failure']);
 
   await assert.rejects(
     controller.execute({

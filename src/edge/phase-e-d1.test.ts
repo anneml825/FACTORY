@@ -205,13 +205,18 @@ test('commercial serving stays off unless explicitly enabled', async () => {
   db.close();
 });
 
-test('a missing binding or secret returns 503 rather than a broken shop', async () => {
+test('a missing commerce secret leaves normal pages available but credential routes fail closed', async () => {
   const db = await seeded();
   const noSecret = await worker.fetch(
     new Request(`${ORIGIN}/p/${EXPERIMENT_ID}`),
     { ...env(db), EDGE_DELIVERY_SECRET: '' } as WorkerEnv,
   );
-  assert.equal(noSecret.status, 503);
+  assert.equal(noSecret.status, 200);
+  const noSecretWebhook = await worker.fetch(
+    new Request(`${ORIGIN}/webhooks/stripe`, { method: 'POST' }),
+    { ...env(db), EDGE_DELIVERY_SECRET: '' } as WorkerEnv,
+  );
+  assert.equal(noSecretWebhook.status, 503);
   const noDb = await worker.fetch(
     new Request(`${ORIGIN}/p/${EXPERIMENT_ID}`),
     { ...env(db), EDGE_DB: undefined as never } as WorkerEnv,

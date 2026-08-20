@@ -14,12 +14,6 @@ name: Phase E Cloudflare preflight
 # structured verdict about it is printed.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - claude/factory-phase-e-remediation
-    paths:
-      - '.github/workflows/phase-e-cloudflare-preflight.yml'
-      - 'tools/verify/cloudflare-preflight.py'
 
 permissions:
   contents: read

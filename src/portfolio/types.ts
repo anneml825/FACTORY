@@ -179,7 +179,7 @@ export interface CostRecord {
   maximumCents: number;
   settledCents: number;
   currency: string;
-  status: 'ZERO_COST_SETTLED' | 'RESERVED' | 'SETTLED' | 'RELEASED';
+  status: 'ZERO_COST_SETTLED' | 'RESERVED' | 'SETTLED' | 'RELEASED' | 'SETTLEMENT_PENDING';
 }
 
 export interface ExperimentRecord {

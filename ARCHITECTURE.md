@@ -244,8 +244,8 @@ authoritative provider objects. It remains restricted
 to noncommercial fixtures, sandbox keys, and `livemode=false` objects/events. Stripe CLI forwarding
 is ephemeral test infrastructure, not production hosting.
 
-Phase C now implements the provider-neutral ARRIVE activation/measurement/deactivation contract,
-a first DEV Community noncommercial pilot adapter, an fsynced local WATCH journal, and an
-append-only PostgreSQL WATCH/webhook state boundary. The credential-free restart tests are local;
-the real public DEV probe has not yet run. External MAKE remains unimplemented. `ROADMAP.md`
-tracks the honest build status.
+Phase C implemented and externally exercised a noncommercial DEV publication fixture, then
+unpublished it; genuine commercial ARRIVE remains unproven. Phase E deployed separate fixture
+and dormant commercial Cloudflare Workers/D1 databases. Fixture commerce was externally
+proved in Stripe test mode. Commercial serving remains disabled and no product exists.
+External metered MAKE remains unimplemented. `ROADMAP.md` tracks the honest build status.
