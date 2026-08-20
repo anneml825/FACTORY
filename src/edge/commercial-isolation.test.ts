@@ -383,6 +383,13 @@ test('each workflow names the target it declares, and only that one', () => {
   assert.match(commercial, /INSERT INTO edge_deploy_canary/);
 });
 
+test('the commercial deploy requires a stable final build, not one lucky response', () => {
+  const workflow = readFileSync('.github/workflows/phase-e-commercial-deploy.yml', 'utf8');
+  assert.match(workflow, /required_consecutive=5/);
+  assert.match(workflow, /Final posture came from an unexpected build/);
+  assert.match(workflow, /EDGE_BUILD_BASE.*-redeployed/);
+});
+
 test('provider-changing and state-writing workflows are manual-only', () => {
   for (const file of [
     '.github/workflows/phase-e-edge-deploy.yml',

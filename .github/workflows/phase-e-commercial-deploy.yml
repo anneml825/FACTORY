@@ -220,15 +220,22 @@ jobs:
           else
             expected="${EDGE_BUILD_BASE}-redeployed"
           fi
-          for attempt in $(seq 1 30); do
+          consecutive=0
+          required_consecutive=5
+          for attempt in $(seq 1 60); do
             live=$(curl -sS "$COMMERCIAL_BASE_URL/posture" | grep -o '"buildId": "[^"]*"' | cut -d'"' -f4 || true)
             if [ "$live" = "$expected" ]; then
-              echo "Build $expected is live after $attempt check(s)."
-              exit 0
+              consecutive=$((consecutive + 1))
+              if [ "$consecutive" -ge "$required_consecutive" ]; then
+                echo "Build $expected answered $required_consecutive consecutive checks by attempt $attempt."
+                exit 0
+              fi
+            else
+              consecutive=0
             fi
             sleep 2
           done
-          echo "::error::The deployed build never became the one answering (saw '${live:-none}')."
+          echo "::error::The deployed build never stabilized (expected '$expected', saw '${live:-none}')."
           exit 1
 
       - name: Prove an ordinary application route survives WATCH replay
@@ -258,6 +265,13 @@ jobs:
             echo "::error::The commercial edge could not report its posture."
             exit 1
           fi
+          if [ "${{ inputs.serving }}" = "enabled" ]; then
+            expected="${EDGE_BUILD_BASE}-enabled"
+          else
+            expected="${EDGE_BUILD_BASE}-redeployed"
+          fi
+          echo "$posture" | grep -q "\"buildId\": \"$expected\"" \
+            || { echo "::error::Final posture came from an unexpected build."; exit 1; }
           echo "$posture" | grep -q '"deploymentPurpose": "COMMERCIAL"' \
             || { echo "::error::The commercial edge does not identify itself as COMMERCIAL."; exit 1; }
           if [ "${{ inputs.serving }}" != "enabled" ]; then
