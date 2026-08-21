@@ -19,6 +19,21 @@
  *      counter trips.
  *   7. A kill switch that halts everything regardless of remaining budget.
  *
+ * WHY THE LEDGER IS TWO-PHASE. The metered calls can only run on an ephemeral
+ * CI runner, because this repository's own network cannot reach the provider. A
+ * ledger that exists only for the life of that runner is not a ledger: every run
+ * would start from an empty history and believe it had the full budget. So the
+ * ledger is a file in the repository, and a run records its INTENT before it
+ * makes its first request — RESERVE, then EXECUTE, then SETTLE, the same shape
+ * the Capital Authority already uses for money.
+ *
+ * The ordering is what makes it safe. A reservation is written and pushed before
+ * any request leaves the runner, and it counts against the budget at its full
+ * intended size until it is settled. A run that crashes, is cancelled, or loses
+ * its network therefore leaves its whole reservation standing. The failure mode
+ * is over-counting, never under-counting, because a request Factory cannot prove
+ * it avoided must be assumed to have happened.
+ *
  * WHY A ROLLING WINDOW RATHER THAN A CALENDAR MONTH. A provider's billing month
  * need not start on the 1st. If it runs the 15th to the 14th and this guard
  * counted calendar months, a run could spend the full budget in the tail of one
@@ -53,15 +68,25 @@ export const EXPLORATORY_LIFETIME_CEILING = 400;
 /** Minimum milliseconds between calls. Bounds velocity before the counter trips. */
 export const MINIMUM_CALL_INTERVAL_MS = 250;
 
+/**
+ * RESERVED means "this many requests may already have happened". It is written
+ * before the first call and counts in full. SETTLED means the run finished and
+ * reported what it actually used.
+ */
+export type LedgerRunStatus = 'RESERVED' | 'SETTLED';
+
 export interface LedgerRun {
   runId: string;
   startedAt: string;
   requests: number;
   note: string;
+  status: LedgerRunStatus;
 }
 
+export const LEDGER_SCHEMA_VERSION = 2;
+
 export interface UsageLedger {
-  schemaVersion: 1;
+  schemaVersion: 2;
   runs: LedgerRun[];
 }
 
@@ -73,7 +98,7 @@ export class BudgetRefusal extends Error {
 }
 
 function emptyLedger(): UsageLedger {
-  return { schemaVersion: 1, runs: [] };
+  return { schemaVersion: LEDGER_SCHEMA_VERSION, runs: [] };
 }
 
 /**
@@ -98,15 +123,29 @@ export async function readLedger(path: string): Promise<UsageLedger> {
   } catch {
     throw new BudgetRefusal(`Refusing to spend: the usage ledger at ${path} is not valid JSON.`);
   }
-  if (parsed.schemaVersion !== 1 || !Array.isArray(parsed.runs)) {
+  const version = (parsed as { schemaVersion?: unknown }).schemaVersion;
+  if ((version !== 1 && version !== LEDGER_SCHEMA_VERSION) || !Array.isArray(parsed.runs)) {
     throw new BudgetRefusal(`Refusing to spend: the usage ledger at ${path} has an unknown shape.`);
   }
   for (const run of parsed.runs) {
     if (!Number.isInteger(run.requests) || run.requests < 0 || !run.startedAt) {
       throw new BudgetRefusal(`Refusing to spend: the usage ledger contains a malformed run entry.`);
     }
+    // A version-1 entry predates two-phase accounting. It was written after the
+    // fact, so it is already a settled record; an unknown status is not.
+    if (run.status === undefined) {
+      run.status = 'SETTLED';
+    } else if (run.status !== 'RESERVED' && run.status !== 'SETTLED') {
+      throw new BudgetRefusal(`Refusing to spend: the usage ledger contains an unknown run status.`);
+    }
   }
+  parsed.schemaVersion = LEDGER_SCHEMA_VERSION;
   return parsed;
+}
+
+async function writeLedger(path: string, ledger: UsageLedger): Promise<void> {
+  await mkdir(dirname(path), { recursive: true });
+  await writeFile(path, `${JSON.stringify(ledger, null, 2)}\n`);
 }
 
 export function spentInWindow(ledger: UsageLedger, now: Date): number {
@@ -216,7 +255,14 @@ export class MeteredApiBudget {
       );
     }
 
-    return new MeteredApiBudget({
+    if (ledger.runs.some((run) => run.runId === options.runId)) {
+      throw new BudgetRefusal(
+        `Refusing to spend: run ${options.runId} already has a ledger entry. ` +
+          `A run may reserve once; use resume() to attach to an existing reservation.`,
+      );
+    }
+
+    const budget = new MeteredApiBudget({
       ledgerPath: options.ledgerPath,
       runId: options.runId,
       note: options.note ?? '',
@@ -225,6 +271,64 @@ export class MeteredApiBudget {
       ledger,
       allowance: options.intendedRequests,
       startedAt: at.toISOString(),
+    });
+
+    // The reservation is written to durable storage BEFORE the caller can make
+    // its first request. If this write fails the run never starts, which is the
+    // correct outcome: a run that cannot record what it is about to do must not
+    // do it.
+    ledger.runs.push({
+      runId: options.runId,
+      startedAt: budget.startedAt,
+      requests: options.intendedRequests,
+      note: options.note ?? '',
+      status: 'RESERVED',
+    });
+    await writeLedger(options.ledgerPath, ledger);
+    return budget;
+  }
+
+  /**
+   * Attaches to a reservation made by an earlier process — the case where one CI
+   * step reserves and pushes the ledger, and a later step does the spending. The
+   * allowance is whatever was reserved; it cannot be enlarged here, because the
+   * reservation is the thing that was durably recorded and reviewed.
+   */
+  static async resume(options: {
+    ledgerPath: string;
+    runId: string;
+    now?: () => Date;
+    sleep?: (ms: number) => Promise<void>;
+    halted?: boolean;
+  }): Promise<MeteredApiBudget> {
+    const now = options.now ?? (() => new Date());
+    const sleep = options.sleep ?? ((ms: number) => new Promise((r) => setTimeout(r, ms)));
+
+    if (options.halted ?? process.env.FACTORY_METERED_API_HALTED === '1') {
+      throw new BudgetRefusal('Refusing to spend: the metered-API kill switch is engaged.');
+    }
+    const ledger = await readLedger(options.ledgerPath);
+    const entry = ledger.runs.find((run) => run.runId === options.runId);
+    if (!entry) {
+      throw new BudgetRefusal(
+        `Refusing to spend: run ${options.runId} has no reservation in the ledger. ` +
+          `Reserve before spending — an unrecorded run is an uncounted one.`,
+      );
+    }
+    if (entry.status !== 'RESERVED') {
+      throw new BudgetRefusal(
+        `Refusing to spend: run ${options.runId} is already settled and cannot spend again.`,
+      );
+    }
+    return new MeteredApiBudget({
+      ledgerPath: options.ledgerPath,
+      runId: options.runId,
+      note: entry.note,
+      now,
+      sleep,
+      ledger,
+      allowance: entry.requests,
+      startedAt: entry.startedAt,
     });
   }
 
@@ -268,14 +372,17 @@ export class MeteredApiBudget {
   async commit(): Promise<UsageLedger> {
     if (this.committed) return this.ledger;
     this.committed = true;
-    this.ledger.runs.push({
-      runId: this.runId,
-      startedAt: this.startedAt,
-      requests: this.used,
-      note: this.note,
-    });
-    await mkdir(dirname(this.ledgerPath), { recursive: true });
-    await writeFile(this.ledgerPath, `${JSON.stringify(this.ledger, null, 2)}\n`);
+    const entry = this.ledger.runs.find((run) => run.runId === this.runId);
+    if (!entry) {
+      throw new BudgetRefusal(
+        `Refusing to settle: run ${this.runId} vanished from the ledger between reserve and commit.`,
+      );
+    }
+    // Settling can only ever lower the recorded figure, never raise it above what
+    // was reserved — the reservation was the reviewed number.
+    entry.requests = Math.min(this.used, entry.requests);
+    entry.status = 'SETTLED';
+    await writeLedger(this.ledgerPath, this.ledger);
     return this.ledger;
   }
 }

@@ -1,0 +1,101 @@
+name: Canopy probe (SPENDS METERED REQUESTS)
+
+# The only workflow in this repository that can cost money.
+#
+# It runs on a push that changes state/canopy-probe-arm.txt, and nothing else.
+# That file does not exist yet, and its absence is the disarmed state. Creating
+# or editing it is the act that authorizes a spend — a separate, deliberate
+# commit that git history attributes to whoever made it. Installing this
+# workflow therefore cannot run it, which is why the arming file was
+# deliberately left out of the commit that introduced this file.
+#
+# THE LEDGER IS THE CONTROL. Canopy can only be reached from a runner, and a
+# runner is ephemeral, so a ledger that lived only inside the job would reset to
+# zero every time and the budget would mean nothing. Instead the ledger is a file
+# in this repository and the run records its INTENT before it makes a single
+# request:
+#
+#   RESERVE  -> write the intended count, commit, push. If the push fails the
+#               job stops here and nothing has been spent.
+#   EXECUTE  -> spend, never more than was reserved.
+#   SETTLE   -> rewrite with what was actually used, commit, push. Runs even
+#               when the probe fails.
+#
+# A run that is cancelled or crashes between RESERVE and SETTLE leaves its whole
+# reservation standing against the budget. Over-counting is the intended failure
+# mode: a request Factory cannot prove it avoided is assumed to have happened.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'state/canopy-probe-arm.txt'
+
+permissions:
+  contents: write
+
+# Never two spending runs at once, and never cancelled mid-flight — a cancelled
+# run cannot settle, so it would strand its full reservation.
+concurrency:
+  group: canopy-spend
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CANOPY_LEDGER_PATH: state/canopy-usage-ledger.json
+      CANOPY_INTENDED_REQUESTS: '5'
+      CANOPY_RUN_NOTE: 'schema-confirmation probe before the KDP demand screen'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      # The guards are only worth what their tests say they are worth, so the
+      # tests run before the money does.
+      - name: Budget guards pass before anything is spent
+        run: |
+          node --test src/research/approved-ceilings.test.ts
+          node --test src/research/metered-api-budget.test.ts
+
+      - name: RESERVE — record the intent
+        run: node src/research/canopy-reserve.ts
+
+      # If this push fails, the job fails here and no request has been made.
+      - name: Make the reservation durable before spending
+        run: |
+          git config user.name "factory-ci"
+          git config user.email "factory-ci@users.noreply.github.com"
+          git add "$CANOPY_LEDGER_PATH"
+          git commit -m "RESERVE ${CANOPY_INTENDED_REQUESTS} Canopy requests for run ${GITHUB_RUN_ID} [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: EXECUTE — the probe
+        id: execute
+        env:
+          CANOPY_API_KEY: ${{ secrets.CANOPY_API_KEY || secrets.CANOPY_KEY || secrets.CANOPYAPI_KEY }}
+        run: node src/research/canopy-probe.ts
+
+      # Always. A failed probe that does not settle would leave the ledger
+      # claiming the full reservation forever.
+      - name: SETTLE — record what was actually spent
+        if: always()
+        run: |
+          git config user.name "factory-ci"
+          git config user.email "factory-ci@users.noreply.github.com"
+          git add "$CANOPY_LEDGER_PATH" state/canopy-probe-result.json || true
+          git commit -m "SETTLE Canopy run ${GITHUB_RUN_ID} [skip ci]" || echo "nothing to settle"
+          git pull --rebase origin "${GITHUB_REF_NAME}" || true
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: Show the ledger
+        if: always()
+        run: cat "$CANOPY_LEDGER_PATH"

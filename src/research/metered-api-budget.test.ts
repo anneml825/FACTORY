@@ -15,6 +15,7 @@ import {
   MeteredApiBudget,
   ROLLING_WINDOW_DAYS,
   ROLLING_WINDOW_REQUEST_BUDGET,
+  readLedger,
   spentInWindow,
 } from './metered-api-budget.ts';
 
@@ -46,10 +47,10 @@ test('the configured budget stays below the free tier', () => {
 test('the window is rolling, so a billing cycle cannot be straddled', () => {
   const now = new Date('2026-08-20T00:00:00Z');
   const ledger = {
-    schemaVersion: 1 as const,
+    schemaVersion: 2 as const,
     runs: [
-      { runId: 'old', startedAt: '2026-06-01T00:00:00Z', requests: 80, note: '' },
-      { runId: 'recent', startedAt: '2026-08-01T00:00:00Z', requests: 40, note: '' },
+      { runId: 'old', startedAt: '2026-06-01T00:00:00Z', requests: 80, note: '', status: 'SETTLED' as const },
+      { runId: 'recent', startedAt: '2026-08-01T00:00:00Z', requests: 40, note: '', status: 'SETTLED' as const },
     ],
   };
   // The June run is outside the window; the August one is inside. A calendar
@@ -59,8 +60,8 @@ test('the window is rolling, so a billing cycle cannot be straddled', () => {
 
 test('an unparseable timestamp counts against the budget rather than being ignored', () => {
   const ledger = {
-    schemaVersion: 1 as const,
-    runs: [{ runId: 'broken', startedAt: 'not-a-date', requests: 50, note: '' }],
+    schemaVersion: 2 as const,
+    runs: [{ runId: 'broken', startedAt: 'not-a-date', requests: 50, note: '', status: 'SETTLED' as const }],
   };
   assert.equal(spentInWindow(ledger, new Date('2026-08-20T00:00:00Z')), 50);
 });
@@ -102,7 +103,7 @@ test('a run that cannot afford its whole intent never makes its first request', 
     path,
     JSON.stringify({
       schemaVersion: 1,
-      runs: [{ runId: 'prior', startedAt: '2026-08-19T00:00:00Z', requests: 85, note: '' }],
+      runs: [{ runId: 'prior', startedAt: '2026-08-19T00:00:00Z', requests: 85, note: '', status: 'SETTLED' as const }],
     }),
   );
   await assert.rejects(
@@ -274,4 +275,138 @@ test('nothing in src/research talks to a provider except through the budget', as
       `${name} must wrap every provider call in budget.spend()`,
     );
   }
+});
+
+// --- Check 2 (durability): the ledger must outlive the process ----------------
+//
+// The provider can only be called from an ephemeral CI runner. These tests are
+// the ones that decide whether the other six checks mean anything there.
+
+test('a reservation is durable before a single request is made', async () => {
+  const path = await ledgerPath();
+  await MeteredApiBudget.reserve({ ledgerPath: path, runId: 'run-a', intendedRequests: 7 });
+
+  // Read from disk, not from the object: this is what the next process sees.
+  const onDisk = await readLedger(path);
+  assert.equal(onDisk.runs.length, 1);
+  assert.equal(onDisk.runs[0].status, 'RESERVED');
+  assert.equal(onDisk.runs[0].requests, 7);
+});
+
+test('a run that dies mid-flight leaves its whole reservation standing', async () => {
+  const path = await ledgerPath();
+  const budget = await MeteredApiBudget.reserve({
+    ledgerPath: path,
+    runId: 'crashed',
+    intendedRequests: 20,
+  });
+  await budget.spend(async () => 'one call made');
+  // No commit(). The process is gone — a cancelled job, a lost runner, a crash.
+
+  const survivor = await readLedger(path);
+  assert.equal(
+    spentInWindow(survivor, new Date()),
+    20,
+    'an interrupted run must count for everything it reserved, not what it proved it used',
+  );
+});
+
+test('reserving twice under one run id is refused', async () => {
+  const path = await ledgerPath();
+  await MeteredApiBudget.reserve({ ledgerPath: path, runId: 'dup', intendedRequests: 3 });
+  await assert.rejects(
+    () => MeteredApiBudget.reserve({ ledgerPath: path, runId: 'dup', intendedRequests: 3 }),
+    BudgetRefusal,
+  );
+});
+
+test('a reservation exhausts the budget for everyone else while it is open', async () => {
+  const path = await ledgerPath();
+  await MeteredApiBudget.reserve({
+    ledgerPath: path,
+    runId: 'holder',
+    intendedRequests: ROLLING_WINDOW_REQUEST_BUDGET,
+  });
+  await assert.rejects(
+    () => MeteredApiBudget.reserve({ ledgerPath: path, runId: 'latecomer', intendedRequests: 1 }),
+    BudgetRefusal,
+  );
+});
+
+// --- resume(): reserve in one step, spend in another --------------------------
+
+test('resume attaches to a reservation and cannot enlarge it', async () => {
+  const path = await ledgerPath();
+  await MeteredApiBudget.reserve({ ledgerPath: path, runId: 'two-step', intendedRequests: 2 });
+
+  const resumed = await MeteredApiBudget.resume({ ledgerPath: path, runId: 'two-step' });
+  assert.equal(resumed.remaining(), 2);
+  await resumed.spend(async () => 1);
+  await resumed.spend(async () => 2);
+  await assert.rejects(() => resumed.spend(async () => 3), BudgetRefusal);
+});
+
+test('resume refuses a run that never reserved', async () => {
+  const path = await ledgerPath();
+  await assert.rejects(
+    () => MeteredApiBudget.resume({ ledgerPath: path, runId: 'ghost' }),
+    BudgetRefusal,
+  );
+});
+
+test('resume refuses a run that has already settled', async () => {
+  const path = await ledgerPath();
+  const budget = await MeteredApiBudget.reserve({
+    ledgerPath: path,
+    runId: 'done',
+    intendedRequests: 4,
+  });
+  await budget.commit();
+  await assert.rejects(
+    () => MeteredApiBudget.resume({ ledgerPath: path, runId: 'done' }),
+    BudgetRefusal,
+  );
+});
+
+test('settling lowers the recorded spend but can never raise it', async () => {
+  const path = await ledgerPath();
+  const budget = await MeteredApiBudget.reserve({
+    ledgerPath: path,
+    runId: 'thrifty',
+    intendedRequests: 10,
+  });
+  await budget.spend(async () => 'only one');
+  await budget.commit();
+
+  const settled = await readLedger(path);
+  assert.equal(settled.runs[0].status, 'SETTLED');
+  assert.equal(settled.runs[0].requests, 1);
+});
+
+test('a version-1 ledger is read as settled history rather than refused', async () => {
+  const path = await ledgerPath();
+  await writeFile(
+    path,
+    JSON.stringify({
+      schemaVersion: 1,
+      runs: [{ runId: 'legacy', startedAt: new Date().toISOString(), requests: 12, note: '' }],
+    }),
+  );
+  const migrated = await readLedger(path);
+  assert.equal(migrated.runs[0].status, 'SETTLED');
+  assert.equal(spentInWindow(migrated, new Date()), 12);
+});
+
+test('an unrecognised run status is a refusal, not a default', async () => {
+  const path = await ledgerPath();
+  await writeFile(
+    path,
+    JSON.stringify({
+      schemaVersion: 2,
+      runs: [
+        { runId: 'weird', startedAt: new Date().toISOString(), requests: 1, note: '', status: 'MAYBE' },
+      ],
+    }),
+  );
+  await assert.rejects(() => readLedger(path), BudgetRefusal);
 });

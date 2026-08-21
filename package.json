@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test src/portfolio/phase-a.test.ts src/portfolio/phase-b-stripe.test.ts src/portfolio/phase-c.test.ts src/portfolio/phase-c-postgres.test.ts src/portfolio/commercial-gates.test.ts src/campaign/phase-d.test.ts src/capital/inference-accounting.test.ts src/edge/phase-e.test.ts src/edge/phase-e-d1.test.ts src/edge/phase-e-postgres.test.ts src/edge/commercial-isolation.test.ts src/research/metered-api-budget.test.ts src/research/approved-ceilings.test.ts",
+    "test": "node --test src/portfolio/phase-a.test.ts src/portfolio/phase-b-stripe.test.ts src/portfolio/phase-c.test.ts src/portfolio/phase-c-postgres.test.ts src/portfolio/commercial-gates.test.ts src/campaign/phase-d.test.ts src/capital/inference-accounting.test.ts src/edge/phase-e.test.ts src/edge/phase-e-d1.test.ts src/edge/phase-e-postgres.test.ts src/edge/commercial-isolation.test.ts src/research/metered-api-budget.test.ts src/research/approved-ceilings.test.ts src/research/spend-surface.test.ts",
     "test:phase-a": "node --test src/portfolio/phase-a.test.ts",
     "test:phase-b": "node --test src/portfolio/phase-b-stripe.test.ts",
     "test:phase-c": "node --test src/portfolio/phase-c.test.ts src/portfolio/phase-c-postgres.test.ts",
