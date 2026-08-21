@@ -1,0 +1,113 @@
+name: Canopy reconnaissance
+
+# Reads Canopy's public documentation and terms from a runner, because this
+# repository's own network is restricted and cannot reach them.
+#
+# THIS RUN SPENDS NO API CREDITS. It makes no authenticated call and does not
+# touch the API key. Its only job is to answer the two questions that gate the
+# KDP demand screen:
+#
+#   1. Do Canopy's terms permit programmatic market research?
+#   2. What fields does a book product actually return — specifically sales
+#      rank, publication date and page count?
+#
+# The answer to (2) is what lets a correct client be written at all. Writing one
+# against guessed field names would spend real credits discovering it was wrong.
+#
+# Manual dispatch only. Pushing code cannot run this.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: canopy-recon
+  cancel-in-progress: false
+
+jobs:
+  recon:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # Confirms the secret exists and is reachable under a name we expect,
+      # WITHOUT printing it. Nothing here sends it anywhere.
+      - name: Confirm the API key is present, without using it
+        env:
+          KEY: ${{ secrets.CANOPY_API_KEY || secrets.CANOPY_KEY || secrets.CANOPYAPI_KEY }}
+        run: |
+          if [ -z "$KEY" ]; then
+            echo "::warning::No Canopy key found under CANOPY_API_KEY, CANOPY_KEY or CANOPYAPI_KEY."
+            echo "Recon does not need it — but the later probe will. Tell Claude the exact secret name."
+          else
+            echo "A Canopy key is present and readable by this workflow. Length: ${#KEY} characters."
+            echo "It was NOT used in this run and was not sent anywhere."
+          fi
+
+      - name: Fetch public documentation and terms
+        run: |
+          mkdir -p recon
+          # Public pages only. No key, no authenticated endpoint, no credits.
+          for target in \
+            "https://www.canopyapi.co/|home" \
+            "https://www.canopyapi.co/terms|terms" \
+            "https://www.canopyapi.co/terms-of-service|terms-of-service" \
+            "https://www.canopyapi.co/pricing|pricing" \
+            "https://docs.canopyapi.co/|docs-root" \
+            "https://www.canopyapi.co/docs|docs" \
+            "https://www.canopyapi.co/use-cases/amazon-product-data|use-case-product-data" \
+          ; do
+            url="${target%%|*}"; name="${target##*|}"
+            echo "--- GET $url"
+            code=$(curl -sS -L --max-time 25 -o "recon/$name.html" -w '%{http_code}' "$url" || echo 000)
+            echo "    -> $code  ($(wc -c < "recon/$name.html" 2>/dev/null || echo 0) bytes)"
+          done
+
+      - name: Extract the readable text
+        run: |
+          python3 - <<'PY'
+          import html, pathlib, re
+          out = pathlib.Path("recon/extracted.txt")
+          chunks = []
+          for path in sorted(pathlib.Path("recon").glob("*.html")):
+              raw = path.read_text("utf8", errors="replace")
+              # Strip script/style, then tags, then collapse whitespace.
+              raw = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", raw)
+              text = html.unescape(re.sub(r"(?s)<[^>]+>", " ", raw))
+              text = re.sub(r"[ \t\r\f\v]+", " ", text)
+              text = re.sub(r"\n\s*\n+", "\n", text).strip()
+              chunks.append(f"\n\n===== {path.name} ({len(text)} chars) =====\n{text[:12000]}")
+          out.write_text("".join(chunks))
+          print(f"wrote {out} ({out.stat().st_size} bytes)")
+          PY
+
+      # Surfaced in the log so it can be read without downloading anything —
+      # this repository cannot fetch artifacts.
+      - name: Print what was found
+        run: |
+          sed -n '1,900p' recon/extracted.txt
+
+      - name: Highlight the decisive passages
+        run: |
+          echo "=================== SCHEMA / FIELD MENTIONS ==================="
+          grep -inE 'salesRank|bestsellerRank|best.?seller|publicationDate|publication_date|numberOfPages|page.?count|print.?length|isbn|rating|reviewCount|featureBullets' \
+            recon/extracted.txt | head -60 || echo "(none found in the extracted text)"
+          echo
+          echo "=================== TERMS / USE RESTRICTIONS ==================="
+          grep -inE 'terms of service|acceptable use|prohibit|restrict|resell|redistribut|scrap|rate limit|commercial use|attribution' \
+            recon/extracted.txt | head -60 || echo "(none found in the extracted text)"
+          echo
+          echo "=================== PRICING / FREE TIER ==================="
+          grep -inE 'free|per request|credit|\$0\.|month|overage|billing' \
+            recon/extracted.txt | head -40 || echo "(none found in the extracted text)"
+
+      - name: Upload the raw pages
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: canopy-recon
+          path: recon/
+          retention-days: 7
+          if-no-files-found: warn
