@@ -1,15 +1,20 @@
 name: Canopy reconnaissance
 
-# Reads Canopy's public documentation and machine-readable API spec from a
-# runner, because this repository's own network cannot reach them.
+# Reads Canopy's public documentation, published example collections, and
+# open-source client code from a runner, because this repository's own network
+# cannot reach them.
 #
 # THIS RUN SPENDS NO API CREDITS. It sends no API key and calls no billable
 # endpoint. Round 1 answered the terms question and confirmed the key exists.
-# Round 2 answers the remaining gate: what fields does a BOOK actually return,
-# and which endpoint yields a category bestseller list?
+# Round 2 established there is no public OpenAPI document, that unauthenticated
+# GraphQL introspection is refused at the edge (403), and that Canopy publishes
+# an MCP server whose 11 tools name the available operations.
 #
-# Writing a client against guessed field names would spend real metered
-# requests discovering it was wrong, and the free allowance is 100 per month.
+# Round 3 answers the remaining gate — what a BOOK query actually returns — by
+# reading Canopy's own open-source client code, which must contain the real
+# field names because it compiles against the real schema. Guessing them
+# instead would spend metered requests discovering the guess was wrong, and the
+# free allowance is 100 requests per month.
 #
 # Runs on a push that changes THIS FILE, and on manual dispatch. The push
 # trigger is deliberate and self-limiting: the job spends no credits, sends no
@@ -37,174 +42,85 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Crawls only Canopy's own public documentation and spec hosts. No API
-      # key is present in this step's environment at all, so it cannot leak and
-      # cannot authenticate a billable call even by accident.
-      - name: Crawl the public documentation and spec
+      # Reads only Canopy's own public endpoints. No API key is present in any
+      # step's environment, so none can leak and none can authenticate a
+      # billable call even by accident.
+      - name: Read Canopy's published example collection and REST root
         run: |
-          python3 - <<'PY'
-          import json, pathlib, re, urllib.request, urllib.error
-          from urllib.parse import urljoin, urlparse
+          mkdir -p recon
+          echo "=== rest.canopyapi.co root ==="
+          curl -sS --max-time 20 https://rest.canopyapi.co/ -o recon/rest-root.txt || true
+          head -c 3500 recon/rest-root.txt
+          echo
+          echo "=== docs hoppscotch collection (real example requests) ==="
+          curl -sS --max-time 20 https://docs.canopyapi.co/hoppscotch-collection.json \
+            -o recon/hoppscotch.json || true
+          python3 -c "import json,sys;print(json.dumps(json.load(open('recon/hoppscotch.json')),indent=1)[:6000])" || cat recon/hoppscotch.json
 
-          OUT = pathlib.Path("recon"); OUT.mkdir(exist_ok=True)
-          ALLOWED = {"docs.canopyapi.co", "rest.canopyapi.co", "www.canopyapi.co"}
+      # Canopy's own MCP server and examples are public source. They compile
+      # against the real schema, so their queries are the schema — no guessing,
+      # no metered request spent to find out.
+      - name: Clone Canopy's open-source clients
+        run: |
+          mkdir -p src-canopy
+          for repo in canopy-api-mcp canopy-api; do
+            echo "--- cloning $repo"
+            git clone --depth 1 --quiet "https://github.com/canopy-api/$repo.git" "src-canopy/$repo" \
+              && echo "    ok" || echo "    FAILED"
+          done
+          echo
+          echo "=== files ==="
+          find src-canopy -type f \
+            \( -name '*.ts' -o -name '*.js' -o -name '*.graphql' -o -name '*.gql' -o -name '*.json' -o -name '*.md' \) \
+            -not -path '*/node_modules/*' -not -name 'package-lock.json' \
+            | head -120
 
-          def get(url, timeout=20):
-              request = urllib.request.Request(url, headers={"User-Agent": "factory-recon/1 (+public docs only)"})
-              try:
-                  with urllib.request.urlopen(request, timeout=timeout) as response:
-                      return response.status, response.read().decode("utf8", "replace")
-              except urllib.error.HTTPError as error:
-                  return error.code, ""
-              except Exception as error:
-                  return 0, f"{type(error).__name__}: {error}"
-
-          # Candidate locations for a machine-readable spec. Cheap to try, and a
-          # hit removes every remaining guess about field names.
-          SPEC_CANDIDATES = [
-              "https://rest.canopyapi.co/openapi.json",
-              "https://rest.canopyapi.co/openapi",
-              "https://rest.canopyapi.co/openapi.yaml",
-              "https://rest.canopyapi.co/swagger.json",
-              "https://rest.canopyapi.co/docs/json",
-              "https://rest.canopyapi.co/api-json",
-              "https://rest.canopyapi.co/",
-              "https://rest.canopyapi.co/docs",
+      - name: The GraphQL operations, verbatim
+        run: |
+          python3 - <<'PY2'
+          import pathlib, re
+          roots = list(pathlib.Path("src-canopy").rglob("*"))
+          files = [
+              p for p in roots
+              if p.is_file()
+              and p.suffix in {".ts", ".js", ".mjs", ".graphql", ".gql", ".tsx"}
+              and "node_modules" not in p.parts
           ]
-          spec_report = []
-          for url in SPEC_CANDIDATES:
-              status, body = get(url)
-              spec_report.append((url, status, len(body)))
-              if status == 200 and body.lstrip().startswith("{"):
-                  try:
-                      json.loads(body)
-                  except Exception:
+          print(f"scanning {len(files)} source files")
+          printed = 0
+          for path in sorted(files):
+              text = path.read_text("utf8", errors="replace")
+              # Template literals and .graphql bodies containing a GraphQL operation.
+              blocks = re.findall(r"`([^`]*?(?:query|mutation)\s[^`]*?)`", text, re.S)
+              if path.suffix in {".graphql", ".gql"}:
+                  blocks.append(text)
+              for block in blocks:
+                  if "{" not in block or len(block) < 40:
                       continue
-                  (OUT / "openapi.json").write_text(body)
-                  spec_report.append((url, "PARSED AS OPENAPI", len(body)))
-                  break
-          (OUT / "spec-report.json").write_text(json.dumps(spec_report, indent=1))
+                  print(f"\n----- {path} -----")
+                  print(block.strip()[:2500])
+                  printed += 1
+                  if printed >= 25:
+                      raise SystemExit(0)
+          if printed == 0:
+              print("(no GraphQL operation literals found)")
+          PY2
 
-          # Breadth-first crawl of the docs site.
-          seeds = ["https://docs.canopyapi.co/", "https://www.canopyapi.co/use-cases/amazon-search-api"]
-          seen, queue, pages = set(), list(seeds), []
-          while queue and len(pages) < 45:
-              url = queue.pop(0)
-              if url in seen:
-                  continue
-              seen.add(url)
-              status, body = get(url)
-              pages.append({"url": url, "status": status, "bytes": len(body)})
-              if status != 200 or not body:
-                  continue
-              name = re.sub(r"[^a-z0-9]+", "-", urlparse(url).path.lower()).strip("-") or "index"
-              (OUT / f"page-{len(pages):02d}-{name[:60]}.html").write_text(body)
-              for href in re.findall(r'href="([^"#?]+)"', body):
-                  target = urljoin(url, href)
-                  if urlparse(target).netloc in ALLOWED and target not in seen and len(queue) < 90:
-                      if not re.search(r"\.(png|jpg|svg|css|js|ico|woff2?)$", target):
-                          queue.append(target)
-          (OUT / "crawl.json").write_text(json.dumps(pages, indent=1))
-          print(f"crawled {len(pages)} pages")
-          PY
-
-      - name: What the spec says a book returns
+      - name: Tool definitions, input schemas and book vocabulary
         run: |
-          python3 - <<'PY'
-          import json, pathlib
-          spec_path = pathlib.Path("recon/openapi.json")
-          print("=== SPEC PROBE RESULTS ===")
-          for row in json.loads(pathlib.Path("recon/spec-report.json").read_text()):
-              print(f"  {row[1]:>18}  {row[2]:>8} bytes  {row[0]}")
-          if not spec_path.exists():
-              print("\nNo machine-readable OpenAPI spec retrieved.")
-              raise SystemExit(0)
-          spec = json.loads(spec_path.read_text())
-          print(f"\n=== PATHS ({len(spec.get('paths', {}))}) ===")
-          for path, operations in sorted(spec.get("paths", {}).items()):
-              for method, operation in operations.items():
-                  if not isinstance(operation, dict):
-                      continue
-                  parameters = ",".join(p.get("name", "?") for p in operation.get("parameters", []) if isinstance(p, dict))
-                  print(f"  {method.upper():6} {path}  ({parameters})")
-          schemas = spec.get("components", {}).get("schemas", {})
-          print(f"\n=== SCHEMAS ({len(schemas)}) ===")
-          for name, schema in sorted(schemas.items()):
-              properties = schema.get("properties", {})
-              if not properties:
-                  continue
-              print(f"  {name}: {', '.join(sorted(properties))[:1200]}")
-          PY
-
-      - name: Book-relevant vocabulary across the docs
-        run: |
-          python3 - <<'PY'
-          import html, json, pathlib, re
-          chunks = []
-          for path in sorted(pathlib.Path("recon").glob("page-*.html")):
-              raw = path.read_text("utf8", errors="replace")
-              raw = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", raw)
-              text = html.unescape(re.sub(r"(?s)<[^>]+>", " ", raw))
-              chunks.append((path.name, re.sub(r"\s+", " ", text).strip()))
-          pathlib.Path("recon/extracted.txt").write_text("\n\n".join(f"== {n} ==\n{t}" for n, t in chunks))
-
-          print("=== CRAWL ===")
-          for page in json.loads(pathlib.Path("recon/crawl.json").read_text()):
-              print(f"  {page['status']}  {page['bytes']:>7}  {page['url']}")
-
-          # One line of context per distinct term, not per occurrence: the log is
-          # the only channel back to this repository, so it must stay readable.
-          TERMS = [
-              "bestSeller", "bestsellers", "best_sellers", "salesRank", "rank",
-              "categor", "browse node", "isbn", "publicationDate", "publication",
-              "numberOfPages", "pageCount", "print length", "author", "book",
-              "monthlySales", "salesEstimate", "estimated sales", "search",
-              "rate limit", "requests per", "credit",
-          ]
-          body = "\n\n".join(f"== {n} ==\n{t}" for n, t in chunks)
-          print("\n=== VOCABULARY ===")
-          for term in TERMS:
-              hits = list(re.finditer(re.escape(term), body, re.I))
-              print(f"\n--- {term}  ({len(hits)} hits)")
-              shown = 0
-              for match in hits:
-                  window = body[max(0, match.start() - 140): match.end() + 200]
-                  print("    …" + re.sub(r"\s+", " ", window))
-                  shown += 1
-                  if shown >= 3:
-                      break
-          PY
-
-      # Does the GraphQL endpoint answer introspection WITHOUT a key? If it
-      # does, the full schema is free. No key is sent either way.
-      - name: Unauthenticated GraphQL introspection attempt
-        run: |
-          python3 - <<'PY'
-          import json, urllib.request, urllib.error
-          query = {"query": "{__schema{queryType{fields{name description args{name type{name kind ofType{name}}}}}}}"}
-          request = urllib.request.Request(
-              "https://graphql.canopyapi.co/",
-              data=json.dumps(query).encode(),
-              headers={"Content-Type": "application/json"},
-          )
-          try:
-              with urllib.request.urlopen(request, timeout=25) as response:
-                  status, body = response.status, response.read().decode("utf8", "replace")
-          except urllib.error.HTTPError as error:
-              status, body = error.code, error.read().decode("utf8", "replace")[:2000]
-          except Exception as error:
-              status, body = 0, f"{type(error).__name__}: {error}"
-          print(f"status={status}")
-          try:
-              fields = json.loads(body)["data"]["__schema"]["queryType"]["fields"]
-              print(f"INTROSPECTION IS OPEN — {len(fields)} root queries:")
-              for field in fields:
-                  args = ", ".join(a["name"] for a in field.get("args", []))
-                  print(f"  {field['name']}({args})  {(field.get('description') or '')[:160]}")
-          except Exception:
-              print("(no schema in response)")
-              print(body[:1500])
-          PY
+          echo "=== TOOL / OPERATION NAMES ==="
+          grep -rhoE '(get|search|list)_amazon_[a-z_]+' src-canopy --include='*.ts' --include='*.js' --include='*.md' \
+            | sort -u || true
+          echo
+          echo "=== BOOK-SPECIFIC VOCABULARY ==="
+          grep -rniE 'isbn|publicationDate|publication_date|numberOfPages|pageCount|print.?length|bookDetails|salesRank|bestSeller|best_seller|rankings?|monthlySales|salesEstimate|categoryId|browse' \
+            src-canopy --include='*.ts' --include='*.js' --include='*.graphql' --include='*.md' \
+            | grep -v node_modules | head -80 || echo "(none)"
+          echo
+          echo "=== SEARCH / CATEGORY INPUT SHAPES ==="
+          grep -rn -A 18 -iE 'search_amazon_products|amazonProductSearchResults|get_amazon_category\b' \
+            src-canopy --include='*.ts' --include='*.js' \
+            | grep -v node_modules | head -140 || echo "(none)"
 
       - name: Upload the raw pages
         if: always()
