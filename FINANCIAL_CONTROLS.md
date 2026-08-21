@@ -140,6 +140,23 @@ These are enforced in schema and code where possible, and are constitutional pro
 everywhere else. **The design target is that an agent which decides to violate one still
 fails.**
 
+### Metered-provider ceilings — 2026-08-20
+
+"Raise a limit" covers every ceiling capable of increasing an external charge: request
+quotas, spend caps, rate allowances, tier limits. Factory may **lower** any of them on its
+own authority at any time. **Raising one requires explicit owner approval**, and approving a
+provider, a research workflow, or an experiment is never approval to raise its ceiling.
+
+Approved values live in `state/approved-ceilings.json`, a file whose only content is
+ceilings. `src/research/approved-ceilings.test.ts` asserts every code constant sits at or
+below its approved value — one-directional, so a reduction passes and an increase fails.
+The CI workflow runs that test on every push.
+
+The honest limit: the manifest is a file, and an agent could edit it too. What this makes
+impossible is doing it *accidentally* or *invisibly* — a raise can no longer hide inside an
+unrelated change, because it must surface as a diff in a file that exists for no other
+purpose.
+
 ---
 
 ## Recurring costs

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "note": "Every limit capable of increasing external charges. Factory may lower any value here autonomously; raising any value requires explicit owner approval. A test asserts the code constants never exceed these numbers, so a raise cannot happen by editing code alone — it must appear as a diff in this file, whose only purpose is ceilings.",
+  "ceilings": [
+    {
+      "id": "canopy.rollingWindowRequests",
+      "description": "Canopy API requests permitted in any rolling 31-day window. Free tier is 100.",
+      "value": 90,
+      "approvedBy": "owner",
+      "approvedAt": "2026-08-20"
+    },
+    {
+      "id": "canopy.exploratoryLifetimeRequests",
+      "description": "Total Canopy API requests permitted across the exploratory phase.",
+      "value": 400,
+      "approvedBy": "owner",
+      "approvedAt": "2026-08-20"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+name: CI
+
+# Runs the test suite and the typechecker on every push to the working branch.
+#
+# This exists because a guard nobody runs is not a guard. The spending-ceiling
+# tests were written and committed, and nothing executed them automatically —
+# so "raising the ceiling turns CI red" was an assurance, not a mechanism.
+# Now it is a mechanism.
+#
+# It contacts nothing external, reads no credential, and cannot spend anything.
+on:
+  push:
+    branches:
+      - claude/factory-phase-e-remediation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      # Named separately so a spending-ceiling violation is legible at a glance
+      # in the checks list, rather than buried inside a general test failure.
+      - name: Spending ceilings are within owner approval
+        run: node --test src/research/approved-ceilings.test.ts
+
+      - name: Test suite
+        run: npm test
