@@ -14,9 +14,18 @@ name: Canopy reconnaissance
 # The answer to (2) is what lets a correct client be written at all. Writing one
 # against guessed field names would spend real credits discovering it was wrong.
 #
-# Manual dispatch only. Pushing code cannot run this.
+# Runs on a push that changes THIS FILE, and on manual dispatch. The push
+# trigger is deliberate and self-limiting: the job spends no credits, reads no
+# credential, and mutates nothing, so requiring a human to find a button for it
+# was cost without benefit. The later probe — which does spend credits — stays
+# manual-dispatch only.
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - claude/factory-phase-e-remediation
+    paths:
+      - '.github/workflows/canopy-recon.yml'
 
 permissions:
   contents: read
