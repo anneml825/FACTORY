@@ -1,6 +1,6 @@
 # Data Economics Probe — Results
 
-**Run:** 2026-08-19T18:42:57.707Z  
+**Run:** 2026-08-24T20:51:41.127Z  
 **Candidates:** 100 (HEAD 34 / MID 33 / LONG_TAIL 33)  
 **Marginal cash cost:** $0.00 — all sources free or credential-blocked
 
@@ -28,12 +28,12 @@ search strategy must be redesigned before material validation capital is spent.
 
 | Source | Intent | Coverage | HEAD | MID | LONG_TAIL | Median latency | Counts |
 |---|---|---|---|---|---|---|---|
-| `wordpress_active_installs` | INDIRECT | **100%** | 100% | 100% | 100% | 328ms | no |
-| `wikipedia_pageviews` | WEAK | **57%** | 100% | 70% | 0% | 107ms | no |
-| `wikipedia_search_hits` | WEAK | **100%** | 100% | 100% | 100% | 231ms | no |
-| `stackexchange_questions` | INDIRECT | **100%** | 100% | 100% | 100% | 95ms | no |
-| `hn_algolia_mentions` | INDIRECT | **100%** | 100% | 100% | 100% | 211ms | no |
-| `npm_weekly_downloads` | INDIRECT | **19%** | 26% | 30% | 0% | 200ms | no |
+| `wordpress_active_installs` | INDIRECT | **100%** | 100% | 100% | 100% | 289ms | no |
+| `wikipedia_pageviews` | WEAK | **57%** | 100% | 70% | 0% | 55ms | no |
+| `wikipedia_search_hits` | WEAK | **100%** | 100% | 100% | 100% | 192ms | no |
+| `stackexchange_questions` | INDIRECT | **100%** | 100% | 100% | 100% | 88ms | no |
+| `hn_algolia_mentions` | INDIRECT | **100%** | 100% | 100% | 100% | 217ms | no |
+| `npm_weekly_downloads` | INDIRECT | **19%** | 26% | 30% | 0% | 73ms | no |
 | `etsy_active_listings` | DIRECT | **0%** | 0% | 0% | 0% | 0ms | no |
 
 ## Informativeness
@@ -42,12 +42,12 @@ Coverage says a source answered. This says whether the answer distinguishes anyt
 
 | Source | Distinct | Zero share | Mode share | Median HEAD | MID | LONG_TAIL |
 |---|---|---|---|---|---|---|
-| `wordpress_active_installs` | 0.28 | 49% | 49% | 40000 | 1000 | 0 |
+| `wordpress_active_installs` | 0.27 | 49% | 49% | 40000 | 1000 | 0 |
 | `wikipedia_pageviews` | 0.98 | 2% | 4% | 7371 | 2733 | — |
-| `wikipedia_search_hits` | 0.80 | 11% | 11% | 11496 | 661 | 5 |
-| `stackexchange_questions` | 0.53 | 43% | 43% | 2523 | 5 | 0 |
-| `hn_algolia_mentions` | 0.56 | 37% | 37% | 496 | 17 | 0 |
-| `npm_weekly_downloads` | 1.00 | 0% | 5% | 15979655 | 1991721 | — |
+| `wikipedia_search_hits` | 0.80 | 11% | 11% | 11503 | 662 | 5 |
+| `stackexchange_questions` | 0.53 | 43% | 43% | 2522 | 5 | 0 |
+| `hn_algolia_mentions` | 0.55 | 37% | 37% | 550 | 14 | 0 |
+| `npm_weekly_downloads` | 1.00 | 0% | 5% | 19286093 | 2397889 | — |
 | `etsy_active_listings` | 0.00 | 0% | 0% | — | — | — |
 
 ## Failure breakdown

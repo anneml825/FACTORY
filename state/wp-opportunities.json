@@ -1,20 +1,20 @@
 {
-  "retrievedAt": "2026-08-19T18:35:35.244Z",
+  "retrievedAt": "2026-08-24T20:44:39.337Z",
   "rows": [
     {
       "query": "restaurant booking",
       "siteType": "restaurant",
       "job": "booking",
-      "matchCount": 6,
+      "matchCount": 5,
       "top": {
         "name": "Five Star Restaurant Reservations &#8211; WordPress Booking Plugin",
         "slug": "restaurant-reservations",
         "activeInstalls": 10000,
         "rating": 94,
-        "numRatings": 210,
-        "lastUpdated": "2026-07-30 3:00pm GMT",
-        "monthsSinceUpdate": 0.7,
-        "supportResolutionPct": 100
+        "numRatings": 211,
+        "lastUpdated": "2026-08-20 2:44pm GMT",
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 50
       },
       "demandProven": true,
       "notDominated": true,
@@ -46,8 +46,8 @@
         "rating": 92,
         "numRatings": 108,
         "lastUpdated": "2026-08-16 2:38pm GMT",
-        "monthsSinceUpdate": 0.1,
-        "supportResolutionPct": 100
+        "monthsSinceUpdate": 0.3,
+        "supportResolutionPct": 50
       },
       "demandProven": true,
       "notDominated": true,
@@ -93,8 +93,8 @@
         "activeInstalls": 3000,
         "rating": 100,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 10:37am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-24 4:53am GMT",
+        "monthsSinceUpdate": 0,
         "supportResolutionPct": null
       },
       "demandProven": true,
@@ -123,14 +123,14 @@
       "job": "staff scheduling",
       "matchCount": 4,
       "top": {
-        "name": "Orderable &#8211; Restaurant &amp; Food Ordering System",
-        "slug": "orderable",
+        "name": "WPCafe &#8211; Restaurant Menu, Online Food Ordering &amp; Table Booking System",
+        "slug": "wp-cafe",
         "activeInstalls": 5000,
         "rating": 92,
-        "numRatings": 40,
-        "lastUpdated": "2026-05-08 3:31pm GMT",
-        "monthsSinceUpdate": 3.4,
-        "supportResolutionPct": 0
+        "numRatings": 108,
+        "lastUpdated": "2026-08-16 2:38pm GMT",
+        "monthsSinceUpdate": 0.3,
+        "supportResolutionPct": 50
       },
       "demandProven": true,
       "notDominated": true,
@@ -149,7 +149,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-05-31 12:03pm GMT",
-        "monthsSinceUpdate": 2.7,
+        "monthsSinceUpdate": 2.8,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -184,7 +184,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-02-10 12:55pm GMT",
-        "monthsSinceUpdate": 6.3,
+        "monthsSinceUpdate": 6.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -271,7 +271,7 @@
         "rating": 100,
         "numRatings": 7,
         "lastUpdated": "2026-08-15 7:09am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.3,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -293,7 +293,7 @@
         "rating": 100,
         "numRatings": 7,
         "lastUpdated": "2026-08-15 7:09am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.3,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -328,7 +328,7 @@
         "rating": 100,
         "numRatings": 7,
         "lastUpdated": "2026-08-15 7:09am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.3,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -415,7 +415,7 @@
         "rating": 100,
         "numRatings": 1,
         "lastUpdated": "2026-07-02 10:17am GMT",
-        "monthsSinceUpdate": 1.6,
+        "monthsSinceUpdate": 1.8,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -476,7 +476,7 @@
         "rating": 90,
         "numRatings": 15,
         "lastUpdated": "2026-06-12 12:52pm GMT",
-        "monthsSinceUpdate": 2.3,
+        "monthsSinceUpdate": 2.4,
         "supportResolutionPct": 0
       },
       "demandProven": false,
@@ -524,7 +524,7 @@
         "rating": 94,
         "numRatings": 17,
         "lastUpdated": "2026-07-27 10:21am GMT",
-        "monthsSinceUpdate": 0.8,
+        "monthsSinceUpdate": 0.9,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -572,7 +572,7 @@
         "rating": 92,
         "numRatings": 504,
         "lastUpdated": "2026-07-29 7:42am GMT",
-        "monthsSinceUpdate": 0.7,
+        "monthsSinceUpdate": 0.9,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -633,7 +633,7 @@
         "rating": 100,
         "numRatings": 1,
         "lastUpdated": "2026-08-13 11:43pm GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -759,7 +759,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-19 3:35pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -781,7 +781,7 @@
         "rating": 88,
         "numRatings": 12,
         "lastUpdated": "2026-07-29 7:25am GMT",
-        "monthsSinceUpdate": 0.7,
+        "monthsSinceUpdate": 0.9,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -803,7 +803,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-19 3:35pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -877,7 +877,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-19 3:35pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -899,7 +899,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-08-13 11:42pm GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -921,7 +921,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-08-13 11:42pm GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -1008,7 +1008,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-08-13 11:42pm GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -1022,34 +1022,43 @@
       "query": "real estate agency booking",
       "siteType": "real estate agency",
       "job": "booking",
-      "matchCount": 1,
+      "matchCount": 2,
       "top": {
-        "name": "Autocomplete Location Field for Contact Form 7",
-        "slug": "autocomplete-location-field-contact-form-7",
-        "activeInstalls": 1000,
-        "rating": 100,
-        "numRatings": 13,
-        "lastUpdated": "2026-07-19 6:18am GMT",
-        "monthsSinceUpdate": 1,
+        "name": "WP Directory Kit",
+        "slug": "wpdirectorykit",
+        "activeInstalls": 2000,
+        "rating": 98,
+        "numRatings": 35,
+        "lastUpdated": "2026-08-12 11:57pm GMT",
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 1 plugins compete"
+        "only 2 plugins compete"
       ],
-      "score": 3
+      "score": 3.3
     },
     {
       "query": "real estate agency intake form",
       "siteType": "real estate agency",
       "job": "intake form",
-      "matchCount": 0,
-      "top": null,
+      "matchCount": 1,
+      "top": {
+        "name": "StudioMeta Voice AI",
+        "slug": "studiometa-voice-ai",
+        "activeInstalls": 0,
+        "rating": 100,
+        "numRatings": 3,
+        "lastUpdated": "2026-08-24 4:13am GMT",
+        "monthsSinceUpdate": 0,
+        "supportResolutionPct": null
+      },
       "demandProven": false,
       "notDominated": true,
       "weakness": [
-        "no vertical-specific plugin among 7 keyword matches"
+        "only 1 plugins compete"
       ],
       "score": 0
     },
@@ -1065,13 +1074,13 @@
         "rating": 90,
         "numRatings": 186,
         "lastUpdated": "2026-08-05 4:02am GMT",
-        "monthsSinceUpdate": 0.5,
-        "supportResolutionPct": 16.666666666666664
+        "monthsSinceUpdate": 0.7,
+        "supportResolutionPct": 12.5
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 17% of support threads resolved",
+        "only 13% of support threads resolved",
         "only 1 plugins compete"
       ],
       "score": 8
@@ -1088,7 +1097,7 @@
         "rating": 86,
         "numRatings": 52,
         "lastUpdated": "2026-06-01 10:27am GMT",
-        "monthsSinceUpdate": 2.6,
+        "monthsSinceUpdate": 2.8,
         "supportResolutionPct": 0
       },
       "demandProven": true,
@@ -1115,7 +1124,7 @@
       "query": "real estate agency inventory tracking",
       "siteType": "real estate agency",
       "job": "inventory tracking",
-      "matchCount": 1,
+      "matchCount": 2,
       "top": {
         "name": "WordPress Store Locator AI powered &#8211; Elementor &#8211; Fast loading &#8211; Local SEO",
         "slug": "digital-plug-store-locator",
@@ -1123,13 +1132,13 @@
         "rating": 100,
         "numRatings": 2,
         "lastUpdated": "2026-07-31 7:57pm GMT",
-        "monthsSinceUpdate": 0.6,
+        "monthsSinceUpdate": 0.8,
         "supportResolutionPct": null
       },
       "demandProven": false,
       "notDominated": true,
       "weakness": [
-        "only 1 plugins compete"
+        "only 2 plugins compete"
       ],
       "score": 0
     },
@@ -1184,7 +1193,7 @@
         "rating": 46,
         "numRatings": 3,
         "lastUpdated": "2026-04-16 2:15pm GMT",
-        "monthsSinceUpdate": 4.1,
+        "monthsSinceUpdate": 4.3,
         "supportResolutionPct": null
       },
       "demandProven": true,
@@ -1206,7 +1215,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-03-04 10:49pm GMT",
-        "monthsSinceUpdate": 5.5,
+        "monthsSinceUpdate": 5.7,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -1228,7 +1237,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-03-04 10:49pm GMT",
-        "monthsSinceUpdate": 5.5,
+        "monthsSinceUpdate": 5.7,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -1260,7 +1269,7 @@
       "demandProven": false,
       "notDominated": true,
       "weakness": [
-        "no vertical-specific plugin among 1 keyword matches"
+        "no vertical-specific plugin among 2 keyword matches"
       ],
       "score": 0
     },
@@ -1359,21 +1368,12 @@
       "query": "photographer inventory tracking",
       "siteType": "photographer",
       "job": "inventory tracking",
-      "matchCount": 1,
-      "top": {
-        "name": "Eleva CRM for Photographers",
-        "slug": "eleva-crm-for-photographers",
-        "activeInstalls": 0,
-        "rating": 0,
-        "numRatings": 0,
-        "lastUpdated": "2026-08-14 1:59pm GMT",
-        "monthsSinceUpdate": 0.2,
-        "supportResolutionPct": null
-      },
+      "matchCount": 0,
+      "top": null,
       "demandProven": false,
       "notDominated": true,
       "weakness": [
-        "only 1 plugins compete"
+        "no vertical-specific plugin among 1 keyword matches"
       ],
       "score": 0
     },
@@ -1623,7 +1623,7 @@
         "rating": 74,
         "numRatings": 65,
         "lastUpdated": "2026-08-03 6:46pm GMT",
-        "monthsSinceUpdate": 0.6,
+        "monthsSinceUpdate": 0.7,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -1684,7 +1684,7 @@
         "rating": 96,
         "numRatings": 60,
         "lastUpdated": "2026-08-14 8:41am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": 0
       },
       "demandProven": true,
@@ -1706,7 +1706,7 @@
         "rating": 46,
         "numRatings": 6,
         "lastUpdated": "2020-03-12 4:16am GMT",
-        "monthsSinceUpdate": 77.3,
+        "monthsSinceUpdate": 77.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -1755,8 +1755,8 @@
         "activeInstalls": 500,
         "rating": 98,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 7:28am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-20 11:54am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -1777,8 +1777,8 @@
         "activeInstalls": 500,
         "rating": 98,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 7:28am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-20 11:54am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -1799,8 +1799,8 @@
         "activeInstalls": 500,
         "rating": 98,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 7:28am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-20 11:54am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -1834,8 +1834,8 @@
         "activeInstalls": 500,
         "rating": 98,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 7:28am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-20 11:54am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -1856,8 +1856,8 @@
         "activeInstalls": 500,
         "rating": 98,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 7:28am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-20 11:54am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -1891,8 +1891,8 @@
         "activeInstalls": 500,
         "rating": 98,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 7:28am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-20 11:54am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": false,
@@ -2018,13 +2018,13 @@
         "rating": 84,
         "numRatings": 547,
         "lastUpdated": "2026-08-07 1:23am GMT",
-        "monthsSinceUpdate": 0.4,
-        "supportResolutionPct": 31.914893617021278
+        "monthsSinceUpdate": 0.6,
+        "supportResolutionPct": 31.25
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 32% of support threads resolved"
+        "only 31% of support threads resolved"
       ],
       "score": 4.85
     },
@@ -2051,9 +2051,9 @@
         "slug": "wp-event-solution",
         "activeInstalls": 10000,
         "rating": 94,
-        "numRatings": 396,
-        "lastUpdated": "2026-08-12 7:01am GMT",
-        "monthsSinceUpdate": 0.3,
+        "numRatings": 397,
+        "lastUpdated": "2026-08-20 9:30am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 60
       },
       "demandProven": true,
@@ -2075,8 +2075,8 @@
         "rating": 90,
         "numRatings": 165,
         "lastUpdated": "2026-08-18 7:16am GMT",
-        "monthsSinceUpdate": 0.1,
-        "supportResolutionPct": 87.5
+        "monthsSinceUpdate": 0.2,
+        "supportResolutionPct": 77.77777777777779
       },
       "demandProven": true,
       "notDominated": true,
@@ -2087,7 +2087,7 @@
       "query": "event venue invoice quote",
       "siteType": "event venue",
       "job": "invoice quote",
-      "matchCount": 2,
+      "matchCount": 3,
       "top": {
         "name": "Object Data Sync for Salesforce Integration with WP, Woo, Gravity, WPForms, Ninja, CF7 &amp; more",
         "slug": "object-data-sync-for-salesforce",
@@ -2095,13 +2095,13 @@
         "rating": 98,
         "numRatings": 22,
         "lastUpdated": "2026-08-14 8:02am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
       "notDominated": true,
       "weakness": [
-        "only 2 plugins compete"
+        "only 3 plugins compete"
       ],
       "score": 0
     },
@@ -2117,7 +2117,7 @@
         "rating": 98,
         "numRatings": 22,
         "lastUpdated": "2026-08-14 8:02am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -2144,21 +2144,21 @@
       "job": "staff scheduling",
       "matchCount": 1,
       "top": {
-        "name": "Sugar Calendar &#8211; Events Calendar, Event Tickets, and Events Management Platform",
-        "slug": "sugar-calendar-lite",
-        "activeInstalls": 10000,
-        "rating": 90,
-        "numRatings": 24,
-        "lastUpdated": "2026-08-19 3:05pm GMT",
+        "name": "GemBooking &#8211; Appointment Scheduling, Booking Calendar &amp; Event Reservations",
+        "slug": "gembooking",
+        "activeInstalls": 0,
+        "rating": 0,
+        "numRatings": 0,
+        "lastUpdated": "2026-08-24 4:34pm GMT",
         "monthsSinceUpdate": 0,
-        "supportResolutionPct": 100
+        "supportResolutionPct": null
       },
-      "demandProven": true,
+      "demandProven": false,
       "notDominated": true,
       "weakness": [
         "only 1 plugins compete"
       ],
-      "score": 4
+      "score": 0
     },
     {
       "query": "marina booking",
@@ -2315,7 +2315,7 @@
         "rating": 0,
         "numRatings": 0,
         "lastUpdated": "2026-08-16 1:36am GMT",
-        "monthsSinceUpdate": 0.1,
+        "monthsSinceUpdate": 0.3,
         "supportResolutionPct": null
       },
       "demandProven": false,
@@ -2453,8 +2453,8 @@
         "activeInstalls": 1000,
         "rating": 94,
         "numRatings": 13,
-        "lastUpdated": "2026-08-09 7:16pm GMT",
-        "monthsSinceUpdate": 0.4,
+        "lastUpdated": "2026-08-24 5:17pm GMT",
+        "monthsSinceUpdate": 0,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2504,13 +2504,13 @@
         "rating": 90,
         "numRatings": 186,
         "lastUpdated": "2026-08-05 4:02am GMT",
-        "monthsSinceUpdate": 0.5,
-        "supportResolutionPct": 16.666666666666664
+        "monthsSinceUpdate": 0.7,
+        "supportResolutionPct": 12.5
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 17% of support threads resolved",
+        "only 13% of support threads resolved",
         "only 1 plugins compete"
       ],
       "score": 8
@@ -2527,13 +2527,13 @@
         "rating": 84,
         "numRatings": 547,
         "lastUpdated": "2026-08-07 1:23am GMT",
-        "monthsSinceUpdate": 0.4,
-        "supportResolutionPct": 31.914893617021278
+        "monthsSinceUpdate": 0.6,
+        "supportResolutionPct": 31.25
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 32% of support threads resolved"
+        "only 31% of support threads resolved"
       ],
       "score": 4.85
     },
@@ -2549,7 +2549,7 @@
         "rating": 92,
         "numRatings": 504,
         "lastUpdated": "2026-07-29 7:42am GMT",
-        "monthsSinceUpdate": 0.7,
+        "monthsSinceUpdate": 0.9,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2571,7 +2571,7 @@
         "rating": 74,
         "numRatings": 65,
         "lastUpdated": "2026-08-03 6:46pm GMT",
-        "monthsSinceUpdate": 0.6,
+        "monthsSinceUpdate": 0.7,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2591,37 +2591,15 @@
         "slug": "wp-event-solution",
         "activeInstalls": 10000,
         "rating": 94,
-        "numRatings": 396,
-        "lastUpdated": "2026-08-12 7:01am GMT",
-        "monthsSinceUpdate": 0.3,
+        "numRatings": 397,
+        "lastUpdated": "2026-08-20 9:30am GMT",
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 60
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
         "only 3 plugins compete"
-      ],
-      "score": 4
-    },
-    {
-      "query": "event venue staff scheduling",
-      "siteType": "event venue",
-      "job": "staff scheduling",
-      "matchCount": 1,
-      "top": {
-        "name": "Sugar Calendar &#8211; Events Calendar, Event Tickets, and Events Management Platform",
-        "slug": "sugar-calendar-lite",
-        "activeInstalls": 10000,
-        "rating": 90,
-        "numRatings": 24,
-        "lastUpdated": "2026-08-19 3:05pm GMT",
-        "monthsSinceUpdate": 0,
-        "supportResolutionPct": 100
-      },
-      "demandProven": true,
-      "notDominated": true,
-      "weakness": [
-        "only 1 plugins compete"
       ],
       "score": 4
     },
@@ -2637,7 +2615,7 @@
         "rating": 96,
         "numRatings": 60,
         "lastUpdated": "2026-08-14 8:41am GMT",
-        "monthsSinceUpdate": 0.2,
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": 0
       },
       "demandProven": true,
@@ -2659,7 +2637,7 @@
         "rating": 86,
         "numRatings": 52,
         "lastUpdated": "2026-06-01 10:27am GMT",
-        "monthsSinceUpdate": 2.6,
+        "monthsSinceUpdate": 2.8,
         "supportResolutionPct": 0
       },
       "demandProven": true,
@@ -2681,8 +2659,8 @@
         "rating": 92,
         "numRatings": 108,
         "lastUpdated": "2026-08-16 2:38pm GMT",
-        "monthsSinceUpdate": 0.1,
-        "supportResolutionPct": 100
+        "monthsSinceUpdate": 0.3,
+        "supportResolutionPct": 50
       },
       "demandProven": true,
       "notDominated": true,
@@ -2702,8 +2680,8 @@
         "activeInstalls": 3000,
         "rating": 100,
         "numRatings": 23,
-        "lastUpdated": "2026-08-18 10:37am GMT",
-        "monthsSinceUpdate": 0.1,
+        "lastUpdated": "2026-08-24 4:53am GMT",
+        "monthsSinceUpdate": 0,
         "supportResolutionPct": null
       },
       "demandProven": true,
@@ -2725,7 +2703,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-19 3:35pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2747,7 +2725,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-19 3:35pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2769,7 +2747,7 @@
         "rating": 88,
         "numRatings": 180,
         "lastUpdated": "2026-08-19 3:35pm GMT",
-        "monthsSinceUpdate": 0,
+        "monthsSinceUpdate": 0.2,
         "supportResolutionPct": 100
       },
       "demandProven": true,
@@ -2783,23 +2761,23 @@
       "query": "real estate agency booking",
       "siteType": "real estate agency",
       "job": "booking",
-      "matchCount": 1,
+      "matchCount": 2,
       "top": {
-        "name": "Autocomplete Location Field for Contact Form 7",
-        "slug": "autocomplete-location-field-contact-form-7",
-        "activeInstalls": 1000,
-        "rating": 100,
-        "numRatings": 13,
-        "lastUpdated": "2026-07-19 6:18am GMT",
-        "monthsSinceUpdate": 1,
+        "name": "WP Directory Kit",
+        "slug": "wpdirectorykit",
+        "activeInstalls": 2000,
+        "rating": 98,
+        "numRatings": 35,
+        "lastUpdated": "2026-08-12 11:57pm GMT",
+        "monthsSinceUpdate": 0.4,
         "supportResolutionPct": null
       },
       "demandProven": true,
       "notDominated": true,
       "weakness": [
-        "only 1 plugins compete"
+        "only 2 plugins compete"
       ],
-      "score": 3
+      "score": 3.3
     },
     {
       "query": "law firm intake form",
@@ -2813,7 +2791,7 @@
         "rating": 46,
         "numRatings": 3,
         "lastUpdated": "2026-04-16 2:15pm GMT",
-        "monthsSinceUpdate": 4.1,
+        "monthsSinceUpdate": 4.3,
         "supportResolutionPct": null
       },
       "demandProven": true,
@@ -2834,8 +2812,8 @@
         "activeInstalls": 1000,
         "rating": 94,
         "numRatings": 13,
-        "lastUpdated": "2026-08-09 7:16pm GMT",
-        "monthsSinceUpdate": 0.4,
+        "lastUpdated": "2026-08-24 5:17pm GMT",
+        "monthsSinceUpdate": 0,
         "supportResolutionPct": 100
       },
       "demandProven": true,

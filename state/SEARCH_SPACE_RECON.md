@@ -1,6 +1,6 @@
 # Search-Space Reconnaissance
 
-**Run:** 2026-08-19T18:39:16.365Z  
+**Run:** 2026-08-24T20:48:08.975Z  
 **Spaces probed:** 10 · **Probe terms:** 12  
 **Marginal cash cost:** $0.00
 
@@ -11,16 +11,16 @@ should precede choosing what to sell.
 
 | Space | Reachable | Auth | Coverage | Distinct | Zero share | Median signal | Latency |
 |---|---|---|---|---|---|---|---|
-| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 155ms |
-| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 17890 | 293ms |
-| `wordpress_plugins` | yes | none | **100%** | 0.58 | 0% | 5000000 | 354ms |
-| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19643 | 832ms |
-| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1072 | 169ms |
-| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 458 | 55ms |
-| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7341772 | 396ms |
-| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1411650 | 185ms |
-| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 45599 | 191ms |
-| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 299ms |
+| `shopify_app_store` | yes | none | **100%** | 0.08 | 0% | 24 | 154ms |
+| `firefox_addons` | yes | none | **100%** | 0.92 | 0% | 18067 | 301ms |
+| `wordpress_plugins` | yes | none | **100%** | 0.50 | 0% | 5000000 | 315ms |
+| `vscode_extensions` | yes | none | **100%** | 1.00 | 0% | 19675 | 659ms |
+| `atlassian_marketplace` | yes | none | **100%** | 1.00 | 0% | 1077 | 148ms |
+| `pypi_packages` | yes | none | **33%** | 1.00 | 0% | 454 | 47ms |
+| `obsidian_plugins` | yes | none | **100%** | 1.00 | 0% | 7433664 | 100ms |
+| `dockerhub_images` | yes | none | **100%** | 1.00 | 0% | 1413230 | 125ms |
+| `crates_rust` | yes | none | **100%** | 1.00 | 0% | 49478 | 209ms |
+| `homeassistant_hacs` | yes | **required** | **75%** | 0.89 | 11% | 10 | 278ms |
 
 ## Structure
 
@@ -51,54 +51,54 @@ Evidence alone is not a search space. Monetization norm is assessed by research,
 
 - **Note:** Included as an EVIDENCE CONTROL, not a candidate. AMO publishes true daily-user counts, so it shows what a high-quality catalogue signal looks like. Monetization is near zero, so it cannot be selected — it exists here to calibrate the others.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=6652, invoice=210945, booking calendar=36191, seo=12341, inventory=8809, form builder=17890, analytics dashboard=46, image optimization=64915, membership=6732, csv import=78244, time tracking=17890, pdf export=4002
+- **Values:** backup=6680, invoice=212075, booking calendar=36452, seo=12410, inventory=8814, form builder=18067, analytics dashboard=47, image optimization=65814, membership=6758, csv import=78872, time tracking=18067, pdf export=4044
 
 ### `wordpress_plugins` — WordPress.org plugin directory
 
 - **Note:** Open documented API, no key. Freemium (free plugin in directory, paid upgrade off-site) is the established norm, so evidence and monetization may both be available.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=3000000, invoice=300000, booking calendar=70000, seo=10000000, inventory=7000000, form builder=5000000, analytics dashboard=5000000, image optimization=7000000, membership=300000, csv import=100000, time tracking=10000000, pdf export=300000
+- **Values:** backup=5000000, invoice=300000, booking calendar=70000, seo=10000000, inventory=7000000, form builder=5000000, analytics dashboard=5000000, image optimization=7000000, membership=300000, csv import=100000, time tracking=10000000, pdf export=300000
 
 ### `vscode_extensions` — VS Code Marketplace
 
 - **Note:** Install counts are real usage. Paid extensions are rare, which is a monetization problem.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=19609, invoice=73, booking calendar=44022, seo=4495, inventory=128, form builder=70922912, analytics dashboard=97385, image optimization=4209125, membership=3189, csv import=23190312, time tracking=19643, pdf export=2708
+- **Values:** backup=19625, invoice=76, booking calendar=44040, seo=4498, inventory=135, form builder=71041683, analytics dashboard=97488, image optimization=4215548, membership=3189, csv import=23295677, time tracking=19675, pdf export=2709
 
 ### `atlassian_marketplace` — Atlassian Marketplace
 
 - **Note:** Paid apps are the NORM here, not the exception — the strongest monetization profile of any candidate. Business buyers with budgets. Question is whether Factory can build and publish to it autonomously.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=102, invoice=100, booking calendar=511, seo=370, inventory=54, form builder=1343, analytics dashboard=1396, image optimization=1072, membership=45, csv import=1562, time tracking=3146, pdf export=1454
+- **Values:** backup=104, invoice=100, booking calendar=512, seo=372, inventory=56, form builder=1348, analytics dashboard=1400, image optimization=1077, membership=46, csv import=1569, time tracking=3153, pdf export=1460
 
 ### `pypi_packages` — PyPI / Python ecosystem
 
 - **Note:** Free API. Same monetization weakness as npm — paying for a Python library is unusual.
-- **HTTP statuses:** {"200":4,"404":7,"429":1}
+- **HTTP statuses:** {"200":4,"404":8}
 - **First failure:** HTTP 404
-- **Values:** backup=168, invoice=458, booking calendar=null, seo=28, inventory=465, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
+- **Values:** backup=185, invoice=454, booking calendar=null, seo=20, inventory=491, form builder=null, analytics dashboard=null, image optimization=null, membership=null, csv import=null, time tracking=null, pdf export=null
 
 ### `obsidian_plugins` — Obsidian community plugins
 
 - **Note:** Entire catalogue with download counts in one public file — near-zero screening cost. Small audience and a strong free norm.
 - **HTTP statuses:** {"200":1}
-- **Values:** backup=7341772
+- **Values:** backup=7433664
 
 ### `dockerhub_images` — Docker Hub
 
 - **Note:** Pull counts are real usage but heavily inflated by CI. Monetization is very weak.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=3092506, invoice=620998, booking calendar=459455, seo=2560, inventory=1277709, form builder=14709212, analytics dashboard=23569395, image optimization=897087408, membership=118952, csv import=1411650, time tracking=886470, pdf export=97904478
+- **Values:** backup=3092592, invoice=630132, booking calendar=459546, seo=2564, inventory=1280473, form builder=14713389, analytics dashboard=23726849, image optimization=897340538, membership=120341, csv import=1413230, time tracking=898467, pdf export=98209801
 
 ### `crates_rust` — crates.io / Rust ecosystem
 
 - **Note:** Confirmed reachable. Strong free norm; paid Rust crates are essentially nonexistent.
 - **HTTP statuses:** {"200":12}
-- **Values:** backup=87071, invoice=1329, booking calendar=3347, seo=578, inventory=115996359, form builder=2592475, analytics dashboard=20353, image optimization=61735, membership=800536, csv import=18864, time tracking=45599, pdf export=2596
+- **Values:** backup=88084, invoice=1386, booking calendar=3432, seo=578, inventory=117848151, form builder=2624120, analytics dashboard=20354, image optimization=1828383, membership=805393, csv import=18865, time tracking=49478, pdf export=2659
 
 ### `homeassistant_hacs` — Home Assistant custom integrations (HACS)
 
 - **Note:** Prosumer audience that already spends money on hardware, which is unusual among the code-adjacent spaces. Stars are a weak usage proxy.
 - **HTTP statuses:** {"200":10,"403":2}
 - **First failure:** HTTP 403 — authentication or policy required
-- **Values:** backup=3559, invoice=853, booking calendar=2, seo=10, inventory=45, form builder=null, analytics dashboard=246, image optimization=0, membership=1, csv import=1, time tracking=null, pdf export=null
+- **Values:** backup=3561, invoice=854, booking calendar=2, seo=10, inventory=45, form builder=null, analytics dashboard=251, image optimization=0, membership=1, csv import=1, time tracking=null, pdf export=null

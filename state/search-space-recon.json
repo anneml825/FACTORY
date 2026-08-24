@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-19T18:39:16.364Z",
+  "runAt": "2026-08-24T20:48:08.975Z",
   "probeTerms": [
     "backup",
     "invoice",
@@ -29,7 +29,7 @@
       "distinctValueRatio": 0.08333333333333333,
       "zeroShare": 0,
       "medianValue": 24,
-      "medianLatencyMs": 155,
+      "medianLatencyMs": 154,
       "httpStatuses": {
         "200": 12
       },
@@ -99,59 +99,59 @@
       "coverage": 1,
       "distinctValueRatio": 0.9166666666666666,
       "zeroShare": 0,
-      "medianValue": 17890,
-      "medianLatencyMs": 293,
+      "medianValue": 18067,
+      "medianLatencyMs": 301,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 6652
+          "value": 6680
         },
         {
           "term": "invoice",
-          "value": 210945
+          "value": 212075
         },
         {
           "term": "booking calendar",
-          "value": 36191
+          "value": 36452
         },
         {
           "term": "seo",
-          "value": 12341
+          "value": 12410
         },
         {
           "term": "inventory",
-          "value": 8809
+          "value": 8814
         },
         {
           "term": "form builder",
-          "value": 17890
+          "value": 18067
         },
         {
           "term": "analytics dashboard",
-          "value": 46
+          "value": 47
         },
         {
           "term": "image optimization",
-          "value": 64915
+          "value": 65814
         },
         {
           "term": "membership",
-          "value": 6732
+          "value": 6758
         },
         {
           "term": "csv import",
-          "value": 78244
+          "value": 78872
         },
         {
           "term": "time tracking",
-          "value": 17890
+          "value": 18067
         },
         {
           "term": "pdf export",
-          "value": 4002
+          "value": 4044
         }
       ],
       "failureDetail": null,
@@ -168,17 +168,17 @@
       "termsAttempted": 12,
       "termsWithValue": 12,
       "coverage": 1,
-      "distinctValueRatio": 0.5833333333333334,
+      "distinctValueRatio": 0.5,
       "zeroShare": 0,
       "medianValue": 5000000,
-      "medianLatencyMs": 354,
+      "medianLatencyMs": 315,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 3000000
+          "value": 5000000
         },
         {
           "term": "invoice",
@@ -241,43 +241,43 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 19643,
-      "medianLatencyMs": 832,
+      "medianValue": 19675,
+      "medianLatencyMs": 659,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 19609
+          "value": 19625
         },
         {
           "term": "invoice",
-          "value": 73
+          "value": 76
         },
         {
           "term": "booking calendar",
-          "value": 44022
+          "value": 44040
         },
         {
           "term": "seo",
-          "value": 4495
+          "value": 4498
         },
         {
           "term": "inventory",
-          "value": 128
+          "value": 135
         },
         {
           "term": "form builder",
-          "value": 70922912
+          "value": 71041683
         },
         {
           "term": "analytics dashboard",
-          "value": 97385
+          "value": 97488
         },
         {
           "term": "image optimization",
-          "value": 4209125
+          "value": 4215548
         },
         {
           "term": "membership",
@@ -285,15 +285,15 @@
         },
         {
           "term": "csv import",
-          "value": 23190312
+          "value": 23295677
         },
         {
           "term": "time tracking",
-          "value": 19643
+          "value": 19675
         },
         {
           "term": "pdf export",
-          "value": 2708
+          "value": 2709
         }
       ],
       "failureDetail": null,
@@ -312,15 +312,15 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 1072,
-      "medianLatencyMs": 169,
+      "medianValue": 1077,
+      "medianLatencyMs": 148,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 102
+          "value": 104
         },
         {
           "term": "invoice",
@@ -328,43 +328,43 @@
         },
         {
           "term": "booking calendar",
-          "value": 511
+          "value": 512
         },
         {
           "term": "seo",
-          "value": 370
+          "value": 372
         },
         {
           "term": "inventory",
-          "value": 54
+          "value": 56
         },
         {
           "term": "form builder",
-          "value": 1343
+          "value": 1348
         },
         {
           "term": "analytics dashboard",
-          "value": 1396
+          "value": 1400
         },
         {
           "term": "image optimization",
-          "value": 1072
+          "value": 1077
         },
         {
           "term": "membership",
-          "value": 45
+          "value": 46
         },
         {
           "term": "csv import",
-          "value": 1562
+          "value": 1569
         },
         {
           "term": "time tracking",
-          "value": 3146
+          "value": 3153
         },
         {
           "term": "pdf export",
-          "value": 1454
+          "value": 1460
         }
       ],
       "failureDetail": null,
@@ -383,21 +383,20 @@
       "coverage": 0.3333333333333333,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 458,
-      "medianLatencyMs": 55,
+      "medianValue": 454,
+      "medianLatencyMs": 47,
       "httpStatuses": {
         "200": 4,
-        "404": 7,
-        "429": 1
+        "404": 8
       },
       "values": [
         {
           "term": "backup",
-          "value": 168
+          "value": 185
         },
         {
           "term": "invoice",
-          "value": 458
+          "value": 454
         },
         {
           "term": "booking calendar",
@@ -405,11 +404,11 @@
         },
         {
           "term": "seo",
-          "value": 28
+          "value": 20
         },
         {
           "term": "inventory",
-          "value": 465
+          "value": 491
         },
         {
           "term": "form builder",
@@ -456,15 +455,15 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 7341772,
-      "medianLatencyMs": 396,
+      "medianValue": 7433664,
+      "medianLatencyMs": 100,
       "httpStatuses": {
         "200": 1
       },
       "values": [
         {
           "term": "backup",
-          "value": 7341772
+          "value": 7433664
         }
       ],
       "failureDetail": null,
@@ -483,59 +482,59 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 1411650,
-      "medianLatencyMs": 185,
+      "medianValue": 1413230,
+      "medianLatencyMs": 125,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 3092506
+          "value": 3092592
         },
         {
           "term": "invoice",
-          "value": 620998
+          "value": 630132
         },
         {
           "term": "booking calendar",
-          "value": 459455
+          "value": 459546
         },
         {
           "term": "seo",
-          "value": 2560
+          "value": 2564
         },
         {
           "term": "inventory",
-          "value": 1277709
+          "value": 1280473
         },
         {
           "term": "form builder",
-          "value": 14709212
+          "value": 14713389
         },
         {
           "term": "analytics dashboard",
-          "value": 23569395
+          "value": 23726849
         },
         {
           "term": "image optimization",
-          "value": 897087408
+          "value": 897340538
         },
         {
           "term": "membership",
-          "value": 118952
+          "value": 120341
         },
         {
           "term": "csv import",
-          "value": 1411650
+          "value": 1413230
         },
         {
           "term": "time tracking",
-          "value": 886470
+          "value": 898467
         },
         {
           "term": "pdf export",
-          "value": 97904478
+          "value": 98209801
         }
       ],
       "failureDetail": null,
@@ -554,23 +553,23 @@
       "coverage": 1,
       "distinctValueRatio": 1,
       "zeroShare": 0,
-      "medianValue": 45599,
-      "medianLatencyMs": 191,
+      "medianValue": 49478,
+      "medianLatencyMs": 209,
       "httpStatuses": {
         "200": 12
       },
       "values": [
         {
           "term": "backup",
-          "value": 87071
+          "value": 88084
         },
         {
           "term": "invoice",
-          "value": 1329
+          "value": 1386
         },
         {
           "term": "booking calendar",
-          "value": 3347
+          "value": 3432
         },
         {
           "term": "seo",
@@ -578,35 +577,35 @@
         },
         {
           "term": "inventory",
-          "value": 115996359
+          "value": 117848151
         },
         {
           "term": "form builder",
-          "value": 2592475
+          "value": 2624120
         },
         {
           "term": "analytics dashboard",
-          "value": 20353
+          "value": 20354
         },
         {
           "term": "image optimization",
-          "value": 61735
+          "value": 1828383
         },
         {
           "term": "membership",
-          "value": 800536
+          "value": 805393
         },
         {
           "term": "csv import",
-          "value": 18864
+          "value": 18865
         },
         {
           "term": "time tracking",
-          "value": 45599
+          "value": 49478
         },
         {
           "term": "pdf export",
-          "value": 2596
+          "value": 2659
         }
       ],
       "failureDetail": null,
@@ -626,7 +625,7 @@
       "distinctValueRatio": 0.8888888888888888,
       "zeroShare": 0.1111111111111111,
       "medianValue": 10,
-      "medianLatencyMs": 299,
+      "medianLatencyMs": 278,
       "httpStatuses": {
         "200": 10,
         "403": 2
@@ -634,11 +633,11 @@
       "values": [
         {
           "term": "backup",
-          "value": 3559
+          "value": 3561
         },
         {
           "term": "invoice",
-          "value": 853
+          "value": 854
         },
         {
           "term": "booking calendar",
@@ -658,7 +657,7 @@
         },
         {
           "term": "analytics dashboard",
-          "value": 246
+          "value": 251
         },
         {
           "term": "image optimization",
