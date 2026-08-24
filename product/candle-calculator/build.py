@@ -105,7 +105,7 @@ def add_case(wb, o=None, suffix="", brief=False):
     row(c, 7, "Water weight", "jar filled to your line")
     inp(c, 7, g("water_weight", 300), MASS)
     c["C7"] = f"={UNIT}"
-    row(c, 8, "Wax factor", "planning assumption — waxes vary")
+    row(c, 8, "Wax factor", "editable assumption — wax density varies by type")
     inp(c, 8, g("wax_factor", 0.86), "0.00", ASSUM_FILL)
     row(c, 9, "Fill weight")
     calc(c, 9, '=IF(OR($B$7="",$B$8=""),"",$B$7*$B$8)', MASS, BOLD)
@@ -189,7 +189,7 @@ def add_case(wb, o=None, suffix="", brief=False):
         row(p, 11 + i, label)
         inp(p, 11 + i, g(key, dflt), MONEY)
 
-    section(p, 18, "Labour")
+    section(p, 18, "Labor")
     row(p, 19, "Include", "optional")
     inp(p, 19, g("labour_on", "No"))
     listdv(p, "B19", "Yes,No")
@@ -215,7 +215,7 @@ def add_case(wb, o=None, suffix="", brief=False):
                 f'({qCA}!$B$27*$B$7+{qCA}!$B$28*$B$8)/{qCA}!$B$25)', MONEY)
     row(p, 31, "Parts")
     calc(p, 31, "=SUM($B$11:$B$16)", MONEY)
-    row(p, 32, "Labour")
+    row(p, 32, "Labor")
     calc(p, 32, '=IF($B$19<>"Yes",0,IF(OR($B$20="",$B$21=""),"",$B$20/60*$B$21))', MONEY)
     row(p, 33, "Overhead")
     calc(p, 33, '=IF($B$24<>"Yes",0,IF(OR($B$25="",$B$26="",$B$26=0),"",$B$25/$B$26))', MONEY)
@@ -286,22 +286,22 @@ def add_reference(wb):
     r["A1"].font = H1
 
     section(r, 3, "Wick sizing", 3)
-    r["A4"] = "Not calculated here."
+    r["A4"] = "Not calculated"
     r["A4"].font = Font(bold=True, size=11, color="C62828")
-    r["C4"] = "Depends on wax, fragrance load, dye and jar shape. Found by burn testing."
+    r["C4"] = "Depends on wax, fragrance load, dye and jar shape. Confirmed by burn testing."
     r["A5"] = "Use"
-    r["C5"] = "The printable Burn Test Log supplied with this sheet."
+    r["C5"] = "The printable Burn Test Log included with this download."
 
-    section(r, 7, "Starting assumptions", 3)
-    for col, txt in (("A", "Assumption"), ("B", "Starts at"), ("C", "Change it on")):
+    section(r, 7, "Editable assumptions", 3)
+    for col, txt in (("A", "Assumption"), ("B", "Default"), ("C", "Change it on")):
         r[f"{col}8"] = txt
         r[f"{col}8"].font = BOLD
     for i, (a, b, cc) in enumerate([
-        ("Wax factor", "0.86", "Candle · wax is about 86% the density of water; waxes vary"),
-        ("Pitcher loss", "0%", "Candle · depends on your pitcher and pour"),
+        ("Wax factor", "0.86", "Candle · wax weighs about 86% of the same volume of water; varies by wax"),
+        ("Pitcher loss", "0%", "Candle · the wax left behind in your pouring pitcher"),
         ("Wholesale multiplier", "2.00", "Costs & Price"),
         ("Selling fees", "blank", "Costs & Price · enter your own current rates"),
-        ("Labour, overhead", "off", "Costs & Price"),
+        ("Labor, overhead", "off", "Costs & Price · both are optional"),
     ]):
         r.cell(row=9 + i, column=1, value=a)
         r.cell(row=9 + i, column=2, value=b)
@@ -321,12 +321,12 @@ def add_reference(wb):
     for i, (a, cc) in enumerate([
         ("Margin", "Profit ÷ price."),
         ("Markup", "Profit ÷ cost."),
-        ("Watch out", "Adding 40% to cost gives a 29% margin, not 40%."),
+        ("Common error", "Adding 40% to cost gives a 29% margin, not 40%."),
     ]):
         r.cell(row=22 + i, column=1, value=a).font = BOLD
         r.cell(row=22 + i, column=3, value=cc)
 
-    section(r, 26, "Fee boxes", 3)
+    section(r, 26, "Fee cells", 3)
     for i, (a, cc) in enumerate([
         ("Selling fee", "Marketplace commission."),
         ("Processing", "Payment provider."),
@@ -337,10 +337,10 @@ def add_reference(wb):
         r.cell(row=27 + i, column=1, value=a).font = BOLD
         r.cell(row=27 + i, column=3, value=cc)
 
-    section(r, 33, "Cell colours", 3)
-    for i, (fill, txt) in enumerate([(INPUT_FILL, "Type here"),
-                                     (CALC_FILL, "Calculated"),
-                                     (ASSUM_FILL, "Assumption you can change")]):
+    section(r, 33, "Cell colors", 3)
+    for i, (fill, txt) in enumerate([(INPUT_FILL, "Enter your own numbers"),
+                                     (CALC_FILL, "Calculated automatically"),
+                                     (ASSUM_FILL, "Editable assumption")]):
         cell = r.cell(row=34 + i, column=1)
         cell.fill, cell.border = fill, THIN
         r.cell(row=34 + i, column=3, value=txt)

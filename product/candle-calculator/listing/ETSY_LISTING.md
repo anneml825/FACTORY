@@ -34,111 +34,108 @@ fragrance load — then the job it does, then who it is for.)*
 
 ## Listing description
 
-**Stop guessing how much wax to melt — and what to charge.**
+**Know how much wax and fragrance to weigh out, and what to charge.**
 
-You have a jar in your hand. This calculator tells you exactly how much wax and how much
-fragrance oil to weigh out for it, what that candle really costs you once everything is added
-up, and the price you need to charge to make the profit you actually want.
+Start with the jar you are pouring into. The calculator works out how much wax and fragrance
+oil to weigh out for it, what that candle costs you once every component is added up, and the
+price you need to charge to reach the profit margin you set.
 
-One sheet. Your jar, your wax, your supplier's prices, your numbers.
+It is one sheet, set up with your jar, your wax and your supplier's prices.
 
-**WHAT IT WORKS OUT FOR YOU**
+**WHAT IT CALCULATES**
 
-▪ How much wax and fragrance oil go in one candle — from the water weight of your jar
+▪ How much wax and fragrance oil go into one candle, from the water weight of your jar
 ▪ How much to melt for a whole batch, including what you lose in the pouring pitcher
-▪ Your fragrance load AND your fragrance content — both shown, side by side, always
-▪ What one candle truly costs you: wax, fragrance, jar, wick, lid, label, box
-▪ Your time and your monthly running costs, if you want them included
+▪ Both your fragrance load and your fragrance content, shown side by side
+▪ What one candle costs you: wax, fragrance, jar, wick, lid, label and packaging
+▪ Your labor time and monthly running costs, if you choose to include them
 ▪ The price to charge to hit the profit margin you want — after your selling fees
-▪ What you actually take home from a sale, once fees come out
+▪ What you receive from a sale after fees
 ▪ Your wholesale price, and what a shop reselling it would charge
 
-**THE THING THAT TRIPS EVERYONE UP**
+**FRAGRANCE LOAD AND FRAGRANCE CONTENT ARE NOT THE SAME NUMBER**
 
-Fragrance load and fragrance content are not the same number.
+Put 20 g of fragrance into 200 g of wax and you have a **10% load** and a **9.09% content**.
+Recipes use one figure and wax spec sheets sometimes use the other, so using one where the other
+is meant changes how much fragrance oil ends up in the candle.
 
-Put 20 g of fragrance into 200 g of wax and you have a **10% load** — but **9.09% content**.
-Same candle. Two different numbers. Recipes use one, wax spec sheets sometimes use the other,
-and mixing them up is why a candle can come out wrong for no obvious reason.
+The calculator asks which figure your recipe uses, then shows you both.
 
-This calculator asks which one you are working in, and then shows you both. Every time.
+**MARGIN IS NOT THE SAME AS MARKUP**
 
-**AND THE OTHER ONE**
+Adding 40% to your cost does not give you a 40% profit margin. It gives about 29%.
 
-Adding 40% to your cost does not give you a 40% profit margin. It gives you about 29%.
+Enter the margin you want and the sheet calculates the price that delivers it after your selling
+fees. Margin and markup are shown side by side.
 
-This sheet solves for the price that actually delivers the margin you asked for — after your
-selling fees come out of it. It shows you your margin and your markup side by side so you can
-see the difference.
+**GRAMS OR OUNCES**
 
-**WORKS IN GRAMS OR OUNCES**
-
-One switch at the top. Everything changes to match — no second file to download, no converting
-your supplier's numbers by hand.
+Choose your unit at the top of the sheet and every figure updates. There is no second file to
+download and no converting your supplier's numbers by hand.
 
 **WHAT YOU GET**
 
 ▪ The calculator, as a Google Sheets template you copy to your own Google Drive in one click
-▪ A printable Burn Test Log for finding your wick size
-▪ A reference tab in plain English: every assumption, where to change it, and what each box means
+▪ A printable Burn Test Log for recording your burn tests
+▪ A reference tab in plain English: every assumption, where to change it, and what each term means
 
 **BEFORE YOU BUY — PLEASE READ**
 
 ▪ This is a **Google Sheets** template. You need a free Google account to use it. It is not an
   Excel file.
-▪ **It does not choose your wick.** Wick size cannot be calculated — it depends on your wax,
-  your fragrance load, your dye and the shape of your jar, and the only way to know is to burn
-  a test candle and watch the melt pool. That is what the Burn Test Log is for.
-▪ Selling fees are left blank on purpose. Fees change and they differ by marketplace and by
-  country, so you type in your own current ones rather than trusting a number I baked in.
+▪ **It does not choose your wick.** Wick size is not calculated here. It depends on your wax,
+  fragrance load, dye and the shape of your jar, and it is confirmed by burning a test candle
+  and watching the melt pool. The Burn Test Log is a record sheet for that testing.
+▪ Selling fees are left blank on purpose. Fees differ by marketplace and by country and they
+  change over time, so you enter your own current rates rather than relying on a figure that
+  may be out of date.
 ▪ Nothing is posted to you. This is an instant digital download.
 
 **INSTANT DOWNLOAD — NO REFUNDS**
 
-Because this is a digital file delivered instantly, it cannot be returned. If anything is
-unclear or does not work as described, message me and I will sort it out.
+Because this is a digital file delivered instantly, it cannot be returned.
 
 ## Listing image copy, in reading order
 
-**Image 1 — the hook**
+**Image 1 — what it is**
 > CANDLE BATCH & PRICING CALCULATOR
-> How much wax. How much fragrance. What to charge.
+> Wax and fragrance weights, cost per candle, and the price to charge.
 > *(Show the Candle tab with real numbers filled in)*
 
-**Image 2 — the problem it solves**
-> 10% LOAD or 10% CONTENT?
-> 20 g fragrance in 200 g wax = 10% load — but 9.09% content.
-> Same candle. Two numbers. This sheet shows you both.
+**Image 2 — the distinction it handles**
+> 10% LOAD OR 10% CONTENT?
+> 20 g fragrance in 200 g wax is a 10% load and a 9.09% content.
+> Tell the sheet which one your recipe uses. It shows you both.
 
-**Image 3 — start where you actually start**
-> BEGIN WITH YOUR JAR
-> Weigh the water. The sheet does the rest.
-> Wax and fragrance, per candle and per batch.
+**Image 3 — where you begin**
+> START WITH YOUR JAR
+> Enter the weight of the water your jar holds.
+> The sheet calculates wax and fragrance, per candle and per batch.
 
-**Image 4 — the money**
+**Image 4 — cost**
 > KNOW WHAT ONE CANDLE COSTS
-> Wax · fragrance · jar · wick · lid · label · box
-> Your time and running costs too, if you want them.
+> Wax, fragrance, jar, wick, lid, label and packaging.
+> Add your labor time and running costs if you want them included.
 
-**Image 5 — the differentiator**
-> THE PRICE THAT ACTUALLY MAKES YOUR MARGIN
-> Adding 40% to your cost gives you 29%, not 40%.
-> This works out the real price — after your fees.
+**Image 5 — pricing**
+> THE PRICE THAT REACHES YOUR MARGIN
+> Adding 40% to your cost gives a 29% margin, not 40%.
+> Enter the margin you want. The sheet calculates the price, after fees.
 
-**Image 6 — reassurance**
-> GRAMS OR OUNCES — ONE SWITCH
-> Wholesale price included.
-> Plain-English notes on every box.
+**Image 6 — what else is in it**
+> GRAMS OR OUNCES, YOUR CHOICE
+> Wholesale pricing included.
+> A reference tab explaining every assumption.
 
-**Image 7 — honesty, and it sells**
-> IT DOES NOT PICK YOUR WICK
-> Nothing can. Wick size is found by burn testing.
-> So a printable Burn Test Log comes with it.
+**Image 7 — what it does not do**
+> IT DOES NOT CHOOSE YOUR WICK
+> Wick size is confirmed by burn testing, not by calculation.
+> A printable Burn Test Log is included for recording your tests.
 
 **Image 8 — what you get**
 > GOOGLE SHEETS TEMPLATE + PRINTABLE BURN TEST LOG
-> Copy to your own Drive in one click.
-> Free Google account needed. Not an Excel file.
+> Copy it to your own Google Drive in one click.
+> Requires a free Google account. Not an Excel file.
 
 ## Pricing recommendation
 
@@ -154,8 +151,8 @@ that signal harder to read.
 
 | File the buyer receives | Format | Purpose |
 |---|---|---|
-| `Candle-Calculator-Start-Here.pdf` | PDF, 1 page | The copy link to the Google Sheet, plus how to use it |
-| `Burn-Test-Log.pdf` | PDF, 1 page | Printable wick testing record |
+| `Candle-Calculator-Start-Here.pdf` | PDF, 2 pages | The copy link to the Google Sheet, plus how to use it |
+| `Burn-Test-Log.pdf` | PDF, 1 page | Printable burn-test record sheet |
 
 The calculator itself is a Google Sheets template. The buyer clicks the link in the Start Here
 PDF and Google asks them to make their own copy.
