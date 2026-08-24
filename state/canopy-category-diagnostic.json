@@ -1,0 +1,229 @@
+{
+  "runId": "32703465776",
+  "rootBySlug": {
+    "products": 50,
+    "medianRatings": 42426,
+    "maxRatings": 490174,
+    "children": 35,
+    "currentCategory": {
+      "name": "Books",
+      "url": "https://www.amazon.com/Best-Sellers-Books/zgbs/books",
+      "id": "books"
+    },
+    "topTitles": [
+      "1. Theo of Golden: A Novel [171663 ratings]",
+      "2. A Court of Splintered Harmony (A Court of Thorns and Roses,  [0 ratings]",
+      "3. In the Room: 60 Years on The Front Lines of History [0 ratings]",
+      "4. This Is Me: A Reckoning [1407 ratings]"
+    ]
+  },
+  "children": [
+    {
+      "id": "1",
+      "name": "Arts & Photography",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Arts-Photography/zgbs/books/1/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "2",
+      "name": "Biographies & Memoirs",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Biographies/zgbs/books/2/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "69724",
+      "name": "Books on CD",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Books-on-CD/zgbs/books/69724/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "3",
+      "name": "Business & Money",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Business-Money/zgbs/books/3/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "3248857011",
+      "name": "Calendars",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Calendars/zgbs/books/3248857011/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "4",
+      "name": "Children's Books",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Childrens-Books/zgbs/books/4/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "12290",
+      "name": "Christian Books & Bibles",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Christian-Books-Bibles/zgbs/books/12290/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "4366",
+      "name": "Comics & Graphic Novels",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Comics-Graphic-Novels/zgbs/books/4366/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "5",
+      "name": "Computers & Technology",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Computers-Technology/zgbs/books/5/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "6",
+      "name": "Cookbooks, Food & Wine",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Cookbooks-Food-Wine/zgbs/books/6/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "48",
+      "name": "Crafts, Hobbies & Home",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Crafts-Hobbies-Home/zgbs/books/48/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "8975347011",
+      "name": "Education & Teaching",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Education-Teaching/zgbs/books/8975347011/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "173507",
+      "name": "Engineering & Transportation",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Engineering-Transportation/zgbs/books/173507/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "10",
+      "name": "Health, Fitness & Dieting",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Health-Fitness-Dieting/zgbs/books/10/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "9",
+      "name": "History",
+      "url": "https://www.amazon.com/Best-Sellers-Books-History/zgbs/books/9/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "86",
+      "name": "Humor & Entertainment",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Humor-Entertainment/zgbs/books/86/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "10777",
+      "name": "Law",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Law/zgbs/books/10777/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "301889",
+      "name": "Lesbian, Gay, Bisexual & Transgender Books",
+      "url": "https://www.amazon.com/Best-Sellers-Books-LGBTQ-Books/zgbs/books/301889/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "16568978011",
+      "name": "Libros en español",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Libros-en-espaol/zgbs/books/16568978011/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "17",
+      "name": "Literature & Fiction",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Literature-Fiction/zgbs/books/17/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "173514",
+      "name": "Medical Books",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Medical-Books/zgbs/books/173514/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "18",
+      "name": "Mystery, Thriller & Suspense",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Mystery-Thriller-Suspense/zgbs/books/18/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "465600",
+      "name": "New, Used & Rental Textbooks",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Textbooks/zgbs/books/465600/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "20",
+      "name": "Parenting & Relationships",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Parenting-Relationships/zgbs/books/20/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "3377866011",
+      "name": "Politics & Social Sciences",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Politics-Social-Sciences/zgbs/books/3377866011/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "21",
+      "name": "Reference",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Reference/zgbs/books/21/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "22",
+      "name": "Religion & Spirituality",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Religion-Spirituality/zgbs/books/22/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "23",
+      "name": "Romance",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Romance/zgbs/books/23/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "75",
+      "name": "Science & Math",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Science-Math/zgbs/books/75/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "25",
+      "name": "Science Fiction & Fantasy",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Science-Fiction-Fantasy/zgbs/books/25/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "4736",
+      "name": "Self-Help",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Self-Help/zgbs/books/4736/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "26",
+      "name": "Sports & Outdoors",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Sports-Outdoors/zgbs/books/26/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "28",
+      "name": "Teens",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Teen-Young-Adult-Books/zgbs/books/28/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "5267710011",
+      "name": "Test Preparation",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Test-Preparation/zgbs/books/5267710011/ref=zg_bs_nav_books_1"
+    },
+    {
+      "id": "27",
+      "name": "Travel",
+      "url": "https://www.amazon.com/Best-Sellers-Books-Travel/zgbs/books/27/ref=zg_bs_nav_books_1"
+    }
+  ],
+  "byUrl": [
+    {
+      "child": {
+        "id": "1",
+        "name": "Arts & Photography",
+        "url": "https://www.amazon.com/Best-Sellers-Books-Arts-Photography/zgbs/books/1/ref=zg_bs_nav_books_1"
+      },
+      "byUrl": {
+        "products": 0,
+        "medianRatings": 0,
+        "maxRatings": 0,
+        "children": 0,
+        "currentCategory": null,
+        "topTitles": []
+      }
+    },
+    {
+      "child": {
+        "id": "27",
+        "name": "Travel",
+        "url": "https://www.amazon.com/Best-Sellers-Books-Travel/zgbs/books/27/ref=zg_bs_nav_books_1"
+      },
+      "byUrl": {
+        "products": 0,
+        "medianRatings": 0,
+        "maxRatings": 0,
+        "children": 0,
+        "currentCategory": null,
+        "topTitles": []
+      }
+    }
+  ]
+}

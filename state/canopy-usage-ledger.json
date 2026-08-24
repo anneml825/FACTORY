@@ -18,9 +18,9 @@
     {
       "runId": "32703465776",
       "startedAt": "2026-08-24T07:52:08.415Z",
-      "requests": 4,
+      "requests": 3,
       "note": "Diagnose why subcategory requests returned browse-like listings instead of bestseller charts: re-read the root for child urls, then re-request two children by url instead of by numeric id.",
-      "status": "RESERVED"
+      "status": "SETTLED"
     }
   ]
 }
