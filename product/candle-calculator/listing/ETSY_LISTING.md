@@ -80,7 +80,7 @@ your supplier's numbers by hand.
 
 ▪ The calculator, as a Google Sheets template you copy to your own Google Drive in one click
 ▪ A printable Burn Test Log for finding your wick size
-▪ Plain-English notes on every box, and a reference tab explaining every assumption
+▪ A reference tab in plain English: every assumption, where to change it, and what each box means
 
 **BEFORE YOU BUY — PLEASE READ**
 
@@ -103,7 +103,7 @@ unclear or does not work as described, message me and I will sort it out.
 **Image 1 — the hook**
 > CANDLE BATCH & PRICING CALCULATOR
 > How much wax. How much fragrance. What to charge.
-> *(Show the Your Candle tab with real numbers filled in)*
+> *(Show the Candle tab with real numbers filled in)*
 
 **Image 2 — the problem it solves**
 > 10% LOAD or 10% CONTENT?
