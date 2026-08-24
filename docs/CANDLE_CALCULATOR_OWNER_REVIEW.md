@@ -15,7 +15,7 @@
 | File | Pages | Purpose |
 |---|---|---|
 | `Candle-Calculator-Start-Here.pdf` | 2 | Carries the one-click copy link, the jar-weighing method, and the two things that trip makers up |
-| `Burn-Test-Log.pdf` | 1 | Printable wick-testing record, 14 rows |
+| `Burn-Test-Log.pdf` | 1, A4 landscape | Printable wick-testing record, 12 rows |
 
 Both at `product/candle-calculator/dist/buyer/`.
 
