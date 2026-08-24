@@ -56,6 +56,12 @@ implemented.
 
 ### Recommendation: Rainforest API, Hobbyist tier — $23/month
 
+> **SUPERSEDED 2026-08-24 — see `docs/RAINFOREST_CAPITAL_RECONCILIATION.md`.**
+> The Hobbyist tier is **"$23/month Billed Annually"** — a **$276/year**
+> commitment, 5.5× the entire authorized capital base, not the $23 this section
+> implies. The billing term was not captured when this was written. A free trial
+> exists and a $18/month entry point is advertised; both should be tried first.
+
 The cheapest verified source that returns the exact thing Canopy could not.
 Its own documentation for `type=bestsellers` shows a response containing:
 
