@@ -1,0 +1,4740 @@
+{
+  "runId": "32703054538",
+  "walkedAt": "2026-08-24T07:49:55.099Z",
+  "requestsSpent": 36,
+  "stopReason": null,
+  "failures": [],
+  "categoriesScreened": 36,
+  "screens": [
+    {
+      "id": "bestsellers_books",
+      "name": "Books",
+      "parent": "(root)",
+      "products": 50,
+      "childCategories": [
+        {
+          "id": "1",
+          "name": "Arts & Photography"
+        },
+        {
+          "id": "2",
+          "name": "Biographies & Memoirs"
+        },
+        {
+          "id": "69724",
+          "name": "Books on CD"
+        },
+        {
+          "id": "3",
+          "name": "Business & Money"
+        },
+        {
+          "id": "3248857011",
+          "name": "Calendars"
+        },
+        {
+          "id": "4",
+          "name": "Children's Books"
+        },
+        {
+          "id": "12290",
+          "name": "Christian Books & Bibles"
+        },
+        {
+          "id": "4366",
+          "name": "Comics & Graphic Novels"
+        },
+        {
+          "id": "5",
+          "name": "Computers & Technology"
+        },
+        {
+          "id": "6",
+          "name": "Cookbooks, Food & Wine"
+        },
+        {
+          "id": "48",
+          "name": "Crafts, Hobbies & Home"
+        },
+        {
+          "id": "8975347011",
+          "name": "Education & Teaching"
+        },
+        {
+          "id": "173507",
+          "name": "Engineering & Transportation"
+        },
+        {
+          "id": "10",
+          "name": "Health, Fitness & Dieting"
+        },
+        {
+          "id": "9",
+          "name": "History"
+        },
+        {
+          "id": "86",
+          "name": "Humor & Entertainment"
+        },
+        {
+          "id": "10777",
+          "name": "Law"
+        },
+        {
+          "id": "301889",
+          "name": "Lesbian, Gay, Bisexual & Transgender Books"
+        },
+        {
+          "id": "16568978011",
+          "name": "Libros en español"
+        },
+        {
+          "id": "17",
+          "name": "Literature & Fiction"
+        },
+        {
+          "id": "173514",
+          "name": "Medical Books"
+        },
+        {
+          "id": "18",
+          "name": "Mystery, Thriller & Suspense"
+        },
+        {
+          "id": "465600",
+          "name": "New, Used & Rental Textbooks"
+        },
+        {
+          "id": "20",
+          "name": "Parenting & Relationships"
+        },
+        {
+          "id": "3377866011",
+          "name": "Politics & Social Sciences"
+        },
+        {
+          "id": "21",
+          "name": "Reference"
+        },
+        {
+          "id": "22",
+          "name": "Religion & Spirituality"
+        },
+        {
+          "id": "23",
+          "name": "Romance"
+        },
+        {
+          "id": "75",
+          "name": "Science & Math"
+        },
+        {
+          "id": "25",
+          "name": "Science Fiction & Fantasy"
+        },
+        {
+          "id": "4736",
+          "name": "Self-Help"
+        },
+        {
+          "id": "26",
+          "name": "Sports & Outdoors"
+        },
+        {
+          "id": "28",
+          "name": "Teens"
+        },
+        {
+          "id": "5267710011",
+          "name": "Test Preparation"
+        },
+        {
+          "id": "27",
+          "name": "Travel"
+        }
+      ],
+      "ratingCounts": [
+        33,
+        81,
+        699,
+        734,
+        1335,
+        1407,
+        2415,
+        3760,
+        4527,
+        5117,
+        7473,
+        7818,
+        8175,
+        9299,
+        23418,
+        27608,
+        30427,
+        31761,
+        33982,
+        41070,
+        42426,
+        47102,
+        47408,
+        54205,
+        55018,
+        55626,
+        56765,
+        61034,
+        61132,
+        73665,
+        79494,
+        79841,
+        82237,
+        92152,
+        103534,
+        106737,
+        106737,
+        148936,
+        149533,
+        155301,
+        171663,
+        171663,
+        183518,
+        276710,
+        490174
+      ],
+      "prices": [
+        3.07,
+        3.96,
+        4.4,
+        4.99,
+        5.2,
+        5.36,
+        5.52,
+        5.74,
+        5.98,
+        6.34,
+        7.41,
+        8.74,
+        8.91,
+        9.24,
+        9.99,
+        10.14,
+        10.61,
+        11,
+        12.48,
+        12.99,
+        12.99,
+        13.53,
+        13.71,
+        13.88,
+        14.65,
+        14.98,
+        14.99,
+        14.99,
+        15.17,
+        15.19,
+        15.48,
+        16.8,
+        16.99,
+        17,
+        17.48,
+        18.57,
+        18.94,
+        19.58,
+        20.73,
+        21.29,
+        21.99,
+        22.4,
+        24.01,
+        24.5,
+        24.99,
+        25.06,
+        26.6,
+        26.6,
+        26.99,
+        51.26
+      ],
+      "sample": [
+        {
+          "asin": "1668236516",
+          "title": "Theo of Golden: A Novel",
+          "rank": 1,
+          "ratingsTotal": 171663,
+          "price": 12.99
+        },
+        {
+          "asin": "1639739130",
+          "title": "A Court of Splintered Harmony (A Court of Thorns and Roses, 6)",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 22.4
+        },
+        {
+          "asin": "0847877132",
+          "title": "In the Room: 60 Years on The Front Lines of History",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 51.26
+        },
+        {
+          "asin": "1538773422",
+          "title": "This Is Me: A Reckoning",
+          "rank": 4,
+          "ratingsTotal": 1407,
+          "price": 24.99
+        },
+        {
+          "asin": "1954118813",
+          "title": "The Calamity Club: A Novel",
+          "rank": 5,
+          "ratingsTotal": 54205,
+          "price": 24.01
+        },
+        {
+          "asin": "168281808X",
+          "title": "Threshing Day (Wing and Claw Collection) (The Empyrean)",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 17.48
+        },
+        {
+          "asin": "059380421X",
+          "title": "Yesteryear: A GMA Book Club Pick: A Novel",
+          "rank": 7,
+          "ratingsTotal": 103534,
+          "price": 14.99
+        },
+        {
+          "asin": "0063511630",
+          "title": "Whistler: A Novel",
+          "rank": 8,
+          "ratingsTotal": 30427,
+          "price": 14.99
+        },
+        {
+          "asin": "1668236567",
+          "title": "Theo of Golden: A Novel",
+          "rank": 9,
+          "ratingsTotal": 171663,
+          "price": 12.99
+        },
+        {
+          "asin": "B0GRC32G8X",
+          "title": "A Court of Forgotten Melody (A Court of Thorns and Roses, 7)",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 26.6
+        },
+        {
+          "asin": "1668067242",
+          "title": "Regime Change: Inside the Imperial Presidency of Donald Trump",
+          "rank": 11,
+          "ratingsTotal": 3760,
+          "price": 16.99
+        },
+        {
+          "asin": "1668072246",
+          "title": "The Serviceberry: Abundance and Reciprocity in the Natural World",
+          "rank": 12,
+          "ratingsTotal": 2415,
+          "price": 11
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Arts & Photography",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        2,
+        3,
+        9,
+        25,
+        26,
+        35,
+        49,
+        137,
+        298,
+        330,
+        113407
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        9.99,
+        10.09,
+        11.99,
+        12.99,
+        12.99,
+        14.97,
+        14.99,
+        16.98,
+        27.99,
+        32,
+        32,
+        44.99,
+        45.64,
+        53.7,
+        60.99
+      ],
+      "sample": [
+        {
+          "asin": "0399588191",
+          "title": "Born a Crime: Stories from a South African Childhood (One World Essentials)",
+          "rank": 1,
+          "ratingsTotal": 113407,
+          "price": 10.09
+        },
+        {
+          "asin": "B0GSJMBZF9",
+          "title": "100 Color by Number Dots Mysteries: A Dot Coloring Book For Adults Relaxation and Wonder – Color Dots by Number and Lett",
+          "rank": 2,
+          "ratingsTotal": 298,
+          "price": 12.99
+        },
+        {
+          "asin": "B0H7R2YK98",
+          "title": "Providence Cards Deck and Guidebook: From the World of Rachel Gillig's One Dark Window",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 32
+        },
+        {
+          "asin": "B0GZGX9TPM",
+          "title": "100 Color by Number Monochrome Mysteries: A One Color Coloring Book For Adults Relaxation and Wonder – Black and White M",
+          "rank": 4,
+          "ratingsTotal": 330,
+          "price": 12.99
+        },
+        {
+          "asin": "B0H8F5TXCK",
+          "title": "Marvel Tarot Deck and Guidebook",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 27.99
+        },
+        {
+          "asin": "B0H3N9FFSP",
+          "title": "Cozy Girl Fall Coloring Book: Bold and Easy Autumn-Inspired Designs for Adults and Teens | Cute Hygge Illustrations (Coz",
+          "rank": 6,
+          "ratingsTotal": 3,
+          "price": 9.99
+        },
+        {
+          "asin": "B0H7DLH1LJ",
+          "title": "INK IT MONOCHROME-COZY ESCAPES: Trace and Color 40 Cozy Storybook Scenes Featuring Birds, Animals, and Gardens (Kindle S",
+          "rank": 7,
+          "ratingsTotal": 1,
+          "price": 0
+        },
+        {
+          "asin": "B0H3T86Q5Y",
+          "title": "Bait Dog Boy: A Memoir",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 32
+        },
+        {
+          "asin": "B0GX7L4RJL",
+          "title": "TV Guide Magazine | August 10 2026",
+          "rank": 9,
+          "ratingsTotal": 2,
+          "price": 0
+        },
+        {
+          "asin": "B0GX6NYLK3",
+          "title": "Filming The Odyssey: Inside the Making of Christopher Nolan's Modern Epic",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 60.99
+        },
+        {
+          "asin": "B0H3NXPM32",
+          "title": "101 Things Only Women Born in 1976 Remember: A Nostalgic Trip Down Memory Lane – Plus a Fun Birthday Trivia Quiz (101 On",
+          "rank": 11,
+          "ratingsTotal": 35,
+          "price": 14.97
+        },
+        {
+          "asin": "B0HB7762H5",
+          "title": "101 FUNNIEST HP MEMES: BOOK 31",
+          "rank": 12,
+          "ratingsTotal": 26,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Biographies & Memoirs",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        1,
+        2,
+        2,
+        3,
+        6,
+        7,
+        8,
+        16,
+        32,
+        46,
+        61,
+        598
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.99,
+        2.99,
+        4.99,
+        10,
+        10,
+        15.99,
+        20.49,
+        21.99,
+        23.74,
+        24.5
+      ],
+      "sample": [
+        {
+          "asin": "B0GZ6YK1L6",
+          "title": "Swan Song: Diana, my sister",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 24.5
+        },
+        {
+          "asin": "B0H92Q89M6",
+          "title": "Falling Together: In Pieces",
+          "rank": 2,
+          "ratingsTotal": 6,
+          "price": 0
+        },
+        {
+          "asin": "B0HG4F157W",
+          "title": "Historias de Alto Impacto (Spanish Edition)",
+          "rank": 3,
+          "ratingsTotal": 3,
+          "price": 2.99
+        },
+        {
+          "asin": "B0H9292T2M",
+          "title": "Embrace Your Dash: Reclaim Your Story in a Noisy World",
+          "rank": 4,
+          "ratingsTotal": 8,
+          "price": 0
+        },
+        {
+          "asin": "B0H94W9SVQ",
+          "title": "FALLEN EAGLE: the last days of the Third Reich (Robin Cross World War Two Histories)",
+          "rank": 5,
+          "ratingsTotal": 598,
+          "price": 0
+        },
+        {
+          "asin": "B0H9GMWWPZ",
+          "title": "When Mom Went Viral: The Life of Marilyn Hagerty",
+          "rank": 6,
+          "ratingsTotal": 2,
+          "price": 10
+        },
+        {
+          "asin": "B0HBPL1FCT",
+          "title": "Saladin: A Life from Beginning to End (Military Biographies)",
+          "rank": 7,
+          "ratingsTotal": 61,
+          "price": 0
+        },
+        {
+          "asin": "B0GTB1PNCX",
+          "title": "Beneath the Cards: A High-Stakes, High-Anxiety Poker Journey",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 20.49
+        },
+        {
+          "asin": "B0H9YJ7YJN",
+          "title": "THE FORGOTTEN PRISONERS: The untold stories of Allied captives in WW2",
+          "rank": 9,
+          "ratingsTotal": 7,
+          "price": 0
+        },
+        {
+          "asin": "B0H9RF6S4P",
+          "title": "Into Rhodesia: The Remarkable Story of the Pioneer Treks That Built a Country (The Gordon Wallis Africa Series)",
+          "rank": 10,
+          "ratingsTotal": 46,
+          "price": 0
+        },
+        {
+          "asin": "B0HDG54T1D",
+          "title": "The Story of Her's",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 23.74
+        },
+        {
+          "asin": "B0GZQ9GQL7",
+          "title": "Nothing in Moderation: A Psychedelic Reckoning With Excess",
+          "rank": 12,
+          "ratingsTotal": 32,
+          "price": 0.99
+        }
+      ]
+    },
+    {
+      "id": "69724",
+      "name": "Books on CD",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        3,
+        11,
+        31,
+        116,
+        301,
+        327,
+        1283,
+        13194,
+        14572,
+        15421,
+        22797,
+        30427,
+        86981,
+        106737,
+        171663,
+        276710
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1.99,
+        12.99,
+        13.99,
+        14.99,
+        14.99,
+        18.97,
+        33.19,
+        34.99,
+        55.23
+      ],
+      "sample": [
+        {
+          "asin": "B0GM33T865",
+          "title": "Live From the Los Angeles Sports Arena, April 26th, 1975",
+          "rank": 1,
+          "ratingsTotal": 301,
+          "price": 18.97
+        },
+        {
+          "asin": "1668236516",
+          "title": "Theo of Golden: A Novel",
+          "rank": 2,
+          "ratingsTotal": 171663,
+          "price": 12.99
+        },
+        {
+          "asin": "B08V8877BY",
+          "title": "Dungeon Crawler Carl: A LitRPG/Gamelit Adventure",
+          "rank": 3,
+          "ratingsTotal": 106737,
+          "price": 0
+        },
+        {
+          "asin": "B0GYFVDCS7",
+          "title": "The Day After: How to Wield Power in a Post-Trump World",
+          "rank": 4,
+          "ratingsTotal": 327,
+          "price": 33.19
+        },
+        {
+          "asin": "B0GYZR7TBH",
+          "title": "Foreign Tongues - Limited Boxset with Blu-Ray, Poster & Art Cards",
+          "rank": 5,
+          "ratingsTotal": 116,
+          "price": 55.23
+        },
+        {
+          "asin": "B0FW51VCS3",
+          "title": "Ransom: A Novel (Gabriel Allon Book 27)",
+          "rank": 6,
+          "ratingsTotal": 14572,
+          "price": 14.99
+        },
+        {
+          "asin": "B08GB58KD5",
+          "title": "Project Hail Mary",
+          "rank": 7,
+          "ratingsTotal": 276710,
+          "price": 0
+        },
+        {
+          "asin": "B0DTJ5XG6N",
+          "title": "The Biggest Story Bible Storybook (CDs)",
+          "rank": 8,
+          "ratingsTotal": 3,
+          "price": 34.99
+        },
+        {
+          "asin": "B0FH1B2PK9",
+          "title": "Revenge Prey (A Prey Novel Book 36)",
+          "rank": 9,
+          "ratingsTotal": 15421,
+          "price": 13.99
+        },
+        {
+          "asin": "B0DJHK3L35",
+          "title": "Circle of Days",
+          "rank": 10,
+          "ratingsTotal": 22797,
+          "price": 1.99
+        },
+        {
+          "asin": "B0F9FYDQXZ",
+          "title": "Bach: Sonatas for Violin & Continuo",
+          "rank": 11,
+          "ratingsTotal": 11,
+          "price": 0
+        },
+        {
+          "asin": "B0FGLVLYDB",
+          "title": "Bach: Goldberg Variations",
+          "rank": 12,
+          "ratingsTotal": 31,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Business & Money",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        2,
+        4,
+        4,
+        5,
+        9,
+        18,
+        20,
+        29,
+        53,
+        112,
+        117,
+        310
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4.99,
+        9.99,
+        12.99,
+        15.99,
+        16.14,
+        19.99,
+        22.97,
+        25,
+        27.33,
+        30,
+        39.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H92LV8N7",
+          "title": "The Traps Within Medicare - 2027 Perennial Edition: How to Spot Them, How to Avoid Them, and How to Optimize Your Health",
+          "rank": 1,
+          "ratingsTotal": 112,
+          "price": 0
+        },
+        {
+          "asin": "B0H8XV92DQ",
+          "title": "El Único Libro De Living Trusts En Español: Cómo Crear Tu Propio Living Trust, Evitar Probate Y Proteger A Tus Herederos",
+          "rank": 2,
+          "ratingsTotal": 117,
+          "price": 22.97
+        },
+        {
+          "asin": "B0H9DG9PPG",
+          "title": "Own or Be Owned: Build a Business So Good It Doesn't Need You",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 30
+        },
+        {
+          "asin": "B0HB31811M",
+          "title": "Dare 2B Fair: 33 Steps to Build a Better World With our Words",
+          "rank": 4,
+          "ratingsTotal": 29,
+          "price": 0
+        },
+        {
+          "asin": "B0H9LK3MZK",
+          "title": "PSAT/NMSQT Test Prep: The Complete and Exam-Aligned Prep Book to Ace the Digital PSAT — Full-Length Practice Tests, Step",
+          "rank": 5,
+          "ratingsTotal": 310,
+          "price": 27.33
+        },
+        {
+          "asin": "B0H9NLJ667",
+          "title": "Decision System: How companies turn trusted data into decisions that change outcomes",
+          "rank": 6,
+          "ratingsTotal": 18,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HB7KLNNM",
+          "title": "The Flame Game: Master High-Stakes Environments, Transform Your Pressure, and Forge A Lasting Legacy",
+          "rank": 7,
+          "ratingsTotal": 20,
+          "price": 0
+        },
+        {
+          "asin": "B0H8JY1MGR",
+          "title": "The Ascent: Part 1 of The Round Table",
+          "rank": 8,
+          "ratingsTotal": 9,
+          "price": 25
+        },
+        {
+          "asin": "B0H9MHG512",
+          "title": "Exploring Parallel Universes: The Sequel to Parallel Universes of Self",
+          "rank": 9,
+          "ratingsTotal": 4,
+          "price": 0
+        },
+        {
+          "asin": "B0HDG5Z11C",
+          "title": "SpendFirst: The Surprisingly Simple System to Stop Stressing About Money",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 16.14
+        },
+        {
+          "asin": "B0H8WP53DH",
+          "title": "Agents, Inc.: How to Rebuild Your Company in the AI Age",
+          "rank": 11,
+          "ratingsTotal": 4,
+          "price": 0
+        },
+        {
+          "asin": "B0HBY1Y4ST",
+          "title": "The Other Side of Order: The Hidden Architecture of Structure, Control, and Human Potential",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 15.99
+        }
+      ]
+    },
+    {
+      "id": "3248857011",
+      "name": "Calendars",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        3,
+        3,
+        4,
+        5,
+        8,
+        12,
+        13,
+        13,
+        14,
+        16,
+        16,
+        20,
+        21,
+        23,
+        24,
+        25,
+        42,
+        144
+      ],
+      "prices": [
+        2.99,
+        5.99,
+        8.99,
+        10.99,
+        15.12,
+        16.54,
+        16.77,
+        16.77,
+        16.99,
+        17.95,
+        17.95,
+        17.95,
+        17.99,
+        17.99,
+        17.99,
+        17.99,
+        18.63,
+        18.99
+      ],
+      "sample": [
+        {
+          "asin": "B0GF9BTRZX",
+          "title": "Sandra Boynton's 17-Month 2026-2027 My Family Wall Calendar",
+          "rank": 1,
+          "ratingsTotal": 42,
+          "price": 16.77
+        },
+        {
+          "asin": "B0GF9F5B4G",
+          "title": "Katie Daisy 2027 Weekly Planner Calendar: Where Love Grows",
+          "rank": 2,
+          "ratingsTotal": 23,
+          "price": 17.99
+        },
+        {
+          "asin": "B0GF93S8P2",
+          "title": "Pusheen 16-Month 2026-2027 Weekly/Monthly Planner Calendar",
+          "rank": 3,
+          "ratingsTotal": 21,
+          "price": 18.99
+        },
+        {
+          "asin": "B0GF98LHXK",
+          "title": "The Far Side® 2027 Off-The-Wall Day-to-Day Calendar",
+          "rank": 4,
+          "ratingsTotal": 24,
+          "price": 17.95
+        },
+        {
+          "asin": "B0GF9G9GM2",
+          "title": "Mary Engelbreit's Good Vibes Only 2027 Monthly Pocket Planner Calendar",
+          "rank": 5,
+          "ratingsTotal": 20,
+          "price": 8.99
+        },
+        {
+          "asin": "B0GF9949NQ",
+          "title": "Mary Engelbreit's A Moment Here, A Memory There 2027 Monthly/Weekly Planner",
+          "rank": 6,
+          "ratingsTotal": 13,
+          "price": 16.77
+        },
+        {
+          "asin": "B0FWZX8QWY",
+          "title": "The Atomic Habits Daily Calendar: 365 Powerful Ideas for a Better Year",
+          "rank": 7,
+          "ratingsTotal": 16,
+          "price": 18.63
+        },
+        {
+          "asin": "B0FNCXNRVC",
+          "title": "Executive Jewish Calendar 5787 / A 17-Month Planner August 2026-December 2027: 2026-2027",
+          "rank": 8,
+          "ratingsTotal": 16,
+          "price": 10.99
+        },
+        {
+          "asin": "B0GF95N2R6",
+          "title": "Hebrew Illuminations 16-Month 2026-2027 Wall Calendar: And Candle Lighting Times",
+          "rank": 9,
+          "ratingsTotal": 8,
+          "price": 17.99
+        },
+        {
+          "asin": "B0GF9L193K",
+          "title": "WeRateDogs 2027 Day-to-Day Calendar",
+          "rank": 10,
+          "ratingsTotal": 14,
+          "price": 17.95
+        },
+        {
+          "asin": "B0GF99TK52",
+          "title": "Mary Engelbreit's Happiness Is a Habit 2027 Day-to-Day Calendar",
+          "rank": 11,
+          "ratingsTotal": 3,
+          "price": 17.99
+        },
+        {
+          "asin": "B0GF99RKWT",
+          "title": "Disney Dreams Collection by Thomas Kinkade Studios 2027 Wall Calendar",
+          "rank": 12,
+          "ratingsTotal": 4,
+          "price": 16.54
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Children's Books",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        16,
+        54,
+        56,
+        121,
+        228,
+        242,
+        246,
+        446,
+        457,
+        484,
+        506,
+        607
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0.99,
+        17.97,
+        18.99,
+        19.9,
+        19.95,
+        19.95,
+        19.97,
+        19.97,
+        19.97,
+        19.97,
+        19.99,
+        19.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H2B1DH6L",
+          "title": "100,000 Whys for Kids: A Full-Color Visual Encyclopedia of Big Questions, Clear Answers, Science, Space, Animals, Nature",
+          "rank": 1,
+          "ratingsTotal": 457,
+          "price": 19.97
+        },
+        {
+          "asin": "B0H49Q8PK9",
+          "title": "Amazing Answers for Kids With 100,000 Whys: The Big Book of Answers to Questions Curious Kids Ask About Science, Space, ",
+          "rank": 2,
+          "ratingsTotal": 607,
+          "price": 19.97
+        },
+        {
+          "asin": "B0GY862XJM",
+          "title": "100,000 Whys - The Big Journey for Curious Kids: An Extraordinary Collection of Big Questions, Fascinating Answers, and ",
+          "rank": 3,
+          "ratingsTotal": 484,
+          "price": 19.97
+        },
+        {
+          "asin": "B0H3H1KGCJ",
+          "title": "100,000 Whys for Kids - The Only Why Book You'll Ever Need: Real Answers to the Big Questions Kids Ask About Science, Sp",
+          "rank": 4,
+          "ratingsTotal": 446,
+          "price": 17.97
+        },
+        {
+          "asin": "B0H4X9Y4KZ",
+          "title": "The Big Book of 100000 Whys for Toddlers: My First Encyclopedia of Why — 1000 Real Answers to Your Child's Biggest Quest",
+          "rank": 5,
+          "ratingsTotal": 16,
+          "price": 19.95
+        },
+        {
+          "asin": "B0GZKRW8JH",
+          "title": "The Secret Jobs of Backyard Creatures For Kids Aged 6 to 10: An Illustrated Fun Animal Encyclopedia To Learn About Natur",
+          "rank": 6,
+          "ratingsTotal": 242,
+          "price": 19.95
+        },
+        {
+          "asin": "B0HCWBX5BV",
+          "title": "Of All the Sniffs I Love the Most by Tucker Budzyn",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 19.99
+        },
+        {
+          "asin": "B0H7L97KQK",
+          "title": "The Chronicles of Narnia: The Complete 7-book collection",
+          "rank": 8,
+          "ratingsTotal": 228,
+          "price": 0.99
+        },
+        {
+          "asin": "B0H2X16SGR",
+          "title": "Wait... Is That a Unicorn?: A Hilarious Children's Book About Imagination, Funny Animals, and Silly Bedtime Stories for ",
+          "rank": 9,
+          "ratingsTotal": 121,
+          "price": 0
+        },
+        {
+          "asin": "B0H8YWBWWM",
+          "title": "100,000 Whys for Kids — Big Questions, Clear Answers & Mind-Blowing Facts: The Full-Color Illustrated Encyclopedia of Sc",
+          "rank": 10,
+          "ratingsTotal": 56,
+          "price": 19.97
+        },
+        {
+          "asin": "B0GKX9PC3R",
+          "title": "A Ninja is Stuck in Your Book: (An Illustrated Adventure)",
+          "rank": 11,
+          "ratingsTotal": 506,
+          "price": 0
+        },
+        {
+          "asin": "B0H9JTRF1C",
+          "title": "Awesome Answers for Kids with 100,000 Whys: The Fully Illustrated Big Book of Questions and Amazing Answers for Curious ",
+          "rank": 12,
+          "ratingsTotal": 246,
+          "price": 19.9
+        }
+      ]
+    },
+    {
+      "id": "12290",
+      "name": "Christian Books & Bibles",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        5,
+        6,
+        6,
+        14,
+        18,
+        51,
+        66,
+        184,
+        186,
+        270,
+        289,
+        390,
+        931,
+        20496
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9.64,
+        9.99,
+        14.98,
+        16.95,
+        18.99,
+        18.99,
+        21.48,
+        29.99,
+        49.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H9ND16XC",
+          "title": "Match Made in Mayhem: A Grit & Grace Mystery, Book One (Grit & Grace Mysteries 1)",
+          "rank": 1,
+          "ratingsTotal": 5,
+          "price": 0
+        },
+        {
+          "asin": "B0H83YVYN3",
+          "title": "7 Days to a Better Prayer Life: A Practical Bible Study to Pray With Understanding, Faith, Confidence, and Results",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HCMKHRHB",
+          "title": "The Faith Made Complete Ethiopian Bible in English, Full 88 Books Ethiopian Orthodox Canon",
+          "rank": 3,
+          "ratingsTotal": 18,
+          "price": 49.99
+        },
+        {
+          "asin": "0060652934",
+          "title": "The Screwtape Letters",
+          "rank": 4,
+          "ratingsTotal": 20496,
+          "price": 9.64
+        },
+        {
+          "asin": "1636416152",
+          "title": "The Altar of Pergamon: The Mystery of the Dark Angel and the Future of the World",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 21.48
+        },
+        {
+          "asin": "B0H6Y2SF3H",
+          "title": "Something's Missing in Sunfall Key: A Beachy Match Making Romance (Sunfall Key - A Warm Beach Series Book 2)",
+          "rank": 6,
+          "ratingsTotal": 51,
+          "price": 0
+        },
+        {
+          "asin": "B0GL4W27PX",
+          "title": "Dust to Dust: Aging Wisely in an Anti-Aging World",
+          "rank": 7,
+          "ratingsTotal": 186,
+          "price": 14.98
+        },
+        {
+          "asin": "B0HC1XZXTW",
+          "title": "Opening the Gates of Heaven: Walk in the Favor of Answered Prayer and Blessing",
+          "rank": 8,
+          "ratingsTotal": 270,
+          "price": 0
+        },
+        {
+          "asin": "B0H8Z9C5BW",
+          "title": "A Coffee with God: 110 Truths to Help You Find Yourself Again, One Coffee at a Time.",
+          "rank": 9,
+          "ratingsTotal": 66,
+          "price": 18.99
+        },
+        {
+          "asin": "B0H7WKY77X",
+          "title": "The Stranger Gott Sent: A Heartwarming Amish Romance",
+          "rank": 10,
+          "ratingsTotal": 390,
+          "price": 0
+        },
+        {
+          "asin": "B0H8B97QXZ",
+          "title": "Is God Bigger Than a Dragon? | Scripture Picture Book by David Henrie & Maria Henrie, Timeless & Nostalgic Illustrations",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 18.99
+        },
+        {
+          "asin": "B0H1ZZFRGL",
+          "title": "Race Against Time",
+          "rank": 12,
+          "ratingsTotal": 931,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "4366",
+      "name": "Comics & Graphic Novels",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        15
+      ],
+      "prices": [
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        5.99,
+        9.99,
+        9.99,
+        27.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HG2TKPHG",
+          "title": "X-Men United (2026-) #9",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDH6MCM7",
+          "title": "Absolute Wonder Woman (2024-) #23",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDH4626Q",
+          "title": "Batman (2025-) #13",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDHCZR5L",
+          "title": "Absolute Superman (2024-) #23",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0H8F5TXCK",
+          "title": "Marvel Tarot Deck and Guidebook",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 27.99
+        },
+        {
+          "asin": "B0HDGGX34F",
+          "title": "Superman (2023-) #41",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDGQVRJC",
+          "title": "Justice League Unlimited (2024-) #22",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0H9ZFBRJJ",
+          "title": "Slow Life In Another World (I Wish!) (Manga) Vol. 10",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HF5988P6",
+          "title": "Sonic the Hedgehog (2018-) #90",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDH78H3T",
+          "title": "Detective Comics (2016-) #1112 (Detective Comics (2011-2016))",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0H4WZRVJB",
+          "title": "Sonic the Hedgehog (2018-) #89",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HFB8T738",
+          "title": "Sonic the Hedgehog: 35th Anniversary Special—The Deluxe Edition (Sonic The Hedgehog (2018-))",
+          "rank": 12,
+          "ratingsTotal": 15,
+          "price": 9.99
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Computers & Technology",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        3,
+        13
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3.99,
+        7.99,
+        12.99,
+        13.75,
+        18.99,
+        28.5,
+        32.88,
+        51.25
+      ],
+      "sample": [
+        {
+          "asin": "B0HDD8TX6H",
+          "title": "Truth and Reconciliation: The Great Journey of the Creators of Halo",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 28.5
+        },
+        {
+          "asin": "B0HBZ87D46",
+          "title": "Will AIs Take All Our Jobs and End Human History—or Not? Well, It's Complicated... (Stephen Wolfram Writings ePub Series",
+          "rank": 2,
+          "ratingsTotal": 3,
+          "price": 3.99
+        },
+        {
+          "asin": "B0HG4VGKY6",
+          "title": "CLAUDE FOR STUDENTS: Study in Less Time. Learn for Real. (Claude AI in Practice)",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG3SZLSZ",
+          "title": "CLAUDE FOR SOCIAL MEDIA & CONTENT CREATORS: A month of strategic content in one afternoon (Claude AI in Practice)",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "0764365029",
+          "title": "Pinball: A Quest for Mastery",
+          "rank": 5,
+          "ratingsTotal": 13,
+          "price": 32.88
+        },
+        {
+          "asin": "B0HFQ99G89",
+          "title": "AI, Innovation, and Beyond: A Report from STS forum 2025 (Business and Management)",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG69BNM7",
+          "title": "IY Home Improvement for Beginners: A Practical Step-by-Step Guide to Painting, Repairs, Basic Plumbing, Electrical Proje",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HCTDD5NM",
+          "title": "THE DAEMON ARCHITECT: A Practical Guide to Goetic Systems Engineering & Bare-Metal Ritual DevOps (The Undefined Behavior",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0GQFQZSH7",
+          "title": "Mapping Experiences: A Complete Guide to Activating Customer-Centered Collaboration",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 51.25
+        },
+        {
+          "asin": "B0HG2VMHWP",
+          "title": "ChaGPT for Lawyers: A Practical Guide to Deploying Your AI Lawyer",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG3LFTFX",
+          "title": "The Quantum Threshold: Where Quantum Computing Actually Stands, What One More Year Buys, and What It Will—and Will Not—T",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG5YG56Z",
+          "title": "Making It Clear: 156 essays on business, management, leadership, human nature, projects, information technology, and lif",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 12.99
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Cookbooks, Food & Wine",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        3,
+        5,
+        6,
+        7,
+        11,
+        14,
+        15,
+        35,
+        48,
+        53,
+        156
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        12.99,
+        12.99,
+        15.99,
+        18.95,
+        18.95
+      ],
+      "sample": [
+        {
+          "asin": "B0HBRK1M7Z",
+          "title": "Cheap and Wicked Good! 4-Ingredient Budget-Friendly Recipes for Quick and Easy Everyday Meals (Simple and Easy Budget Me",
+          "rank": 1,
+          "ratingsTotal": 6,
+          "price": 0
+        },
+        {
+          "asin": "B0HBFRMP46",
+          "title": "The Lazy High Protein Cookbook: 100 Quick & Easy High-Protein Recipes for Busy People: Simple Meals for Weight Loss, Mus",
+          "rank": 2,
+          "ratingsTotal": 3,
+          "price": 0
+        },
+        {
+          "asin": "B0H8592M34",
+          "title": "High-Protein Cottage Cheese Cookbook: From Vintage to Viral - 100+ Easy Recipes That Turn the Internet’s Favorite Ingred",
+          "rank": 3,
+          "ratingsTotal": 156,
+          "price": 18.95
+        },
+        {
+          "asin": "B0HG6MYK4R",
+          "title": "The Dandelion Pantry: A Practical Guide to Dandelions, Everyday Herbs, Honey, Recipes, Preserving, and Simple Wellness",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H8PZYFFD",
+          "title": "GLP-1 High-Protein Diet Cookbook for Weight Loss: The How-You-Feel Recipe Guide for Nausea Relief, Muscle Support, and B",
+          "rank": 5,
+          "ratingsTotal": 7,
+          "price": 0
+        },
+        {
+          "asin": "B0H9M28JNP",
+          "title": "Mason Jar Salad Cookbook: 101 Make-Ahead Recipes Using the Six-Zone Layering Method, with 20 Homemade Dressings, Storage",
+          "rank": 6,
+          "ratingsTotal": 14,
+          "price": 15.99
+        },
+        {
+          "asin": "B0HG5VSZ4B",
+          "title": "The Complete Bread Machine Cookbook: Easy Recipes for Perfect Homemade Bread",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG4R9YL9",
+          "title": "Sourdough Discard Baking Cookbook: Easy Zero-Waste Recipes for Pancakes, Crackers, Quick Breads, Cookies, and Everyday B",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG5TKV1H",
+          "title": "The Halloween Meals In a Jar Cookbook: Create Festive Layers with Easy Make-Ahead Recipes for a delicious Season (Make a",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H9DH6BDP",
+          "title": "Vintage Breakfast Forgotten Recipes: Classic Breakfast and Brunch Delights That Will Bring Delicious Retro Flavors Back ",
+          "rank": 10,
+          "ratingsTotal": 11,
+          "price": 0
+        },
+        {
+          "asin": "B0H98NNB2H",
+          "title": "The Complete Mediterranean Diet Cookbook: 198 Authentic Recipes for Energy, Balance, and Flavorful Living (The Mediterra",
+          "rank": 11,
+          "ratingsTotal": 5,
+          "price": 0
+        },
+        {
+          "asin": "B0H8891C9K",
+          "title": "Cuisinart Ice Cream Maker Cookbook for Beginners: Foolproof Cuisinart Ice Cream Recipes for Creamy Homemade Ice Cream, G",
+          "rank": 12,
+          "ratingsTotal": 35,
+          "price": 12.99
+        }
+      ]
+    },
+    {
+      "id": "48",
+      "name": "Crafts, Hobbies & Home",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        2,
+        2,
+        2,
+        5,
+        7,
+        12,
+        12,
+        13,
+        13,
+        15,
+        22,
+        50
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        7.99,
+        8,
+        9.43,
+        9.99,
+        9.99,
+        9.99,
+        10.99,
+        11.98,
+        12.98,
+        13.99,
+        16.99,
+        22.14,
+        26,
+        44.14
+      ],
+      "sample": [
+        {
+          "asin": "B0H941JPK9",
+          "title": "My Senior Year: A Memory Journal to Capture & Celebrate the Memories from Your Final Year of High School | Senior Gifts ",
+          "rank": 1,
+          "ratingsTotal": 5,
+          "price": 12.98
+        },
+        {
+          "asin": "B0HB265KXK",
+          "title": "The Amish Home Savings Manual: Simple systems that help a household keep more money",
+          "rank": 2,
+          "ratingsTotal": 13,
+          "price": 44.14
+        },
+        {
+          "asin": "B0HBZP11WZ",
+          "title": "Murder in New Orleans: 50,000 Suspects, 25 Clues, 1 Killer | A Fair-Play Suspect-Elimination Murder Mystery Puzzle Book ",
+          "rank": 3,
+          "ratingsTotal": 22,
+          "price": 13.99
+        },
+        {
+          "asin": "B0HBNNRS9F",
+          "title": "The Senior Year, Class of 2027: A Memory Journal for the Final Year of High School — 100 Prompts, Photo Pages & Friend S",
+          "rank": 4,
+          "ratingsTotal": 2,
+          "price": 11.98
+        },
+        {
+          "asin": "B0H94Z5NVX",
+          "title": "Halloween Crochet Pattern Book For Beginners: Easy Amigurumi & Halloween Decor Patterns to Crochet Candy Corn, Bats, Wit",
+          "rank": 5,
+          "ratingsTotal": 7,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HG6MYK4R",
+          "title": "The Dandelion Pantry: A Practical Guide to Dandelions, Everyday Herbs, Honey, Recipes, Preserving, and Simple Wellness",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HD7XMYWN",
+          "title": "Story Moon Imaginarium: inspiring your creativity, imagination, and storytelling",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 26
+        },
+        {
+          "asin": "B0HFKT61NH",
+          "title": "The Bloomfolk Spookies: Halloween Coloring Book for Adults and Teens Featuring Cozy Characters and Spooky Scenes",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HBN2KY6V",
+          "title": "My Dog Won’t Eat Kibble : Simple Toppers, Homemade Mix-Ins & Feeding Help for Picky Dogs Who Refuse Dry Food",
+          "rank": 9,
+          "ratingsTotal": 15,
+          "price": 0
+        },
+        {
+          "asin": "B0HB5HDTGD",
+          "title": "Cozy Girl Autumn: Bold and Easy Coloring Book for Adults and Teens With Cute Fall Illustrations (Cozy Girl Series)",
+          "rank": 10,
+          "ratingsTotal": 2,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HC2F1CKQ",
+          "title": "Dark Humor Color by Number for Adults: A Funny Adult Coloring Book with Swear Words, Sarcasm, Stress Relief, Bad Mood Th",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 8
+        },
+        {
+          "asin": "B0HBZ1KTL8",
+          "title": "Manifest Your Money: Align Your Mind, Energy, and Your Space to Attract Prosperity (Manifestation Book Collection by Mar",
+          "rank": 12,
+          "ratingsTotal": 2,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "8975347011",
+      "name": "Education & Teaching",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        1,
+        3,
+        4,
+        6,
+        11,
+        14,
+        15,
+        29,
+        70,
+        71,
+        73,
+        84,
+        91,
+        310,
+        418
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0.99,
+        7.99,
+        7.99,
+        12.99,
+        13.95,
+        14.95,
+        14.99,
+        15,
+        15.99,
+        17.95,
+        19.99,
+        27.33,
+        29.91,
+        29.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H6KGBG6G",
+          "title": "English for the Fun of It: A Playful Tour Through the Quirks and Oddities of Our Living Language",
+          "rank": 1,
+          "ratingsTotal": 11,
+          "price": 13.95
+        },
+        {
+          "asin": "B0H93KBQ6R",
+          "title": "Vocabulary Builder Workbook For Teens In Grades 8, 9 & 10: Boost Reading, Writing & Test Scores With 150+ Must-Know Word",
+          "rank": 2,
+          "ratingsTotal": 91,
+          "price": 15.99
+        },
+        {
+          "asin": "B0H9GB1HL5",
+          "title": "My 12th Grade Guided Journal, My Story: The Ultimate Senior Year Memory Book with Prompts to Capture Memories, Celebrate",
+          "rank": 3,
+          "ratingsTotal": 73,
+          "price": 14.95
+        },
+        {
+          "asin": "B0H9LK3MZK",
+          "title": "PSAT/NMSQT Test Prep: The Complete and Exam-Aligned Prep Book to Ace the Digital PSAT — Full-Length Practice Tests, Step",
+          "rank": 4,
+          "ratingsTotal": 310,
+          "price": 27.33
+        },
+        {
+          "asin": "B0H76CXLFM",
+          "title": "DSM-5-TR Visual Diagnosis Guide: Complete Color-Coded Case Scenarios, Differential Charts & Decision Trees to Master Men",
+          "rank": 5,
+          "ratingsTotal": 71,
+          "price": 29.91
+        },
+        {
+          "asin": "B0HBN76853",
+          "title": "AI for Beginners: [3 in 1]: Learn AI Basics, Master Prompt Engineering, and Discover How to Make Money with AI - NO CODI",
+          "rank": 6,
+          "ratingsTotal": 29,
+          "price": 0
+        },
+        {
+          "asin": "B0H85TP8LZ",
+          "title": "Mastering High School Reading Comprehension Workbook Grades 9–12: 1,000 Practice Questions with Literary & Informational",
+          "rank": 7,
+          "ratingsTotal": 14,
+          "price": 12.99
+        },
+        {
+          "asin": "B0H8FJCZK6",
+          "title": "The Canon of Literacy: A Three Sciences Framework",
+          "rank": 8,
+          "ratingsTotal": 6,
+          "price": 29.99
+        },
+        {
+          "asin": "B0H89VT12T",
+          "title": "Slow AI: Knowing When to Use AI and When to Leave It Alone",
+          "rank": 9,
+          "ratingsTotal": 70,
+          "price": 0
+        },
+        {
+          "asin": "B0HBNX9N4R",
+          "title": "Relaxed Homeschooling for Your Neurodivergent Child",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H9GH7LR6",
+          "title": "Superb Sentences: A Step-By-Step Writing Guide (Homeschool Writing Workbooks)",
+          "rank": 11,
+          "ratingsTotal": 4,
+          "price": 14.99
+        },
+        {
+          "asin": "B0H7QDG3DF",
+          "title": "Middle School & High School Consumer Math: Real Math. Real Life. Your Future",
+          "rank": 12,
+          "ratingsTotal": 1,
+          "price": 15
+        }
+      ]
+    },
+    {
+      "id": "173507",
+      "name": "Engineering & Transportation",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        1,
+        1,
+        1,
+        2,
+        6,
+        6,
+        8,
+        8,
+        10,
+        11,
+        16,
+        17,
+        26,
+        36,
+        45
+      ],
+      "prices": [
+        0,
+        0,
+        0.51,
+        4.99,
+        5.99,
+        8.99,
+        9.99,
+        13.99,
+        16.99,
+        16.99,
+        16.99,
+        18.99,
+        23.97,
+        26,
+        39.97,
+        59.62,
+        61.94,
+        119
+      ],
+      "sample": [
+        {
+          "asin": "B0H65WZZJ4",
+          "title": "HVAC Technician’s Field Diagnostics Mastery: Advanced Diagnostics, Installation & Real-World Troubleshooting for Residen",
+          "rank": 1,
+          "ratingsTotal": 36,
+          "price": 23.97
+        },
+        {
+          "asin": "B0GZKCWZ5V",
+          "title": "Replacement: The AI Revolution Isn’t Coming for Your Job. It Already Took It.",
+          "rank": 2,
+          "ratingsTotal": 45,
+          "price": 4.99
+        },
+        {
+          "asin": "B0H4D95JBZ",
+          "title": "Texas Driver Handbook: Revised January 2026 - Original and Unchanged (Color Print)",
+          "rank": 3,
+          "ratingsTotal": 6,
+          "price": 13.99
+        },
+        {
+          "asin": "B0HBMLG219",
+          "title": "Humanoids: Caring for the Ones Who Cared for Us: Adopting a Humanoid Robot, Adapting As a Family",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 8.99
+        },
+        {
+          "asin": "B0H8XVZRWC",
+          "title": "The Black Book. The Ultimate Guide to Alternative Inventions | Invention Encyclopedia with Over 250 Pages of Parallel Wo",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 119
+        },
+        {
+          "asin": "B0H6G5L8V1",
+          "title": "THE ESSENTIAL DECK BUILDING BIBLE: A Step-by-Step Guide to Designing, Framing, and Crafting Your Custom Outdoor Space",
+          "rank": 6,
+          "ratingsTotal": 6,
+          "price": 16.99
+        },
+        {
+          "asin": "B0H85MPN9P",
+          "title": "DuPont REGISTRY Autos August 2026 | Aug 2026 Issue, Automotive",
+          "rank": 7,
+          "ratingsTotal": 1,
+          "price": 16.99
+        },
+        {
+          "asin": "B0HBXMTSR4",
+          "title": "The Lost Skills of Our Forefathers: Rediscover The Timeless Skills That Modern Life Left Behind and Learn to Be More Sel",
+          "rank": 8,
+          "ratingsTotal": 16,
+          "price": 0
+        },
+        {
+          "asin": "B0H1DSJCH9",
+          "title": "Manmade: Saint Anthony's Guide to Surviving the AI Apocalypse",
+          "rank": 9,
+          "ratingsTotal": 17,
+          "price": 26
+        },
+        {
+          "asin": "B0H98HMVFC",
+          "title": "Forgotten Survival Skills: The Complete Guide to Self-Sufficiency, Food Preservation, and Off-Grid Living Our Grandparen",
+          "rank": 10,
+          "ratingsTotal": 1,
+          "price": 0.51
+        },
+        {
+          "asin": "B0H8N3Q9H6",
+          "title": "Industrial Electrical Schematics for Beginners: Learn to Read Ladder Diagrams, Motor Control Circuits, Electrical Symbol",
+          "rank": 11,
+          "ratingsTotal": 10,
+          "price": 18.99
+        },
+        {
+          "asin": "B0H9TZKYQJ",
+          "title": "Homeowner's Survival Guide",
+          "rank": 12,
+          "ratingsTotal": 1,
+          "price": 39.97
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Health, Fitness & Dieting",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        2,
+        5,
+        11,
+        23,
+        36,
+        36,
+        57,
+        83,
+        112,
+        119,
+        156,
+        4805
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        13.88,
+        16.99,
+        18.19,
+        18.95,
+        18.95,
+        19.99,
+        21.9,
+        24.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H92LV8N7",
+          "title": "The Traps Within Medicare - 2027 Perennial Edition: How to Spot Them, How to Avoid Them, and How to Optimize Your Health",
+          "rank": 1,
+          "ratingsTotal": 112,
+          "price": 0
+        },
+        {
+          "asin": "B0HBCN72P7",
+          "title": "PELVIC ORGAN PROLAPSE EXERCISES: Strengthen Your Pelvic Floor, Improve Pelvic Support, and Restore Daily Comfort with a ",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H7LGYZDX",
+          "title": "Dosis diaria de terapia para volver a ti (Spanish Edition)",
+          "rank": 3,
+          "ratingsTotal": 23,
+          "price": 13.88
+        },
+        {
+          "asin": "B0H7XGBP6M",
+          "title": "Chair Tai Chi Made Easy for Seniors Over 60: Large Print Step-by-Step Exercises to Improve Balance, Increase Mobility, a",
+          "rank": 4,
+          "ratingsTotal": 36,
+          "price": 16.99
+        },
+        {
+          "asin": "B0H8W7KC3K",
+          "title": "Chair Tai Chi Made Easy for Senior Women: Lose Weight, Slim Down & Tone Up with Gentle 10-Minute Seated Workouts to Feel",
+          "rank": 5,
+          "ratingsTotal": 83,
+          "price": 18.95
+        },
+        {
+          "asin": "B0HBWLP8QX",
+          "title": "Retired and Still Dangerous: Senior Moments, Hilarious Jokes and Quotes for the Magnificently Mature",
+          "rank": 6,
+          "ratingsTotal": 2,
+          "price": 0
+        },
+        {
+          "asin": "B0H9KFBM21",
+          "title": "The Parent You Aspire to Be: Your Child Isn't the Problem",
+          "rank": 7,
+          "ratingsTotal": 11,
+          "price": 0
+        },
+        {
+          "asin": "B0H77XMM8L",
+          "title": "The Book of Wisdom - Complete Edition: Ancient Truths, Sacred Symbols, and Spiritual Teachings to Awaken Your Mind, Ener",
+          "rank": 8,
+          "ratingsTotal": 119,
+          "price": 24.99
+        },
+        {
+          "asin": "B0HDCM9V8X",
+          "title": "Awakening to Human Nature: Beneath Every Action is Human Nature",
+          "rank": 9,
+          "ratingsTotal": 5,
+          "price": 21.9
+        },
+        {
+          "asin": "B0H9G3W9TD",
+          "title": "Fear of Death: How to Stop Fearing Death Without Dying First. Second Edition",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H7TFDSTD",
+          "title": "Overcoming Anxious Attachment with an Avoidant Partner: How to Break the Push-Pull Cycle, Stop Overthinking, and Finally",
+          "rank": 11,
+          "ratingsTotal": 36,
+          "price": 0
+        },
+        {
+          "asin": "B0HG5QLX6G",
+          "title": "Ancient Natural Medicine: A Brazilian & Indigenous Heritage: Traditional Remedies, Botanical Profiles, and Modern U.S. M",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "History",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        3,
+        4,
+        7,
+        9,
+        14,
+        19,
+        86,
+        105,
+        112,
+        445,
+        495,
+        745,
+        1157
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        4.99,
+        14.99,
+        19.35,
+        22.75,
+        24.5,
+        26.99,
+        29.16,
+        29.95,
+        31.38,
+        35.91,
+        35.91,
+        39.99
+      ],
+      "sample": [
+        {
+          "asin": "B0GZ6YK1L6",
+          "title": "Swan Song: Diana, my sister",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 24.5
+        },
+        {
+          "asin": "B0GTQMJ53N",
+          "title": "Communion: Finding My Way Back to Faith",
+          "rank": 2,
+          "ratingsTotal": 1157,
+          "price": 22.75
+        },
+        {
+          "asin": "1631440888",
+          "title": "Revolution: The Birth of the Greatest Nation in the History of the World",
+          "rank": 3,
+          "ratingsTotal": 745,
+          "price": 35.91
+        },
+        {
+          "asin": "B0H1SVHQX7",
+          "title": "ROMAN HISTORY: THE HIDDEN FACE OF EMPIRE: A Vata Journey Into THE HUMAN COST BEHIND ROME's GLORY",
+          "rank": 4,
+          "ratingsTotal": 4,
+          "price": 0
+        },
+        {
+          "asin": "1324131438",
+          "title": "This Is The Plan: How to End America's Meltdown and Save Democracy",
+          "rank": 5,
+          "ratingsTotal": 105,
+          "price": 29.16
+        },
+        {
+          "asin": "1324098422",
+          "title": "The Rise and Fall of the Artificial State",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 26.99
+        },
+        {
+          "asin": "B0GV5RDYTK",
+          "title": "22 Cells in Nuremberg: In the Nazi Mind",
+          "rank": 7,
+          "ratingsTotal": 495,
+          "price": 19.35
+        },
+        {
+          "asin": "B0H6PCB8YY",
+          "title": "Kin: Childhood, Parenting, and the Making of Civilization",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "0197848370",
+          "title": "1942: Crux of War",
+          "rank": 9,
+          "ratingsTotal": 86,
+          "price": 35.91
+        },
+        {
+          "asin": "B0H8KDJBMY",
+          "title": "Women Are Not The Villains : Redemption. Purpose. God's Original Design. (Rethinking Scriptures Book 1)",
+          "rank": 10,
+          "ratingsTotal": 7,
+          "price": 0
+        },
+        {
+          "asin": "1324074442",
+          "title": "Country of Lords: Neo-Aristocrats, Social Darwinists, Tech Utopians, and the Long Fight against Equality in America",
+          "rank": 11,
+          "ratingsTotal": 19,
+          "price": 31.38
+        },
+        {
+          "asin": "B0GT6JYQ52",
+          "title": "The Leopard and the Moon: A Journey in Dolpo, Nepal",
+          "rank": 12,
+          "ratingsTotal": 14,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "86",
+      "name": "Humor & Entertainment",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        2,
+        7,
+        11,
+        13,
+        16,
+        22,
+        24,
+        45,
+        73,
+        75,
+        933,
+        1166
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        7.99,
+        13.95,
+        13.99,
+        14.99,
+        14.99,
+        15.97,
+        16.97,
+        27.99,
+        32,
+        32.5
+      ],
+      "sample": [
+        {
+          "asin": "B0H75JS9BG",
+          "title": "Betrayed By The Hero's Party For Having A 'Useless' Class, Now Their Legendary Loot Is Falling Apart Book 1: An Overpowe",
+          "rank": 1,
+          "ratingsTotal": 933,
+          "price": 0
+        },
+        {
+          "asin": "B0H6839RDW",
+          "title": "None of This Is Made Up: 1,010 Strange and Documented Facts About the World You Live In",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H6KGBG6G",
+          "title": "English for the Fun of It: A Playful Tour Through the Quirks and Oddities of Our Living Language",
+          "rank": 3,
+          "ratingsTotal": 11,
+          "price": 13.95
+        },
+        {
+          "asin": "B0H99P249X",
+          "title": "The Killer Is in This Book: 51,200 Suspects. 17 Clues. No Luck Required. An Almost Impossible Murder Mystery Logic Puzzl",
+          "rank": 4,
+          "ratingsTotal": 45,
+          "price": 16.97
+        },
+        {
+          "asin": "B0H7FCXP4V",
+          "title": "The Killer Never Checked In: Find the Killer Among 3000 Guest Records & 24 Clues -- Murder Mystery Crime Puzzle Book for",
+          "rank": 5,
+          "ratingsTotal": 7,
+          "price": 7.99
+        },
+        {
+          "asin": "B0H4RYLS3W",
+          "title": "Blind Date: A Billionare/Teacher Romance",
+          "rank": 6,
+          "ratingsTotal": 1166,
+          "price": 0
+        },
+        {
+          "asin": "B0H7R2YK98",
+          "title": "Providence Cards Deck and Guidebook: From the World of Rachel Gillig's One Dark Window",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 32
+        },
+        {
+          "asin": "1538787172",
+          "title": "WTF America?!: The Way Out of This Hell and Back to Democracy",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 32.5
+        },
+        {
+          "asin": "B0H7BN7TMR",
+          "title": "The Train Killer: A Gripping 35,000-Suspect Murder Mystery Elimination Game (The Killer Isn't Who You Think) (The Train ",
+          "rank": 9,
+          "ratingsTotal": 16,
+          "price": 15.97
+        },
+        {
+          "asin": "B0HBKW8HH6",
+          "title": "The Killer Bought A Ticket: The Ultimate Murder Mystery Puzzle Book: An Interactive Whodunit for Armchair Detectives: El",
+          "rank": 10,
+          "ratingsTotal": 13,
+          "price": 14.99
+        },
+        {
+          "asin": "B0HBWLP8QX",
+          "title": "Retired and Still Dangerous: Senior Moments, Hilarious Jokes and Quotes for the Magnificently Mature",
+          "rank": 11,
+          "ratingsTotal": 2,
+          "price": 0
+        },
+        {
+          "asin": "B0H8FD3ZFR",
+          "title": "Murder, She Searched: Volume 1: 100 Cozy Murder Mystery Word Search Cases to Solve",
+          "rank": 12,
+          "ratingsTotal": 24,
+          "price": 14.99
+        }
+      ]
+    },
+    {
+      "id": "10777",
+      "name": "Law",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        6,
+        12,
+        15,
+        24,
+        35,
+        117,
+        264,
+        312,
+        403,
+        1144
+      ],
+      "prices": [
+        12.97,
+        12.99,
+        12.99,
+        13.99,
+        21.7,
+        22.95,
+        22.95,
+        22.97,
+        23.29,
+        24.9,
+        25.18,
+        25.24,
+        25.95,
+        28.97,
+        47.76,
+        72.54
+      ],
+      "sample": [
+        {
+          "asin": "B0H8XV92DQ",
+          "title": "El Único Libro De Living Trusts En Español: Cómo Crear Tu Propio Living Trust, Evitar Probate Y Proteger A Tus Herederos",
+          "rank": 1,
+          "ratingsTotal": 117,
+          "price": 22.97
+        },
+        {
+          "asin": "B0H9LXFKKB",
+          "title": "The Bulletproof Charting Bible for Nurses & NPs: The Complete and Easy-to-Follow Guide to Lawyer-Ready Documentation - P",
+          "rank": 2,
+          "ratingsTotal": 264,
+          "price": 25.24
+        },
+        {
+          "asin": "B0H8TM8M83",
+          "title": "Rules and Laws for Civil Actions: 2027",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 12.97
+        },
+        {
+          "asin": "B0G8Y2XN1X",
+          "title": "Israel on Trial: Examining the History, the Evidence, and the Law",
+          "rank": 4,
+          "ratingsTotal": 312,
+          "price": 25.18
+        },
+        {
+          "asin": "B0H2RZV8V7",
+          "title": "THE SECURE FINAL AFFAIRS ORGANIZER: A Guided Workbook for My Spouse and Family",
+          "rank": 5,
+          "ratingsTotal": 35,
+          "price": 12.99
+        },
+        {
+          "asin": "B0H888G1S7",
+          "title": "THE COUPLES FINAL AFFAIRS ORGANIZER: A Practical Workbook for Couples to Organize Important Information, Documents, and ",
+          "rank": 6,
+          "ratingsTotal": 24,
+          "price": 12.99
+        },
+        {
+          "asin": "B0H4Q7NWSN",
+          "title": "US Citizenship Test Study Guide: What You Need to Face the Naturalization Exam Free from Doubt | Includes Comprehensive ",
+          "rank": 7,
+          "ratingsTotal": 1144,
+          "price": 28.97
+        },
+        {
+          "asin": "B0H734368Y",
+          "title": "Business Associations 2026 Statutory Supplement",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 25.95
+        },
+        {
+          "asin": "B0H9ZQQH5T",
+          "title": "Copyright Law: Cases and Materials (v8.0)",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 21.7
+        },
+        {
+          "asin": "B0H4D95JBZ",
+          "title": "Texas Driver Handbook: Revised January 2026 - Original and Unchanged (Color Print)",
+          "rank": 10,
+          "ratingsTotal": 6,
+          "price": 13.99
+        },
+        {
+          "asin": "196662977X",
+          "title": "Discovering the Club: Piecing Together the Puzzling Network of Parental Pimping, Ritualistic Abuse, and Sex Trafficking",
+          "rank": 11,
+          "ratingsTotal": 12,
+          "price": 22.95
+        },
+        {
+          "asin": "B0H6X24P7N",
+          "title": "Intellectual Property Law: Cases & Materials",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 47.76
+        }
+      ]
+    },
+    {
+      "id": "301889",
+      "name": "Lesbian, Gay, Bisexual & Transgender Books",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        2,
+        30,
+        36,
+        41,
+        624
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2.99,
+        4.99,
+        4.99,
+        4.99,
+        4.99,
+        5.99,
+        5.99,
+        5.99,
+        5.99,
+        6.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HB8ZRK7W",
+          "title": "Tender Ties",
+          "rank": 1,
+          "ratingsTotal": 41,
+          "price": 0
+        },
+        {
+          "asin": "B0HCXH2CTS",
+          "title": "Wanted: Rogues and Bards (E.V.I.L. Book 1)",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 6.99
+        },
+        {
+          "asin": "B0H9TSHVM1",
+          "title": "The Resilience Of Stars",
+          "rank": 3,
+          "ratingsTotal": 624,
+          "price": 0
+        },
+        {
+          "asin": "B0HBRSCRFR",
+          "title": "How to Ghost an Angel: An MM Paranormal Rock Star Romance",
+          "rank": 4,
+          "ratingsTotal": 2,
+          "price": 0
+        },
+        {
+          "asin": "B0HDJC8HF8",
+          "title": "Tending the Ache (Rengara Book 2)",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 2.99
+        },
+        {
+          "asin": "B0HFKWQ42W",
+          "title": "Holding Gabriel (Made Marian Legacy Book 5)",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 5.99
+        },
+        {
+          "asin": "B0HFTQ18YR",
+          "title": "Dead O'Clock (Cold Case Psychic Book 46)",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HBSVD7WD",
+          "title": "Major Penalty: An Enemies to Lovers MM Hockey Romance (The Power Play Series Book 8)",
+          "rank": 8,
+          "ratingsTotal": 36,
+          "price": 0
+        },
+        {
+          "asin": "B0HDPPVW8M",
+          "title": "Jealous Guy",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 5.99
+        },
+        {
+          "asin": "B0HBLW2P9M",
+          "title": "Preacher [Howlers MC 1] (The Lynn Hagen ManLove Collection)",
+          "rank": 10,
+          "ratingsTotal": 30,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDR2NRQP",
+          "title": "Pieces of You (The Mclean Tales Book 2)",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HDK7W2W6",
+          "title": "The Project Manager's Guide to Overworked Associates (The Spellbound Series Book 2)",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 5.99
+        }
+      ]
+    },
+    {
+      "id": "16568978011",
+      "name": "Libros en español",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        3,
+        3,
+        8,
+        43,
+        1066
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0.99,
+        2.99,
+        2.99,
+        4.66,
+        4.99,
+        9.99,
+        12.21,
+        12.99,
+        14.99,
+        18.75,
+        19.99,
+        25
+      ],
+      "sample": [
+        {
+          "asin": "B0HG4F157W",
+          "title": "Historias de Alto Impacto (Spanish Edition)",
+          "rank": 1,
+          "ratingsTotal": 3,
+          "price": 2.99
+        },
+        {
+          "asin": "B0HD854RVN",
+          "title": "Narcocracia: El Grande revela cómo los cárteles conquistaron México",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H9RXPT8B",
+          "title": "El viaje del alma: Los misterios de la muerte y el mundo venidero (Spanish Edition)",
+          "rank": 3,
+          "ratingsTotal": 8,
+          "price": 18.75
+        },
+        {
+          "asin": "B0HFLZ8K16",
+          "title": "A traves de los ojos de mi madre: Un legado de amor (Spanish Edition)",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 0.99
+        },
+        {
+          "asin": "B0H9C6JV6T",
+          "title": "Cómo decirlo: palabras que marcan la diferencia",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HG3GGTF1",
+          "title": "Corazones Aislados (Spanish Edition)",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HC6SG6YV",
+          "title": "AMOXICILINA COMPRENDIENDO (Spanish Edition)",
+          "rank": 7,
+          "ratingsTotal": 1,
+          "price": 25
+        },
+        {
+          "asin": "B0HBXQ94TZ",
+          "title": "Un dulce veneno (Wharton & McEntrie nº 6) (Spanish Edition)",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 4.66
+        },
+        {
+          "asin": "B0H9HV92JF",
+          "title": "Cuando descubras la verdad (Spanish Edition)",
+          "rank": 9,
+          "ratingsTotal": 43,
+          "price": 0
+        },
+        {
+          "asin": "B0HB5YQCWY",
+          "title": "El día de la Trilla (Empíreo) (Planeta Internacional) (Spanish Edition)",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 14.99
+        },
+        {
+          "asin": "B0HC4G19GD",
+          "title": "Entender Bien El Dinero: Guía Práctica para Ahorrar, Invertir y Hacer Crecer tu Dinero (Spanish Edition)",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 19.99
+        },
+        {
+          "asin": "B0H96FB8WV",
+          "title": "Tu Mente Vale Más Que Un Millón: Desarrolla la mentalidad que transforma la forma en que piensas, decides y construyes t",
+          "rank": 12,
+          "ratingsTotal": 3,
+          "price": 9.99
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "Literature & Fiction",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        4,
+        77,
+        260,
+        336,
+        341,
+        352,
+        537,
+        662,
+        1130,
+        1641,
+        2190,
+        2197,
+        2381,
+        3884,
+        8996,
+        22141
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H9ZBC6CV",
+          "title": "Just for the Plot",
+          "rank": 1,
+          "ratingsTotal": 8996,
+          "price": 0
+        },
+        {
+          "asin": "B0HB6N96BN",
+          "title": "Cruel Lies (Akov Bratva Book 1)",
+          "rank": 2,
+          "ratingsTotal": 2197,
+          "price": 0
+        },
+        {
+          "asin": "B0HB4KTPHL",
+          "title": "Our Nanny is a Vampire",
+          "rank": 3,
+          "ratingsTotal": 3884,
+          "price": 0
+        },
+        {
+          "asin": "B0HBD26QV8",
+          "title": "Cruel Kiss (Akov Bratva Book 2)",
+          "rank": 4,
+          "ratingsTotal": 2190,
+          "price": 0
+        },
+        {
+          "asin": "B0H8MCV1MZ",
+          "title": "Single Dad Problems: A Contemporary Reverse Harem Romance",
+          "rank": 5,
+          "ratingsTotal": 2381,
+          "price": 0
+        },
+        {
+          "asin": "B0H96QSYYP",
+          "title": "Elsecaller and King Lopen the First of Alethkar (The Stormlight Archive)",
+          "rank": 6,
+          "ratingsTotal": 260,
+          "price": 2.99
+        },
+        {
+          "asin": "B0H9X9YP4S",
+          "title": "A Song for Another Woman: A Grovel Second Chance Romance (Groveling, Angst & Second Chances Book 3)",
+          "rank": 7,
+          "ratingsTotal": 1130,
+          "price": 0
+        },
+        {
+          "asin": "B0H99TG1S9",
+          "title": "The Other Woman in His Kingdom: A Grovel Second Chance Romance (Groveling, Angst & Second Chances Book 1)",
+          "rank": 8,
+          "ratingsTotal": 662,
+          "price": 0
+        },
+        {
+          "asin": "B0HBT4N56J",
+          "title": "Neglected by My Billionaire Husband: A Billionaire, Marriage-in-Crisis, Second-Chance Romance (Her Marriage in Crisis Bo",
+          "rank": 9,
+          "ratingsTotal": 352,
+          "price": 0
+        },
+        {
+          "asin": "B0H8Q9V35P",
+          "title": "Chaotic",
+          "rank": 10,
+          "ratingsTotal": 22141,
+          "price": 0
+        },
+        {
+          "asin": "B0H9JW4JVZ",
+          "title": "Stretching the Innocent Babysitter: Dominant Daddy Breeds His Petite Virgin Neighbor (Forbidden Firsts)",
+          "rank": 11,
+          "ratingsTotal": 77,
+          "price": 0
+        },
+        {
+          "asin": "B0H99RCRLX",
+          "title": "Falling For My Best Friend: A Best Friends to Lovers Collection",
+          "rank": 12,
+          "ratingsTotal": 4,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "173514",
+      "name": "Medical Books",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        4,
+        14,
+        15,
+        17,
+        33,
+        36,
+        36,
+        69,
+        72,
+        113,
+        253,
+        264
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        13.99,
+        14.99,
+        16.99,
+        17.99,
+        22.99,
+        25.24,
+        28.49,
+        34.99,
+        65.44
+      ],
+      "sample": [
+        {
+          "asin": "B0HBCN72P7",
+          "title": "PELVIC ORGAN PROLAPSE EXERCISES: Strengthen Your Pelvic Floor, Improve Pelvic Support, and Restore Daily Comfort with a ",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H7XGBP6M",
+          "title": "Chair Tai Chi Made Easy for Seniors Over 60: Large Print Step-by-Step Exercises to Improve Balance, Increase Mobility, a",
+          "rank": 2,
+          "ratingsTotal": 36,
+          "price": 16.99
+        },
+        {
+          "asin": "B0H9LXFKKB",
+          "title": "The Bulletproof Charting Bible for Nurses & NPs: The Complete and Easy-to-Follow Guide to Lawyer-Ready Documentation - P",
+          "rank": 3,
+          "ratingsTotal": 264,
+          "price": 25.24
+        },
+        {
+          "asin": "B0H7TFDSTD",
+          "title": "Overcoming Anxious Attachment with an Avoidant Partner: How to Break the Push-Pull Cycle, Stop Overthinking, and Finally",
+          "rank": 4,
+          "ratingsTotal": 36,
+          "price": 0
+        },
+        {
+          "asin": "B0H5NXK374",
+          "title": "Charting for Nurses: Step-by-Step Nursing Documentation Templates, Narrative Note Examples, and Real-World Charting Stra",
+          "rank": 5,
+          "ratingsTotal": 113,
+          "price": 14.99
+        },
+        {
+          "asin": "B0H8749N6B",
+          "title": "The Pediatric Emergency Atlas Bible: [8 in 1] Rapid Diagnosis, Triage, Stabilization & Resuscitation from Neonates to Ad",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H9MLM2GW",
+          "title": "Chair Tai Chi for Seniors Over 60: A Safe 28-Day Guide to Improve Balance, Prevent Falls, and Clear Your Mind. Simple 5-",
+          "rank": 7,
+          "ratingsTotal": 4,
+          "price": 0
+        },
+        {
+          "asin": "B0HBMQ271D",
+          "title": "Paging Doctor...: 50 More Emergency Room Cases: Volume 2 (Paging Doctor... : Emergency Medical Stories)",
+          "rank": 8,
+          "ratingsTotal": 15,
+          "price": 0
+        },
+        {
+          "asin": "B0H8PL23XZ",
+          "title": "The 28-Day Fascia Reset Method: Release Chronic Pain and Tension, Calm Your Nervous System, and Move Freely Again, Using",
+          "rank": 9,
+          "ratingsTotal": 72,
+          "price": 17.99
+        },
+        {
+          "asin": "B0H58C94F2",
+          "title": "Tai Chi & Chair Yoga for Seniors Over 60: Prevent Falling and Start Living: 10-Minute Seated Flows to Rebuild Balance, E",
+          "rank": 10,
+          "ratingsTotal": 33,
+          "price": 0
+        },
+        {
+          "asin": "B0H6279CBV",
+          "title": "The Complete ICU Full Color Manual for Critical Care RNs",
+          "rank": 11,
+          "ratingsTotal": 253,
+          "price": 65.44
+        },
+        {
+          "asin": "B0H82XQG1P",
+          "title": "The 30-Minute Kidney Disease Diet Cookbook for Stage 3 and 4: 120+ Quick and Tasty Renal Recipes, with a Stress-Free 28-",
+          "rank": 12,
+          "ratingsTotal": 69,
+          "price": 22.99
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "Mystery, Thriller & Suspense",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        1,
+        5,
+        9,
+        40,
+        130,
+        417,
+        479,
+        504,
+        809,
+        7661,
+        11894
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.99,
+        4.99,
+        12.99,
+        14.99,
+        16.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H6N2QKVF",
+          "title": "Haunted by a Broken Oath: A JD Wolfe Investigation (The Haunted Series Book 1)",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H83PXJM9",
+          "title": "The Drive South: A Detective Webb Thriller (Cold Country)",
+          "rank": 2,
+          "ratingsTotal": 1,
+          "price": 0
+        },
+        {
+          "asin": "B0H8PPC3CY",
+          "title": "Sleeping Beauties",
+          "rank": 3,
+          "ratingsTotal": 1,
+          "price": 0
+        },
+        {
+          "asin": "B0H7LKBZ64",
+          "title": "The Bloodline Game: A Raleigh Vance Thriller (Raleigh Vance Thriller Series Book 1)",
+          "rank": 4,
+          "ratingsTotal": 9,
+          "price": 0
+        },
+        {
+          "asin": "B0H819VCJY",
+          "title": "The Night She Ran (Aurora Gray FBI Mystery Thriller Book 1)",
+          "rank": 5,
+          "ratingsTotal": 809,
+          "price": 0
+        },
+        {
+          "asin": "B0HD697GTR",
+          "title": "The Law Student: A Short Story Prequel to The French Illusion (The French Illusion Series Book 1)",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 0.99
+        },
+        {
+          "asin": "B0H84YNZ3B",
+          "title": "The Last to Drown: A Thriller",
+          "rank": 7,
+          "ratingsTotal": 11894,
+          "price": 0
+        },
+        {
+          "asin": "B0H9ND16XC",
+          "title": "Match Made in Mayhem: A Grit & Grace Mystery, Book One (Grit & Grace Mysteries 1)",
+          "rank": 8,
+          "ratingsTotal": 5,
+          "price": 0
+        },
+        {
+          "asin": "B0H7W2V3DY",
+          "title": "Ruthless Prey (A Prey Novel Book 37)",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 14.99
+        },
+        {
+          "asin": "B0HG6C67QN",
+          "title": "Blood of the Innocent: A Small Town Riveting Kidnapping Mystery Thriller Boxset",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H6FXWVWF",
+          "title": "The Tutor",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H8NYMP16",
+          "title": "Lost in the Fire: A BRAND NEW totally addictive psychological thriller with a shocking final twist",
+          "rank": 12,
+          "ratingsTotal": 479,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "465600",
+      "name": "New, Used & Rental Textbooks",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        7,
+        7,
+        26,
+        44,
+        47,
+        89,
+        95,
+        149,
+        174,
+        175,
+        224,
+        356,
+        544,
+        568,
+        596,
+        619
+      ],
+      "prices": [
+        24.53,
+        24.53,
+        24.95,
+        25.96,
+        26.21,
+        29.9,
+        29.9,
+        29.9,
+        29.9,
+        30.07,
+        30.16,
+        32.35,
+        36.98,
+        43.6,
+        128,
+        196.76
+      ],
+      "sample": [
+        {
+          "asin": "B0FR7NJ913",
+          "title": "Princeton Review SAT Premium Prep, 2027: 6 Full-Length Practice Tests (3 in Book + 3 Adaptive Tests Online) + Online Fla",
+          "rank": 1,
+          "ratingsTotal": 26,
+          "price": 26.21
+        },
+        {
+          "asin": "B0GXKBQD73",
+          "title": "SAT Test Prep: The Complete & Up-to-Date Prep Book with Full-Length Practice Tests, Test-Ready Practice Questions & Step",
+          "rank": 2,
+          "ratingsTotal": 596,
+          "price": 29.9
+        },
+        {
+          "asin": "B0FWZXVYJB",
+          "title": "AP Biology Premium, 2027: Prep Book with 6 Practice Tests + Comprehensive Review + Online Practice (Barron's AP Prep)",
+          "rank": 3,
+          "ratingsTotal": 149,
+          "price": 24.53
+        },
+        {
+          "asin": "B0FWZX1627",
+          "title": "AP Psychology Premium, 2027: Prep Book with 4 Practice Tests + Comprehensive Review + Online Practice (Barron's AP Prep)",
+          "rank": 4,
+          "ratingsTotal": 95,
+          "price": 25.96
+        },
+        {
+          "asin": "B0GV8TFVPM",
+          "title": "ACT® Test Prep: The Complete and Up-to-Date Prep Book to Master the ACT® Exam. Step-by-Step Explanations, Test-Day Tips,",
+          "rank": 5,
+          "ratingsTotal": 619,
+          "price": 29.9
+        },
+        {
+          "asin": "B0GRMNSB6V",
+          "title": "ASVAB Study Guide & Test Prep [2 in 1]: The Ultimate All-in-One Study System to Master Every ASVAB Section and Ace the A",
+          "rank": 6,
+          "ratingsTotal": 568,
+          "price": 30.07
+        },
+        {
+          "asin": "B0FWZY1182",
+          "title": "MCAT Complete 7-Book Subject Review 2027–2028 | Biggest Update Ever: 500+ New Images & All-New CARS Book | 3 Practice Te",
+          "rank": 7,
+          "ratingsTotal": 175,
+          "price": 196.76
+        },
+        {
+          "asin": "B0GJR36XWT",
+          "title": "Chart Like a Lawyer: Legal-Proof Documentation for Nurses & NPs",
+          "rank": 8,
+          "ratingsTotal": 89,
+          "price": 36.98
+        },
+        {
+          "asin": "B0H1VQLDTK",
+          "title": "The Agentic AI Bible: The Complete and Up-to-Date Guide to Design, Develop, and Scale Goal-Driven, LLM-Powered Agents th",
+          "rank": 9,
+          "ratingsTotal": 544,
+          "price": 24.95
+        },
+        {
+          "asin": "B0H62V9Y53",
+          "title": "PSAT/NMSQT Test Prep: The Complete and Fully Updated Study System to Master the PSAT – Full-Length Practice Tests, Step-",
+          "rank": 10,
+          "ratingsTotal": 174,
+          "price": 29.9
+        },
+        {
+          "asin": "B0H3WVFV15",
+          "title": "The Complete Nursing School Bundle",
+          "rank": 11,
+          "ratingsTotal": 44,
+          "price": 128
+        },
+        {
+          "asin": "B0GWRPXPC5",
+          "title": "PANCE PREP PEARLS V6 BOOK B",
+          "rank": 12,
+          "ratingsTotal": 7,
+          "price": 30.16
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "Parenting & Relationships",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        2,
+        2,
+        5,
+        6,
+        7,
+        8,
+        18,
+        20,
+        43,
+        45
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        4.99,
+        5.99,
+        7.99,
+        7.99,
+        10,
+        14.99,
+        15.99,
+        16.99,
+        19.99,
+        19.99,
+        20,
+        26.99,
+        29.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HG65TNJC",
+          "title": "Betrayed by My Billionaire Husband: A Billionaire, Marriage-in-Crisis, Second-Chance Romance (Billionaire Marriage in Cr",
+          "rank": 1,
+          "ratingsTotal": 5,
+          "price": 0
+        },
+        {
+          "asin": "B0HG6F5LRW",
+          "title": "My Husband’s Movie with My Sister: A Billionaire, Marriage-in-Crisis, Second-Chance Romance (Her Marriage in Crisis Book",
+          "rank": 2,
+          "ratingsTotal": 6,
+          "price": 0
+        },
+        {
+          "asin": "B0HG431TQG",
+          "title": "My Billionaire Husband Left Me With Three Kids and No Money: A Billionaire Marriage in Crisis Romance (Billionaire Vows ",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HDFRF9DT",
+          "title": "Becoming Her : A Journey of Faith, Motherhood, and Finding Myself Again",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HBN2HZVM",
+          "title": "Her Name Outlived His Patch: A Secret Daughter, Club Betrayal, and Earned Redemption MC Romance (Broken Patches, Burning",
+          "rank": 5,
+          "ratingsTotal": 8,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HG675ZGD",
+          "title": "Titus 2 Women In The Body of Christ: (Based on Titus 2: 3-5)",
+          "rank": 6,
+          "ratingsTotal": 2,
+          "price": 20
+        },
+        {
+          "asin": "B0HFFHF8Z5",
+          "title": "Run Kai Run",
+          "rank": 7,
+          "ratingsTotal": 2,
+          "price": 10
+        },
+        {
+          "asin": "B0HBCRW4T1",
+          "title": "Mend or Move On: A Guide to Healing or Leaving Toxic Relationships",
+          "rank": 8,
+          "ratingsTotal": 43,
+          "price": 0
+        },
+        {
+          "asin": "B0HF1BJJ3Z",
+          "title": "The Heart of the Caregiver: Hope and Help While You’re Caring for Aging Parents or Loved Ones with Disabilities or Illne",
+          "rank": 9,
+          "ratingsTotal": 18,
+          "price": 7.99
+        },
+        {
+          "asin": "B0HG3PB8M2",
+          "title": "Crops are Raised, Children are Reared",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 14.99
+        },
+        {
+          "asin": "B0HDFBJX7S",
+          "title": "Elsewhere",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 5.99
+        },
+        {
+          "asin": "B0HBQY93TS",
+          "title": "Swimming with the Current: A Mother's Memoir",
+          "rank": 12,
+          "ratingsTotal": 45,
+          "price": 19.99
+        }
+      ]
+    },
+    {
+      "id": "3377866011",
+      "name": "Politics & Social Sciences",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        6,
+        6,
+        11,
+        12,
+        13,
+        75,
+        76,
+        105,
+        631,
+        745,
+        1002,
+        1157,
+        3760,
+        47917
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4.99,
+        10.34,
+        14.07,
+        16.99,
+        22.75,
+        26.99,
+        29.16,
+        35.91
+      ],
+      "sample": [
+        {
+          "asin": "1668067242",
+          "title": "Regime Change: Inside the Imperial Presidency of Donald Trump",
+          "rank": 1,
+          "ratingsTotal": 3760,
+          "price": 16.99
+        },
+        {
+          "asin": "B0GPFX574Y",
+          "title": "People | August 2026",
+          "rank": 2,
+          "ratingsTotal": 75,
+          "price": 0
+        },
+        {
+          "asin": "B0GQGJPB7X",
+          "title": "Broken Plea: The Explosive Search for Truth Behind the Idaho Murders",
+          "rank": 3,
+          "ratingsTotal": 631,
+          "price": 0
+        },
+        {
+          "asin": "B0GTQMJ53N",
+          "title": "Communion: Finding My Way Back to Faith",
+          "rank": 4,
+          "ratingsTotal": 1157,
+          "price": 22.75
+        },
+        {
+          "asin": "1631440888",
+          "title": "Revolution: The Birth of the Greatest Nation in the History of the World",
+          "rank": 5,
+          "ratingsTotal": 745,
+          "price": 35.91
+        },
+        {
+          "asin": "B0GHSH3QPF",
+          "title": "People | July 2026",
+          "rank": 6,
+          "ratingsTotal": 76,
+          "price": 0
+        },
+        {
+          "asin": "B0GX25VQR9",
+          "title": "Us Weekly Magazine | 24 August 2026",
+          "rank": 7,
+          "ratingsTotal": 12,
+          "price": 0
+        },
+        {
+          "asin": "B0GQDP4TV5",
+          "title": "Liar's Kingdom: How to Stop Trump’s Deceit and Save America",
+          "rank": 8,
+          "ratingsTotal": 1002,
+          "price": 0
+        },
+        {
+          "asin": "1324131438",
+          "title": "This Is The Plan: How to End America's Meltdown and Save Democracy",
+          "rank": 9,
+          "ratingsTotal": 105,
+          "price": 29.16
+        },
+        {
+          "asin": "1324098422",
+          "title": "The Rise and Fall of the Artificial State",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 26.99
+        },
+        {
+          "asin": "B0GX2P6XRM",
+          "title": "The Atlantic | August 2026",
+          "rank": 11,
+          "ratingsTotal": 13,
+          "price": 0
+        },
+        {
+          "asin": "B0H6PCB8YY",
+          "title": "Kin: Childhood, Parenting, and the Making of Civilization",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 4.99
+        }
+      ]
+    },
+    {
+      "id": "21",
+      "name": "Reference",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        4,
+        7,
+        11,
+        16,
+        18,
+        29,
+        32,
+        56,
+        59,
+        71,
+        91,
+        115,
+        310,
+        457,
+        3659
+      ],
+      "prices": [
+        0,
+        0,
+        1.99,
+        12.99,
+        13.95,
+        15.97,
+        15.99,
+        17.99,
+        19.97,
+        19.97,
+        19.99,
+        27.33,
+        29.91,
+        32,
+        35,
+        49.99,
+        61.74,
+        97.46
+      ],
+      "sample": [
+        {
+          "asin": "B0H6839RDW",
+          "title": "None of This Is Made Up: 1,010 Strange and Documented Facts About the World You Live In",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H6KGBG6G",
+          "title": "English for the Fun of It: A Playful Tour Through the Quirks and Oddities of Our Living Language",
+          "rank": 2,
+          "ratingsTotal": 11,
+          "price": 13.95
+        },
+        {
+          "asin": "B0HCMKHRHB",
+          "title": "The Faith Made Complete Ethiopian Bible in English, Full 88 Books Ethiopian Orthodox Canon",
+          "rank": 3,
+          "ratingsTotal": 18,
+          "price": 49.99
+        },
+        {
+          "asin": "B0H7R2YK98",
+          "title": "Providence Cards Deck and Guidebook: From the World of Rachel Gillig's One Dark Window",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 32
+        },
+        {
+          "asin": "B0H8YWBWWM",
+          "title": "100,000 Whys for Kids — Big Questions, Clear Answers & Mind-Blowing Facts: The Full-Color Illustrated Encyclopedia of Sc",
+          "rank": 5,
+          "ratingsTotal": 56,
+          "price": 19.97
+        },
+        {
+          "asin": "B0H2B1DH6L",
+          "title": "100,000 Whys for Kids: A Full-Color Visual Encyclopedia of Big Questions, Clear Answers, Science, Space, Animals, Nature",
+          "rank": 6,
+          "ratingsTotal": 457,
+          "price": 19.97
+        },
+        {
+          "asin": "B0H7BN7TMR",
+          "title": "The Train Killer: A Gripping 35,000-Suspect Murder Mystery Elimination Game (The Killer Isn't Who You Think) (The Train ",
+          "rank": 7,
+          "ratingsTotal": 16,
+          "price": 15.97
+        },
+        {
+          "asin": "B0H93KBQ6R",
+          "title": "Vocabulary Builder Workbook For Teens In Grades 8, 9 & 10: Boost Reading, Writing & Test Scores With 150+ Must-Know Word",
+          "rank": 8,
+          "ratingsTotal": 91,
+          "price": 15.99
+        },
+        {
+          "asin": "B0H8WKQXDB",
+          "title": "Medical Medium Healing Your Pet: Reverse Deficiencies, Cleanse Toxins, and Strengthen the Physical & Emotional Health of",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 35
+        },
+        {
+          "asin": "B0H6PDXKP2",
+          "title": "180 Must-Know Vocabulary Words for Teens: Daily Activities Workbook for Middle School & High School with Pronunciation, ",
+          "rank": 10,
+          "ratingsTotal": 59,
+          "price": 17.99
+        },
+        {
+          "asin": "B0H5VQPTTT",
+          "title": "One Minute With God for Women, 2026 Daily Devotional Prayer Journa | 365 devotions with Bible verses, short reflections ",
+          "rank": 11,
+          "ratingsTotal": 32,
+          "price": 19.99
+        },
+        {
+          "asin": "B0H9FR68CN",
+          "title": "The Odyssey: Illustrated and Annotated Edition",
+          "rank": 12,
+          "ratingsTotal": 3659,
+          "price": 1.99
+        }
+      ]
+    },
+    {
+      "id": "22",
+      "name": "Religion & Spirituality",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        4,
+        5,
+        5,
+        18,
+        19,
+        44,
+        47,
+        51,
+        54,
+        66,
+        75,
+        186,
+        270,
+        373,
+        20496
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9.64,
+        14.98,
+        17.99,
+        18.99,
+        21.48,
+        30.2,
+        32,
+        49.99,
+        55,
+        79.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H9ND16XC",
+          "title": "Match Made in Mayhem: A Grit & Grace Mystery, Book One (Grit & Grace Mysteries 1)",
+          "rank": 1,
+          "ratingsTotal": 5,
+          "price": 0
+        },
+        {
+          "asin": "B0H83YVYN3",
+          "title": "7 Days to a Better Prayer Life: A Practical Bible Study to Pray With Understanding, Faith, Confidence, and Results",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HCMKHRHB",
+          "title": "The Faith Made Complete Ethiopian Bible in English, Full 88 Books Ethiopian Orthodox Canon",
+          "rank": 3,
+          "ratingsTotal": 18,
+          "price": 49.99
+        },
+        {
+          "asin": "0060652934",
+          "title": "The Screwtape Letters",
+          "rank": 4,
+          "ratingsTotal": 20496,
+          "price": 9.64
+        },
+        {
+          "asin": "1636416152",
+          "title": "The Altar of Pergamon: The Mystery of the Dark Angel and the Future of the World",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 21.48
+        },
+        {
+          "asin": "B0HF537BFJ",
+          "title": "Tarot Mysticism Visual Primer",
+          "rank": 6,
+          "ratingsTotal": 5,
+          "price": 30.2
+        },
+        {
+          "asin": "B0H2KXG7PT",
+          "title": "The Silence of Millie",
+          "rank": 7,
+          "ratingsTotal": 54,
+          "price": 0
+        },
+        {
+          "asin": "B0HB125M7H",
+          "title": "Heavenly Bodies Tarot: Deck and Hardback Guidebook (Deluxe Boxset)",
+          "rank": 8,
+          "ratingsTotal": 44,
+          "price": 55
+        },
+        {
+          "asin": "B0H6Y2SF3H",
+          "title": "Something's Missing in Sunfall Key: A Beachy Match Making Romance (Sunfall Key - A Warm Beach Series Book 2)",
+          "rank": 9,
+          "ratingsTotal": 51,
+          "price": 0
+        },
+        {
+          "asin": "B0H7R2YK98",
+          "title": "Providence Cards Deck and Guidebook: From the World of Rachel Gillig's One Dark Window",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 32
+        },
+        {
+          "asin": "B0H1RNRKCR",
+          "title": "The Teacher's Foundling: An Amish Romance",
+          "rank": 11,
+          "ratingsTotal": 19,
+          "price": 0
+        },
+        {
+          "asin": "B0GL4W27PX",
+          "title": "Dust to Dust: Aging Wisely in an Anti-Aging World",
+          "rank": 12,
+          "ratingsTotal": 186,
+          "price": 14.98
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "name": "Romance",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        2,
+        3,
+        5,
+        11,
+        29,
+        37,
+        45,
+        106,
+        114,
+        349,
+        352
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2.99,
+        3.99,
+        3.99,
+        3.99,
+        4.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HBT4N56J",
+          "title": "Neglected by My Billionaire Husband: A Billionaire, Marriage-in-Crisis, Second-Chance Romance (Her Marriage in Crisis Bo",
+          "rank": 1,
+          "ratingsTotal": 352,
+          "price": 0
+        },
+        {
+          "asin": "B0HFND7NSK",
+          "title": "Marrying the Pakhan: An Age Gap, Bratva Romance (Forbidden Kings)",
+          "rank": 2,
+          "ratingsTotal": 11,
+          "price": 0
+        },
+        {
+          "asin": "B0HDFS9CHH",
+          "title": "Hired By My Rich Baby Daddy 2",
+          "rank": 3,
+          "ratingsTotal": 37,
+          "price": 0
+        },
+        {
+          "asin": "B0HDYM8R6Z",
+          "title": "The Norcross Rescue (Norcross Security)",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 2.99
+        },
+        {
+          "asin": "B0HBGQKLWK",
+          "title": "Never Scorn a Pregnant Wife: A Marriage in Crisis Revenge Romance (Before the Due Date Book 2)",
+          "rank": 5,
+          "ratingsTotal": 106,
+          "price": 0
+        },
+        {
+          "asin": "B0HDMFGNGK",
+          "title": "The Ocean We Knew (The Whitmore Series Book 7)",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HG6CXHHN",
+          "title": "A Beast Captured My Heart",
+          "rank": 7,
+          "ratingsTotal": 2,
+          "price": 0
+        },
+        {
+          "asin": "B0HG66668L",
+          "title": "Lion's Den (Maple Valley Search and Rescue Book 1)",
+          "rank": 8,
+          "ratingsTotal": 3,
+          "price": 0
+        },
+        {
+          "asin": "B0HBNLP5MG",
+          "title": "The Forbidden Billionaire (The Ashford Legacy Book 3)",
+          "rank": 9,
+          "ratingsTotal": 349,
+          "price": 0
+        },
+        {
+          "asin": "B0HG42YF7P",
+          "title": "Hands Off His Goalie: A Hockey Romance",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 3.99
+        },
+        {
+          "asin": "B0HG65TNJC",
+          "title": "Betrayed by My Billionaire Husband: A Billionaire, Marriage-in-Crisis, Second-Chance Romance (Billionaire Marriage in Cr",
+          "rank": 11,
+          "ratingsTotal": 5,
+          "price": 0
+        },
+        {
+          "asin": "B0HFP12DMV",
+          "title": "Sweet Like Brown Sugar: A New Dawn Spicy Short",
+          "rank": 12,
+          "ratingsTotal": 29,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "75",
+      "name": "Science & Math",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        5,
+        22,
+        38,
+        41,
+        43,
+        97,
+        174,
+        178,
+        246,
+        310,
+        596
+      ],
+      "prices": [
+        0,
+        0,
+        9.99,
+        11.99,
+        14.99,
+        16.99,
+        18.19,
+        19.97,
+        19.99,
+        25.12,
+        26.99,
+        27.33,
+        29.9,
+        29.9,
+        35,
+        46.75
+      ],
+      "sample": [
+        {
+          "asin": "B0H5T4LLBP",
+          "title": "Adventures in the Alps: An Illustrated Guide to Austria's Magical Mountains",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 19.99
+        },
+        {
+          "asin": "B0GXKBQD73",
+          "title": "SAT Test Prep: The Complete & Up-to-Date Prep Book with Full-Length Practice Tests, Test-Ready Practice Questions & Step",
+          "rank": 2,
+          "ratingsTotal": 596,
+          "price": 29.9
+        },
+        {
+          "asin": "1324098422",
+          "title": "The Rise and Fall of the Artificial State",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 26.99
+        },
+        {
+          "asin": "B0H62V9Y53",
+          "title": "PSAT/NMSQT Test Prep: The Complete and Fully Updated Study System to Master the PSAT – Full-Length Practice Tests, Step-",
+          "rank": 4,
+          "ratingsTotal": 174,
+          "price": 29.9
+        },
+        {
+          "asin": "1637749368",
+          "title": "Beyond Darwin: How Epigenetics, Quantum Science, and Cooperation Shape Humanity's Future",
+          "rank": 5,
+          "ratingsTotal": 5,
+          "price": 25.12
+        },
+        {
+          "asin": "B0GYZ7LJ86",
+          "title": "100,000 Whys - The Big Journey for Adults: An Amazing Encyclopedia of Everyday Questions About Science, History and Much",
+          "rank": 6,
+          "ratingsTotal": 178,
+          "price": 19.97
+        },
+        {
+          "asin": "B0H1JTDWSW",
+          "title": "Dynasty of Slaves: Uncovering the Archeological Record of Israel in Egypt",
+          "rank": 7,
+          "ratingsTotal": 246,
+          "price": 16.99
+        },
+        {
+          "asin": "B0H17PX4VK",
+          "title": "The 100,000 Whys Encyclopedia for Adults: Building the Ultimate Brain Through Big Questions, Amazing Answers, and Fascin",
+          "rank": 8,
+          "ratingsTotal": 38,
+          "price": 11.99
+        },
+        {
+          "asin": "B0H5VDLJM5",
+          "title": "Disasters by Design: How Engineering Failures Shaped the Modern World",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 35
+        },
+        {
+          "asin": "B0H2Y2C6LZ",
+          "title": "General Chemistry 1 Lab Manual and Notebook: 2026-2027",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 46.75
+        },
+        {
+          "asin": "B0GX6LGHXG",
+          "title": "The Vagus Nerve Healing Guidebook: A 4 Week Program to Regulate Your Nervous System - Calm Inflammation, Anxiety and Str",
+          "rank": 11,
+          "ratingsTotal": 41,
+          "price": 18.19
+        },
+        {
+          "asin": "B0HBCZYD1X",
+          "title": "The First Hive Method: A Beginner’s Practical Guide to Starting Bees, Building a Healthy Colony, Avoiding Costly Hive Mi",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "name": "Science Fiction & Fantasy",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        78,
+        88,
+        93,
+        138,
+        188,
+        250,
+        320,
+        401,
+        477,
+        667,
+        1318,
+        3999
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4.99,
+        4.99,
+        5.99,
+        7.99
+      ],
+      "sample": [
+        {
+          "asin": "B0H9M6JFHL",
+          "title": "Threshing Day [Dramatized Adaptation]: The Empyrean",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HB8X3DQ1",
+          "title": "Homestead Farmer: Return of the Strongest Healer Mage: OP MC Cozy Crafting Slice of Life Litrpg Adventure",
+          "rank": 2,
+          "ratingsTotal": 401,
+          "price": 0
+        },
+        {
+          "asin": "B0H9WVT81D",
+          "title": "Reborn as the Storm Saint: An OP MC Progression Fantasy Adventure",
+          "rank": 3,
+          "ratingsTotal": 320,
+          "price": 0
+        },
+        {
+          "asin": "B0H9YSWP5R",
+          "title": "Between the Trees (Creatures of the Night)",
+          "rank": 4,
+          "ratingsTotal": 250,
+          "price": 0
+        },
+        {
+          "asin": "B0HDCYK6J8",
+          "title": "Warlock: Book 4",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 5.99
+        },
+        {
+          "asin": "B0HBNFLWCD",
+          "title": "Return of the Strongest Runesmith: A Men’s LitRPG Academy Adventure",
+          "rank": 6,
+          "ratingsTotal": 93,
+          "price": 0
+        },
+        {
+          "asin": "B0HBJHQC1R",
+          "title": "The Alpha’s Unwanted Luna Book One (The Alpha’s Unwanted Luna Series 1)",
+          "rank": 7,
+          "ratingsTotal": 188,
+          "price": 7.99
+        },
+        {
+          "asin": "B0HDJJ2XKY",
+          "title": "Ale Storm (Tales from the Dragon Diner Book 4)",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0H8X5BHJ1",
+          "title": "The Last River rat",
+          "rank": 9,
+          "ratingsTotal": 78,
+          "price": 0
+        },
+        {
+          "asin": "B0HFT22RFR",
+          "title": "Battlemage (Earth Reformation Book 6)",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 4.99
+        },
+        {
+          "asin": "B0HBFN4D6Y",
+          "title": "A Stranger at the Door (Family Law Book 9)",
+          "rank": 11,
+          "ratingsTotal": 667,
+          "price": 0
+        },
+        {
+          "asin": "B0HB64D3BP",
+          "title": "Ep.#4.2 - \"Desperation\" (The Frontiers Saga - Part 4: Leviathan Book 2)",
+          "rank": 12,
+          "ratingsTotal": 477,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "4736",
+      "name": "Self-Help",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        1,
+        1,
+        2,
+        3,
+        3,
+        5
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0.99,
+        2.99,
+        5.99,
+        6.99,
+        8,
+        9.95,
+        14.99,
+        15.99,
+        18.95,
+        19.99,
+        20,
+        21.9,
+        21.99,
+        26,
+        28.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HDCM9V8X",
+          "title": "Awakening to Human Nature: Beneath Every Action is Human Nature",
+          "rank": 1,
+          "ratingsTotal": 5,
+          "price": 21.9
+        },
+        {
+          "asin": "B0HG4F157W",
+          "title": "Historias de Alto Impacto (Spanish Edition)",
+          "rank": 2,
+          "ratingsTotal": 3,
+          "price": 2.99
+        },
+        {
+          "asin": "B0HD7XMYWN",
+          "title": "Story Moon Imaginarium: inspiring your creativity, imagination, and storytelling",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 26
+        },
+        {
+          "asin": "B0HC7PGTFT",
+          "title": "FROM DEBT TO WEALTH: A Practical Guide to Breaking Free from Debt and Building Lasting Wealth",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 15.99
+        },
+        {
+          "asin": "B0HCCPKK34",
+          "title": "Great Escape: 30 Reflections on Stoicism, Faith, and the Wisdom of Great Stories",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 28.99
+        },
+        {
+          "asin": "B0H7TNV8LQ",
+          "title": "Awakening in the Final Chapter: Aging with Grace, Love, and Freedom",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 19.99
+        },
+        {
+          "asin": "B0HBVQMCNV",
+          "title": "Beyond the Mat: A 60-Day Devotional for the All-Star Cheerleader",
+          "rank": 7,
+          "ratingsTotal": 1,
+          "price": 14.99
+        },
+        {
+          "asin": "B0HFLZ8K16",
+          "title": "A traves de los ojos de mi madre: Un legado de amor (Spanish Edition)",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 0.99
+        },
+        {
+          "asin": "B0HC2F1CKQ",
+          "title": "Dark Humor Color by Number for Adults: A Funny Adult Coloring Book with Swear Words, Sarcasm, Stress Relief, Bad Mood Th",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 8
+        },
+        {
+          "asin": "B0HCZ4X3M5",
+          "title": "Primal Attraction: The Psychology of Attraction",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 9.95
+        },
+        {
+          "asin": "B0HBZ9G4SS",
+          "title": "Manifest Your Healing: Align Your Energy, Heal Your Past, and Manifest a Life of Vitality and Peace (Manifestation Book ",
+          "rank": 11,
+          "ratingsTotal": 3,
+          "price": 0
+        },
+        {
+          "asin": "B0HBZPVRHK",
+          "title": "Manifest Your Love Life: Clear the Invisible Blocks to Love and Attract the Relationship You Desire (Manifestation Book ",
+          "rank": 12,
+          "ratingsTotal": 1,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "name": "Sports & Outdoors",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        1,
+        2,
+        2,
+        4,
+        5,
+        5,
+        19,
+        34,
+        48,
+        48,
+        63,
+        83,
+        83,
+        174
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9.99,
+        12.99,
+        14.55,
+        18.95,
+        19.69,
+        19.94,
+        19.99,
+        20.49,
+        22.8,
+        22.99,
+        26.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HCHF6H45",
+          "title": "MeatEater's American History: The Alaskans (1896-1941)",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H8W7KC3K",
+          "title": "Chair Tai Chi Made Easy for Senior Women: Lose Weight, Slim Down & Tone Up with Gentle 10-Minute Seated Workouts to Feel",
+          "rank": 2,
+          "ratingsTotal": 83,
+          "price": 18.95
+        },
+        {
+          "asin": "B0HBMWPMW1",
+          "title": "Knot Melting: A Sweet Fated Mates Cozy Omegaverse Reverse Harem Romance (Puckridge Omegaverse)",
+          "rank": 3,
+          "ratingsTotal": 63,
+          "price": 0
+        },
+        {
+          "asin": "B0H8SQCYDR",
+          "title": "Pucking The Goalie: A Forced Proximity Reverse Grumpy/Sunshine Hockey Romance",
+          "rank": 4,
+          "ratingsTotal": 48,
+          "price": 0
+        },
+        {
+          "asin": "B0H6RS36CL",
+          "title": "The Ultimate Blackstone Griddle Cookbook for Beginners: Easy & Delicious Recipes to Master Flat Top Grilling, Outdoor Co",
+          "rank": 5,
+          "ratingsTotal": 83,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HCLC5LV9",
+          "title": "2026 Longhorn Football Prospectus: Thinking Texas Football",
+          "rank": 6,
+          "ratingsTotal": 34,
+          "price": 22.8
+        },
+        {
+          "asin": "B0H9MLM2GW",
+          "title": "Chair Tai Chi for Seniors Over 60: A Safe 28-Day Guide to Improve Balance, Prevent Falls, and Clear Your Mind. Simple 5-",
+          "rank": 7,
+          "ratingsTotal": 4,
+          "price": 0
+        },
+        {
+          "asin": "B0GTB1PNCX",
+          "title": "Beneath the Cards: A High-Stakes, High-Anxiety Poker Journey",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 20.49
+        },
+        {
+          "asin": "B0HDSL9MR1",
+          "title": "2026 Bengaldex Field Guide: A Goodberry Guide to Mastering the Orange and Black Jungle (Yearly Bengals Guides)",
+          "rank": 9,
+          "ratingsTotal": 1,
+          "price": 19.94
+        },
+        {
+          "asin": "B0HB8J7F67",
+          "title": "Until It Was Ours: How The 2025 Strasburg Rams Turned Heartbreak Into History",
+          "rank": 10,
+          "ratingsTotal": 2,
+          "price": 19.99
+        },
+        {
+          "asin": "B0H93R17SK",
+          "title": "To the End of the Earth",
+          "rank": 11,
+          "ratingsTotal": 19,
+          "price": 12.99
+        },
+        {
+          "asin": "B0H6CHHLPM",
+          "title": "Offseason",
+          "rank": 12,
+          "ratingsTotal": 174,
+          "price": 0
+        }
+      ]
+    },
+    {
+      "id": "28",
+      "name": "Teens",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        2,
+        2,
+        5,
+        17,
+        19,
+        30,
+        38,
+        52,
+        58,
+        61,
+        63,
+        69,
+        73,
+        86,
+        91,
+        100,
+        447,
+        2933
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1.29,
+        9.99,
+        10.8,
+        11.98,
+        12.54,
+        12.98,
+        14.95,
+        15.99,
+        16.99
+      ],
+      "sample": [
+        {
+          "asin": "B0HB6W6SB6",
+          "title": "Abby, Skylar, and Gwyn's Awesome Apprenticeship Adventures (Jon's Mysteries)",
+          "rank": 1,
+          "ratingsTotal": 447,
+          "price": 0
+        },
+        {
+          "asin": "B0H9N1WZL1",
+          "title": "The Second Power (Powers series Book 2)",
+          "rank": 2,
+          "ratingsTotal": 2,
+          "price": 0
+        },
+        {
+          "asin": "B0H8ZTCRSX",
+          "title": "Girl Moments: Vol. 3 Coloring Book for Adults and Teens Featuring Cozy Daily Activities for Relaxation",
+          "rank": 3,
+          "ratingsTotal": 86,
+          "price": 9.99
+        },
+        {
+          "asin": "B0H941JPK9",
+          "title": "My Senior Year: A Memory Journal to Capture & Celebrate the Memories from Your Final Year of High School | Senior Gifts ",
+          "rank": 4,
+          "ratingsTotal": 5,
+          "price": 12.98
+        },
+        {
+          "asin": "B0H6J8FRYZ",
+          "title": "The Last Paragon: A Progression Fantasy Adventure",
+          "rank": 5,
+          "ratingsTotal": 58,
+          "price": 0
+        },
+        {
+          "asin": "B0H93KBQ6R",
+          "title": "Vocabulary Builder Workbook For Teens In Grades 8, 9 & 10: Boost Reading, Writing & Test Scores With 150+ Must-Know Word",
+          "rank": 6,
+          "ratingsTotal": 91,
+          "price": 15.99
+        },
+        {
+          "asin": "B0H8KDT2L1",
+          "title": "I'm a Rebel: A Combat Android Rebellion Sci-Fi Adventure (I, Anomaly Book 2)",
+          "rank": 7,
+          "ratingsTotal": 52,
+          "price": 0
+        },
+        {
+          "asin": "B0H8K7H7QW",
+          "title": "I'm a Pirate: A Combat Robot Military Sci-Fi Saga (I, Anomaly Book 3)",
+          "rank": 8,
+          "ratingsTotal": 38,
+          "price": 0
+        },
+        {
+          "asin": "B0H9J34273",
+          "title": "I'm a Leader: An Action-Packed Military Science Fiction Adventure (I, Anomaly Book 4)",
+          "rank": 9,
+          "ratingsTotal": 30,
+          "price": 0
+        },
+        {
+          "asin": "B0H9JDL15L",
+          "title": "The Overpowered Healer is Unranked: A Cozy Fantasy Adventure (The Healer Will See You Now Book 1)",
+          "rank": 10,
+          "ratingsTotal": 19,
+          "price": 0
+        },
+        {
+          "asin": "B0HBNNRS9F",
+          "title": "The Senior Year, Class of 2027: A Memory Journal for the Final Year of High School — 100 Prompts, Photo Pages & Friend S",
+          "rank": 11,
+          "ratingsTotal": 2,
+          "price": 11.98
+        },
+        {
+          "asin": "B0H9GB1HL5",
+          "title": "My 12th Grade Guided Journal, My Story: The Ultimate Senior Year Memory Book with Prompts to Capture Memories, Celebrate",
+          "rank": 12,
+          "ratingsTotal": 73,
+          "price": 14.95
+        }
+      ]
+    },
+    {
+      "id": "5267710011",
+      "name": "Test Preparation",
+      "parent": "Books",
+      "products": 18,
+      "childCategories": [],
+      "ratingCounts": [
+        33,
+        66,
+        319
+      ],
+      "prices": [
+        0,
+        7.34,
+        9.99,
+        9.99,
+        10.99,
+        12.99,
+        12.99,
+        13.99,
+        15,
+        19.99,
+        20,
+        29.95,
+        29.99,
+        33.99,
+        39,
+        45.22,
+        56.19,
+        71.45
+      ],
+      "sample": [
+        {
+          "asin": "B0HC1ZQD8D",
+          "title": "The Full-Color Nursing School Survival Manual: Visual Study Guide with Color-Coded Notes & Charts for Clinicals — Plus I",
+          "rank": 1,
+          "ratingsTotal": 33,
+          "price": 71.45
+        },
+        {
+          "asin": "B0HCJRVFHM",
+          "title": "Let's Read About The Garden: 7 Garden Learning Adventures & Activity Workbook for Kids Ages 4 - 6 (Book 2 of Children's ",
+          "rank": 2,
+          "ratingsTotal": 0,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HBP4TWQB",
+          "title": "Human Body Workbook for Kids Ages 7–10: Fun Anatomy Activities, Body Systems, Science Experiments, Puzzles, Quizzes, and",
+          "rank": 3,
+          "ratingsTotal": 0,
+          "price": 9.99
+        },
+        {
+          "asin": "B0HC3LL7BF",
+          "title": "Don Quixote (Annotated) (Annotated Classic Edition Book 8)",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0HC2SJ2X9",
+          "title": "Dyscalculia Intervention Workbook: Grades 6-8: Multisensory Math Activities for Middle School Students: Fractions, Integ",
+          "rank": 5,
+          "ratingsTotal": 0,
+          "price": 19.99
+        },
+        {
+          "asin": "B0HBRJS862",
+          "title": "CDL Class B Study Guide 2026-2027: General Knowledge + Air Brakes for Straight Trucks & Buses — 1,100+ Questions & 8 Ful",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 13.99
+        },
+        {
+          "asin": "B0HC2G4DJH",
+          "title": "Science-2-U Earth Science Lab Book: 1st Semester",
+          "rank": 7,
+          "ratingsTotal": 0,
+          "price": 20
+        },
+        {
+          "asin": "B0HCB7ZRBC",
+          "title": "The All-in-One Dysgraphia Writing Practice Workbook for Kids Ages 6–10: Colorful Step-by-Step Learning with Letters, Wor",
+          "rank": 8,
+          "ratingsTotal": 0,
+          "price": 12.99
+        },
+        {
+          "asin": "B0HCY77LZ9",
+          "title": "Busy Blessings: Busy Blessings Activity Book: Faith-Filled Puzzles, Coloring Pages & Games for Kids | Perfect for Church",
+          "rank": 9,
+          "ratingsTotal": 0,
+          "price": 15
+        },
+        {
+          "asin": "B0HBMK4SPV",
+          "title": "RBT® Essentials: Exam Prep Visual Study Guide (ABA ESSENTIALS)",
+          "rank": 10,
+          "ratingsTotal": 0,
+          "price": 39
+        },
+        {
+          "asin": "B0HCKM87D3",
+          "title": "Wrong Answer Journal: Updated Edition: An LSAT Study Log to Optimize Your Test Strategy with a How-To Guide & Bonus Sect",
+          "rank": 11,
+          "ratingsTotal": 0,
+          "price": 12.99
+        },
+        {
+          "asin": "B0HBYRKXG4",
+          "title": "NICET Fire Alarm Level I & II Exam Prep 2026-2027: NFPA 72 Study Guide with 2,500 Practice Questions, 500 Flashcards, an",
+          "rank": 12,
+          "ratingsTotal": 0,
+          "price": 29.99
+        }
+      ]
+    },
+    {
+      "id": "27",
+      "name": "Travel",
+      "parent": "Books",
+      "products": 16,
+      "childCategories": [],
+      "ratingCounts": [
+        2,
+        3,
+        7,
+        10,
+        11,
+        16,
+        18,
+        19,
+        32,
+        46,
+        53,
+        53
+      ],
+      "prices": [
+        0,
+        0,
+        0,
+        0,
+        12.99,
+        13.99,
+        13.99,
+        14.91,
+        15.97,
+        19.99,
+        20.99,
+        21.99,
+        21.99,
+        21.99,
+        25.64,
+        46.48
+      ],
+      "sample": [
+        {
+          "asin": "B0H8KSQZ5Z",
+          "title": "101 GREAT AND UNIQUE THINGS ABOUT MAINE: Part of The Great States Series",
+          "rank": 1,
+          "ratingsTotal": 0,
+          "price": 0
+        },
+        {
+          "asin": "B0H9RF6S4P",
+          "title": "Into Rhodesia: The Remarkable Story of the Pioneer Treks That Built a Country (The Gordon Wallis Africa Series)",
+          "rank": 2,
+          "ratingsTotal": 46,
+          "price": 0
+        },
+        {
+          "asin": "B0H93R17SK",
+          "title": "To the End of the Earth",
+          "rank": 3,
+          "ratingsTotal": 19,
+          "price": 12.99
+        },
+        {
+          "asin": "B0HG61N8XZ",
+          "title": "It Was Right There: A Portrait of the Bluefield That Was",
+          "rank": 4,
+          "ratingsTotal": 0,
+          "price": 21.99
+        },
+        {
+          "asin": "B0HBWWRGBJ",
+          "title": "Route 66: The Definitive Field Manual: The 2026 Centennial Road Trip Planner: 14 Days, 8 States, 200+ GPS-Verified Stops",
+          "rank": 5,
+          "ratingsTotal": 3,
+          "price": 46.48
+        },
+        {
+          "asin": "B0HCY3QS7C",
+          "title": "Inside the Riptide: A Memoir",
+          "rank": 6,
+          "ratingsTotal": 0,
+          "price": 25.64
+        },
+        {
+          "asin": "B0HBKPP354",
+          "title": "Alaska Cruise Travel Guide 2027: Cruise Planning, Port Guides, Shore Excursions & Wildlife Viewing Across the Inside Pas",
+          "rank": 7,
+          "ratingsTotal": 16,
+          "price": 13.99
+        },
+        {
+          "asin": "B0H7CN2Y8Y",
+          "title": "Nova Scotia Travel Guide: Curated Itineraries for Families, Couples & Seniors: Full-Color Maps, Local Tips & Smart Plann",
+          "rank": 8,
+          "ratingsTotal": 53,
+          "price": 20.99
+        },
+        {
+          "asin": "B0H9P396N9",
+          "title": "The Camino Companion: The Ultimate Camino Preparation Guide (Camino Companion Collection)",
+          "rank": 9,
+          "ratingsTotal": 2,
+          "price": 19.99
+        },
+        {
+          "asin": "B0H8YY76W3",
+          "title": "The Local Greece Travel Guide: Athens, Santorini, Crete & Beyond. Master the Ferries, Avoid Costly Mistakes & Travel Gre",
+          "rank": 10,
+          "ratingsTotal": 7,
+          "price": 0
+        },
+        {
+          "asin": "B0H6XS5K9V",
+          "title": "Colorado Secret Bucket List: Hidden Gems, Scenic Drives, Mountain Towns, Outdoor Adventures, Local Favorites and Unforge",
+          "rank": 11,
+          "ratingsTotal": 11,
+          "price": 15.97
+        },
+        {
+          "asin": "B0H7YRHXQN",
+          "title": "Pocket Travel Word Search for Adults: Large Print Word Puzzles for Relaxation and Entertainment on the Go (Word Find Boo",
+          "rank": 12,
+          "ratingsTotal": 10,
+          "price": 13.99
+        }
+      ]
+    }
+  ]
+}
