@@ -40,14 +40,12 @@ jobs:
           import html, pathlib, re, urllib.request, urllib.error
 
           TARGETS = {
-              "rainforest-pricing": "https://www.rainforestapi.com/pricing",
-              "rf-result-product": "https://docs.trajectdata.com/rainforestapi/product-data-api/results/product",
-              "rf-result-category": "https://docs.trajectdata.com/rainforestapi/product-data-api/results/category",
-              "rf-result-bestsellers": "https://docs.trajectdata.com/rainforestapi/product-data-api/results/bestsellers",
-              "rf-param-bestsellers": "https://docs.trajectdata.com/rainforestapi/product-data-api/parameters/bestsellers",
-              "keepa-api-alt": "https://keepa.com/api",
-              "keepa-pypi": "https://pypi.org/project/keepa/",
-              "keepa-rtd": "https://keepaapi.readthedocs.io/en/latest/",
+              "rf-pricing": "https://www.rainforestapi.com/pricing",
+              "rf-home": "https://www.rainforestapi.com/",
+              "rf-signup": "https://app.rainforestapi.com/sign-up",
+              "rf-docs-overview": "https://docs.trajectdata.com/rainforestapi/overview",
+              "rf-docs-credits": "https://docs.trajectdata.com/rainforestapi/account-api/overview",
+              "traject-pricing": "https://trajectdata.com/pricing/",
           }
 
           def get(url):
@@ -65,7 +63,7 @@ jobs:
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?s)<[^>]+>", " ", raw))).strip()
 
           MONEY = re.compile(r"(?:[$€£]\s?\d[\d,.]*|\d+\s?(?:USD|EUR|GBP))(?:\s*(?:/|per\s)\s*(?:mo|month|year|request|call|token|credit)s?)?", re.I)
-          KEYS = re.compile(r"bestsellers?_?rank|sales_?rank|rank\b|total_?results|category_?results|categories|price history|tokens? per|refill|BSR", re.I)
+          KEYS = re.compile(r"free trial|try for free|no credit card|trial|hobbyist|credits?/month|credits included|cancel|month.to.month|billed monthly", re.I)
 
           for name, url in TARGETS.items():
               status, raw = get(url)
