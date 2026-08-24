@@ -14,6 +14,13 @@
       "requests": 36,
       "note": "Breadth-first walk of the Amazon Books bestseller taxonomy: root plus its 35 child categories, with slack for retries. Measures the distribution of rating counts among ranked titles as a competition signal. Concludes nothing about demand.",
       "status": "SETTLED"
+    },
+    {
+      "runId": "32703465776",
+      "startedAt": "2026-08-24T07:52:08.415Z",
+      "requests": 4,
+      "note": "Diagnose why subcategory requests returned browse-like listings instead of bestseller charts: re-read the root for child urls, then re-request two children by url instead of by numeric id.",
+      "status": "RESERVED"
     }
   ]
 }
