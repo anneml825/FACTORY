@@ -1,25 +1,13 @@
 name: Canopy reconnaissance
 
-# Reads Canopy's public documentation, published example collections, and
-# open-source client code from a runner, because this repository's own network
-# cannot reach them.
+# Zero-cost reconnaissance from a runner, because this repository's own network
+# cannot reach these hosts. NO API KEY IS SENT IN ANY STEP.
 #
-# THIS RUN SPENDS NO API CREDITS. It sends no API key and calls no billable
-# endpoint. Round 1 answered the terms question and confirmed the key exists.
-# Round 2 established there is no public OpenAPI document, that unauthenticated
-# GraphQL introspection is refused at the edge (403), and that Canopy publishes
-# an MCP server whose 11 tools name the available operations.
-#
-# Round 3 answers the remaining gate — what a BOOK query actually returns — by
-# reading Canopy's own open-source client code, which must contain the real
-# field names because it compiles against the real schema. Guessing them
-# instead would spend metered requests discovering the guess was wrong, and the
-# free allowance is 100 requests per month.
-#
-# Runs on a push that changes THIS FILE, and on manual dispatch. The push
-# trigger is deliberate and self-limiting: the job spends no credits, sends no
-# credential, and mutates nothing. The later probe — which does spend metered
-# requests — stays manual-dispatch only.
+# Rounds 1-3 established Canopy's terms, pricing and schema. Round 4 changes
+# subject: Canopy has FAILED as a KDP demand-research source — totalResults is
+# unpopulated on both its category and search endpoints — so this round prices
+# the alternatives that could measure demand AND competition, from their own
+# published pages rather than from memory.
 on:
   workflow_dispatch:
   push:
@@ -45,82 +33,65 @@ jobs:
       # Reads only Canopy's own public endpoints. No API key is present in any
       # step's environment, so none can leak and none can authenticate a
       # billable call even by accident.
-      - name: Read Canopy's published example collection and REST root
+      - name: Price the alternative data sources from their own pages
         run: |
           mkdir -p recon
-          echo "=== rest.canopyapi.co root ==="
-          curl -sS --max-time 20 https://rest.canopyapi.co/ -o recon/rest-root.txt || true
-          head -c 3500 recon/rest-root.txt
-          echo
-          echo "=== docs hoppscotch collection (real example requests) ==="
-          curl -sS --max-time 20 https://docs.canopyapi.co/hoppscotch-collection.json \
-            -o recon/hoppscotch.json || true
-          python3 -c "import json,sys;print(json.dumps(json.load(open('recon/hoppscotch.json')),indent=1)[:6000])" || cat recon/hoppscotch.json
-
-      # Canopy's own MCP server and examples are public source. They compile
-      # against the real schema, so their queries are the schema — no guessing,
-      # no metered request spent to find out.
-      - name: Clone Canopy's open-source clients
-        run: |
-          mkdir -p src-canopy
-          for repo in canopy-api-mcp canopy-api; do
-            echo "--- cloning $repo"
-            git clone --depth 1 --quiet "https://github.com/canopy-api/$repo.git" "src-canopy/$repo" \
-              && echo "    ok" || echo "    FAILED"
-          done
-          echo
-          echo "=== files ==="
-          find src-canopy -type f \
-            \( -name '*.ts' -o -name '*.js' -o -name '*.graphql' -o -name '*.gql' -o -name '*.json' -o -name '*.md' \) \
-            -not -path '*/node_modules/*' -not -name 'package-lock.json' \
-            | head -120
-
-      - name: The GraphQL operations, verbatim
-        run: |
           python3 - <<'PY2'
-          import pathlib, re
-          roots = list(pathlib.Path("src-canopy").rglob("*"))
-          files = [
-              p for p in roots
-              if p.is_file()
-              and p.suffix in {".ts", ".js", ".mjs", ".graphql", ".gql", ".tsx"}
-              and "node_modules" not in p.parts
-          ]
-          print(f"scanning {len(files)} source files")
-          printed = 0
-          for path in sorted(files):
-              text = path.read_text("utf8", errors="replace")
-              # Template literals and .graphql bodies containing a GraphQL operation.
-              blocks = re.findall(r"`([^`]*?(?:query|mutation)\s[^`]*?)`", text, re.S)
-              if path.suffix in {".graphql", ".gql"}:
-                  blocks.append(text)
-              for block in blocks:
-                  if "{" not in block or len(block) < 40:
-                      continue
-                  print(f"\n----- {path} -----")
-                  print(block.strip()[:2500])
-                  printed += 1
-                  if printed >= 25:
-                      raise SystemExit(0)
-          if printed == 0:
-              print("(no GraphQL operation literals found)")
-          PY2
+          import html, pathlib, re, urllib.request, urllib.error
 
-      - name: Tool definitions, input schemas and book vocabulary
-        run: |
-          echo "=== TOOL / OPERATION NAMES ==="
-          grep -rhoE '(get|search|list)_amazon_[a-z_]+' src-canopy --include='*.ts' --include='*.js' --include='*.md' \
-            | sort -u || true
-          echo
-          echo "=== BOOK-SPECIFIC VOCABULARY ==="
-          grep -rniE 'isbn|publicationDate|publication_date|numberOfPages|pageCount|print.?length|bookDetails|salesRank|bestSeller|best_seller|rankings?|monthlySales|salesEstimate|categoryId|browse' \
-            src-canopy --include='*.ts' --include='*.js' --include='*.graphql' --include='*.md' \
-            | grep -v node_modules | head -80 || echo "(none)"
-          echo
-          echo "=== SEARCH / CATEGORY INPUT SHAPES ==="
-          grep -rn -A 18 -iE 'search_amazon_products|amazonProductSearchResults|get_amazon_category\b' \
-            src-canopy --include='*.ts' --include='*.js' \
-            | grep -v node_modules | head -140 || echo "(none)"
+          TARGETS = {
+              "keepa-api": "https://keepa.com/#!api",
+              "keepa-home": "https://keepa.com/",
+              "keepa-docs": "https://keepa.com/#!discuss/t/product-object/116",
+              "rainforest-pricing": "https://www.rainforestapi.com/pricing",
+              "rainforest-docs-category": "https://docs.trajectdata.com/rainforestapi/product-data-api/parameters/category",
+              "dataforseo-pricing": "https://dataforseo.com/pricing",
+              "dataforseo-amazon": "https://docs.dataforseo.com/v3/merchant/amazon/overview/",
+              "publisherrocket": "https://publisherrocket.com/",
+          }
+
+          def get(url):
+              request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 (compatible; factory-recon/1)"})
+              try:
+                  with urllib.request.urlopen(request, timeout=25) as response:
+                      return response.status, response.read().decode("utf8", "replace")
+              except urllib.error.HTTPError as error:
+                  return error.code, ""
+              except Exception as error:
+                  return 0, f"{type(error).__name__}: {error}"
+
+          def text_of(raw):
+              raw = re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", raw)
+              return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?s)<[^>]+>", " ", raw))).strip()
+
+          MONEY = re.compile(r"(?:[$€£]\s?\d[\d,.]*|\d+\s?(?:USD|EUR|GBP))(?:\s*(?:/|per\s)\s*(?:mo|month|year|request|call|token|credit)s?)?", re.I)
+          KEYS = re.compile(r"tokens?|credits?|requests? per|per month|free|trial|sales rank|bestseller|category|product count|BSR|price history", re.I)
+
+          for name, url in TARGETS.items():
+              status, raw = get(url)
+              print(f"\n=============== {name}  [{status}]  {url}")
+              if status != 200 or not raw:
+                  print("   (not retrieved)")
+                  continue
+              body = text_of(raw)
+              pathlib.Path(f"recon/{name}.txt").write_text(body)
+              prices = []
+              for m in MONEY.finditer(body):
+                  window = body[max(0, m.start() - 90): m.end() + 90]
+                  prices.append(re.sub(r"\s+", " ", window))
+                  if len(prices) >= 12:
+                      break
+              print("   --- money mentions:")
+              for p in prices:
+                  print("      …" + p[:220])
+              print("   --- capability mentions:")
+              seen = 0
+              for m in KEYS.finditer(body):
+                  print("      …" + re.sub(r"\s+", " ", body[max(0, m.start() - 80): m.end() + 120])[:200])
+                  seen += 1
+                  if seen >= 8:
+                      break
+          PY2
 
       - name: Upload the raw pages
         if: always()
