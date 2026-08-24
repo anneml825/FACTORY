@@ -581,3 +581,57 @@ Once arm's-length profit exists, `CONSTITUTION.md` §42 reinvestment rules gover
 experiments funded from **realized** available cash.
 
 Implemented in `src/experiments/cost-discipline.ts`.
+
+---
+
+## 19. Declared ≠ populated — the field meaning test
+
+**A provider schema declaring a field is not evidence that the field is operationally
+populated.** Any external data field that a research design materially depends on must pass a
+live, minimal-cost meaning test before Factory allocates a batch of requests around it.
+
+### The rule
+
+Before a research design spends a batch of metered requests, it must:
+
+1. **Name the load-bearing field** — the one whose absence would make the whole run
+   worthless — and say so in the script.
+2. **Declare, in code, what a correct answer looks like**, written *before* the first request
+   goes out. Not a comment: a value the script checks.
+3. **Check it after the FIRST response**, and abort the run if it fails.
+
+A criterion written after seeing the data is one the model can talk itself into. The ordering
+is the control, not the criterion.
+
+### Why this exists
+
+Factory spent 48 metered requests on the Amazon book market and produced no usable
+competition measure, across two designs that were sound on paper:
+
+- **Design 1** rested on `bestSellersRank` from a subcategory chart. The endpoint accepts only
+  41 top-level slugs. Handed a subcategory id it returned a browse listing *without erroring* —
+  16 titles carrying two ratings each, which passed silently for a bestseller chart. The run
+  completed with **zero failures** and produced 35 confident, meaningless rows. Cost: **36
+  requests.**
+- **Design 2** rested on `pageInfo.totalResults` from the category endpoint, a field the
+  generated OpenAPI types plainly declare. It returns **0** for a category containing thousands
+  of books. Cost: **1 request**, because by then the gate existed.
+
+The difference between 36 and 1 is the entire value of this section.
+
+### The subtler failure it also covers
+
+The probe that cleared Design 1 asked *"does this call return products?"* It did. It never
+asked whether they were the **right** products. **A test of mechanism is not a test of
+meaning.** A gate that only proves a response arrived, parsed, and had a non-zero length
+proves nothing about whether the numbers mean what the design assumes.
+
+### What a meaning test looks like
+
+Not "did the response parse" but "is this value consistent with the world it describes":
+
+- a category of books contains more than zero products
+- the leaders of a mainstream bestseller chart carry more than two ratings each
+- a page of search results for a common term returns more than a handful of matches
+
+Cheap, obvious, and each one would have caught a real failure above on its first request.
