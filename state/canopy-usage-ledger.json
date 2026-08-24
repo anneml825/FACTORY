@@ -1,4 +1,12 @@
 {
   "schemaVersion": 2,
-  "runs": []
+  "runs": [
+    {
+      "runId": "32702700806",
+      "startedAt": "2026-08-24T07:42:18.919Z",
+      "requests": 5,
+      "note": "schema-confirmation probe before the KDP demand screen",
+      "status": "RESERVED"
+    }
+  ]
 }
