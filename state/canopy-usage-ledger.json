@@ -32,9 +32,9 @@
     {
       "runId": "32703847979",
       "startedAt": "2026-08-24T07:56:56.036Z",
-      "requests": 37,
+      "requests": 1,
       "note": "Breadth-first walk of the 35 Books subcategories via the category endpoint, measuring field size (totalResults), rating-count distribution and the subcategory tree. Aborts after one request if the endpoint does not meet the plausibility criterion declared in the script.",
-      "status": "RESERVED"
+      "status": "SETTLED"
     }
   ]
 }
