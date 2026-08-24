@@ -65,6 +65,32 @@ validation:
 | `INFRASTRUCTURE` | Unavoidable operating cost |
 | `RESERVE` | Refund/chargeback reserve — not spendable |
 
+### The allocation — owner-confirmed 2026-08-24
+
+| Bucket | Allocation |
+|---|---:|
+| `DISCOVERY` | **$10** |
+| `INFRASTRUCTURE` | **$10** |
+| `VALIDATION` | **$30** |
+| `RESERVE` | funded from earnings, not from the $50 |
+
+Validation is deliberately the largest share. The point of the partition is that
+research cannot eat the money reserved for real exposure, and an allocation that gave
+discovery the largest share would invert that.
+
+**Recorded as infrastructure debt — 2026-08-24.** Until this line existed, the split
+was recorded only as the string `30/10/10` in one `ROADMAP.md` table cell, with no
+mapping to bucket names anywhere in the repository. Asked to reconcile a proposed
+purchase against it, Factory could not, and had to present two defensible readings
+that gave opposite answers — under one the purchase left $7, under the other the
+Capital Authority would have refused it outright. The owner supplied the mapping.
+
+**The general defect this exposes: a control that exists only as prose cannot be
+reconciled against.** The allocation is still not machine-readable, and no live
+`capital_bucket` row holds it. **Both must be resolved before Factory is granted
+autonomous authority to make real paid expenditures.** Until then, every spend is an
+owner decision — which is the current state and is correct for it.
+
 **Buckets are non-transferable by a model.** Not "restricted" — there is deliberately **no
 transfer function anywhere in the codebase**. An agent cannot call what does not exist.
 Reallocation is an owner action.

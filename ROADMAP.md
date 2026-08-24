@@ -29,7 +29,8 @@ sequence governs (see the conflict note in `docs/spec/BOOTSTRAP_INSTRUCTIONS_v2.
 | **Phase B Stripe Managed Payments sandbox adapter** | **`DONE`** — run `32173279299` passed the complete provider-test lifecycle and deactivated all objects |
 | **Phase C ARRIVE + durable WATCH** | **`DONE` as an engineering proof** — temporary DEV publication/analytics/deactivation, attributed Stripe sandbox transaction, PostgreSQL durability, and zero commercial evidence |
 | **Phase E always-on commerce edge + accounting repair** | **`DONE` locally and in CI** — product page, first-party denominator, webhook reception, signed delivery, durable restart; sub-cent Capital Authority bypass closed; §18 enforced in code; commercial Value QA and COMMERCIAL mode built. Cloudflare deployment `NOT VERIFIED` |
-| Live database instance | `BLOCKED` — needs owner Neon account |
+| Live database instance | `BLOCKED` — needs owner Neon account. Not required until a selected commercial experiment actually spends |
+| Machine-readable bucket allocation | `DEBT` — the split lives in prose, not in a file the code can read |
 | External MAKE / PUT / ARRIVE / WATCH providers | Stripe PUT/WATCH and DEV publication/measurement plumbing externally exercised; genuine commercial ARRIVE and metered MAKE not started |
 
 **Only provider-test commerce has happened.** Stripe sandbox objects, two owner-test checkouts,
@@ -156,9 +157,10 @@ tested adapter is Node HTTP. Deployment is owner setup and has not occurred.
 | Capital Authority (TypeScript) | `DONE` (verified) |
 | Reserve → execute → settle logic | `DONE` (verified) |
 | Concurrency safety under contention | `DONE` (verified) |
-| Owner capital authorization + buckets | `DONE` — $50 allocated 30/10/10, reserve from earnings |
+| Owner capital authorization + buckets | `DONE` — $50 as DISCOVERY $10 / INFRASTRUCTURE $10 / VALIDATION $30 (owner-confirmed 2026-08-24), reserve from earnings |
 | Recurring-cost registry population | `NOT STARTED` — nothing to register at $0 burn |
-| Live database instance | `BLOCKED` — needs owner Neon account |
+| Live database instance | `BLOCKED` — needs owner Neon account. Not required until a selected commercial experiment actually spends |
+| Machine-readable bucket allocation | `DEBT` — the split lives in prose, not in a file the code can read |
 
 **Exit criteria:** Capital Authority refuses an unauthorized spend, in code, against a live
 database, under a passing concurrency test. **Met, against a local PostgreSQL 16 instance —
