@@ -1,5 +1,5 @@
 {
-  "script": "src/research/kdp-demand-screen.ts",
-  "intendedRequests": 37,
-  "note": "Breadth-first walk of the 35 Books subcategories via the category endpoint, measuring field size (totalResults), rating-count distribution and the subcategory tree. Aborts after one request if the endpoint does not meet the plausibility criterion declared in the script."
+  "script": "src/research/kdp-keyword-screen.ts",
+  "intendedRequests": 35,
+  "note": "Keyword competition screen over Books subcategory terms derived from earlier runs. The first request is a meaning test of pageInfo.totalResults; the run aborts there if it fails, preserving the remaining budget."
 }
