@@ -1,0 +1,143 @@
+{
+  "runId": "32722635147",
+  "screenedAt": "2026-08-24T11:35:56.777Z",
+  "requestsSpent": 1,
+  "meaningTest": {
+    "minTotalResults": 50,
+    "minResultsOnPage": 10,
+    "requireAtLeastOneRatedProduct": true,
+    "requireIdentifiableProducts": true
+  },
+  "abortedByGate": true,
+  "stopReason": "ABORTED after one request — the meaning test failed: totalResults was 0; a mainstream Amazon book shelf searched for its own subject has more than 50 matching titles. Canopy cannot supply a keyword competition measure. Nothing here is a competition signal, and the remaining budget is preserved.",
+  "failures": [],
+  "seedsAvailable": 51,
+  "termsScreened": 1,
+  "rows": [
+    {
+      "term": "Arts & Photography",
+      "categoryId": "1",
+      "level": 1,
+      "parent": "Books",
+      "totalResults": 0,
+      "totalPages": 400,
+      "resultsOnPage": 20,
+      "sponsoredOnPage": 4,
+      "unratedOnPage": 1,
+      "ratingCounts": [
+        1,
+        8,
+        20,
+        46,
+        54,
+        56,
+        65,
+        73,
+        127,
+        148,
+        158,
+        170,
+        188,
+        192,
+        224,
+        323,
+        361,
+        566,
+        588
+      ],
+      "prices": [
+        5.99,
+        9.99,
+        11.16,
+        19.8,
+        20.65,
+        24.95,
+        24.98,
+        26.33,
+        26.99,
+        29.82,
+        31.8,
+        37.87,
+        38.22,
+        39.21,
+        48.87,
+        58.28,
+        60.93,
+        74.99,
+        108
+      ],
+      "sample": [
+        {
+          "asin": "1681982102",
+          "title": "The Art of Photography: A Personal Approach to Artistic Expression",
+          "ratingsTotal": 566,
+          "price": 37.87,
+          "sponsored": false
+        },
+        {
+          "asin": "B0FQN8JTJB",
+          "title": "The Art of Street Photography",
+          "ratingsTotal": 65,
+          "price": 29.82,
+          "sponsored": false
+        },
+        {
+          "asin": "0714863920",
+          "title": "Art and Photography",
+          "ratingsTotal": 46,
+          "price": 24.95,
+          "sponsored": false
+        },
+        {
+          "asin": "0714842869",
+          "title": "Art and Photography",
+          "ratingsTotal": 20,
+          "price": 48.87,
+          "sponsored": false
+        },
+        {
+          "asin": "1580936334",
+          "title": "STILL: The Art of Noticing",
+          "ratingsTotal": 170,
+          "price": 38.22,
+          "sponsored": false
+        },
+        {
+          "asin": "1933952687",
+          "title": "The Art of Photography: An Approach to Personal Expression",
+          "ratingsTotal": 588,
+          "price": 39.21,
+          "sponsored": false
+        },
+        {
+          "asin": "0740301756",
+          "title": "Art",
+          "ratingsTotal": 1,
+          "price": 108,
+          "sponsored": true
+        },
+        {
+          "asin": "1465481834",
+          "title": "Photography: History. Art. Technique (DK Ultimate Guides)",
+          "ratingsTotal": 127,
+          "price": 31.8,
+          "sponsored": false
+        },
+        {
+          "asin": "1999584414",
+          "title": "Fine Art Street Photography",
+          "ratingsTotal": 158,
+          "price": 11.16,
+          "sponsored": false
+        },
+        {
+          "asin": "B00DAD26SI",
+          "title": "The Art of the Photograph: Essential Habits for Stronger Compositions",
+          "ratingsTotal": 224,
+          "price": 5.99,
+          "sponsored": false
+        }
+      ]
+    }
+  ]
+}

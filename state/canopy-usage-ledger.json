@@ -39,9 +39,9 @@
     {
       "runId": "32722635147",
       "startedAt": "2026-08-24T11:35:50.710Z",
-      "requests": 35,
+      "requests": 1,
       "note": "Keyword competition screen over Books subcategory terms derived from earlier runs. The first request is a meaning test of pageInfo.totalResults; the run aborts there if it fails, preserving the remaining budget.",
-      "status": "RESERVED"
+      "status": "SETTLED"
     }
   ]
 }
