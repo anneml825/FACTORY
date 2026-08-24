@@ -36,22 +36,20 @@ test('exactly one workflow can reach the Canopy credential', async () => {
   );
 });
 
-test('the spending workflow is armed by one file and nothing else', async () => {
+test('the spending workflow is disarmed — nothing in the repository can trigger it', async () => {
   const source = (await workflowSources()).get(SPENDING_WORKFLOW);
   assert.ok(source, 'the spending workflow is missing');
 
-  // A push trigger with no paths filter would fire on every commit to the repo.
-  const paths = source.match(/paths:\n((?:\s+-\s+'[^']+'\n)+)/);
-  assert.ok(paths, 'the spending workflow has a push trigger with no paths filter');
-  const armed = paths[1]
-    .split('\n')
-    .map((line) => line.trim().replace(/^-\s*'|'$/g, ''))
-    .filter(Boolean);
-  assert.deepEqual(
-    armed,
-    ['state/canopy-run-request.json'],
-    'the spending workflow can now be triggered by editing something other than the run request',
+  // Canopy failed as a research source, so the workflow is dispatch-only. The
+  // file that used to arm it lives in state/, which Factory writes routinely; a
+  // push trigger there would let an unrelated state write spend real requests.
+  const triggers = source.slice(source.indexOf('\non:'), source.indexOf('permissions:'));
+  assert.doesNotMatch(
+    triggers,
+    /^\s+push:/m,
+    'the spending workflow has regained a push trigger — re-arming must be a deliberate, reviewed change',
   );
+  assert.match(triggers, /workflow_dispatch:/);
 });
 
 test('a spending run is never cancelled mid-flight', async () => {

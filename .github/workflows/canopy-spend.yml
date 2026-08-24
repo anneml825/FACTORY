@@ -24,11 +24,14 @@ name: Canopy spend (METERED REQUESTS)
 # A run cancelled or crashed between RESERVE and SETTLE leaves its whole
 # reservation standing against the budget. Over-counting is the intended failure
 # mode: a request Factory cannot prove it avoided is assumed to have happened.
+# DISARMED 2026-08-24. The push trigger has been removed, not merely pointed
+# somewhere harmless. Canopy failed as the demand-research source, and the run
+# request file that used to arm this workflow sits in a directory Factory edits
+# routinely — leaving a trigger on it would mean an unrelated state write could
+# spend metered requests. Re-arming is a deliberate act: restore the push
+# trigger in a reviewable diff.
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'state/canopy-run-request.json'
 
 permissions:
   contents: write
