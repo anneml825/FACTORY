@@ -35,6 +35,13 @@
       "requests": 1,
       "note": "Breadth-first walk of the 35 Books subcategories via the category endpoint, measuring field size (totalResults), rating-count distribution and the subcategory tree. Aborts after one request if the endpoint does not meet the plausibility criterion declared in the script.",
       "status": "SETTLED"
+    },
+    {
+      "runId": "32722635147",
+      "startedAt": "2026-08-24T11:35:50.710Z",
+      "requests": 35,
+      "note": "Keyword competition screen over Books subcategory terms derived from earlier runs. The first request is a meaning test of pageInfo.totalResults; the run aborts there if it fails, preserving the remaining budget.",
+      "status": "RESERVED"
     }
   ]
 }
