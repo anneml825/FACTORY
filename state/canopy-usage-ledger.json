@@ -21,6 +21,13 @@
       "requests": 3,
       "note": "Diagnose why subcategory requests returned browse-like listings instead of bestseller charts: re-read the root for child urls, then re-request two children by url instead of by numeric id.",
       "status": "SETTLED"
+    },
+    {
+      "runId": "32703595816",
+      "startedAt": "2026-08-24T07:53:45.018Z",
+      "requests": 4,
+      "note": "Test four category addressing forms against a plausibility criterion fixed before the requests are made: compositional id, prefixed slug, url without tracking suffix, canonical short chart url.",
+      "status": "RESERVED"
     }
   ]
 }
