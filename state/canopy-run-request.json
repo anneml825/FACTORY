@@ -1,5 +1,5 @@
 {
-  "script": "src/research/canopy-category-diagnostic.ts",
+  "script": "src/research/canopy-addressing-diagnostic.ts",
   "intendedRequests": 4,
-  "note": "Diagnose why subcategory requests returned browse-like listings instead of bestseller charts: re-read the root for child urls, then re-request two children by url instead of by numeric id."
+  "note": "Test four category addressing forms against a plausibility criterion fixed before the requests are made: compositional id, prefixed slug, url without tracking suffix, canonical short chart url."
 }
