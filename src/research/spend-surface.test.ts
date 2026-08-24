@@ -13,7 +13,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const WORKFLOWS = '.github/workflows';
-const SPENDING_WORKFLOW = 'canopy-probe.yml';
+const SPENDING_WORKFLOW = 'canopy-spend.yml';
 
 async function workflowSources(): Promise<Map<string, string>> {
   const entries = await readdir(WORKFLOWS);
@@ -49,8 +49,8 @@ test('the spending workflow is armed by one file and nothing else', async () => 
     .filter(Boolean);
   assert.deepEqual(
     armed,
-    ['state/canopy-probe-arm.txt'],
-    'the spending workflow can now be triggered by editing something other than the arming file',
+    ['state/canopy-run-request.json'],
+    'the spending workflow can now be triggered by editing something other than the run request',
   );
 });
 
@@ -60,17 +60,17 @@ test('a spending run is never cancelled mid-flight', async () => {
   assert.match(source, /cancel-in-progress:\s*false/);
 });
 
-test('the reservation is pushed before the probe runs, not after', async () => {
+test('the reservation is pushed before the script runs, not after', async () => {
   const source = (await workflowSources()).get(SPENDING_WORKFLOW) ?? '';
   const durable = source.indexOf('Make the reservation durable before spending');
-  const execute = source.indexOf('EXECUTE — the probe');
+  const execute = source.indexOf('EXECUTE — the research script');
   const settle = source.indexOf('SETTLE — record what was actually spent');
   assert.ok(durable > 0 && execute > 0 && settle > 0, 'the three phases are not all present');
   assert.ok(durable < execute, 'the reservation must be durable before any request is made');
   assert.ok(execute < settle, 'settlement must follow execution');
 });
 
-test('settlement runs even when the probe fails', async () => {
+test('settlement runs even when the script fails', async () => {
   const source = (await workflowSources()).get(SPENDING_WORKFLOW) ?? '';
   const settleBlock = source.slice(source.indexOf('SETTLE — record what was actually spent'));
   assert.match(
@@ -84,4 +84,70 @@ test('the reconnaissance workflow cannot spend', async () => {
   const source = (await workflowSources()).get('canopy-recon.yml') ?? '';
   assert.doesNotMatch(source, /secrets\.CANOPY/, 'recon must never carry the credential');
   assert.doesNotMatch(source, /API-KEY/, 'recon must never authenticate');
+});
+
+// --- The run request is executed, so it is validated rather than trusted ------
+
+import { mkdtemp, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { InvalidRunRequest, readRunRequest } from './canopy-run-request.ts';
+import { ROLLING_WINDOW_REQUEST_BUDGET } from './metered-api-budget.ts';
+
+async function requestFile(body: unknown): Promise<string> {
+  const dir = await mkdtemp(join(tmpdir(), 'runreq-'));
+  const path = join(dir, 'canopy-run-request.json');
+  await writeFile(path, typeof body === 'string' ? body : JSON.stringify(body));
+  return path;
+}
+
+test('a run request naming a script outside src/research is refused', async () => {
+  for (const script of [
+    '../../etc/passwd',
+    'src/research/../../evil.ts',
+    'scripts/anything.ts',
+    'src/research/nested/deep.ts',
+    'src/research/Screen.ts',
+  ]) {
+    const path = await requestFile({ script, intendedRequests: 1, note: 'x' });
+    await assert.rejects(
+      () => readRunRequest(path),
+      InvalidRunRequest,
+      `${script} should not be executable`,
+    );
+  }
+});
+
+test('a run request cannot ask for more than the window budget', async () => {
+  const path = await requestFile({
+    script: 'src/research/kdp-demand-screen.ts',
+    intendedRequests: ROLLING_WINDOW_REQUEST_BUDGET + 1,
+    note: 'too much',
+  });
+  await assert.rejects(() => readRunRequest(path), InvalidRunRequest);
+});
+
+test('a run request must say what it is for', async () => {
+  const path = await requestFile({
+    script: 'src/research/kdp-demand-screen.ts',
+    intendedRequests: 5,
+    note: '   ',
+  });
+  await assert.rejects(() => readRunRequest(path), InvalidRunRequest);
+});
+
+test('a missing or malformed run request authorizes nothing', async () => {
+  await assert.rejects(() => readRunRequest('does/not/exist.json'), InvalidRunRequest);
+  const malformed = await requestFile('{ not json');
+  await assert.rejects(() => readRunRequest(malformed), InvalidRunRequest);
+});
+
+test('a well-formed run request is accepted', async () => {
+  const path = await requestFile({
+    script: 'src/research/kdp-demand-screen.ts',
+    intendedRequests: 45,
+    note: 'breadth-first books screen',
+  });
+  const request = await readRunRequest(path);
+  assert.equal(request.script, 'src/research/kdp-demand-screen.ts');
+  assert.equal(request.intendedRequests, 45);
 });

@@ -8,13 +8,15 @@
  */
 
 import { MeteredApiBudget, readLedger, spentInWindow, spentLifetime } from './metered-api-budget.ts';
+import { readRunRequest } from './canopy-run-request.ts';
 
 const ledgerPath = process.env.CANOPY_LEDGER_PATH ?? 'state/canopy-usage-ledger.json';
+const requestPath = process.env.CANOPY_RUN_REQUEST ?? 'state/canopy-run-request.json';
 const runId = process.env.GITHUB_RUN_ID;
-const intended = Number(process.env.CANOPY_INTENDED_REQUESTS ?? '5');
-const note = process.env.CANOPY_RUN_NOTE ?? 'canopy probe';
 
 if (!runId) throw new Error('GITHUB_RUN_ID is required: a run must be identifiable to be counted.');
+
+const { intendedRequests: intended, note } = await readRunRequest(requestPath);
 
 await MeteredApiBudget.reserve({ ledgerPath, runId, intendedRequests: intended, note });
 
