@@ -171,6 +171,49 @@ a plausibility criterion is written down **before** the requests go out, and the
 walk checks it after the **first** node and aborts. The original mistake cost a
 full budget; the same mistake now costs one request.
 
+## 4b. Correction — the field-size measure is unpopulated too (2026-08-24)
+
+The replacement measure proposed in 4a does not exist either. `/api/amazon/category`
+was going to supply `pageInfo.totalResults` — the number of products in a
+category — and the rebuilt screen was built around it as the headline number.
+
+The abort gate fired on the first node. `totalResults` came back **0** for
+Arts & Photography, a category that plainly contains more than zero books. The
+walk stopped having spent **one request instead of thirty-five**, which is the
+entire reason the gate was added.
+
+Everything else on that response is real. Arts & Photography returned 22 products
+with genuine titles and rating counts spanning 7 to 14,904 (*All About Love*,
+*Kitchen Confidential*, *Persepolis*), a correct `breadcrumbPath` of
+"Books > Arts & Photography", **16 real subcategories** with usable ids, and a
+`sponsored` flag showing 6 of the 22 were ads. So the endpoint works. The one
+field the screen depended on is the one that is empty.
+
+### What is actually available, after 48 requests
+
+| Measure | Available? | Notes |
+| --- | --- | --- |
+| Top-level bestseller rank | **Yes** | Only the 41 root slugs. Books root gave 50 titles, median 42,426 ratings |
+| Subcategory bestseller rank | **No** | Not reachable by any addressing form (§4a) |
+| Products in a category | **No** | `totalResults` returns 0 |
+| Category product listings | Yes | Page 1 only, ad-influenced ordering, `sponsored` flag present |
+| Recursive subcategory tree | Yes | Real ids and names, several levels deep |
+| Results for a keyword in a category | **Untested** | `/api/amazon/search` declares `totalResults` in `pageInfo` |
+| Sales estimate per ASIN | **Yes** | 1 request each. Vendor model output, not observed sales |
+
+### The honest conclusion
+
+This API can characterise **what already sells** — top-level charts, and unit
+estimates for any ASIN. It cannot, by the routes tested, identify **where a new
+entrant has room**, because that needs either subcategory rank or category size
+and neither is available.
+
+One untested route remains: `/api/amazon/search` declares `totalResults` in its
+`pageInfo`, so "how many titles compete for keyword K" may be answerable even
+though "how many titles are in category C" is not. That is the standard KDP
+research measure and would be a better one than either abandoned design. It is
+untested, and the last two designs that looked sound on paper were not.
+
 ## 5. Budget arithmetic for the planned screen
 
 | Step | Requests |
