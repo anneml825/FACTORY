@@ -1,5 +1,5 @@
 {
-  "script": "src/research/canopy-addressing-diagnostic.ts",
-  "intendedRequests": 4,
-  "note": "Test four category addressing forms against a plausibility criterion fixed before the requests are made: compositional id, prefixed slug, url without tracking suffix, canonical short chart url."
+  "script": "src/research/kdp-demand-screen.ts",
+  "intendedRequests": 37,
+  "note": "Breadth-first walk of the 35 Books subcategories via the category endpoint, measuring field size (totalResults), rating-count distribution and the subcategory tree. Aborts after one request if the endpoint does not meet the plausibility criterion declared in the script."
 }
