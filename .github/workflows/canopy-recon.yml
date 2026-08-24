@@ -40,14 +40,14 @@ jobs:
           import html, pathlib, re, urllib.request, urllib.error
 
           TARGETS = {
-              "keepa-api": "https://keepa.com/#!api",
-              "keepa-home": "https://keepa.com/",
-              "keepa-docs": "https://keepa.com/#!discuss/t/product-object/116",
               "rainforest-pricing": "https://www.rainforestapi.com/pricing",
-              "rainforest-docs-category": "https://docs.trajectdata.com/rainforestapi/product-data-api/parameters/category",
-              "dataforseo-pricing": "https://dataforseo.com/pricing",
-              "dataforseo-amazon": "https://docs.dataforseo.com/v3/merchant/amazon/overview/",
-              "publisherrocket": "https://publisherrocket.com/",
+              "rf-result-product": "https://docs.trajectdata.com/rainforestapi/product-data-api/results/product",
+              "rf-result-category": "https://docs.trajectdata.com/rainforestapi/product-data-api/results/category",
+              "rf-result-bestsellers": "https://docs.trajectdata.com/rainforestapi/product-data-api/results/bestsellers",
+              "rf-param-bestsellers": "https://docs.trajectdata.com/rainforestapi/product-data-api/parameters/bestsellers",
+              "keepa-api-alt": "https://keepa.com/api",
+              "keepa-pypi": "https://pypi.org/project/keepa/",
+              "keepa-rtd": "https://keepaapi.readthedocs.io/en/latest/",
           }
 
           def get(url):
@@ -65,7 +65,7 @@ jobs:
               return re.sub(r"\s+", " ", html.unescape(re.sub(r"(?s)<[^>]+>", " ", raw))).strip()
 
           MONEY = re.compile(r"(?:[$€£]\s?\d[\d,.]*|\d+\s?(?:USD|EUR|GBP))(?:\s*(?:/|per\s)\s*(?:mo|month|year|request|call|token|credit)s?)?", re.I)
-          KEYS = re.compile(r"tokens?|credits?|requests? per|per month|free|trial|sales rank|bestseller|category|product count|BSR|price history", re.I)
+          KEYS = re.compile(r"bestsellers?_?rank|sales_?rank|rank\b|total_?results|category_?results|categories|price history|tokens? per|refill|BSR", re.I)
 
           for name, url in TARGETS.items():
               status, raw = get(url)
@@ -79,7 +79,7 @@ jobs:
               for m in MONEY.finditer(body):
                   window = body[max(0, m.start() - 90): m.end() + 90]
                   prices.append(re.sub(r"\s+", " ", window))
-                  if len(prices) >= 12:
+                  if len(prices) >= 8:
                       break
               print("   --- money mentions:")
               for p in prices:
@@ -89,7 +89,7 @@ jobs:
               for m in KEYS.finditer(body):
                   print("      …" + re.sub(r"\s+", " ", body[max(0, m.start() - 80): m.end() + 120])[:200])
                   seen += 1
-                  if seen >= 8:
+                  if seen >= 10:
                       break
           PY2
 
