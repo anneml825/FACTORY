@@ -1,0 +1,5 @@
+{
+  "script": "src/research/kdp-demand-screen.ts",
+  "intendedRequests": 45,
+  "note": "Breadth-first walk of the Amazon Books bestseller taxonomy: root plus its 35 child categories, with slack for retries. Measures the distribution of rating counts among ranked titles as a competition signal. Concludes nothing about demand."
+}
