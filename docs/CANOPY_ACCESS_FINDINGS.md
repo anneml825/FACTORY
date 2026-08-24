@@ -113,6 +113,64 @@ Three consequences worth stating plainly, because each one bounds what the scree
 
 None of this blocks a screen. It bounds what the screen is allowed to conclude.
 
+## 4a. Correction — subcategory charts are not reachable (2026-08-24)
+
+Section 3 above described `/api/amazon/bestsellers` as the workhorse of a
+taxonomy walk, because one request returns ranked products *and* the child
+categories beneath them. The first half is true. The second half misled me, and
+the correction is the most important fact on this page.
+
+**`/api/amazon/bestsellers` accepts only the 41 top-level slugs** returned by
+`/api/amazon/bestseller-categories` — `bestsellers_books`, `bestsellers_automotive`
+and so on. The `childCategories` it returns alongside them carry bare numeric ids
+(`1`, `27`, `4736`, `3248857011`), and those are **not** valid bestsellers
+addresses.
+
+Handed one, the endpoint does not error. It returns a browse-like listing: 16–18
+products instead of 50, near-zero rating counts, no further children, and in
+several categories a price of $0. A run against all 35 Books children completed
+with zero failures and produced 35 rows that looked like data and were not. Six
+requests were then spent ruling out the alternatives — every one returned an
+empty result:
+
+| Form tried | Result |
+| --- | --- |
+| `categoryId: "1"` (bare numeric) | browse listing, not a chart |
+| the child's own `url` (with `/ref=` suffix) | 0 products |
+| `url` with the `/ref=` tracking suffix stripped | 0 products |
+| `categoryId: "books/1"` (compositional) | 0 products |
+| `categoryId: "bestsellers_books_1"` (prefixed slug) | 0 products |
+| `https://www.amazon.com/gp/bestsellers/books/1` | 0 products |
+
+**Rank below the top level is therefore unavailable through this API.** Any plan
+that depends on subcategory bestseller rank needs a different data source.
+
+### What replaces it
+
+`/api/amazon/category` reaches subcategories by those same numeric ids and
+returns `subcategories[]` (so the tree is walkable), a page of products with
+`ratingsTotal` and a `sponsored` flag, and — the useful part — 
+`pageInfo.totalResults`: **how many products are in the category at all**.
+
+That is a better competition measure than the review-mass distribution the
+original screen was built around. It is the size of the field a new title would
+join, stated directly, rather than inferred from how much review mass the
+incumbents happen to carry. What it does not carry is rank, and it never will.
+
+### The process failure, recorded plainly
+
+The probe that cleared this endpoint asked *"does a child id return products?"*
+It does. It never asked whether they were the **right** products. A test of
+mechanism was read as a test of meaning, and the screen then had no criterion
+for what a correct answer would look like — so 16 titles carrying two ratings
+each passed as a bestseller chart, and a category whose real leaders hold six
+figures of reviews would have been reported as the softest market in publishing.
+
+Two changes follow from it, both now in the code rather than in this paragraph:
+a plausibility criterion is written down **before** the requests go out, and the
+walk checks it after the **first** node and aborts. The original mistake cost a
+full budget; the same mistake now costs one request.
+
 ## 5. Budget arithmetic for the planned screen
 
 | Step | Requests |

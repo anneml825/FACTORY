@@ -89,6 +89,40 @@ export interface BestSellerCategoriesResponse {
   };
 }
 
+/**
+ * The category endpoint reaches subcategories, which the bestsellers endpoint
+ * does not — but it carries no rank. What it does carry, and bestsellers does
+ * not, is totalResults: how many products are in the category at all.
+ */
+export interface CategoryResponse {
+  data: {
+    amazonProductCategory: {
+      id?: string;
+      name?: string;
+      breadcrumbPath?: string;
+      subcategories?: { id?: string; name?: string; breadcrumbPath?: string }[];
+      productResults?: {
+        results?: {
+          title?: string;
+          asin?: string;
+          price?: CanopyPrice;
+          rating?: number;
+          ratingsTotal?: number;
+          sponsored?: boolean;
+        }[];
+        pageInfo?: { currentPage?: number; totalPages?: number; totalResults?: number };
+      };
+    };
+  };
+}
+
+export type CategorySort =
+  | 'FEATURED'
+  | 'MOST_RECENT'
+  | 'PRICE_ASCENDING'
+  | 'PRICE_DESCENDING'
+  | 'AVERAGE_CUSTOMER_REVIEW';
+
 export interface SalesEstimateResponse {
   data: {
     amazonProduct: {
@@ -154,6 +188,24 @@ export class CanopyClient {
       domain: options.domain ?? 'US',
       page: options.page,
       limit: options.limit,
+    });
+  }
+
+  /**
+   * The only route into a subcategory. Returns the subcategory tree, a page of
+   * products with their rating counts, and the size of the field.
+   */
+  category(options: {
+    categoryId: string;
+    domain?: string;
+    page?: number;
+    sort?: CategorySort;
+  }): Promise<CategoryResponse> {
+    return this.get<CategoryResponse>('/api/amazon/category', {
+      categoryId: options.categoryId,
+      domain: options.domain ?? 'US',
+      page: options.page,
+      sort: options.sort,
     });
   }
 
