@@ -123,6 +123,30 @@ export type CategorySort =
   | 'PRICE_DESCENDING'
   | 'AVERAGE_CUSTOMER_REVIEW';
 
+export interface SearchResponse {
+  data: {
+    amazonProductSearchResults: {
+      productResults?: {
+        results?: {
+          title?: string;
+          asin?: string;
+          price?: CanopyPrice;
+          rating?: number;
+          ratingsTotal?: number;
+          isPrime?: boolean;
+          sponsored?: boolean;
+        }[];
+        pageInfo?: {
+          currentPage?: number;
+          totalPages?: number;
+          /** The load-bearing field for a competition screen. Verify it is populated. */
+          totalResults?: number;
+        };
+      };
+    };
+  };
+}
+
 export interface SalesEstimateResponse {
   data: {
     amazonProduct: {
@@ -188,6 +212,30 @@ export class CanopyClient {
       domain: options.domain ?? 'US',
       page: options.page,
       limit: options.limit,
+    });
+  }
+
+  /**
+   * How many titles compete for a term, and what the visible ones look like.
+   * Unlike the category endpoint, this one declares totalResults in a position
+   * where it plausibly means something — which is a claim to be tested, not
+   * assumed. See EXPERIMENTAL_PROTOCOL.md §19.
+   */
+  search(options: {
+    searchTerm: string;
+    categoryId?: string;
+    domain?: string;
+    page?: number;
+    limit?: number;
+    sort?: CategorySort;
+  }): Promise<SearchResponse> {
+    return this.get<SearchResponse>('/api/amazon/search', {
+      searchTerm: options.searchTerm,
+      categoryId: options.categoryId,
+      domain: options.domain ?? 'US',
+      page: options.page,
+      limit: options.limit,
+      sort: options.sort,
     });
   }
 
