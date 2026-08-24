@@ -1,0 +1,38 @@
+{
+  "runId": "32702700806",
+  "requestsSpent": 4,
+  "terminalStop": null,
+  "findings": [
+    {
+      "question": "bestseller-category seed returns usable ids",
+      "answered": true,
+      "detail": "41 categories; sample: bestsellers_amazon_devices, bestsellers_amazon_renewed, bestsellers_appliances, bestsellers_mobile_apps, bestsellers_arts_crafts, bestsellers_audible, bestsellers_automotive, bestsellers_baby_products"
+    },
+    {
+      "question": "a Books bestseller category exists",
+      "answered": true,
+      "detail": "Books (bestsellers_books)"
+    },
+    {
+      "question": "one bestsellers request returns ranked products AND child categories",
+      "answered": true,
+      "detail": "50 products (50 carrying bestSellersRank), 35 child categories"
+    },
+    {
+      "question": "products carry the screening fields",
+      "answered": true,
+      "detail": "sample: {\"title\":\"Theo of Golden: A Novel\",\"url\":\"https://www.amazon.com/Theo-Golden-Novel-Allen-Levi/dp/1668236516/ref=zg_bs_g_books_d_sccl_1/131-4028265-8296019?psc=1\",\"asin\":\"1668236516\",\"price\":{\"symbol\":\"$\",\"value\":12.99,\"currency\":\"USD\",\"display\":\"$12.99\"},\"mainImageUrl\":\"https://images-na.ssl-images-"
+    },
+    {
+      "question": "a child category id works as an input, so the walk is recursive",
+      "answered": true,
+      "detail": "Arts & Photography (1): 18 products, 0 further children"
+    },
+    {
+      "question": "a sales estimate returns unit figures",
+      "answered": true,
+      "detail": "1668236516: {\"weeklyUnitSales\":1155,\"monthlyUnitSales\":5000,\"annualUnitSales\":60000}"
+    }
+  ],
+  "allAnswered": true
+}
