@@ -1,0 +1,57 @@
+{
+  "runId": "32703595816",
+  "criterion": {
+    "minProducts": 30,
+    "minMedianRatings": 200
+  },
+  "attempts": [
+    {
+      "form": "compositional id \"books/1\"",
+      "argument": {
+        "categoryId": "books/1"
+      },
+      "products": 0,
+      "medianRatings": 0,
+      "children": 0,
+      "currentCategory": null,
+      "looksLikeAChart": false,
+      "topTitles": []
+    },
+    {
+      "form": "prefixed slug \"bestsellers_books_1\"",
+      "argument": {
+        "categoryId": "bestsellers_books_1"
+      },
+      "products": 0,
+      "medianRatings": 0,
+      "children": 0,
+      "currentCategory": null,
+      "looksLikeAChart": false,
+      "topTitles": []
+    },
+    {
+      "form": "url with the /ref tracking suffix stripped",
+      "argument": {
+        "url": "https://www.amazon.com/Best-Sellers-Books-Arts-Photography/zgbs/books/1"
+      },
+      "products": 0,
+      "medianRatings": 0,
+      "children": 0,
+      "currentCategory": null,
+      "looksLikeAChart": false,
+      "topTitles": []
+    },
+    {
+      "form": "canonical short chart url",
+      "argument": {
+        "url": "https://www.amazon.com/gp/bestsellers/books/1"
+      },
+      "products": 0,
+      "medianRatings": 0,
+      "children": 0,
+      "currentCategory": null,
+      "looksLikeAChart": false,
+      "topTitles": []
+    }
+  ]
+}

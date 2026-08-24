@@ -27,7 +27,7 @@
       "startedAt": "2026-08-24T07:53:45.018Z",
       "requests": 4,
       "note": "Test four category addressing forms against a plausibility criterion fixed before the requests are made: compositional id, prefixed slug, url without tracking suffix, canonical short chart url.",
-      "status": "RESERVED"
+      "status": "SETTLED"
     }
   ]
 }
