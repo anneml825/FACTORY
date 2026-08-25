@@ -1,5 +1,5 @@
 {
-  "runAt": "2026-08-19T18:38:01.520Z",
+  "runAt": "2026-08-24T20:46:57.405Z",
   "criteria": {
     "minCoverage": 0.6,
     "maxCostPerCandidateUsd": 0.02,
@@ -57,7 +57,7 @@
       "id": "wh02",
       "term": "backup",
       "stratum": "HEAD",
-      "value": 3000000
+      "value": 5000000
     },
     {
       "id": "wh03",
@@ -123,7 +123,7 @@
       "id": "wh13",
       "term": "redirect manager",
       "stratum": "HEAD",
-      "value": 3000000
+      "value": 2000000
     },
     {
       "id": "wh14",
@@ -237,7 +237,7 @@
       "id": "wm12",
       "term": "product reviews ratings",
       "stratum": "MID",
-      "value": 900000
+      "value": 10000000
     },
     {
       "id": "wm13",
@@ -399,7 +399,7 @@
       "id": "wt19",
       "term": "equipment rental availability calendar deposit",
       "stratum": "LONG_TAIL",
-      "value": 50000
+      "value": 40000
     },
     {
       "id": "wt20",

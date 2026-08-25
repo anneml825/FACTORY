@@ -1,5 +1,5 @@
 {
-  "retrievedAt": "2026-08-19T18:35:10.331Z",
+  "retrievedAt": "2026-08-24T20:44:15.724Z",
   "terms": [
     "scheduling software",
     "invoice automation",
@@ -32,7 +32,7 @@
       "values": [
         5074822.58,
         6688147.82,
-        9823504.96,
+        10411504.96,
         16112355.72,
         12602867.95,
         71624148.01,
@@ -111,9 +111,9 @@
         "200": 8
       },
       "coverage": 1,
-      "distinctRatio": 0.625,
+      "distinctRatio": 0.5,
       "nonZeroShare": 1,
-      "median": 14,
+      "median": 16,
       "max": 36,
       "sampleDetail": "",
       "values": [
@@ -122,7 +122,7 @@
         36,
         6,
         16,
-        14,
+        16,
         16,
         8
       ]

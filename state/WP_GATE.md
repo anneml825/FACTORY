@@ -1,6 +1,6 @@
 # Data Economics Gate — WordPress search space
 
-**Run:** 2026-08-19T18:38:01.506Z  
+**Run:** 2026-08-24T20:46:57.391Z  
 **Candidates:** 60 WordPress-native, stratified  
 **Cost:** $0.00  
 
@@ -35,7 +35,7 @@
 | Stratum | Query | Top plugin active installs |
 |---|---|---|
 | HEAD | contact form | 10,000,000 |
-| HEAD | backup | 3,000,000 |
+| HEAD | backup | 5,000,000 |
 | HEAD | seo | 10,000,000 |
 | HEAD | security firewall | 5,000,000 |
 | HEAD | caching | 7,000,000 |
@@ -46,7 +46,7 @@
 | HEAD | newsletter signup | 1,000,000 |
 | HEAD | social sharing | 3,000,000 |
 | HEAD | cookie consent | 1,000,000 |
-| HEAD | redirect manager | 3,000,000 |
+| HEAD | redirect manager | 2,000,000 |
 | HEAD | sitemap | 10,000,000 |
 | HEAD | user registration | 200,000 |
 | HEAD | multilingual translation | 900,000 |
@@ -65,7 +65,7 @@
 | MID | directory listings business | 20,000 |
 | MID | invoice quotes client | 30,000 |
 | MID | live chat support | 900,000 |
-| MID | product reviews ratings | 900,000 |
+| MID | product reviews ratings | 10,000,000 |
 | MID | wholesale pricing customer group | 10,000 |
 | MID | inventory stock management | 20,000 |
 | MID | gdpr data request | 1,000,000 |
@@ -92,7 +92,7 @@
 | LONG_TAIL | library book lending due date | 200 |
 | LONG_TAIL | brewery tap list beer abv update | 0 |
 | LONG_TAIL | tutoring session scheduling recurring student | 2,000 |
-| LONG_TAIL | equipment rental availability calendar deposit | 50,000 |
+| LONG_TAIL | equipment rental availability calendar deposit | 40,000 |
 | LONG_TAIL | hoa dues payment tracking resident | 0 |
 
 ## Reading the zeros
