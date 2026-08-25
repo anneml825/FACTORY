@@ -10,28 +10,23 @@ name: Data Economics Probe
 # Cost: $0. Free sources only. No owner capital is touched and the Capital
 # Authority is not involved, because nothing here can spend.
 
+# Dispatch only, and deliberately so.
+#
+# This job commits its results back to the ref that triggered it. It previously
+# ran on pushes to the working branch that touched src/evidence/**, package.json
+# or this file, on the theory that those inputs invalidate a prior measurement.
+#
+# That reasoning held for a single focused commit and failed for everything else.
+# GitHub evaluates path filters across the ENTIRE push range, so a branch catch-up
+# push — one that fast-forwards a stale branch by many commits — matches the
+# filter if any commit anywhere in that range touched a watched path. On
+# 2026-08-25 a product-copy push that moved a stale branch forward by 97 commits
+# fired this probe and appended a results commit to a branch in active use.
+#
+# A measurement must not run as a side effect of unrelated work, and must not
+# rewrite the branch it was measured from. Start it by hand.
 on:
   workflow_dispatch:
-  # Re-measure whenever the source adapters, candidate universe, or pass criteria
-  # change — those are exactly the inputs whose change invalidates a prior result.
-  #
-  # This cannot self-trigger: the run writes only to state/, which is outside the
-  # path filter.
-  #
-  # Deliberately NOT scheduled. The probe is a measurement, not an ongoing job.
-  #
-  # Restricted to the default branch. This job commits its results back to
-  # whatever ref triggered it, so an unrestricted push trigger meant any feature
-  # branch could have a commit appended to it mid-work — including, once there
-  # is one, a branch being deployed commercially. A measurement must not rewrite
-  # the branch it was measured from.
-  push:
-    branches:
-      - claude/factory-autonomous-business-p3h3a1
-    paths:
-      - 'src/evidence/**'
-      - '.github/workflows/data-economics-probe.yml'
-      - 'package.json'
 
 permissions:
   contents: write

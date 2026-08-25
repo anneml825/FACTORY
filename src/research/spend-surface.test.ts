@@ -78,6 +78,34 @@ test('settlement runs even when the script fails', async () => {
   );
 });
 
+// Research and measurement jobs are started by a person, never by a push. A
+// path-filtered push trigger looks narrow and is not: GitHub matches the filter
+// across the whole push range, so a branch catch-up that fast-forwards many
+// commits fires on any watched path touched anywhere in that range. That is how
+// a product-copy push once started the data-economics probe and had it commit
+// results onto a branch in active use.
+const RESEARCH_WORKFLOWS = ['canopy-recon.yml', 'canopy-spend.yml', 'data-economics-probe.yml'];
+
+test('no research or measurement workflow can be started by a push', async () => {
+  const sources = await workflowSources();
+  for (const name of RESEARCH_WORKFLOWS) {
+    const source = sources.get(name);
+    assert.ok(source, `${name} is missing`);
+    const triggers = source.slice(source.indexOf('\non:'), source.indexOf('\npermissions:'));
+    assert.doesNotMatch(
+      triggers,
+      /^\s+push:/m,
+      `${name} gained a push trigger — research must require deliberate activation`,
+    );
+    assert.doesNotMatch(
+      triggers,
+      /^\s+schedule:/m,
+      `${name} gained a schedule — research must require deliberate activation`,
+    );
+    assert.match(triggers, /workflow_dispatch:/, `${name} has no manual trigger left`);
+  }
+});
+
 test('the reconnaissance workflow cannot spend', async () => {
   const source = (await workflowSources()).get('canopy-recon.yml') ?? '';
   assert.doesNotMatch(source, /secrets\.CANOPY/, 'recon must never carry the credential');

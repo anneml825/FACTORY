@@ -8,13 +8,11 @@ name: Canopy reconnaissance
 # unpopulated on both its category and search endpoints — so this round prices
 # the alternatives that could measure demand AND competition, from their own
 # published pages rather than from memory.
+# Dispatch only. A research job must be started deliberately, never as a side
+# effect of unrelated work. This previously carried a push trigger on the
+# working branch, which meant editing the file re-ran the reconnaissance.
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - claude/factory-phase-e-remediation
-    paths:
-      - '.github/workflows/canopy-recon.yml'
 
 permissions:
   contents: read
