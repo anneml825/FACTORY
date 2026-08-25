@@ -207,7 +207,7 @@ that signal harder to read.
 
 | File the buyer receives | Format | Purpose |
 |---|---|---|
-| `Candle-Calculator-Start-Here.pdf` | PDF, 2 pages | The copy link to the Google Sheet, plus how to use it |
+| `Candle-Calculator-Start-Here.pdf` | PDF, 1 page | The copy link to the Google Sheet, plus how to use it |
 | `Burn-Test-Log.pdf` | PDF, 1 page | Printable burn-test record sheet |
 
 The calculator itself is a Google Sheets template. The buyer clicks the link in the Start Here

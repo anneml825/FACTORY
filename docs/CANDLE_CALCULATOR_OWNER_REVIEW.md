@@ -1,6 +1,6 @@
 # Owner review package — Candle Cost & Pricing Calculator
 
-**2026-08-24. Built, QA'd, merchandised, and rewritten for sheet-native copy.
+**2026-08-25. Built, QA'd, merchandised, language-passed, and rendered.
 Nothing published. No capital spent.**
 
 ## 1. Exact deliverables produced
@@ -9,17 +9,17 @@ Nothing published. No capital spent.**
 
 | Item | Where | State |
 |---|---|---|
-| Candle Cost & Pricing Calculator | Google Sheet in your Drive, `1Zzk1iB3KQq7q3KWOIK9z9EL-auXMxTD0eRPhMvLTmp8` | Live, 3 tabs, converted and verified |
+| Candle Cost and Pricing Calculator | Google Sheet in your Drive, `1Zzk1iB3KQq7q3KWOIK9z9EL-auXMxTD0eRPhMvLTmp8` | Live, 3 tabs — **content one revision behind, see action 1** |
 
-The earlier four-tab build has been moved to your Drive trash. The Start Here PDF points at
-the sheet above.
+The earlier four-tab build is in your Drive trash. The Start Here PDF links to the sheet above,
+and that link is correct and does not change.
 
 **The files the buyer downloads from Etsy**
 
 | File | Pages | Purpose |
 |---|---|---|
-| `Candle-Calculator-Start-Here.pdf` | 2 | Carries the one-click copy link, the jar-weighing method, and the two things that trip makers up |
-| `Burn-Test-Log.pdf` | 1, A4 landscape | Printable wick-testing record, 12 rows |
+| `Candle-Calculator-Start-Here.pdf` | 1, A4 portrait | The copy link, the jar-weighing method, the load/content and margin/markup distinctions, and the cell-color key |
+| `Burn-Test-Log.pdf` | 1, A4 landscape | Printable burn-test record sheet, 12 rows |
 
 Both at `product/candle-calculator/dist/buyer/`.
 
@@ -87,26 +87,38 @@ That reads as competence rather than a caveat, and no competitor says it.
   jar shape, and only burn testing settles it. The Burn Test Log is the honest companion.
 - **Selling fees ship blank** — no marketplace preset. Fees change and differ by country, so the
   buyer enters their own current figures.
-- **The water-to-wax factor is a planning assumption, not a constant**, labelled as such and
+- **The water-to-wax factor is an editable assumption, not a constant**, labeled as such and
   editable, with 0.86 as the starting point.
 - **Melt loss starts at 0%** because no sourced figure exists for it.
 
 ## 6. Owner actions remaining
 
-Three, all mechanical. No creative or product decisions.
+Four, all mechanical. No creative or product decisions.
 
-1. **Make the Sheet copyable — the one that actually matters.** Open the Sheet, Share → General
+1. **Load the current workbook into the existing Sheet.** Open the Sheet, then
+   **File → Import → Upload**, choose `product/candle-calculator/dist/candle-calculator.xlsx`,
+   and select **Replace spreadsheet**. *~1 minute.*
+
+   Why this is yours and not mine: the Drive API this session can reach updates a file's *title*
+   but not its *contents*, and its create-file call rejects a payload this size, so I could not
+   push the language-passed workbook into Drive. The live Sheet is therefore one revision behind
+   — it still reads "Labour", "Cell colours", "Type here", "Starting assumptions", "Watch out"
+   and "Fee boxes". **Replace spreadsheet** keeps the same document ID, so the link already
+   printed in the Start Here PDF stays valid and no file needs re-rendering. Do this before
+   action 2.
+
+2. **Make the Sheet copyable — the one that actually matters.** Open the Sheet, Share → General
    access → **Anyone with the link → Viewer**. Without this, the buyer's copy link fails.
    *~30 seconds.* I cannot set link-sharing; the tool only shares with a named person.
-2. **Create the Etsy listing** — paste the title, 13 tags, description and price; upload the two
+3. **Create the Etsy listing** — paste the title, 13 tags, description and price; upload the two
    PDFs as the digital files; produce the eight images from the supplied copy.
-3. **Decide the shop-level questions** I deliberately did not make up: shop name, policies,
+4. **Decide the shop-level questions** I deliberately did not make up: shop name, policies,
    and the Etsy account itself.
 
 ## 7. One deliberate deviation from the specification, disclosed
 
 The specification asked for calculated cells to be **locked** while leaving the protection
-removable. I implemented the *intent* — a distinct fill colour for calculated cells, a colour
+removable. I implemented the *intent* — a distinct fill color for calculated cells, a color
 key on the Reference tab, and the same key restated in the Start Here PDF — but **did not enable
 sheet protection**, because protection imported from a converted file behaves unpredictably in Google
 Sheets and I had no way to verify it in the live environment. Given the specification's own
@@ -148,3 +160,48 @@ strings, tabs `['Candle', 'Costs & Price', 'Reference']`.
 rebuilt file, so it is no longer an owner action. And the sheet is now named *Candle Batch and
 Pricing Calculator* with no version suffix, because the buyer sees the file name when they take
 their copy.
+
+
+## 9. Language pass and final render, 2026-08-25
+
+**Copy.** Removed the AI-writing mannerisms across all four buyer-facing surfaces: the punchy
+fragment stacks ("How much wax. How much fragrance. What to charge."), the dramatic fragments
+("Nothing can.", "Every time."), the vague universals ("the thing that trips everyone up", "the
+only way to know"), and the folksy filler ("either way", "whenever you like", "work themselves
+out"). British spellings became US ones for the Etsy audience — colour/grey/labour to
+color/gray/labor. `labour_on` survives as an internal dictionary key the test suite references;
+it is not buyer-facing.
+
+**The invented support promise is gone.** "Message me through Etsy and I will help" in the Start
+Here PDF, and "message me and I will sort it out" in the refund paragraph, were both written by
+me and never authorized. They would have committed you to unpaid buyer troubleshooting on a $16
+digital download. Deleted with no replacement.
+
+**Listing description.** Replaced wholesale with your rewrite. Every claim in it was checked
+against the built workbook before adoption. One line changed on accuracy grounds: "Reference
+guide with explanations…" sat in a WHAT YOU RECEIVE list beside two actual files and would have
+read as a third download, so it now says it is a tab inside the calculator.
+
+**Renders and visual QA.** Both PDFs were rasterised and inspected page by page — the real buyer
+files, not a browser approximation of them.
+
+| Check | Result |
+|---|---|
+| Clipping or overflow | None |
+| Illegible text | None |
+| Stale copy | None in the shipped files |
+| Broken or wrong links | None — the PDF link resolves to the live sheet ID |
+| Rendering errors | None |
+| Orphan pages | **One found and fixed** |
+
+The Start Here PDF broke across two pages with the four-line "Cell colors" section stranded
+alone on a near-empty page two. A buyer printing it got a wasted sheet. Fixed in CSS only —
+tighter page margins, leading and block spacing — and the body markup was diffed before and
+after to prove not one word of the approved copy changed. It is now a single balanced A4 page.
+
+The delivery manifest said the Start Here PDF was 2 pages, then 1; it now says 1, matching the
+file.
+
+**Re-QA after all of it.** 10/10 acceptance tests pass against the shipped workbook,
+independent-model cross-check AGREE, 34 formulas with no unbalanced brackets or quotes, no error
+strings anywhere in the book, tabs `['Candle', 'Costs & Price', 'Reference']`.
