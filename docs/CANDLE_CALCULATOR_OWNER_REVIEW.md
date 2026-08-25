@@ -1,4 +1,4 @@
-# Owner review package — Candle Batch & Pricing Calculator
+# Owner review package — Candle Cost & Pricing Calculator
 
 **2026-08-24. Built, QA'd, merchandised, and rewritten for sheet-native copy.
 Nothing published. No capital spent.**
@@ -9,7 +9,7 @@ Nothing published. No capital spent.**
 
 | Item | Where | State |
 |---|---|---|
-| Candle Batch and Pricing Calculator | Google Sheet in your Drive, `1Zzk1iB3KQq7q3KWOIK9z9EL-auXMxTD0eRPhMvLTmp8` | Live, 3 tabs, converted and verified |
+| Candle Cost & Pricing Calculator | Google Sheet in your Drive, `1Zzk1iB3KQq7q3KWOIK9z9EL-auXMxTD0eRPhMvLTmp8` | Live, 3 tabs, converted and verified |
 
 The earlier four-tab build has been moved to your Drive trash. The Start Here PDF points at
 the sheet above.
@@ -58,7 +58,7 @@ problems and no error strings**.
 
 ## 3. Final name, title, tags, price
 
-**Product name:** Candle Batch & Pricing Calculator
+**Product name:** Candle Cost & Pricing Calculator
 
 **Etsy title** (133 characters):
 > Candle Making Calculator Google Sheets | Fragrance Load, Wax Weight & Cost Per Candle | Candle Pricing Spreadsheet for Small Candle Business
