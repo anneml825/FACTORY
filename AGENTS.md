@@ -40,7 +40,17 @@ Short by design. Read it every time.
    human, what it cost in cash, what it cost in owner minutes, and what evidence grade the
    result actually supports. Distinguish "implemented" from "implemented and verified
    against the real external system."
-10. **Leave the next agent a working repository.** Commit coherent changes. If you left
+10. **Pass the repository-persistence gate.** Every final or owner-review artifact needed
+    to reproduce, inspect, publish, operate, audit, or continue the work must be saved at a
+    stable documented repository path, committed, successfully pushed, and verified on the
+    remote before the task may be called complete. This includes customer packages, editable
+    source files, listing copy and metadata, listing images and ZIPs, combined previews, QA
+    reports, change logs, manifests, and read-me files. Files that exist only in chat, Library,
+    an agent workspace, or a temporary filesystem do not count. A local commit does not count.
+    If GitHub cannot safely accept an artifact, stop and report completion blocked unless the
+    owner explicitly approves a durable alternative. Never commit secrets or prohibited
+    credentials.
+11. **Leave the next agent a working repository.** Commit coherent changes. If you left
     something broken or half-built, say so explicitly in the commit and in your report.
 
 ## The two failure modes that matter most
