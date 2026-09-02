@@ -104,6 +104,13 @@ Only genuine arm's-length activity satisfies a commercial stage gate.
 Evidence grade is **not** model confidence. Observed evidence supersedes model estimates.
 Full rules in `EXPERIMENTAL_PROTOCOL.md`.
 
+**ARRIVE and Demand DEPTH are separate gates.** Evidence that unrelated buyers purchase a
+product type establishes only that paid demand exists. Before Factory allocates a production
+slot, observable demand must also be large and distributed enough to justify production:
+DEPTH and Etsy Channel Fit must each be at least MEDIUM, and the thesis must not depend on one
+anomalous seller or listing. Missing evidence is not positive evidence. Low competition plus
+low demand is not an opportunity. Full decision rules are in `EXPERIMENTAL_PROTOCOL.md` §20.
+
 ## 12. No fake functionality, no fake claims
 
 Do not build things that appear to work but do not. Do not report that an external action —
