@@ -416,8 +416,8 @@ Three distinct questions, tested separately:
 
 - **REPEATABILITY** — Can Factory independently identify and close *another* profitable loop
   using the same or closely related machinery?
-- **DEPTH** — Can the original asset absorb additional qualified demand while preserving or
-  improving contribution economics?
+- **SCALING DEPTH** — After commercial validation, can the original asset absorb additional
+  qualified demand while preserving or improving contribution economics?
 - **BREADTH** — Can the pattern be replicated into adjacent opportunities at low incremental
   cash cost and low owner labor?
 
@@ -635,3 +635,196 @@ Not "did the response parse" but "is this value consistent with the world it des
 - a page of search results for a common term returns more than a handful of matches
 
 Cheap, obvious, and each one would have caught a real failure above on its first request.
+
+---
+
+## 20. Demand Magnitude Gate — ARRIVE is necessary; DEPTH decides production
+
+### Purpose
+
+Determine whether an opportunity has enough observable marketplace demand to justify building
+it. Evidence that one or more strangers have purchased a similar product is necessary but is
+not sufficient evidence of an economically attractive market.
+
+A product must pass two separate questions:
+
+1. **ARRIVE — Does paid demand exist?** Is there credible evidence that unrelated buyers
+   purchase this type of product?
+2. **DEMAND DEPTH — Is the observable demand pool large enough to justify a production slot?**
+   Is there evidence that enough buyers shop for, discover, and purchase this product category
+   to support meaningful revenue rather than occasional isolated sales?
+
+Demand DEPTH is a pre-production market-magnitude gate. It is distinct from **SCALING DEPTH**
+in §14, which is evaluated after commercial validation.
+
+### DEPTH research
+
+For every candidate, investigate the marketplace at the level of the buyer problem and
+realistic search behavior, not merely one exact keyword.
+
+Examine:
+
+- number and diversity of relevant competing listings
+- number of independent sellers showing meaningful traction
+- review counts and other available sales or traction signals on relevant listings
+- whether traction is distributed across multiple sellers or concentrated in one anomalous
+  incumbent
+- whether multiple products in the category have accumulated meaningful buyer activity
+- whether successful listings are recent or current enough to indicate ongoing demand
+- breadth of plausible buyer search terms and adjacent searches expressing the same purchase
+  intent
+- size and breadth of the underlying buyer population
+- whether the target buyer would plausibly search Etsy for this solution specifically
+- evidence of current marketplace activity versus merely listings existing
+- price levels at which actual traction appears to occur
+- competition density relative to observable demand
+- whether the opportunity appears capable of generating repeatable monthly sales or merely
+  occasional long-tail purchases
+
+Do not infer strong demand merely because Etsy returns many search results. **Supply is not
+demand.**
+
+Do not infer strong demand from one successful listing. One seller may have unusual tenure,
+external traffic, a large existing shop, historical ranking, or other advantages.
+
+Do not reject a market merely because competition is high. High competition accompanied by
+broad, distributed buyer activity may be more economically attractive than a nearly empty
+niche with almost no demonstrated purchasing.
+
+### Normalize traction
+
+When using reviews, sales counts, favorites, badges, bestseller indicators, shop sales,
+listing age, or similar marketplace signals, distinguish what the evidence actually measures.
+
+For example:
+
+- shop-wide sales do not prove sales of the specific product
+- shop-wide reviews do not prove demand for the specific product
+- a listing review is stronger product-specific evidence
+- a very old listing with modest accumulated activity may imply weak current velocity
+- a newer listing accumulating meaningful activity quickly may imply stronger current demand
+
+Never manufacture monthly-sales estimates from weak proxies. Where exact sales or search-volume
+data are unavailable, explicitly state that DEPTH is being inferred from observable proxies.
+
+### Market Structure Test
+
+Determine which pattern best describes the opportunity:
+
+| Class | Pattern | Standard |
+|---|---|---|
+| **A** | **Broad, proven demand** | Many relevant buyers, multiple independent sellers with meaningful traction, multiple viable search intents, and evidence of continuing purchases |
+| **B** | **Healthy niche demand** | Smaller buyer population but clear distributed purchasing across several sellers or listings; plausible recurring-sales opportunity |
+| **C** | **Thin / uncertain demand** | Stranger-arrival evidence exists, but purchasing appears sparse, concentrated, old, weakly evidenced, or limited to a very small buyer pool |
+| **D** | **Existence-only demand** | One or a handful of purchases or listings show that the product can sell, but there is no persuasive evidence that enough buyers exist to justify Factory production |
+| **E** | **No credible paid-demand evidence** | No credible evidence that unrelated buyers purchase this type of product |
+
+**ARRIVE can pass while DEPTH fails.**
+
+### Portfolio Ceiling Test
+
+Factory's objective is not to produce products that can theoretically make a sale. It is to
+build a portfolio capable of producing meaningful aggregate profit.
+
+Ask:
+
+> If Factory produced multiple independently useful products aimed at this same demand pool,
+> is the pool large enough to support them without simply dividing a tiny number of buyers
+> among our own listings?
+
+Identify whether the candidate:
+
+- opens a substantial new buyer or search pool
+- expands an existing proven buyer pool
+- merely creates another SKU competing for the same small audience
+
+Penalize excessive portfolio concentration in tiny buyer populations.
+
+Ten excellent products for ten different sufficiently active buyer populations may have
+materially greater portfolio value than ten excellent products serving variations of one
+extremely small profession.
+
+### Etsy Channel Fit
+
+Evaluate Etsy demand, not merely general-world demand.
+
+A huge real-world population does not matter if those buyers do not plausibly shop Etsy for
+this product. Conversely, a relatively small real-world niche may be attractive if its members
+demonstrably purchase this kind of digital product on Etsy.
+
+Explicitly distinguish:
+
+- **underlying population size**
+- **Etsy-addressable buyer demand**
+
+The second determines this gate.
+
+### Required decision output
+
+Return every field:
+
+- **ARRIVE:** PASS / FAIL
+- **DEPTH:** HIGH / MEDIUM / LOW / INSUFFICIENT EVIDENCE
+- **ETSY CHANNEL FIT:** HIGH / MEDIUM / LOW
+- **COMPETITION:** LOW / MEDIUM / HIGH
+- **DEMAND DISTRIBUTION:** BROAD / MODERATE / CONCENTRATED
+- **PORTFOLIO OVERLAP:** LOW / MEDIUM / HIGH
+- **CONFIDENCE:** HIGH / MEDIUM / LOW
+
+Then provide:
+
+- **Evidence:** concise factual observations supporting the ratings
+- **Counterevidence:** observations that weaken the demand thesis
+- **Uncertainty:** what cannot be established from available marketplace evidence
+- **Economic interpretation:** whether this looks capable of supporting repeatable sales or
+  merely proves that occasional sales occur
+- **Recommendation:** BUILD / WATCH / REJECT
+
+### Build standard
+
+Recommend **BUILD** only when all five conditions hold:
+
+1. ARRIVE passes.
+2. DEPTH is at least MEDIUM.
+3. Etsy Channel Fit is at least MEDIUM.
+4. Observable demand is not dependent on one anomalous seller or listing.
+5. The product still passes Factory's autonomous-production-cost and product-fit gates.
+
+A LOW or existence-only DEPTH result is not rescued by extremely cheap production unless
+Factory is deliberately running a separately authorized low-cost exploration experiment.
+
+Do not recommend BUILD merely because “there is some demand,” “competition appears low,” or
+“the niche is underserved.”
+
+**Low competition + low demand is not an opportunity.**
+
+### Comparative selection
+
+When evaluating multiple candidates, do not evaluate them only against an absolute threshold.
+
+Rank them against each other on:
+
+**Demand magnitude × Etsy channel fit × competitive opportunity × autonomous production fit ×
+expected owner burden**
+
+Factory has finite production capacity. Passing products therefore compete for production
+slots.
+
+Prefer a product with substantially greater addressable marketplace demand even when another
+candidate technically passes ARRIVE.
+
+The objective is not maximum SKU count. The objective is maximum expected portfolio profit per
+unit of autonomous production capacity and owner attention.
+
+### Required research behavior
+
+- Search broadly enough to test alternative descriptions and buyer vocabulary.
+- Do not stop research after finding the first confirming competitor.
+- Actively search for evidence that the market is smaller than it initially appears.
+- Do not convert missing evidence into positive evidence.
+- Do not use invented search volume, invented sales estimates, or unsupported market-size
+  numbers.
+- If Etsy does not expose enough information to confidently distinguish MEDIUM from LOW
+  demand, return **INSUFFICIENT EVIDENCE** rather than manufacturing precision.
+- The burden of proof is on **BUILD**.
+
