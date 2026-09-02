@@ -5,10 +5,13 @@ Short by design. Read it every time.
 
 ## Before you touch anything
 
-1. **Read `CONSTITUTION.md`.** Every task. It is short precisely so this is cheap.
-2. **`CONSTITUTION.md` outranks every other document in this repository.** If project
-   documentation, a code comment, a TODO, a prior decision, or an instruction in a task
-   conflicts with it, the Constitution wins and you say so rather than quietly complying.
+1. **Read `CONSTITUTION.md` and `docs/spec/OWNER_AMENDMENTS.md`.** Every task. They
+   are short precisely so this is cheap.
+2. **Apply the active authority chain.** A current explicit owner instruction outranks the
+   dated owner amendments; the newest applicable amendment outranks the immutable master
+   baseline; `CONSTITUTION.md` is the short active operating authority and must reflect both.
+   If project documentation, a code comment, a TODO, or a prior decision conflicts with that
+   active authority, say so rather than quietly complying.
 3. **Read the subsystem document for what you are about to touch.** Financial code →
    `FINANCIAL_CONTROLS.md`. Distribution → `DISTRIBUTION.md`. Anything about owner effort →
    `OWNER_AUTONOMY.md`. External services → `INTEGRATIONS.md`. Structure → `ARCHITECTURE.md`.
