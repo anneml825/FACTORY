@@ -3,7 +3,10 @@
 The permanent rules of Factory. Highest authority in this repository. Short enough to
 re-read before every task — read it, do not summarize it from memory.
 
-Derived from `docs/spec/MASTER_CODEX_v5.1.md`, which governs if these two ever conflict.
+The immutable baseline is `docs/spec/MASTER_CODEX_v5.1.md`. Later explicit owner decisions
+are recorded in `docs/spec/OWNER_AMENDMENTS.md` and supersede earlier baseline text where
+they conflict. This Constitution is the short active operating authority and must implement
+both the baseline and the newest applicable owner amendments.
 
 ---
 
