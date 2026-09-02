@@ -14,7 +14,10 @@ Short by design. Read it every time.
    `OWNER_AUTONOMY.md`. External services → `INTEGRATIONS.md`. Structure → `ARCHITECTURE.md`.
 4. **Before you design, approve, launch, modify, or evaluate any economic experiment, read
    `CONSTITUTION.md` *and* `EXPERIMENTAL_PROTOCOL.md` in full.** Not a summary. Not your
-   memory of them. The gates only work if they are applied as written.
+   memory of them. The gates only work if they are applied as written. Before allocating any
+   production slot, apply the Demand Magnitude Gate in `EXPERIMENTAL_PROTOCOL.md` §20 and
+   return every required decision field. ARRIVE alone never authorizes BUILD; passing
+   candidates must also compete comparatively for finite production capacity.
 
 ## While you work
 
