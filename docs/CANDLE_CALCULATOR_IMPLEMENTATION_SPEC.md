@@ -351,3 +351,35 @@ marketplace named in a formula or default.
 
 **Do not claim Excel compatibility anywhere** — not in the workbook, not in listing copy, not
 in the filename.
+
+
+---
+
+## FORMAT CHANGE — 2026-09-03, owner decision
+
+**V1 ships as a Microsoft Excel `.xlsx` download. The Google Sheets delivery is withdrawn.**
+
+The original decision was "Google Sheets only for V1", with an explicit revisit trigger. That
+trigger has fired, for a reason the original reasoning did not weigh:
+
+A Google Sheet has an owner. Anyone the sheet is shared with can be shown the owner's identity
+by Google's own interface, and the shop account here is a personal Gmail address whose display
+name reproduces the local part. The delivery mechanism leaked the seller into the product. An
+`.xlsx` has no owner, no sharing layer and no account — the buyer downloads a file and that is
+the end of the relationship.
+
+The original reasoning is otherwise preserved and still satisfied:
+
+- **Still exactly one QA surface.** The concern was that shipping two environments doubles the
+  surface on which a formula can silently diverge. This swaps the single environment; it does
+  not add one. Google Sheets compatibility is explicitly not claimed.
+- **Costs the buyer nothing extra.** It removes a requirement rather than adding one: no Google
+  account is needed at all now.
+- **Removes two owner actions and both publication blockers** — the Drive import and the
+  link-sharing step, which was the one thing standing between the product and publication.
+
+`fullCalcOnLoad` is now set on the workbook, so the file recalculates on open rather than
+displaying whatever was cached at build time.
+
+Everything else in this specification is unchanged. No formula, default, calculation or claim
+was altered by the format change.

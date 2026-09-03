@@ -1,6 +1,6 @@
 # Owner review package — Candle Cost & Pricing Calculator
 
-**2026-08-25. Built, QA'd, merchandised, language-passed, and rendered.
+**2026-09-03. Converted to a direct .xlsx download. Both publication blockers are gone.
 Nothing published. No capital spent.**
 
 ## 1. Exact deliverables produced
@@ -205,3 +205,44 @@ file.
 **Re-QA after all of it.** 10/10 acceptance tests pass against the shipped workbook,
 independent-model cross-check AGREE, 34 formulas with no unbalanced brackets or quotes, no error
 strings anywhere in the book, tabs `['Candle', 'Costs & Price', 'Reference']`.
+
+
+## 10. Format change to .xlsx — 2026-09-03
+
+The product now ships as a Microsoft Excel workbook the buyer downloads, not a Google Sheet
+they copy.
+
+**What this removes.** Both remaining publication blockers, and the privacy problem underneath
+them. A Google Sheet has an owner and Google surfaces that owner to people with access; the shop
+account is a personal Gmail whose display name reproduces the address local part. An .xlsx has
+no owner and no sharing layer. Nothing of yours travels with the file — I re-scanned the built
+workbook for any name, address or path and it is clean.
+
+**Owner actions: four to two.**
+
+| Was | Now |
+|---|---|
+| ~~1. Import the workbook into the Sheet~~ | gone — the workbook is the deliverable |
+| ~~2. Set link-sharing to Anyone with the link~~ | gone — nothing is shared |
+| 3. Create the Etsy listing | **1. Create the Etsy listing** |
+| 4. Shop-level decisions | **2. Shop-level decisions** |
+
+**What changed in the files.** The Start Here PDF lost the copy link and the Google steps and
+now explains opening the .xlsx, Protected View, and saving your own copy; it is still one page
+and now carries zero link annotations. The listing's title, tag 8, section heading, WHAT YOU
+RECEIVE, PLEASE NOTE, closing paragraph, image 8 copy and delivery manifest were all reversed
+from Sheets to Excel. `google sheets` was replaced by `excel template` as a tag, which is the
+stronger search term for this category anyway.
+
+**What did not change.** No formula, default, calculation or buyer-facing claim about what the
+product does. 10/10 acceptance tests still pass with the independent-model cross-check
+agreeing.
+
+**One improvement carried across from the tracker review.** `fullCalcOnLoad` is now set, so the
+workbook recalculates on open instead of showing whatever was cached at build time. The tracker
+shipped with an internally inconsistent cache; this prevents the same class of defect here.
+
+**The superseded Google Sheet has been moved to your Drive trash.**
+
+**Delivery is now three files:** `Candle-Cost-and-Pricing-Calculator.xlsx`,
+`Candle-Calculator-Start-Here.pdf`, `Burn-Test-Log.pdf`.

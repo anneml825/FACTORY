@@ -6,8 +6,9 @@ words, no sentences, no commentary about how the sheet works. Explanation lives
 in the Start Here PDF that ships with it. The only full sentences here are
 warning messages, because a warning is a sentence in every spreadsheet.
 
-The .xlsx is a build vehicle only: it is converted to a Google Sheet, which is
-the product. No .xlsx is shipped and Excel compatibility is never claimed.
+The .xlsx IS the product. It is delivered to the buyer directly as a download,
+so there is no sharing layer, no account requirement, and nothing of the seller's
+attached to the file.
 """
 
 import sys
@@ -350,6 +351,10 @@ def finish(wb):
     for ws in wb.worksheets:
         ws.sheet_view.showGridLines = False
         ws.freeze_panes = "A2"
+    # Recalculate on open. Without this a viewer can render whatever values were
+    # cached at build time, which is how a shipped workbook shows one stale number
+    # beside a correct one.
+    wb.calculation.fullCalcOnLoad = True
 
 
 def build(path, o=None):

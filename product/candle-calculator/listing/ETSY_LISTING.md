@@ -1,7 +1,7 @@
 # Etsy publication package — Candle Cost & Pricing Calculator
 
-Buyer-facing copy only. No mention of how it was made, no Excel claim, no fee figures, no
-suggestion that wick size is calculated.
+Buyer-facing copy only. No mention of how it was made, no fee figures, no suggestion that
+wick size is calculated. Delivered as a direct .xlsx download — no account, no sharing.
 
 ## Product name (short, for the shop)
 
@@ -9,7 +9,7 @@ suggestion that wick size is calculated.
 
 ## Etsy listing title
 
-> Candle Making Calculator Google Sheets | Fragrance Load, Wax Weight & Cost Per Candle | Candle Pricing Spreadsheet for Small Candle Business
+> Candle Making Calculator Excel Spreadsheet | Fragrance Load, Wax Weight & Cost Per Candle | Candle Pricing Template for Small Candle Business
 
 *(133 characters. Leads with the two things people search for — candle making calculator and
 fragrance load — then the job it does, then who it is for.)*
@@ -25,7 +25,7 @@ fragrance load — then the job it does, then who it is for.)*
 | 5 | candle pricing | 14 |
 | 6 | candle making | 13 |
 | 7 | cost per candle | 15 |
-| 8 | google sheets | 13 |
+| 8 | excel template | 14 |
 | 9 | candle business | 15 |
 | 10 | soy candle maker | 16 |
 | 11 | candle profit | 13 |
@@ -34,12 +34,12 @@ fragrance load — then the job it does, then who it is for.)*
 
 ## Listing description
 
-**CANDLE COST & PRICING CALCULATOR — GOOGLE SHEETS**
+**CANDLE COST & PRICING CALCULATOR — EXCEL SPREADSHEET**
 
 Take the guesswork out of candle costing and pricing with a calculator that brings your recipe,
 batch quantities, costs and selling price together in one place.
 
-This Google Sheets candle calculator helps you work out how much wax and fragrance oil you need,
+This Excel candle calculator helps you work out how much wax and fragrance oil you need,
 what each candle costs to make, and what you need to charge to reach your target profit margin
 after selling fees.
 
@@ -116,7 +116,7 @@ recipes and supplies. Both are included in the same template.
 
 **WHAT YOU RECEIVE**
 
-• Candle Cost & Pricing Calculator for Google Sheets
+• Candle Cost & Pricing Calculator — Microsoft Excel workbook (.xlsx)
 • Printable Burn Test Log
 • A reference tab inside the calculator explaining its terms, assumptions and editable settings
 • Instructions for making your own copy and getting started
@@ -132,8 +132,9 @@ pricing.
 
 **PLEASE NOTE**
 
-This template is designed for Google Sheets and requires a free Google account. It is not an Excel
-template.
+This is a Microsoft Excel workbook (.xlsx) designed for desktop Excel. It downloads straight to
+your computer — there is no account to create and nothing to share. Google Sheets compatibility
+is not included or supported.
 
 Selling fees are entered by you so you can use the rates that currently apply to your marketplace
 or payment method.
@@ -148,8 +149,8 @@ those tests.
 
 This is a digital product. No physical item will be shipped.
 
-After purchase, follow the included instructions to make your own copy of the Google Sheets
-template and replace the sample information with your candle recipe, costs and pricing.
+After purchase, download the workbook and open it in Excel, then replace the starting figures
+with your own candle recipe, costs and pricing.
 
 ## Listing image copy, in reading order
 
@@ -189,9 +190,9 @@ template and replace the sample information with your candle recipe, costs and p
 > A printable Burn Test Log is included for recording your tests.
 
 **Image 8 — what you get**
-> GOOGLE SHEETS TEMPLATE + PRINTABLE BURN TEST LOG
-> Copy it to your own Google Drive in one click.
-> Requires a free Google account. Not an Excel file.
+> EXCEL WORKBOOK + PRINTABLE BURN TEST LOG
+> Downloads straight to your computer.
+> For desktop Microsoft Excel. Not a Google Sheets file.
 
 ## Pricing recommendation
 
@@ -207,8 +208,9 @@ that signal harder to read.
 
 | File the buyer receives | Format | Purpose |
 |---|---|---|
-| `Candle-Calculator-Start-Here.pdf` | PDF, 1 page | The copy link to the Google Sheet, plus how to use it |
+| `Candle-Cost-and-Pricing-Calculator.xlsx` | Excel workbook, 3 tabs | The calculator itself |
+| `Candle-Calculator-Start-Here.pdf` | PDF, 1 page | How to open it and how the numbers work |
 | `Burn-Test-Log.pdf` | PDF, 1 page | Printable burn-test record sheet |
 
-The calculator itself is a Google Sheets template. The buyer clicks the link in the Start Here
-PDF and Google asks them to make their own copy.
+All three files download together. Nothing is hosted, shared or linked, so the buyer needs no
+account and nothing of the shop's is attached to what they receive.
