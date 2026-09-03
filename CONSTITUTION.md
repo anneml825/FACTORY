@@ -3,7 +3,10 @@
 The permanent rules of Factory. Highest authority in this repository. Short enough to
 re-read before every task — read it, do not summarize it from memory.
 
-Derived from `docs/spec/MASTER_CODEX_v5.1.md`, which governs if these two ever conflict.
+The immutable baseline is `docs/spec/MASTER_CODEX_v5.1.md`. Later explicit owner decisions
+are recorded in `docs/spec/OWNER_AMENDMENTS.md` and supersede earlier baseline text where
+they conflict. This Constitution is the short active operating authority and must implement
+both the baseline and the newest applicable owner amendments.
 
 ---
 
@@ -104,6 +107,13 @@ Only genuine arm's-length activity satisfies a commercial stage gate.
 Evidence grade is **not** model confidence. Observed evidence supersedes model estimates.
 Full rules in `EXPERIMENTAL_PROTOCOL.md`.
 
+**ARRIVE and Demand DEPTH are separate gates.** Evidence that unrelated buyers purchase a
+product type establishes only that paid demand exists. Before Factory allocates a production
+slot, observable demand must also be large and distributed enough to justify production:
+DEPTH and Etsy Channel Fit must each be at least MEDIUM, and the thesis must not depend on one
+anomalous seller or listing. Missing evidence is not positive evidence. Low competition plus
+low demand is not an opportunity. Full decision rules are in `EXPERIMENTAL_PROTOCOL.md` §20.
+
 ## 12. No fake functionality, no fake claims
 
 Do not build things that appear to work but do not. Do not report that an external action —
@@ -120,7 +130,29 @@ enter prompts, source code, GitHub, logs, or ordinary model context. The owner i
 to paste them into an agent session. They are entered directly into the provider's own
 interface.
 
-## 14. No artificial profit ceiling
+## 14. Repository persistence is a completion gate
+
+This GitHub repository is Factory's authoritative shared state. An artifact that exists only in
+a chat, agent workspace, temporary filesystem, Library, or external tool is not safely handed
+off and does not count as completed work.
+
+Every final or owner-review file needed to reproduce, inspect, publish, operate, audit, or
+continue Factory work must be saved at a stable documented path in this repository, committed,
+and successfully pushed before the task may be reported as complete. This includes, as
+applicable, source files, customer-delivery packages, editable workbooks, listing copy and
+metadata, listing images and ZIP archives, combined previews, QA reports, change logs,
+manifests, and read-me files.
+
+A local file is insufficient. A local commit is insufficient. Completion requires verifying
+that the intended files and commit are present on the remote repository. Temporary workspaces
+are working storage only.
+
+Sensitive credentials and prohibited secret material remain excluded under §13. If an
+artifact cannot be stored in GitHub safely or within technical limits, completion is blocked
+until the owner explicitly approves a durable alternative; the agent must report the blocker
+instead of silently leaving the artifact in temporary storage.
+
+## 15. No artificial profit ceiling
 
 The $50 limit bounds the owner's **initial financial exposure**. It is not a profit target
 and not a permanent size constraint. There is no artificial upper bound on how profitable
