@@ -1,0 +1,47 @@
+{
+  "productName": "Craft Fair & Farmers Market Profit Tracker",
+  "title": "Craft Fair Profit Tracker Spreadsheet, Farmers Market Sales & Profit per Hour Excel Template for Vendors",
+  "priceCents": 1299,
+  "description": "CRAFT FAIR & FARMERS MARKET PROFIT TRACKER\n\nYou made sales. But was the market actually worth it?\n\nA busy booth and a big sales number can feel like a great market day. But once you factor in the booth fee, travel, product costs and the time you put in, a different event may have actually performed better.\n\nThe Craft Fair & Farmers Market Profit Tracker helps you see the difference.\n\nEnter what you sold, what it cost you and how much time you spent. Then compare your markets side by side to see what was left after the costs you entered, how much stock you sold, what you made per market hour and which events reached your own goals.\n\nFIND OUT WHICH MARKETS ACTUALLY PERFORMED BETTER\n\nThe highest-sales market isn’t always the strongest one.\n\nThe included sample data shows exactly that:\n\nRiverside Pop-Up\n$478 sales → $182 profit after entered costs → $36.40 per market hour\n\nNight Bazaar\n$509 sales → $51 profit after entered costs → $6.38 per market hour\n\nMore sales. Much less left behind.\n\nInstead of judging an event by the sales total alone, you can compare the numbers that matter to your business.\n\nTRACK THE COSTS BEHIND THE SALES\n\nFor each product batch, enter:\n\n• Units brought\n• Units sold\n• Sales\n• Ingredient costs\n• Packaging costs\n• Product work hours\n• The value you assign to your work time\n\nThe workbook also factors in each product row’s share of the booth fee and travel cost you entered for that event.\n\nThe result is Profit After Entered Costs—a consistent way to compare one market with another using your own numbers.\n\nSEE WHAT YOUR TIME PRODUCED\n\nSelling for eight hours and making your products for five hours are two different things, so the workbook tracks them separately.\n\nHours Worked at Market shows how much Profit After Entered Costs the market produced for each hour you spent working the event.\n\nProduct Work Hours lets you include the value of the time you spent making or preparing a product batch in its entered costs.\n\nBoth are clearly labeled so you know exactly what goes where.\n\nSET YOUR OWN GOALS\n\nYou decide what a worthwhile market looks like for your business.\n\nSet your minimum:\n\n• Profit Margin\n• Profit per Market Hour\n• Stock Sold %\n\nWhen an event reaches all three, you’ll see MEETS TARGETS.\n\nIf one or more falls short, you’ll see REVIEW.\n\nNo universal rules about whether you should book a market again—the workbook compares the event against the goals you chose.\n\nCOMPARE UP TO 5 MARKETS SIDE BY SIDE\n\nUse Market Comparison to quickly review:\n\n• Sales\n• Profit After Entered Costs\n• Profit Margin\n• Units Sold\n• Stock Sold %\n• Profit per Market Hour\n• Target status\n\nAnd use the Dashboard to see your overall sales, profit after entered costs, margin, unsold stock and market results together.\n\nUSE IT AGAIN AFTER EVERY MARKET\n\n1. Set your three goals.\n2. Log the market’s booth fee, travel cost and hours worked.\n3. Enter what you brought, sold and spent on each product batch.\n4. Review your results.\n5. Compare markets and see which ones worked best for you.\n\nBuilt-in input checks flag missing, invalid, duplicate or unmatched entries so incomplete rows don’t quietly flow into your totals.\n\nWHAT YOU RECEIVE\n\n• 1 editable Microsoft Excel .xlsx workbook\n• 6 connected sheets\n• Space for 50 market days\n• Space for 100 product-sales rows\n• Side-by-side comparison for up to 5 markets\n• Clearly marked sample data\n• Built-in input checks\n• No macros\n• Instant digital download\n\nMADE FOR\n\nCraft fair vendors, farmers market sellers, makers and other physical-product businesses that want to know more than “How much did I sell?”\n\nUse the same process after every event and start seeing which markets are actually giving you the strongest results for the costs and time you put in.\n\nIMPORTANT SCOPE\n\nProfit After Entered Costs uses only the costs and time value you enter. It isn’t bookkeeping profit, net income, take-home pay or a tax result and doesn’t include every possible business expense.\n\nDesigned for desktop Microsoft Excel. Google Sheets compatibility is not included or supported.\n\nEvery workbook is developed and rigorously quality-checked with assistance from frontier AI models, helping catch errors, test calculations and deliver a more reliable tool for your business.",
+  "tags": [
+    "craft fair tracker",
+    "farmers market excel",
+    "market sales tracker",
+    "handmade business",
+    "market profit sheet",
+    "vendor sales excel",
+    "booth fee tracker",
+    "event profit tracker",
+    "sell through tracker",
+    "product cost tracker",
+    "popup shop tracker",
+    "farmers market tool",
+    "craft vendor excel"
+  ],
+  "images": [
+    "01-hero.png",
+    "02-more-sales-less-left.png",
+    "03-market-comparison.png",
+    "04-four-step-workflow.png",
+    "05-cost-and-time-model.png",
+    "06-two-kinds-of-time.png",
+    "07-your-decision-targets.png",
+    "08-dashboard.png",
+    "09-six-connected-sheets.png",
+    "10-buyer-fit.png"
+  ],
+  "buyerDownload": [
+    "Craft-Fair-Farmers-Market-Profit-Tracker.xlsx",
+    "Read-Me.txt"
+  ],
+  "workbookSheets": [
+    "Start Here",
+    "Targets",
+    "Market Days",
+    "Product Sales",
+    "Market Comparison",
+    "Dashboard"
+  ],
+  "publicationStatus": "OWNER_REVIEW_REQUIRED",
+  "aiDisclosureIncluded": true
+}

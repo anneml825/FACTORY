@@ -1,0 +1,25 @@
+CRAFT FAIR & FARMERS MARKET PROFIT TRACKER
+
+Open the .xlsx file in desktop Microsoft Excel and begin on Start Here.
+
+Use the sheets in this order:
+1. Targets — enter your three decision goals.
+2. Market Days — enter one row per event.
+3. Product Sales — enter one row per product batch sold at that event.
+4. Market Comparison — enter up to five market names to compare.
+5. Dashboard — review the overall and market-by-market results.
+
+Blue cells are buyer inputs. Green cells are calculated. Yellow/red cells need attention.
+
+Important definitions:
+• Hours Worked at Market is time spent working the event.
+• Product Work Hours is time spent making or preparing a product batch.
+• Profit After Entered Costs uses only the costs and time value entered in this workbook. It is not accounting profit, take-home pay or a tax result.
+• MEETS TARGETS means all three displayed results reached your displayed goals. REVIEW means at least one did not.
+
+The workbook ships with sample data so you can see how it works. It is marked at the top of
+each sheet that contains it: Market Days (rows 5-7), Product Sales (rows 5-10) and Market
+Comparison (the market names). Delete all of it before entering your own information, or your
+results will combine your figures with the samples.
+
+File: editable .xlsx workbook, no macros. Designed for desktop Microsoft Excel. Google Sheets compatibility is not included or supported.

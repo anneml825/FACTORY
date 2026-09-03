@@ -1,0 +1,379 @@
+CRAFT FAIR & FARMERS MARKET PROFIT TRACKER — ETSY COPY
+
+LISTING TITLE
+
+Craft Fair Profit Tracker Spreadsheet, Farmers Market Sales & Profit per Hour Excel Template for Vendors
+
+
+LISTING IMAGE COPY
+
+IMAGE 1 — HERO
+
+Kicker:
+FOR CRAFT FAIR, FARMERS MARKET + POP-UP VENDORS
+
+Headline:
+Craft Fair & Farmers Market Profit Tracker
+
+Hook:
+You made sales. But was the market actually worth it?
+
+Supporting copy:
+See what's left after the costs and time you enter — and compare which markets worked best for your business.
+
+Panel label:
+MARKET COMPARISON — COMPARE UP TO 5 MARKETS SIDE BY SIDE
+
+Table (sample data):
+Saturday Market · $487 · $109 · 22.4% · 76.7% · $15.57 · REVIEW
+Riverside Pop-Up · $478 · $182 · 38.1% · 88.0% · $36.40 · MEETS TARGETS
+Night Bazaar · $509 · $51 · 10.0% · 67.1% · $6.38 · REVIEW
+
+Bottom labels:
+COMPARE MARKETS · TRACK COSTS + TIME · EXCEL .XLSX
+
+
+IMAGE 2 — THE MONEY SHOT
+
+Kicker:
+MORE SALES ≠ A BETTER MARKET
+
+Headline:
+$509 in sales. Only $51 left after entered costs.
+
+Card 1 — RIVERSIDE POP-UP
+$478 in sales
+Left after entered costs: $182
+Per market hour: $36.40
+Stock sold: 88%
+Profit margin: 38.1%
+MEETS TARGETS
+
+Card 2 — NIGHT BAZAAR
+$509 in sales
+Left after entered costs: $51
+Per market hour: $6.38
+Stock sold: 67%
+Profit margin: 10.0%
+REVIEW
+
+Bottom line:
+The bigger sales number kept $131 less. You'd never see that from the till total.
+
+
+IMAGE 3 — MARKET COMPARISON
+
+Kicker:
+COMPARE MARKET DAYS SIDE BY SIDE
+
+Headline:
+See which markets made you the most profit.
+
+Supporting copy:
+Sales, profit after entered costs, margin, stock sold % and profit per market hour — one view.
+
+Panel label:
+MARKET COMPARISON SHEET
+
+Bottom line:
+Same three markets. Three very different results.
+
+
+IMAGE 4 — HOW IT WORKS
+
+Kicker:
+FROM MARKET DAY TO CLEAR COMPARISON
+
+Headline:
+Four steps. Same process after every event.
+
+1 — SET YOUR GOALS
+Choose the profit margin, hourly profit and stock sold % you want to reach.
+
+2 — LOG THE EVENT
+Enter the booth fee, travel cost and hours you worked at the market.
+
+3 — ADD WHAT YOU SOLD
+Enter product sales, costs, quantities and the hours spent making each batch.
+
+4 — COMPARE YOUR MARKETS
+See which events reached all three of the goals you set.
+
+Bottom line:
+Built-in input checks flag missing, invalid, duplicate or unmatched rows before they reach your totals.
+
+
+IMAGE 5 — WHAT GETS COUNTED
+
+Kicker:
+DON'T STOP AT SALES
+
+Headline:
+See what's left after the costs you enter.
+
+Worked example (sample data — Citrus candle C-09, Riverside Pop-Up):
+Sales                                        $270.00
+− Ingredients                                 $60.00
+− Packaging                                   $18.00
+− Product work time (2.0 hrs × $20)           $40.00
+− Share of booth + travel                     $31.50
+= Profit after entered costs                 $120.50
+
+Bottom line:
+Every market is measured the same way, using the numbers you enter.
+
+
+IMAGE 6 — YOUR TIME COUNTS TOO
+
+Kicker:
+A $500 MARKET CAN FEEL VERY DIFFERENT AFTER 8 HOURS
+
+Headline:
+Track time at the market and time spent making your products.
+
+HOURS AT THE MARKET
+How much profit the event produced for every hour you stood behind the table.
+Riverside Pop-Up · $36.40 / hr
+Night Bazaar · $6.38 / hr
+
+PRODUCT WORK HOURS
+The value of the time spent making or preparing each batch, counted inside its costs.
+Citrus candle C-09 · 2.0 hrs
+Valued at · $20.00 / hr
+
+Bottom line:
+Two separate time inputs. Two different parts of the picture.
+
+
+IMAGE 7 — YOUR GOALS
+
+Kicker:
+SET THE BAR FOR YOUR OWN BUSINESS
+
+Headline:
+See which markets hit all three of your goals.
+
+Set your minimum (sample data):
+MINIMUM PROFIT MARGIN — 30%
+MINIMUM PROFIT / MARKET HOUR — $20
+MINIMUM STOCK SOLD — 70%
+
+MEETS TARGETS
+All three reached.
+
+REVIEW
+One or more missed.
+
+Bottom line:
+Your goals, your numbers. The workbook only shows how each market measured up.
+
+
+IMAGE 8 — DASHBOARD
+
+Kicker:
+STOP DIGGING THROUGH MARKET-DAY NOTES
+
+Headline:
+See the bigger picture in one dashboard.
+
+KPIs (sample data):
+SALES — $1,474
+PROFIT AFTER ENTERED COSTS — $342
+OVERALL MARGIN — 23.2%
+UNSOLD UNITS — 43
+
+Panel label:
+DASHBOARD — SAMPLE DATA
+
+Bottom line:
+Three markets logged. One place to compare them.
+
+
+IMAGE 9 — WHAT'S INCLUDED
+
+Kicker:
+BUILT TO USE AGAIN AFTER EVERY MARKET
+
+Headline:
+One workbook. Six connected sheets.
+
+START HERE
+Setup and how the numbers work.
+
+TARGETS
+Set your three goals.
+
+MARKET DAYS
+Log booth fee, travel and hours.
+
+PRODUCT SALES
+One row per batch you sold.
+
+MARKET COMPARISON
+Compare up to 5 markets.
+
+DASHBOARD
+See the bigger picture.
+
+Bottom line:
+Clearly marked sample data · 50 market days · 100 product rows · no macros
+
+
+IMAGE 10 — BUYER FIT
+
+Kicker:
+BUILT FOR PEOPLE WHO SELL IN PERSON
+
+Headline:
+Turn market-day numbers into something you can actually compare.
+
+A GOOD FIT IF YOU:
+— Sell handmade or physical products
+— Sell at craft fairs, farmers markets or pop-ups
+— Want to track costs and time, not sales alone
+— Want to compare one event against another
+— Use desktop Microsoft Excel
+
+Know before buying:
+Results use only the costs and time value you enter. They are not bookkeeping profit, take-home pay or a tax result. Designed for desktop Excel; Google Sheets is not supported.
+
+Bottom labels:
+EDITABLE .XLSX · NO MACROS · INSTANT DOWNLOAD
+
+
+ETSY DESCRIPTION
+
+CRAFT FAIR & FARMERS MARKET PROFIT TRACKER
+
+You made sales. But was the market actually worth it?
+
+A busy booth and a big sales number can feel like a great market day. But once you factor in the booth fee, travel, product costs and the time you put in, a different event may have actually performed better.
+
+The Craft Fair & Farmers Market Profit Tracker helps you see the difference.
+
+Enter what you sold, what it cost you and how much time you spent. Then compare your markets side by side to see what was left after the costs you entered, how much stock you sold, what you made per market hour and which events reached your own goals.
+
+FIND OUT WHICH MARKETS ACTUALLY PERFORMED BETTER
+
+The highest-sales market isn’t always the strongest one.
+
+The included sample data shows exactly that:
+
+Riverside Pop-Up
+$478 sales → $182 profit after entered costs → $36.40 per market hour
+
+Night Bazaar
+$509 sales → $51 profit after entered costs → $6.38 per market hour
+
+More sales. Much less left behind.
+
+Instead of judging an event by the sales total alone, you can compare the numbers that matter to your business.
+
+TRACK THE COSTS BEHIND THE SALES
+
+For each product batch, enter:
+
+• Units brought
+• Units sold
+• Sales
+• Ingredient costs
+• Packaging costs
+• Product work hours
+• The value you assign to your work time
+
+The workbook also factors in each product row’s share of the booth fee and travel cost you entered for that event.
+
+The result is Profit After Entered Costs—a consistent way to compare one market with another using your own numbers.
+
+SEE WHAT YOUR TIME PRODUCED
+
+Selling for eight hours and making your products for five hours are two different things, so the workbook tracks them separately.
+
+Hours Worked at Market shows how much Profit After Entered Costs the market produced for each hour you spent working the event.
+
+Product Work Hours lets you include the value of the time you spent making or preparing a product batch in its entered costs.
+
+Both are clearly labeled so you know exactly what goes where.
+
+SET YOUR OWN GOALS
+
+You decide what a worthwhile market looks like for your business.
+
+Set your minimum:
+
+• Profit Margin
+• Profit per Market Hour
+• Stock Sold %
+
+When an event reaches all three, you’ll see MEETS TARGETS.
+
+If one or more falls short, you’ll see REVIEW.
+
+No universal rules about whether you should book a market again—the workbook compares the event against the goals you chose.
+
+COMPARE UP TO 5 MARKETS SIDE BY SIDE
+
+Use Market Comparison to quickly review:
+
+• Sales
+• Profit After Entered Costs
+• Profit Margin
+• Units Sold
+• Stock Sold %
+• Profit per Market Hour
+• Target status
+
+And use the Dashboard to see your overall sales, profit after entered costs, margin, unsold stock and market results together.
+
+USE IT AGAIN AFTER EVERY MARKET
+
+1. Set your three goals.
+2. Log the market’s booth fee, travel cost and hours worked.
+3. Enter what you brought, sold and spent on each product batch.
+4. Review your results.
+5. Compare markets and see which ones worked best for you.
+
+Built-in input checks flag missing, invalid, duplicate or unmatched entries so incomplete rows don’t quietly flow into your totals.
+
+WHAT YOU RECEIVE
+
+• 1 editable Microsoft Excel .xlsx workbook
+• 6 connected sheets
+• Space for 50 market days
+• Space for 100 product-sales rows
+• Side-by-side comparison for up to 5 markets
+• Clearly marked sample data
+• Built-in input checks
+• No macros
+• Instant digital download
+
+MADE FOR
+
+Craft fair vendors, farmers market sellers, makers and other physical-product businesses that want to know more than “How much did I sell?”
+
+Use the same process after every event and start seeing which markets are actually giving you the strongest results for the costs and time you put in.
+
+IMPORTANT SCOPE
+
+Profit After Entered Costs uses only the costs and time value you enter. It isn’t bookkeeping profit, net income, take-home pay or a tax result and doesn’t include every possible business expense.
+
+Designed for desktop Microsoft Excel. Google Sheets compatibility is not included or supported.
+
+Every workbook is developed and rigorously quality-checked with assistance from frontier AI models, helping catch errors, test calculations and deliver a more reliable tool for your business.
+
+
+ETSY TAGS
+
+craft fair tracker
+farmers market excel
+market sales tracker
+handmade business
+market profit sheet
+vendor sales excel
+booth fee tracker
+event profit tracker
+sell through tracker
+product cost tracker
+popup shop tracker
+farmers market tool
+craft vendor excel

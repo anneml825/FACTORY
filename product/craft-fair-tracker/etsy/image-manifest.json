@@ -1,0 +1,88 @@
+{
+  "dimensions": [
+    2000,
+    1600
+  ],
+  "files": [
+    {
+      "name": "01-hero.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "10f7c5c34e2547ee2de7286e57cf2a73104d222c26a7e4835c2fa39a5c7382b3"
+    },
+    {
+      "name": "02-more-sales-less-left.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "59e672886f57c7ce2a7aad57816c6131f4eccf9af9360f1fa0aff5a68118978e"
+    },
+    {
+      "name": "03-market-comparison.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "6699fe26c66e71a6d3d82054804bd99760d6d9778f34cc1dea22da9acc383653"
+    },
+    {
+      "name": "04-four-step-workflow.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "280921d04d1bac36f3cc738c3030059d0b4e52f987039125199c2ae69114f591"
+    },
+    {
+      "name": "05-cost-and-time-model.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "9d2763639939427ba19a27f9c248118b4b720c64d172f7e4e248138229aa8d5a"
+    },
+    {
+      "name": "06-two-kinds-of-time.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "efc79a23737a2edacff32a09c536f2542e7d005d22b7de11d11db558a3517872"
+    },
+    {
+      "name": "07-your-decision-targets.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "29cc3ffd6f77b964ba3105e8d4d4e0b75c106934e8e142fad12a352bee196c74"
+    },
+    {
+      "name": "08-dashboard.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "482490a22dfa46f64cf077946425375edc99190e8d15bd5cfbcd88067543e337"
+    },
+    {
+      "name": "09-six-connected-sheets.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "678b2491d1aa4fc62000208240e145ec211af512703e6bfd3fc196faacef63e8"
+    },
+    {
+      "name": "10-buyer-fit.png",
+      "size": [
+        2000,
+        1600
+      ],
+      "sha256": "1095797f00fd27bcc672b8fd1eebcc675f6bbfa6d3a396ac2e6f6500e10e8777"
+    }
+  ]
+}
