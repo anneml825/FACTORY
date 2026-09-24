@@ -1,0 +1,174 @@
+<!doctype html><html><head><meta charset="utf-8">
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page { size: Letter; margin: 0.32in 0.36in; }
+:root { --navy:#1F3A5F; --lung:#2E6DA4; --lungbg:#EAF2FA; --body:#B5651D; --bodybg:#FBF0E4;
+        --red:#B3261E; --redbg:#FDECEA; --ink:#1B1B1B; --mute:#5A6570; --line:#D5DCE3; --panel:#F5F7F9; }
+* { box-sizing:border-box; }
+body { margin:0; font-family: "Helvetica Neue", Arial, sans-serif; color:var(--ink); font-size:8.3pt; line-height:1.32; }
+.hdr { background:var(--navy); color:#fff; padding:7px 12px 7px; border-radius:6px; display:flex; justify-content:space-between; align-items:flex-end; }
+.hdr h1 { margin:0; font-size:20pt; letter-spacing:.5px; font-weight:800; }
+.hdr .tag { font-size:8pt; letter-spacing:1.5px; text-transform:uppercase; opacity:.85; }
+.hdr .def { font-size:9pt; text-align:right; max-width:3.6in; line-height:1.3; }
+h2 { font-size:8.6pt; text-transform:uppercase; letter-spacing:1px; margin:0 0 3px; color:var(--navy); }
+.row { display:flex; gap:7px; margin-top:6px; }
+.col { flex:1; }
+.card { border:1px solid var(--line); border-radius:5px; padding:6px 8px; background:#fff; }
+.panel { background:var(--panel); border:none; }
+ul { margin:0; padding-left:12px; } li { margin:0 0 1.5px; }
+.side { border-radius:6px; padding:7px 9px; }
+.left { background:var(--lungbg); border:1.5px solid var(--lung); }
+.right { background:var(--bodybg); border:1.5px solid var(--body); }
+.side h3 { margin:0 0 1px; font-size:11pt; }
+.left h3 { color:var(--lung); } .right h3 { color:var(--body); }
+.side .mem { font-size:8pt; font-weight:700; margin-bottom:4px; }
+.left .mem { color:var(--lung); } .right .mem { color:var(--body); }
+b.k { color:var(--navy); }
+table { width:100%; border-collapse:collapse; font-size:7.9pt; }
+th { text-align:left; background:var(--navy); color:#fff; padding:3px 5px; font-weight:700; font-size:7.8pt; }
+td { padding:2.5px 5px; border-bottom:1px solid var(--line); vertical-align:top; }
+tr:nth-child(even) td { background:#FAFBFC; }
+.em { background:var(--redbg); border:1.5px solid var(--red); }
+.em h2 { color:var(--red); }
+.mini td { padding:1.5px 4px; }
+.pill { display:inline-block; background:var(--navy); color:#fff; border-radius:3px; padding:0 4px; font-weight:700; font-size:7.6pt; }
+.faces b { color:var(--navy); font-size:9.5pt; }
+.foot { margin-top:6px; font-size:6.6pt; color:var(--mute); border-top:1px solid var(--line); padding-top:4px; display:flex; justify-content:space-between; gap:10px; }
+</style></head><body>
+<style>
+.t1 { background:#EAF2FA; border:1.5px solid #2E6DA4; } .t1 h3 { color:#2E6DA4; }
+.t2 { background:#FBF0E4; border:1.5px solid #B5651D; } .t2 h3 { color:#B5651D; }
+.hypo { background:#EAF2FA; border:1.5px solid #2E6DA4; } .hypo h2 { color:#2E6DA4; }
+.hyper { background:#FDECEA; border:1.5px solid #B3261E; } .hyper h2 { color:#B3261E; }
+.mnem { font-weight:700; font-size:8pt; margin-bottom:3px; }
+.hypo .mnem { color:#2E6DA4; } .hyper .mnem { color:#B3261E; }
+.nw { white-space:nowrap; }
+</style></head><body>
+
+<div class="hdr">
+  <div><div class="tag">Nursing study sheet</div><h1>DIABETES MELLITUS</h1></div>
+  <div class="def">The body cannot make insulin, cannot use it well, or both — so glucose stays in the <b>blood</b> instead of entering the <b>cells</b>.</div>
+</div>
+
+<div class="row">
+  <div class="col side t1">
+    <h3>Type 1</h3>
+    <div class="mem" style="color:#2E6DA4">NO insulin &nbsp;·&nbsp; autoimmune destruction of beta cells</div>
+    <ul>
+      <li><b>Absolute</b> insulin deficiency — <b>insulin is required</b> for life</li>
+      <li>Often diagnosed young, but can occur at any age</li>
+      <li><b>Rapid onset</b>; often thin or weight loss at diagnosis</li>
+      <li>Crisis risk: <b>DKA</b></li>
+    </ul>
+  </div>
+  <div class="col side t2">
+    <h3>Type 2</h3>
+    <div class="mem" style="color:#B5651D">RESISTANCE to insulin &nbsp;·&nbsp; plus relative deficiency</div>
+    <ul>
+      <li>Cells respond poorly to insulin; production falls over time</li>
+      <li>Most common type; risk rises with age, excess weight, inactivity, family history</li>
+      <li><b>Gradual onset</b>; may have no symptoms for years</li>
+      <li>Lifestyle, oral or injectable meds; may need insulin. Crisis risk: <b>HHS</b></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card hypo">
+    <h2>Hypoglycemia · below 70 <span style="text-transform:none">mg/dL</span></h2>
+    <div class="mnem">"Cold and clammy — need some candy"</div>
+    <ul>
+      <li>Shaky, <b>sweaty</b>, pale, cool clammy skin</li>
+      <li>Tachycardia, anxiety, hunger, irritability</li>
+      <li>Confusion, slurred speech → seizure, loss of consciousness</li>
+      <li><b>Rule of 15:</b> 15 g fast-acting carbohydrate → recheck in 15 min → repeat if still under 70. Then a snack or meal</li>
+      <li><b>Unable to swallow safely:</b> glucagon or IV dextrose per protocol — nothing by mouth</li>
+    </ul>
+  </div>
+  <div class="col card hyper">
+    <h2>Hyperglycemia</h2>
+    <div class="mnem">"Hot and dry — sugar high"</div>
+    <ul>
+      <li><b>3 Ps:</b> <b>polyuria</b>, <b>polydipsia</b>, <b>polyphagia</b></li>
+      <li>Warm, dry skin; dehydration</li>
+      <li>Blurred vision, fatigue, headache</li>
+      <li>Slow wound healing, frequent infections</li>
+      <li>Untreated → <b>DKA</b> (type 1) or <b>HHS</b> (type 2)</li>
+    </ul>
+  </div>
+  <div class="col card panel" style="flex:.8">
+    <h2>Diagnosis (ADA)</h2>
+    <table class="mini">
+      <tr><td><b class="k">A1C</b></td><td class="nw">≥ 6.5%</td></tr>
+      <tr><td><b class="k">Fasting glucose</b></td><td class="nw">≥ 126 mg/dL</td></tr>
+      <tr><td><b class="k">2-h OGTT</b></td><td class="nw">≥ 200 mg/dL</td></tr>
+      <tr><td><b class="k">Random + symptoms</b></td><td class="nw">≥ 200 mg/dL</td></tr>
+      <tr><td><b class="k">Prediabetes A1C</b></td><td class="nw">5.7–6.4%</td></tr>
+    </table>
+    <div style="font-size:7.3pt;color:#5A6570;margin-top:3px">A1C reflects average glucose over about 3 months.</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card" style="padding:5px 6px 4px">
+    <h2>Insulin — onset, peak, duration <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#5A6570;font-size:7.4pt">&nbsp;approximate; varies by product — confirm in a drug reference</span></h2>
+    <table>
+      <tr><th style="width:17%">Type</th><th style="width:22%">Examples</th><th style="width:8%">Onset</th><th style="width:8%">Peak</th><th style="width:9%">Duration</th><th>Nursing watch-fors</th></tr>
+      <tr><td><b>Rapid-acting</b></td><td>lispro, aspart, glulisine</td><td class="nw">~15 min</td><td class="nw">1–2 h</td><td class="nw">3–5 h</td><td>Give with the meal — <b>food must be available</b></td></tr>
+      <tr><td><b>Short-acting</b></td><td>regular</td><td class="nw">30–60 min</td><td class="nw">2–4 h</td><td class="nw">5–8 h</td><td>The insulin given <b>IV</b> (DKA, HHS)</td></tr>
+      <tr><td><b>Intermediate</b></td><td>NPH</td><td class="nw">1–2 h</td><td class="nw">4–12 h</td><td class="nw">12–18 h</td><td><b>Cloudy</b> — roll, don't shake. Mixing with regular: <b>clear before cloudy</b></td></tr>
+      <tr><td><b>Long-acting</b></td><td>glargine, detemir, degludec</td><td class="nw">1–2 h</td><td class="nw">no peak</td><td class="nw">~24 h+</td><td>Basal insulin — <b>never mix</b> with other insulins</td></tr>
+    </table>
+    <div style="font-size:7.3pt;color:#B3261E;margin-top:3px"><b>Hypoglycemia risk is highest at the peak.</b> Insulin is a high-alert medication — follow double-check policy.</div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card" style="padding:5px 6px 4px">
+    <h2>DKA vs HHS</h2>
+    <table>
+      <tr><th style="width:18%"></th><th style="width:41%">DKA — diabetic ketoacidosis</th><th>HHS — hyperosmolar hyperglycemic state</th></tr>
+      <tr><td><b>Usually</b></td><td>Type 1</td><td>Type 2, often older adults</td></tr>
+      <tr><td><b>Glucose</b></td><td>Elevated, typically &gt; 250 mg/dL</td><td>Very high, typically <b>&gt; 600 mg/dL</b></td></tr>
+      <tr><td><b>Ketones / pH</b></td><td><b>Ketones present</b>, <b>acidosis</b> — pH &lt; 7.3</td><td>Minimal or no ketones; pH &gt; 7.3</td></tr>
+      <tr><td><b>Signs</b></td><td><b>Kussmaul respirations</b>, <b>fruity breath</b>, abdominal pain, N/V</td><td><b>Severe dehydration</b>, high osmolality, <b>altered mental status</b></td></tr>
+      <tr><td><b>Onset</b></td><td>Hours to a day</td><td>Days</td></tr>
+      <tr><td><b>Priorities</b></td><td colspan="2"><b>IV fluids first</b> → IV regular insulin as ordered → <b>monitor K⁺ closely</b> (insulin drives K⁺ into cells → hypokalemia) → hourly glucose, I&amp;O, neuro checks</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card">
+    <h2>Nursing priorities</h2>
+    <ul>
+      <li>Check glucose before meals and at bedtime, or as ordered</li>
+      <li>Coordinate insulin with meal trays</li>
+      <li>Rotate injection sites within one area</li>
+      <li>Watch for hypoglycemia when NPO, vomiting, or at insulin peak</li>
+    </ul>
+  </div>
+  <div class="col card">
+    <h2>Sick-day rules</h2>
+    <ul>
+      <li><b>Do not stop insulin</b> when ill, even if not eating</li>
+      <li>Check glucose more often</li>
+      <li>Check ketones, especially type 1</li>
+      <li>Fluids to prevent dehydration; report persistent vomiting</li>
+    </ul>
+  </div>
+  <div class="col card">
+    <h2>Foot care teaching</h2>
+    <ul>
+      <li>Inspect feet daily; use a mirror</li>
+      <li><b>Never go barefoot</b>; well-fitting shoes</li>
+      <li>Wash and dry well, especially between toes</li>
+      <li>Report cuts, blisters, color change</li>
+    </ul>
+  </div>
+</div>
+
+<div class="foot">
+  <div>Educational study reference for nursing students. Not medical advice, and not a substitute for current institutional policy, prescriber orders, or drug references.</div>
+  <div style="white-space:nowrap">Content basis: ADA Standards of Care in Diabetes</div>
+</div>
+</body></html>
