@@ -1,0 +1,166 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page { size: Letter; margin: 0.32in 0.36in; }
+:root { --navy:#1F3A5F; --lung:#2E6DA4; --lungbg:#EAF2FA; --body:#B5651D; --bodybg:#FBF0E4;
+        --red:#B3261E; --redbg:#FDECEA; --ink:#1B1B1B; --mute:#5A6570; --line:#D5DCE3; --panel:#F5F7F9; }
+* { box-sizing:border-box; }
+body { margin:0; font-family: "Helvetica Neue", Arial, sans-serif; color:var(--ink); font-size:8.3pt; line-height:1.32; }
+.hdr { background:var(--navy); color:#fff; padding:7px 12px 7px; border-radius:6px; display:flex; justify-content:space-between; align-items:flex-end; }
+.hdr h1 { margin:0; font-size:20pt; letter-spacing:.5px; font-weight:800; }
+.hdr .tag { font-size:8pt; letter-spacing:1.5px; text-transform:uppercase; opacity:.85; }
+.hdr .def { font-size:9pt; text-align:right; max-width:3.6in; line-height:1.3; }
+h2 { font-size:8.6pt; text-transform:uppercase; letter-spacing:1px; margin:0 0 3px; color:var(--navy); }
+.row { display:flex; gap:7px; margin-top:6px; }
+.col { flex:1; }
+.card { border:1px solid var(--line); border-radius:5px; padding:6px 8px; background:#fff; }
+.panel { background:var(--panel); border:none; }
+ul { margin:0; padding-left:12px; } li { margin:0 0 1.5px; }
+.side { border-radius:6px; padding:7px 9px; }
+.left { background:var(--lungbg); border:1.5px solid var(--lung); }
+.right { background:var(--bodybg); border:1.5px solid var(--body); }
+.side h3 { margin:0 0 1px; font-size:11pt; }
+.left h3 { color:var(--lung); } .right h3 { color:var(--body); }
+.side .mem { font-size:8pt; font-weight:700; margin-bottom:4px; }
+.left .mem { color:var(--lung); } .right .mem { color:var(--body); }
+b.k { color:var(--navy); }
+table { width:100%; border-collapse:collapse; font-size:7.9pt; }
+th { text-align:left; background:var(--navy); color:#fff; padding:3px 5px; font-weight:700; font-size:7.8pt; }
+td { padding:2.5px 5px; border-bottom:1px solid var(--line); vertical-align:top; }
+tr:nth-child(even) td { background:#FAFBFC; }
+.em { background:var(--redbg); border:1.5px solid var(--red); }
+.em h2 { color:var(--red); }
+.mini td { padding:1.5px 4px; }
+.pill { display:inline-block; background:var(--navy); color:#fff; border-radius:3px; padding:0 4px; font-weight:700; font-size:7.6pt; }
+.faces b { color:var(--navy); font-size:9.5pt; }
+.foot { margin-top:6px; font-size:6.6pt; color:var(--mute); border-top:1px solid var(--line); padding-top:4px; display:flex; justify-content:space-between; gap:10px; }
+</style></head><body>
+
+<div class="hdr">
+  <div><div class="tag">Nursing study sheet</div><h1>HEART FAILURE</h1></div>
+  <div class="def">The heart cannot pump enough blood to meet the body's needs, so blood <b>backs up</b> (congestion) and organs are <b>underperfused</b>.</div>
+</div>
+
+<div class="row">
+  <div class="col side left">
+    <h3>Left-sided HF</h3>
+    <div class="mem">L = LUNGS &nbsp;·&nbsp; backs up into the pulmonary circulation</div>
+    <ul>
+      <li><b>Dyspnea</b>, <b>orthopnea</b> (needs more pillows), <b>PND</b> — waking breathless at night</li>
+      <li><b>Crackles</b> in the lungs; cough</li>
+      <li><b>Pink, frothy sputum</b> = pulmonary edema — emergency</li>
+      <li>Tachycardia, <b>S3</b> heart sound</li>
+      <li>Fatigue, weakness, activity intolerance</li>
+      <li>Restlessness, confusion — ↓ cerebral perfusion</li>
+      <li>↓ Urine output — ↓ renal perfusion</li>
+    </ul>
+  </div>
+  <div class="col side right">
+    <h3>Right-sided HF</h3>
+    <div class="mem">R = REST OF THE BODY &nbsp;·&nbsp; backs up into systemic veins</div>
+    <ul>
+      <li><b>JVD</b> — jugular vein distension</li>
+      <li><b>Dependent edema</b> — legs and ankles; sacrum if bedbound</li>
+      <li><b>Weight gain</b> from fluid retention</li>
+      <li><b>Hepatomegaly</b>, RUQ discomfort; <b>ascites</b></li>
+      <li>Anorexia, nausea, bloating — GI congestion</li>
+      <li>Most common cause of right-sided HF: <b>left-sided HF</b></li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card panel">
+    <h2>Type by ejection fraction</h2>
+    <table class="mini">
+      <tr><td><b class="k">HFrEF</b></td><td style="white-space:nowrap">EF ≤ 40%</td><td>reduced — weak squeeze</td></tr>
+      <tr><td><b class="k">HFmrEF</b></td><td style="white-space:nowrap">EF 41–49%</td><td>mildly reduced</td></tr>
+      <tr><td><b class="k">HFpEF</b></td><td style="white-space:nowrap">EF ≥ 50%</td><td>preserved — stiff, poor filling</td></tr>
+    </table>
+  </div>
+  <div class="col card panel">
+    <h2>NYHA functional class</h2>
+    <table class="mini">
+      <tr><td><b class="k">I</b></td><td>No limitation of ordinary activity</td></tr>
+      <tr><td><b class="k">II</b></td><td>Slight limitation; ordinary activity causes symptoms</td></tr>
+      <tr><td><b class="k">III</b></td><td>Marked limitation; less than ordinary activity causes symptoms</td></tr>
+      <tr><td><b class="k">IV</b></td><td>Symptoms at rest</td></tr>
+    </table>
+  </div>
+  <div class="col card panel" style="flex:.85">
+    <h2>ACC/AHA stage</h2>
+    <table class="mini">
+      <tr><td><b class="k">A</b></td><td>At risk; no structural disease</td></tr>
+      <tr><td><b class="k">B</b></td><td>Structural disease, no symptoms <span style="white-space:nowrap">(pre-HF)</span></td></tr>
+      <tr><td><b class="k">C</b></td><td>Structural disease with symptoms</td></tr>
+      <tr><td><b class="k">D</b></td><td>Advanced HF</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card" style="flex:.9">
+    <h2>Diagnostics</h2>
+    <ul>
+      <li><b>BNP / NT-proBNP</b> — released when ventricles stretch; elevated in HF. BNP &lt;100 pg/mL makes HF unlikely</li>
+      <li><b>Echocardiogram</b> — measures EF; the key test</li>
+      <li><b>Chest x-ray</b> — cardiomegaly, pulmonary congestion</li>
+      <li><b>Electrolytes, renal function</b> — watch K⁺ and creatinine on diuretics and RAAS drugs</li>
+    </ul>
+  </div>
+  <div class="col card" style="flex:1.1">
+    <h2>Nursing priorities</h2>
+    <ul>
+      <li><b>Daily weight</b> — same time, same scale, same clothing, after voiding, before breakfast</li>
+      <li><b>Report a gain of 2–3 lb in a day or 5 lb in a week</b></li>
+      <li>High Fowler's for dyspnea; oxygen as ordered</li>
+      <li>Strict I&amp;O; sodium and fluid restriction as prescribed</li>
+      <li>Assess lung sounds, edema, JVD, and mental status every shift</li>
+      <li>Cluster care; plan rest periods; increase activity gradually</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card" style="padding:5px 6px 4px">
+    <h2>Medications — what the nurse watches <span class="pill">HFrEF: 4 pillars ★</span></h2>
+    <table>
+      <tr><th style="width:24%">Class</th><th style="width:25%">Examples</th><th>Nursing watch-fors</th></tr>
+      <tr><td><b>★ ARNI / ACE inhibitor / ARB</b></td><td>sacubitril-valsartan; -pril; -sartan</td><td>BP, <b>hyperkalemia</b>, renal function. ACEi: dry cough, <b>angioedema</b>. ARNI: never within <b>36 h</b> of an ACEi</td></tr>
+      <tr><td><b>★ Beta blocker</b></td><td>carvedilol, metoprolol succinate, bisoprolol</td><td>Apical HR and BP before giving; hold per ordered parameters. <b>Do not stop abruptly</b></td></tr>
+      <tr><td><b>★ MRA</b></td><td>spironolactone, eplerenone</td><td>Potassium-sparing — <b>hyperkalemia</b>; renal function</td></tr>
+      <tr><td><b>★ SGLT2 inhibitor</b></td><td>dapagliflozin, empagliflozin</td><td>Volume depletion; genital and urinary infections. Used in HF with or without diabetes</td></tr>
+      <tr><td><b>Loop diuretic</b></td><td>furosemide, bumetanide</td><td><b>Hypokalemia</b>, hypotension, daily weight, I&amp;O. Give in the morning</td></tr>
+      <tr><td><b>Digoxin</b></td><td>digoxin</td><td>Apical pulse for a full minute; hold per parameters. Toxicity: nausea, vomiting, <b>yellow-green halos</b>, bradycardia. <b>Low K⁺ raises toxicity risk</b>. Narrow therapeutic range</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col card em">
+    <h2>⚠ Acute pulmonary edema</h2>
+    <ul>
+      <li>Severe dyspnea, <b>pink frothy sputum</b>, crackles throughout, anxiety, hypoxia</li>
+      <li>High Fowler's with legs dependent; oxygen</li>
+      <li>Call the provider or rapid response</li>
+      <li>Prepare IV loop diuretic as ordered</li>
+    </ul>
+  </div>
+  <div class="col card">
+    <h2>Patient teaching</h2>
+    <ul>
+      <li>Weigh daily; report the gain thresholds above</li>
+      <li>Follow the prescribed sodium limit</li>
+      <li><b>Avoid NSAIDs</b> — they worsen fluid retention</li>
+      <li>Report more breathlessness, swelling, or needing more pillows to sleep</li>
+    </ul>
+  </div>
+  <div class="col card panel faces" style="flex:.75">
+    <h2>Warning signs: FACES</h2>
+    <b>F</b>atigue<br><b>A</b>ctivity limitation<br><b>C</b>ongestion / cough<br><b>E</b>dema<br><b>S</b>hortness of breath
+  </div>
+</div>
+
+<div class="foot">
+  <div>Educational study reference for nursing students. Not medical advice, and not a substitute for current institutional policy, prescriber orders, or drug references.</div>
+  <div style="white-space:nowrap">Content basis: 2022 AHA/ACC/HFSA Heart Failure Guideline</div>
+</div>
+</body></html>
